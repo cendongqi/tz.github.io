@@ -250,6 +250,263 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2017/03/19/Python爬虫实战——免费图片-Pixabay/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="崔斯特">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1488291259&di=9b54b1ab9a4a02ec51e4344e960692d6&src=http://ni.ppsrc.com/aR24MryiGC7HFCEJTB-wgQ@640w_640h_75Q.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="崔斯特的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/19/Python爬虫实战——免费图片-Pixabay/" itemprop="url">
+                  Python爬虫实战——免费图片 - Pixabay
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-19T17:24:58+08:00">
+                2017-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/19/Python爬虫实战——免费图片-Pixabay/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/19/Python爬虫实战——免费图片-Pixabay/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/03/19/Python爬虫实战——免费图片-Pixabay/" class="leancloud_visitors" data-flag-title="Python爬虫实战——免费图片 - Pixabay">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <pre><code>这是崔斯特的第五篇原创文章
+</code></pre><p><img src="http://i.imgur.com/jUTb7Pw.jpg" alt=""></p>
+<p>Pixabay，一个挺不错的高清无码图片网站，可以免费下载。</p>
+<p><a href="https://pixabay.com/" target="_blank" rel="external">https://pixabay.com/</a></p>
+<p><em>一些介绍</em></p>
+<blockquote>
+<p>超过 900000 高质量照片、 插图和矢量图形。可免费用于商业用途。没有所需的归属。</p>
+<p>Pixabay是一家高质量图片分享网站。最初，该网站由Hans Braxmeier和Simon Steinberger在德国发展起来。2013年2月，网站拥有由影师和其社区的插画家提供的大约7万张免费的照片和矢量图形。该公司于2010年12月在德国乌尔姆成立。</p>
+<p>2012年3月，Pixabay开始从一个私人图像搜集网站转变成一个互动的网上社区，该网站支持20种语言。同年5月，网站推出公共应用程序编程接口，从而使第三方用户和网站开发人员搜索其图像数据库。网站还与Flickr，YouTube和维基共享资源。</p>
+<p>Pixabay用户无需注册就可以获得免费版权的高质量图像。根据知识共享契约CC0相关的肖像权，用户在该网站通过上传图片就默认放弃图片版权，从而使图片广泛流通。网站允许任何人使用，修改图片 - 即便是在商业应用 - 不要求许可并且未认可。 </p>
+<p>Pixabay为了确保高品质图片标准，用户上传的所有图片将由网站工作人员手动审批。大约27％的用户会说英语，20％的用户会说西班牙语，11％的用户会说葡萄牙语，7％的用户会说德语和5％的用户会说法语。其用户主要是博客、图形设计师、作家、记者和广告商。</p>
+</blockquote>
+<p>今天的目标就是爬取小编精选的图片  <a href="https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=1" target="_blank" rel="external">https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=1</a></p>
+<h1 id="一、分析"><a href="#一、分析" class="headerlink" title="一、分析"></a>一、分析</h1><p>我们需要写3个函数</p>
+<blockquote>
+<p>一个Download(url)，用来下载图片</p>
+<p>一个用来获取小编精选一共有的165页FullUrl()</p>
+<p>最后用来调用main()</p>
+</blockquote>
+<p>下面开始一个个写吧~</p>
+<p><a href="https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=1" title="小编精选 - 照片" target="_blank" rel="external">https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=1</a></p>
+<p>打开网页，F12，查看图片链接所在的标签</p>
+<p><img src="http://i.imgur.com/TlQbPlN.jpg" alt=""><br><img src="http://i.imgur.com/D3kTbAR.jpg" alt=""></p>
+<p>可以看到图片链接都在<code>&lt;img&gt;</code>标签下，但是我自己发现前几张和后几张的属性是不一样的，提取出<code>&lt;img&gt;</code>中“src”就可以了，使用的是xpath</p>
+<pre><code>import requests
+from lxml import etree
+
+header = {&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&apos;}
+url = &apos;https://pixabay.com/zh/editors_choice/&apos;
+r = requests.get(url,headers=header).text
+s = etree.HTML(r)
+print(s.xpath(&apos;//img/@src&apos;))
+</code></pre><p>结果是</p>
+<p><img src="http://i.imgur.com/uWgYPa4.png" alt=""></p>
+<p>前面都是正确的图片链接，可是后面出现了’/static/img/blank.gif’，这个是什么鬼，查看网页源代码，搜索</p>
+<p><img src="http://i.imgur.com/Mxqh6Qu.png" alt=""></p>
+<p>可以发现确实有这一段字符串，我自己在这一点上花了很多时间。感谢@李宏杰的帮助，<br><a href="https://www.zhihu.com/question/57188290" title="Python爬虫动态页面抓取问题？ - 爬虫（计算机网络） - 知乎" target="_blank" rel="external">https://www.zhihu.com/question/57188290</a></p>
+<blockquote>
+<p>浏览器中的代码是JavaScript修改过的, 你直接用requests请求然后打印出来看就会发现</p>
+</blockquote>
+<pre><code>&lt;div class=&quot;item&quot; data-w=&quot;640&quot; data-h=&quot;426&quot;&gt;
+                    &lt;a href=&quot;/zh/%E8%9B%8B%E7%B3%95-%E4%B8%80%E5%9D%97%E8%9B%8B%E7%B3%95-%E9%A3%9F%E8%B0%B1-%E4%B8%80%E7%89%87-%E7%B3%96%E6%9E%9C-%E6%8F%92%E5%9B%BE-%E7%83%98%E7%83%A4-%E7%94%9C%E7%82%B9-%E9%A3%9F%E5%93%81-1971556/&quot;&gt;
+                        &lt;img src=&quot;/static/img/blank.gif&quot; data-lazy-srcset=&quot;https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971556__340.jpg 1x, https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971556__480.jpg 2x&quot; data-lazy=&quot;https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971556__340.jpg&quot; alt=&quot;&quot;&gt;
+
+                    &lt;/a&gt;
+                    &lt;div&gt;
+</code></pre><p>requests返回的数据中可以看到，“data-lazy”总含有我们需要的数据，修改代码</p>
+<p><img src="http://i.imgur.com/PgU67mV.png" alt=""></p>
+<p>发现现在返回的数据是我们需要的，打开一张图片查看</p>
+<p><img src="http://i.imgur.com/caZqMpt.png" alt=""><br><img src="http://i.imgur.com/AE8qAph.png" alt=""></p>
+<p>下面的图片要清晰很多，我们只需要把<code>__340</code>换成<code>_960_720</code>即可</p>
+<p>小编精选一共有165页，我们需要获取下一页URL</p>
+<pre><code>https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=2
+https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=3
+。。。
+</code></pre><p>规律很简单</p>
+<pre><code>full_link = []
+for i in range(1,165):
+    #print(i)
+    full_link.append( &apos;https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=&apos;+ str(i))
+</code></pre><p>到现在，准备工作做好了，思路可能不是很清楚，请谅解~</p>
+<h1 id="二、代码"><a href="#二、代码" class="headerlink" title="二、代码"></a>二、代码</h1><pre><code>import requests
+from lxml import etree
+import time
+import urllib
+
+def Download(url):
+    header = {
+        &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&apos;}
+    r = s.get(url, headers=header).text
+    s = etree.HTML(r)
+    r = s.xpath(&apos;//img/@data-lazy&apos;)
+    for i in r:
+        imglist = i.replace(&apos;__340&apos;, &apos;_960_720&apos;)
+        name = imglist.split(&apos;/&apos;)[-1]#图片名称
+        urllib.request.urlretrieve(imglist,name)
+        time.sleep(1)
+
+
+def FullUrl():
+    full_link = []
+    for i in range(2,165):
+        #print(i)
+        full_link.append( &apos;https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=&apos;+ str(i))
+        #print(full)
+    return full_link
+
+if __name__ == &apos;__main__&apos;:
+    urls = FullUrl()
+    for url in urls:
+        Download(url)
+</code></pre><p>爬取图片的工作就完成了，粗略的计算6600张，每一张下载需要5秒钟，一分钟60秒、一小时60分钟，天呐，需要<strong>9个小时</strong>才能爬取全部的图片。想一想还是算了吧，整站爬取还是要使用Scrapy+mongodb。</p>
+<pre><code>&gt;&gt;&gt; 165*40
+6600
+&gt;&gt;&gt; from __future__ import division
+&gt;&gt;&gt; 6600*5/60/60
+9.166666666666666
+</code></pre><p>下载了700多张，108M，也算是留着看看吧。</p>
+<p>一会上传到Github上</p>
+<h1 id="三、结语"><a href="#三、结语" class="headerlink" title="三、结语"></a>三、结语</h1><p>昨天学习了<strong>崔庆才</strong>老师的爬虫，感觉真的学习到了好多，对Python爬虫提高很有帮助，还有，原来他就是<strong>静觅</strong>，刚开始学习爬虫就在看他的博客，没想到他现在又在出爬虫教程，打算跟着学习。</p>
+<p><img src="http://i.imgur.com/SYdEM8X.png" alt=""></p>
+<pre><code>分享内容：  
+
+1. 分析知乎Ajax请求及爬取逻辑
+
+2. 用Scrapy实现递归爬取
+
+3. 爬取结果存储到MongoDB   
+</code></pre><p>废话不多说，自己看看就知道了。</p>
+<p>静觅丨崔庆才的个人博客<a href="http://cuiqingcai.com/" target="_blank" rel="external">http://cuiqingcai.com/</a></p>
+<p>微课录播 | 03月17日 爬取知乎所有用户详细信息<a href="https://edu.hellobi.com/course/163" target="_blank" rel="external">https://edu.hellobi.com/course/163</a></p>
+<blockquote>
+<p>最后的小广告</p>
+<p>有朋友竟然叫我去作一期直播，讲一讲Python。</p>
+<p>打算根据自己的经历分享一些经验，主要是关于Python入门的，想听听可以私信我。</p>
+<p>时间是周二晚9点~</p>
+<p><strong>Hello World！ Try to be a Pythoner！</strong></p>
+</blockquote>
+<p><img src="http://i.imgur.com/6MorRwD.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2017/03/14/Python练习第九题，爬取贴吧图片/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -867,7 +1124,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -878,7 +1135,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
