@@ -347,95 +347,15 @@
 
       
         
-          
-            <pre><code>这是崔斯特的第九篇原创文章
-</code></pre><p><img src="http://i.imgur.com/zd3tHnD.png" alt=""></p>
-<blockquote>
-<p>来源：天善智能-商业智能和大数据在线社区，用心创造价值<a href="https://edu.hellobi.com/course/159/play/lesson/2531" target="_blank" rel="external">https://edu.hellobi.com/course/159/play/lesson/2531</a></p>
-<p>丘祐玮<a href="https://ask.hellobi.com/people/DavidChiu" target="_blank" rel="external">https://ask.hellobi.com/people/DavidChiu</a>人人都爱数据科学家！Python数据科学精华实战课程</p>
-</blockquote>
-<p>环境：Anaconda3</p>
-<p>建议使用Anaconda，下载源文件后再阅读本文：<a href="https://github.com/zhangslob/DanmuFenxi" target="_blank" rel="external">https://github.com/zhangslob/DanmuFenxi</a></p>
-<p>选择经典演讲稿，奥巴马2009年9月8日开学演讲。。<a href="https://wenku.baidu.com/view/ad77bc1caf45b307e8719758.html" target="_blank" rel="external">https://wenku.baidu.com/view/ad77bc1caf45b307e8719758.html</a></p>
-<blockquote>
-<p>THE PRESIDENT:</p>
-<p> Hello, everybody! Thank you. Thank you. Thank you, everybody. All right, everybody go ahead and have a seat. How is everybody doing today? (Applause.) How about Tim Spicer? (Applause.) I am here with students at Wakefield High School in Arlington, Virginia. And we’ve got students tuning in from all across America, from kindergarten through 12th grade. And I am just so glad that all could join us today. And I want to thank Wakefield for being such an outstanding host. Give yourselves a big round of applause. (Applause.)<br>…</p>
-</blockquote>
-<h1 id="1、World-Count-Version-1"><a href="#1、World-Count-Version-1" class="headerlink" title="1、World Count(Version 1)"></a>1、World Count(Version 1)</h1><p>把数据命名为speech_text，首先需要对英文进行分词。英文中主要是空格，使用split()函数</p>
-<pre><code># coding: utf-8
-
-# In[1]:
-
-speech_text=&apos;&apos;&apos;#长文本使用&apos;&apos;&apos;..&apos;&apos;&apos;
-THE PRESIDENT:
-
- Hello, everybody! Thank you. Thank you. Thank you, everybody. All right, everybody go ahead and have a seat. How is everybody doing today? (Applause.) How about Tim Spicer? (Applause.) I am here with students at Wakefield High School in Arlington, Virginia. And we&apos;ve got students tuning in from all across America, from kindergarten through 12th grade. And I am just so glad that all could join us today. And I want to thank Wakefield for being such an outstanding host. Give yourselves a big round of applause. (Applause.)
- ...#省略文字
-&apos;&apos;&apos;
-# In[2]:
-
-speech=speech_text.split()
-
-
-# In[3]:
-
-speech
-</code></pre><p><img src="http://i.imgur.com/hU6Dvhc.png" alt=""></p>
-<p>下一步，计算speech中词语出现的次数</p>
-<pre><code># In[4]:
-
-dic={}
-for word in speech:
-    if word not in dic:
-        dic[word] = 1
-    else:
-        dic[word] = dic[word] + 1
-
-
-# In[5]:
-
-dic
-</code></pre><p><img src="http://i.imgur.com/MyFbn3d.png" alt=""></p>
-<p>通过 items() 函数以列表返回可遍历的(键, 值) 元组数组。</p>
-<p><img src="http://i.imgur.com/41PnERl.png" alt=""></p>
-<p>下一步，对词语进行排序</p>
-<pre><code># In[7]:
-
-import operator
-swd=sorted(dic.items(),key=operator.itemgetter(1),reverse=True)#从大到小排序
-
-
-# In[9]:
-
-swd
-</code></pre><p><img src="http://i.imgur.com/NakQWW0.png" alt=""></p>
-<p>发现其中“to”、“the”等单词是常见词，借用nltk我们可以把这些词语去掉</p>
-<pre><code>from nltk.corpus import stopwords
-stop_words = stopwords.words(&apos;English&apos;)
-</code></pre><p>虽说Anaconda已经安装了NLTK，但是我自己操作时stopwords貌似没有，出错请参考<a href="https://www.douban.com/note/534906136/" target="_blank" rel="external">https://www.douban.com/note/534906136/</a></p>
-<p><img src="http://i.imgur.com/jOK5aa1.png" alt=""></p>
-<p>看看英文中的去停词，下一步，遍历，打印出不含有去停词</p>
-<pre><code>for k,v in swd2:
-    if k not in stop_words:
-        print(k,v)
-</code></pre><p><img src="http://i.imgur.com/C5ER07f.png" alt=""></p>
-<p>发现出现了很多“–”，回去原文中观察，发现确实有很多，</p>
-<p>那么问题来了，为什么出现这么多“–”。萌新求解！</p>
-<h1 id="2、World-Count-Version-2"><a href="#2、World-Count-Version-2" class="headerlink" title="2、World Count(Version 2)"></a>2、World Count(Version 2)</h1><pre><code>from collections import Counter
-c=Counter(speech2)
-</code></pre><p>使用Python 的collections模块更简洁，详细见<a href="http://www.jb51.net/article/48771.htm" target="_blank" rel="external">http://www.jb51.net/article/48771.htm</a></p>
-<p><img src="http://i.imgur.com/6uZzcVV.png" alt=""></p>
-<p>同样可以使用stop_word，还可以使用most_common打印出前几个</p>
-<pre><code>for sw in stop_words:
-    del c[sw]
-</code></pre><p><img src="http://i.imgur.com/uV3TTwA.png" alt=""></p>
-<h1 id="3、反思"><a href="#3、反思" class="headerlink" title="3、反思"></a>3、反思</h1><p>上一篇文章<a href="https://zhuanlan.zhihu.com/p/25983014" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/25983014</a>写的比较粗糙，很多人要求把“观众” “礼物”筛选出来，那我来试试。</p>
-<pre><code>stop = [&apos;！&apos;,&apos;*&apos;,&apos;观众&apos;,&apos;礼物&apos;,&apos;:&apos;,&apos;？&apos;,&apos;。&apos;,&apos;，&apos;,&apos;~&apos;,&apos;1&apos;]
-</code></pre><p>去停词只有这些、可以根据实际情况添删。</p>
-<p>看来观众很喜欢说“xx学院发来贺电~~”</p>
-<p><img src="http://i.imgur.com/DKOE9Q5.png" alt=""></p>
-
-          
+          <pre><code>这是崔斯特的第九篇原创文章
+</code></pre><p><img src="http://i.imgur.com/zd3tHnD.png" alt=""><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/28/使用Python计算文章中的字词频率丨学习笔记和反思/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
