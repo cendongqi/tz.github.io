@@ -945,9 +945,9 @@ hexo deploy #部署发布
     </summary>
     
     
-      <category term="黑魔法" scheme="https://zhangslob.github.io/tags/%E9%BB%91%E9%AD%94%E6%B3%95/"/>
-    
       <category term="个人博客" scheme="https://zhangslob.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="黑魔法" scheme="https://zhangslob.github.io/tags/%E9%BB%91%E9%AD%94%E6%B3%95/"/>
     
       <category term="Markdown语法" scheme="https://zhangslob.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
