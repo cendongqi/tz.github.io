@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-05-19T15:07:32.244Z</updated>
+  <updated>2017-05-20T09:55:27.930Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,274 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>知乎上妹子都爱取啥名？</title>
+    <link href="https://zhangslob.github.io/2017/05/20/%E7%9F%A5%E4%B9%8E%E4%B8%8A%E5%A6%B9%E5%AD%90%E9%83%BD%E7%88%B1%E5%8F%96%E5%95%A5%E5%90%8D%EF%BC%9F/"/>
+    <id>https://zhangslob.github.io/2017/05/20/知乎上妹子都爱取啥名？/</id>
+    <published>2017-05-20T09:45:48.000Z</published>
+    <updated>2017-05-20T09:55:27.930Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十二篇原创文章
+</code></pre><p><img src="http://i.imgur.com/g4LZEo8.png" alt=""></p>
+<p>闲来无事上知乎，看到好多妹子，于是抓取一波。<br><a id="more"></a></p>
+<blockquote>
+<p>目标网址：<a href="https://www.zhihu.com/collection/78172986" target="_blank" rel="external">轮子哥带我逛知乎 - 收藏夹 - 知乎</a></p>
+<p>目标：抓取妹子的ID</p>
+</blockquote>
+<h1 id="1、抓取"><a href="#1、抓取" class="headerlink" title="1、抓取"></a>1、抓取</h1><p>这次并没有使用Python做爬虫，使用工具来，速度更快。<a href="http://zaoshu.io/" target="_blank" rel="external">造数 - 新一代智能云爬虫</a></p>
+<p><img src="http://i.imgur.com/ImOBVfA.png" alt=""></p>
+<p>不到十分钟就完成了，遗失了部分数据，但是无所谓啦。保存下来，分析分析。</p>
+<h1 id="2、分析"><a href="#2、分析" class="headerlink" title="2、分析"></a>2、分析</h1><p><img src="http://i.imgur.com/rTvn8QE.png" alt=""></p>
+<p>使用pandas操作文件</p>
+<pre><code>import pandas as pd
+fp = pd.read_excel(&apos;D:\Backup\桌面\lunzige.xlsx&apos;)
+
+fp
+</code></pre><p><img src="http://i.imgur.com/pS8ZbGw.png" alt=""></p>
+<pre><code>name = fp[&apos;name&apos;].tolist()
+li1 = list(set(name))
+li1
+
+[&apos;阿蕾&apos;,
+ &apos;杨面&apos;,
+ &apos;陈10&apos;,
+ &apos;杨顺顺&apos;,
+ &apos;霧橤&apos;,
+ &apos;真顺顺真&apos;,
+ &apos;谢椿明&apos;,
+ &apos;刀刀&apos;,
+ &apos;水枪大帝&apos;,
+ &apos;倾浅&apos;,
+ &apos;Listening&apos;,
+ &apos;小火龙&apos;,
+ &apos;包子琛&apos;,
+ &apos;杨笋笋&apos;,
+ &apos;蜉蝣&apos;,
+ &apos;十元&apos;,
+ &apos;靡靡之音&apos;,
+ &apos;Real机智张&apos;,
+ &apos;陈梓小童鞋&apos;,
+ &apos;花甲&apos;,
+ &apos;窗里窗外&apos;,
+ &apos;刘梓乔&apos;,
+ &apos;璇璇97&apos;,
+ &apos;Olivia菊香小姐姐&apos;,
+ &apos;牛奶小夏目&apos;,
+ &apos;周依宁&apos;,
+ &apos;万阿咸&apos;,
+ &apos;一蓑烟雨任平生&apos;,
+ &apos;来都来了&apos;,
+ &apos;就像周一&apos;,
+ &apos;Mc蛋蛋&apos;,
+ &apos;秉剑侯&apos;,
+ &apos;李大梦Lee&apos;,
+ &apos;Diss锐雯&apos;,
+ &apos;雨音眞白&apos;,
+ &apos;半仙幺幺&apos;,
+ &apos;Natsuki是只蠢兔纸&apos;,
+ &apos;夏冰莹&apos;,
+ &apos;guuweihai&apos;,
+ &apos;阿舞&apos;,
+ &apos;肖柚妮&apos;,
+ &apos;墨脱要开&apos;,
+ &apos;芷珞&apos;,
+ &apos;舒西婷&apos;,
+ &apos;Childe0Q&apos;,
+ &apos;被压扁的海螺&apos;,
+ &apos;snow arc&apos;,
+ &apos;灰灰灰灰灰plus&apos;,
+ &apos;小兔子菲呀&apos;,
+ &apos;士多啤梨羊咩咩&apos;,
+ &apos;李小可可&apos;,
+ &apos;谁来拽我的尾巴&apos;,
+ &apos;飞鸽之舞&apos;,
+ &apos;小美&apos;,
+ &apos;樱雪绫sama&apos;,
+ &apos;zshiyao&apos;,
+ &apos;王漠里&apos;,
+ &apos;Slivan&apos;,
+ &apos;喵小虾&apos;,
+ &apos;SUSAN苏&apos;,
+ &apos;上官兰颜&apos;,
+ &apos;这个杀手不太冷&apos;,
+ &apos;看朱成碧纷思君&apos;,
+ &apos;情绪&apos;,
+ &apos;我系小忌廉&apos;,
+ &apos;一只兔&apos;,
+ &apos;June&apos;,
+ &apos;我就想改名而已&apos;,
+ &apos;温柔的大猫Leo&apos;,
+ &apos;猫芙琳&apos;,
+ &apos;以太&apos;,
+ &apos;博丽魔理沙&apos;,
+ &apos;洛丽塔&apos;,
+ &apos;羽小团&apos;,
+ &apos;娄良&apos;,
+ &apos;Rosi&apos;,
+ &apos;叶以北&apos;,
+ &apos;吃不胖的小猫&apos;,
+ &apos;Lina&apos;,
+ &apos;ingrid&apos;,
+ &apos;itttttx&apos;,
+ &apos;胡杨&apos;,
+ &apos;孙阿童&apos;,
+ &apos;林美珍&apos;,
+ &apos;赫蘿Taiga&apos;,
+ &apos;宫曼曼&apos;,
+ &apos;Yoonyicc&apos;,
+ &apos;ZW711&apos;,
+ &apos;笙箫&apos;,
+ &apos;KIKI.Liu&apos;,
+ &apos;另一只袜子&apos;,
+ &apos;荒野大嫖客&apos;,
+ &apos;少女诗&apos;,
+ &apos;芸豆豆豆豆&apos;,
+ &apos;璐璐噜&apos;,
+ &apos;棹歌&apos;,
+ &apos;梦里有只独角兽&apos;,
+ &apos;Oo澄子oO&apos;,
+ &apos;雷梅苔丝&apos;,
+ &apos;CherryZhao&apos;,
+ &apos;李萬一&apos;,
+ &apos;琴脂&apos;,
+ &apos;鹿斑比&apos;,
+ &apos;Chris姬-云烟&apos;,
+ &apos;hyoram&apos;,
+ &apos;蔗蔗蔗&apos;,
+ &apos;柚子Ruby&apos;,
+ &apos;Sheena&apos;,
+ &apos;孟德尔&apos;,
+ &apos;kaka小师妹&apos;,
+ &apos;桢视明&apos;,
+ &apos;大豆苗&apos;,
+ &apos;少女开膛手&apos;,
+ &apos;陈诗茗&apos;]
+</code></pre><p>那么，下一步就是对名字进行分词了，jieba分词，你值得拥有。<a href="https://github.com/fxsjy/jieba" target="_blank" rel="external">fxsjy/jieba</a></p>
+<pre><code>li2 = &apos;&apos;.join(li1)
+li2
+
+&apos;阿蕾杨面陈10杨顺顺霧橤真顺顺真谢椿明刀刀水枪大帝倾浅Listening小火龙包子琛杨笋笋蜉蝣十元靡靡之音Real机智张陈梓小童鞋花甲窗里窗外刘梓乔璇璇97Olivia菊香小姐姐牛奶小夏目周依宁万阿咸一蓑烟雨任平生来都来了就像周一Mc蛋蛋秉剑侯李大梦LeeDiss锐雯雨音眞白半仙幺幺Natsuki是只蠢兔纸夏冰莹guuweihai阿舞肖柚妮墨脱要开芷珞舒西婷Childe0Q被压扁的海螺snow arc灰灰灰灰灰plus小兔子菲呀士多啤梨羊咩咩李小可可谁来拽我的尾巴飞鸽之舞小美樱雪绫samazshiyao王漠里Slivan喵小虾SUSAN苏上官兰颜这个杀手不太冷看朱成碧纷思君情绪我系小忌廉一只兔June我就想改名而已温柔的大猫Leo猫芙琳以太博丽魔理沙洛丽塔羽小团娄良Rosi叶以北吃不胖的小猫Linaingriditttttx胡杨孙阿童林美珍赫蘿Taiga宫曼曼YoonyiccZW711笙箫KIKI.Liu另一只袜子荒野大嫖客少女诗芸豆豆豆豆璐璐噜棹歌梦里有只独角兽Oo澄子oO雷梅苔丝CherryZhao李萬一琴脂鹿斑比Chris姬-云烟hyoram蔗蔗蔗柚子RubySheena孟德尔kaka小师妹桢视明大豆苗少女开膛手陈诗茗&apos;
+</code></pre><p>有何感想？？</p>
+<p><img src="http://i.imgur.com/F7G5etA.jpg" alt=""></p>
+<p>下一步就是分词制作图云了</p>
+<pre><code>import jieba
+seg_list = jieba.cut(li2)
+word = &quot;/&quot;.join(seg_list)
+print(&quot;Full Mode: &quot; + &quot;/ &quot;.join(seg_list)) 
+
+Building prefix dict from the default dictionary ...
+Dumping model to file cache C:\Users\ADMINI~1\AppData\Local\Temp\jieba.cache
+Loading model cost 1.148 seconds.
+Prefix dict has been built succesfully.
+Full Mode: 阿蕾/ 杨/ 面陈/ 10/ 杨/ 顺顺/ 霧/ 橤/ 真/ 顺顺/ 真/ 谢椿明/ 刀刀/ 水枪/ 大帝/ 倾浅/ Listening/ 小/ 火龙/ 包子/ 琛/ 杨笋/ 笋/ 蜉蝣/ 十元/ 靡靡之音/ Real/ 机智/ 张/ 陈梓/ 小/ 童鞋/ 花甲/ 窗里/ 窗外/ 刘梓乔/ 璇/ 璇/ 97Olivia/ 菊香/ 小姐姐/ 牛奶/ 小夏目/ 周依宁/ 万/ 阿/ 咸一/ 蓑/ 烟雨任/ 平生/ 来/ 都/ 来/ 了/ 就/ 像/ 周一/ Mc/ 蛋蛋/ 秉剑侯/ 李大梦/ LeeDiss/ 锐雯雨/ 音眞白/ 半仙/ 幺/ 幺/ Natsuki/ 是/ 只/ 蠢/ 兔纸/ 夏/ 冰莹/ guuweihai/ 阿舞/ 肖柚妮/ 墨脱/ 要/ 开芷/ 珞/ 舒西婷/ Childe0Q/ 被/ 压扁/ 的/ 海螺/ snow/  / arc/ 灰灰/ 灰灰/ 灰/ plus/ 小兔子/ 菲/ 呀/ 士多啤梨/ 羊/ 咩/ 咩/ 李小/ 可可/ 谁/ 来/ 拽/ 我/ 的/ 尾巴/ 飞鸽/ 之舞/ 小美/ 樱雪/ 绫/ samazshiyao/ 王漠/ 里/ Slivan/ 喵/ 小虾/ SUSAN/ 苏/ 上官/ 兰颜/ 这个/ 杀手/ 不/ 太冷/ 看朱成碧/ 纷思君/ 情绪/ 我系/ 小忌廉/ 一只/ 兔/ June/ 我/ 就/ 想/ 改名/ 而已/ 温柔/ 的/ 大猫/ Leo/ 猫/ 芙琳/ 以太/ 博丽/ 魔理沙/ 洛丽塔/ 羽小团/ 娄良/ Rosi/ 叶/ 以北/ 吃不胖/ 的/ 小猫/ Linaingriditttttx/ 胡杨/ 孙阿童/ 林美珍/ 赫蘿/ Taiga/ 宫曼曼/ YoonyiccZW711/ 笙箫/ KIKI/ ./ Liu/ 另一只/ 袜子/ 荒野/ 大/ 嫖客/ 少女/ 诗/ 芸豆/ 豆豆/ 豆璐璐噜/ 棹/ 歌梦里/ 有/ 只/ 独角兽/ Oo/ 澄子/ oO/ 雷梅/ 苔丝/ CherryZhao/ 李萬/ 一琴脂/ 鹿斑/ 比/ Chris/ 姬/ -/ 云烟/ hyoram/ 蔗蔗蔗/ 柚子/ RubySheena/ 孟德尔/ kaka/ 小/ 师妹/ 桢视/ 明大/ 豆苗/ 少女/ 开膛手/ 陈诗/ 茗
+</code></pre><p>下一步绘制图云，用jupyter遇到了很多坑。。</p>
+<pre><code># -*- coding: utf-8 -*-
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud,STOPWORDS,ImageColorGenerator
+
+# 直接从文件读取数据
+
+text = &apos;&apos;&apos;阿蕾/杨/面陈/10/杨/顺顺/霧/橤/真/顺顺/真/谢椿明/刀刀/水枪/大帝/倾浅/Listening/小/火龙/包子/琛/杨笋/笋/蜉蝣/十元/靡靡之音/Real/机智/张/陈梓/小/童鞋/花甲/窗里/窗外/刘梓乔/璇/璇/97Olivia/菊香/小姐姐/牛奶/小夏目/周依宁/万/阿/咸一/蓑/烟雨任/平生/来/都/来/了/就/像/周一/Mc/蛋蛋/秉剑侯/李大梦/LeeDiss/锐雯雨/音眞白/半仙/幺/幺/Natsuki/是/只/蠢/兔纸/夏/冰莹/guuweihai/阿舞/肖柚妮/墨脱/要/开芷/珞/舒西婷/Childe0Q/被/压扁/的/海螺/snow/ /arc/灰灰/灰灰/灰/plus/小兔子/菲/呀/士多啤梨/羊/咩/咩/李小/可可/谁/来/拽/我/的/尾巴/飞鸽/之舞/小美/樱雪/绫/samazshiyao/王漠/里/Slivan/喵/小虾/SUSAN/苏/上官/兰颜/这个/杀手/不/太冷/看朱成碧/纷思君/情绪/我系/小忌廉/一只/兔/June/我/就/想/改名/而已/温柔/的/大猫/Leo/猫/芙琳/以太/博丽/魔理沙/洛丽塔/羽小团/娄良/Rosi/叶/以北/吃不胖/的/小猫/Linaingriditttttx/胡杨/孙阿童/林美珍/赫蘿/Taiga/宫曼曼/YoonyiccZW711/笙箫/KIKI/./Liu/另一只/袜子/荒野/大/嫖客/少女/诗/芸豆/豆豆/豆璐璐噜/棹/歌梦里/有/只/独角兽/Oo/澄子/oO/雷梅/苔丝/CherryZhao/李萬/一琴脂/鹿斑/比/Chris/姬/-/云烟/hyoram/蔗蔗蔗/柚子/RubySheena/孟德尔/kaka/小/师妹/桢视/明大/豆苗/少女/开膛手/陈诗/茗&apos;&apos;&apos;
+
+backgroud_Image = plt.imread(&apos;girl.jpg&apos;)
+wc = WordCloud( background_color = &apos;white&apos;,    # 设置背景颜色
+                mask = backgroud_Image,        # 设置背景图片
+                max_words = 2000,            # 设置最大现实的字数
+                stopwords = STOPWORDS,        # 设置停用词
+                font_path = &apos;C:/Users/Windows/fonts/msyh.ttf&apos;,# 设置字体格式，如不设置显示不了中文
+                max_font_size = 300,            # 设置字体最大值
+                random_state = 50,            # 设置有多少种随机生成状态，即有多少种配色方案
+                )
+wc.generate(text)
+image_colors = ImageColorGenerator(backgroud_Image)
+#wc.recolor(color_func = image_colors)
+plt.imshow(wc)
+plt.axis(&apos;off&apos;)
+plt.show()
+</code></pre><p>来看看图云吧</p>
+<p><img src="http://i.imgur.com/tXgcb6g.png" alt=""></p>
+<p><img src="http://i.imgur.com/CuFdg9z.png" alt=""></p>
+<p>其实这个并没有什么卵用，知识自己无聊时玩玩的。下面才是我想要的</p>
+<pre><code>0    陈诗茗    https://www.zhihu.com/people/chen-shi-ming-69
+1    李大梦Lee    https://www.zhihu.com/people/li-da-meng-58-44
+2    snow arc    https://www.zhihu.com/people/xiaoxueli
+3    夏冰莹    https://www.zhihu.com/people/xia-bingying
+4    Sheena    https://www.zhihu.com/people/zhang-chu-yun-84
+5    喵小虾    https://www.zhihu.com/people/maoxiaoxia233
+6    李大梦Lee    https://www.zhihu.com/people/li-da-meng-58-44
+7    李大梦Lee    https://www.zhihu.com/people/li-da-meng-58-44
+8    以太    https://www.zhihu.com/people/elapse08
+9    zshiyao    https://www.zhihu.com/people/duo-rou-wan-zi-89
+10    SUSAN苏    https://www.zhihu.com/people/susansu-66
+11    温柔的大猫Leo    https://www.zhihu.com/people/li-yue-90-56
+12    琴脂    https://www.zhihu.com/people/qin-zhi-49
+13    王漠里    https://www.zhihu.com/people/wang-mo-li-66
+14    花甲    https://www.zhihu.com/people/hua-jia-1-71
+15    雷梅苔丝    https://www.zhihu.com/people/lei-mei-tai-si-15
+16    Olivia菊香小姐姐    https://www.zhihu.com/people/olivia-60-10
+17    芷珞    https://www.zhihu.com/people/zhi-luo-90-6
+18    Mc蛋蛋    https://www.zhihu.com/people/lee2egg
+19    少女诗    https://www.zhihu.com/people/shao-nu-shi-75
+20    ingrid    https://www.zhihu.com/people/da-da-yao-guai
+21    博丽魔理沙    https://www.zhihu.com/people/nan-xiao-niao-94-5
+22    赫蘿Taiga    https://www.zhihu.com/people/he-luo-taiga
+23    kaka小师妹    https://www.zhihu.com/people/kakasis
+24    芸豆豆豆豆    https://www.zhihu.com/people/yun-dou-dou-dou-dou
+25    林美珍    https://www.zhihu.com/people/lin-mei-zhen
+26    喵小虾    https://www.zhihu.com/people/maoxiaoxia233
+27    这个杀手不太冷    https://www.zhihu.com/people/wei-jun-jie-9
+28    喵小虾    https://www.zhihu.com/people/maoxiaoxia233
+29    Rosi    https://www.zhihu.com/people/rosi-91
+...    ...    ...
+111    洛丽塔    https://www.zhihu.com/people/hua-hua-gu-niang-5
+112    洛丽塔    https://www.zhihu.com/people/hua-hua-gu-niang-5
+113    洛丽塔    https://www.zhihu.com/people/hua-hua-gu-niang-5
+114    洛丽塔    https://www.zhihu.com/people/hua-hua-gu-niang-5
+115    Diss锐雯    https://www.zhihu.com/people/DSRiven
+116    水枪大帝    https://www.zhihu.com/people/shuiqiangge
+117    樱雪绫sama    https://www.zhihu.com/people/lin-xuan-ting-1
+118    李小可可    https://www.zhihu.com/people/li-gao-xing-2
+119    士多啤梨羊咩咩    https://www.zhihu.com/people/shi-duo-pi-li-yan...
+120    李萬一    https://www.zhihu.com/people/moire
+121    万阿咸    https://www.zhihu.com/people/wan-a-xian-58
+122    笙箫    https://www.zhihu.com/people/sheng-xiao-36
+123    谢椿明    https://www.zhihu.com/people/xie-chun-ming-16
+124    孙阿童    https://www.zhihu.com/people/sun-a-tong
+125    宫曼曼    https://www.zhihu.com/people/gong-nuo-6
+126    荒野大嫖客    https://www.zhihu.com/people/ji-da-fa-37
+127    我就想改名而已    https://www.zhihu.com/people/wowjessica
+128    就像周一    https://www.zhihu.com/people/yin-qing-chu-kai
+129    胡杨    https://www.zhihu.com/people/hu-yang-49-22
+130    杨笋笋    https://www.zhihu.com/people/yang-sun-sun-98
+131    蜉蝣    https://www.zhihu.com/people/yuan-xia-66
+132    羽小团    https://www.zhihu.com/people/xiao-yu-bao-er
+133    杨笋笋    https://www.zhihu.com/people/yang-sun-sun-98
+134    Lina    https://www.zhihu.com/people/li-nuo-84-28
+135    另一只袜子    https://www.zhihu.com/people/151231
+136    刘梓乔    https://www.zhihu.com/people/liu-zi-qiao-42
+137    guuweihai    https://www.zhihu.com/people/guuweihai
+138    陈10    https://www.zhihu.com/people/chen-10-80
+139    ZW711    https://www.zhihu.com/people/zw711
+140    看朱成碧纷思君    https://www.zhihu.com/people/kan-zhu-cheng-bi-...
+</code></pre><p>下周二晚上8点，我会在趣直播聊一聊Python爬虫，如果你感兴趣，欢迎你来参加。</p>
+<p><a href="http://m.quzhiboapp.com/?#!/intro/522?liveId=522" target="_blank" rel="external">趣直播 - 知识直播平台</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十二篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/g4LZEo8.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;闲来无事上知乎，看到好多妹子，于是抓取一波。&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="知乎" scheme="https://zhangslob.github.io/tags/%E7%9F%A5%E4%B9%8E/"/>
+    
+      <category term="妹子" scheme="https://zhangslob.github.io/tags/%E5%A6%B9%E5%AD%90/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode_4.Median of Two Sorted Arrays</title>
