@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-05-25T07:27:36.718Z</updated>
+  <updated>2017-05-25T07:29:53.451Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://zhangslob.github.io/2017/05/25/%E7%88%AC%E8%99%AB%E4%B8%89%E6%AD%A5%E8%B5%B0%EF%BC%88%E4%B8%80%EF%BC%89%E8%8E%B7%E5%8F%96%E6%BA%90%E7%A0%81/"/>
     <id>https://zhangslob.github.io/2017/05/25/爬虫三步走（一）获取源码/</id>
     <published>2017-05-25T07:21:06.000Z</published>
-    <updated>2017-05-25T07:27:36.718Z</updated>
+    <updated>2017-05-25T07:29:53.451Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第十三篇原创文章
 </code></pre><p><img src="http://i.imgur.com/Dw2WeLb.png" alt=""></p>
@@ -107,8 +107,7 @@ print(len(res))
   File &quot;C:\Python35\lib\site-packages\requests\adapters.py&quot;, line 485, in send
     raise ProxyError(e, request=request)
 requests.exceptions.ProxyError: HTTPConnectionPool(host=&apos;121.201.24.248：8088&apos;, port=80): Max retries exceeded with url: http://daily.zhihu.com/ (Caused by ProxyError(&apos;Cannot connect to proxy.&apos;, NewConnectionError(&apos;&lt;requests.packages.urllib3.connection.HTTPConnection object at 0x0000000003860DA0&gt;: Failed to establish a new connection: [Errno 11004] getaddrinfo failed&apos;,)))
-</code></pre><p>3、模拟登录</p>
-<p>有些网站是需要登录才能看到信息的，例如知乎，直接用requests获取知乎首页信息，返回数据是需要你登录的，只有登录了才能看到数据。</p>
+</code></pre><h1 id="3、模拟登录"><a href="#3、模拟登录" class="headerlink" title="3、模拟登录"></a>3、模拟登录</h1><p>有些网站是需要登录才能看到信息的，例如知乎，直接用requests获取知乎首页信息，返回数据是需要你登录的，只有登录了才能看到数据。</p>
 <pre><code>&lt;button type=&quot;button&quot; class=&quot;signin-switch-button&quot;&gt;手机验证码登录&lt;/button&gt;
 
 &lt;a class=&quot;unable-login&quot; href=&quot;#&quot;&gt;无法登录？&lt;/a&gt;
@@ -1572,9 +1571,9 @@ hexo deploy #部署发布
     </summary>
     
     
-      <category term="黑魔法" scheme="https://zhangslob.github.io/tags/%E9%BB%91%E9%AD%94%E6%B3%95/"/>
-    
       <category term="个人博客" scheme="https://zhangslob.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="黑魔法" scheme="https://zhangslob.github.io/tags/%E9%BB%91%E9%AD%94%E6%B3%95/"/>
     
       <category term="Markdown语法" scheme="https://zhangslob.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     

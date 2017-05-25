@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://i.imgur.com/Dw2WeLb.png">
 <meta property="og:image" content="http://i.imgur.com/RKDWmZY.png">
 <meta property="og:image" content="http://i.imgur.com/0oZDwG4.png">
-<meta property="og:updated_time" content="2017-05-25T07:27:36.718Z">
+<meta property="og:updated_time" content="2017-05-25T07:29:53.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬虫三步走（一）获取源码">
 <meta name="twitter:description" content="这是崔斯特的第十三篇原创文章
@@ -459,8 +459,7 @@ print(len(res))
   File &quot;C:\Python35\lib\site-packages\requests\adapters.py&quot;, line 485, in send
     raise ProxyError(e, request=request)
 requests.exceptions.ProxyError: HTTPConnectionPool(host=&apos;121.201.24.248：8088&apos;, port=80): Max retries exceeded with url: http://daily.zhihu.com/ (Caused by ProxyError(&apos;Cannot connect to proxy.&apos;, NewConnectionError(&apos;&lt;requests.packages.urllib3.connection.HTTPConnection object at 0x0000000003860DA0&gt;: Failed to establish a new connection: [Errno 11004] getaddrinfo failed&apos;,)))
-</code></pre><p>3、模拟登录</p>
-<p>有些网站是需要登录才能看到信息的，例如知乎，直接用requests获取知乎首页信息，返回数据是需要你登录的，只有登录了才能看到数据。</p>
+</code></pre><h1 id="3、模拟登录"><a href="#3、模拟登录" class="headerlink" title="3、模拟登录"></a>3、模拟登录</h1><p>有些网站是需要登录才能看到信息的，例如知乎，直接用requests获取知乎首页信息，返回数据是需要你登录的，只有登录了才能看到数据。</p>
 <pre><code>&lt;button type=&quot;button&quot; class=&quot;signin-switch-button&quot;&gt;手机验证码登录&lt;/button&gt;
 
 &lt;a class=&quot;unable-login&quot; href=&quot;#&quot;&gt;无法登录？&lt;/a&gt;
@@ -757,7 +756,7 @@ print(div)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、获取源码"><span class="nav-number">1.</span> <span class="nav-text">1、获取源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、代理设置"><span class="nav-number">2.</span> <span class="nav-text">2、代理设置</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、获取源码"><span class="nav-number">1.</span> <span class="nav-text">1、获取源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、代理设置"><span class="nav-number">2.</span> <span class="nav-text">2、代理设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、模拟登录"><span class="nav-number">3.</span> <span class="nav-text">3、模拟登录</span></a></li></ol></div>
             
 
           </div>
