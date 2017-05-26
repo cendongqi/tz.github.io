@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-05-25T07:29:53.451Z</updated>
+  <updated>2017-05-26T12:16:58.084Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,87 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>爬虫三步走（二）解析源码</title>
+    <link href="https://zhangslob.github.io/2017/05/26/%E7%88%AC%E8%99%AB%E4%B8%89%E6%AD%A5%E8%B5%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E8%A7%A3%E6%9E%90%E6%BA%90%E7%A0%81/"/>
+    <id>https://zhangslob.github.io/2017/05/26/爬虫三步走（二）解析源码/</id>
+    <published>2017-05-26T12:15:20.000Z</published>
+    <updated>2017-05-26T12:16:58.084Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十四篇原创文章
+</code></pre><p><img src="http://i.imgur.com/Dw2WeLb.png" alt=""></p>
+<p>爬虫三步走：获取源码、解析源码、数据储存</p>
+<a id="more"></a>
+<p>上一期讲了如何获取网页源码的方法，这一期说一说怎么从其中获得我们需要的和数据。</p>
+<p>解析网页的方法很多，最常见的就是BeautifulSoup和正则了，其他的像xpath、PyQuery等等，其中我觉得最好用的就是xpath了，xpath真的超级简单好用，学了之后再也不想取用<code>美丽汤</code>了。下面介绍xpath的使用方法。<br><img src="http://i.imgur.com/tVgBAeY.jpg" alt=""></p>
+<p>首先需要安装lxml，windows下安装lxml是个大坑，知乎上有人给出了解决方法<a href="https://www.zhihu.com/question/30047496" target="_blank" rel="external">Python LXML模块死活安装不了怎么办？</a></p>
+<p>详细的用法可以参考<a href="https://zhuanlan.zhihu.com/p/25572729" target="_blank" rel="external">爬虫入门到精通-网页的解析（xpath）</a></p>
+<p>在这里我们尝试使用xpath来迅速获取数据。</p>
+<p>例如想要获熊猫直播<a href="http://www.huya.com/g/lol" target="_blank" rel="external">虎牙直播</a>下主播的ID</p>
+<p><img src="http://i.imgur.com/HEGXkuM.jpg" alt=""></p>
+<pre><code>import requests
+from lxml import etree
+
+url = &apos;http://www.huya.com/g/lol&apos;
+headers = {&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&apos;}
+res = requests.get(url,headers=headers).text
+s = etree.HTML(res)
+print(s.xpath(&apos;//i[@class=&quot;nick&quot;]/text()&apos;))
+</code></pre><p>输出：</p>
+<p><img src="http://i.imgur.com/czo9c1M.png" alt=""></p>
+<p>下面一步步讲解为什么这样做。</p>
+<pre><code>import requests
+from lxml import etree
+</code></pre><p>首先是导入模块，<code>requests</code>很常见，但是xpath需要    <code>from lxml import etree</code>，你肯点想问为什么这样写，回答是“我也不知道”，就像是约定俗成的东西一样。</p>
+<pre><code>url = &apos;http://www.huya.com/g/lol&apos;
+headers = {&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&apos;}
+res = requests.get(url,headers=headers).text
+</code></pre><p>这三步就是平常获取源码的过程，很简单。</p>
+<pre><code>s = etree.HTML(res)
+</code></pre><p>给一个html，返回xml结构，为什么这样写？？答案和上面一样。最重要的就是下面的这一步：</p>
+<pre><code>s.xpath(&apos;//i[@class=&quot;nick&quot;]/text()&apos;)
+</code></pre><p><img src="http://i.imgur.com/QP54jeA.png" alt=""></p>
+<p>按下F12看到“爱拍-古手羽”在<code>i</code>标签下，接着我们右键打开“查看网页源代码”，搜索“爱拍-古手羽”</p>
+<p><img src="http://i.imgur.com/BkKsKgH.png" alt=""></p>
+<p>确实找到了“爱拍-古手羽”就在<code>i</code>标签下，那我们就把他提出来吧！</p>
+<p><code>s.xpath(&#39;//i[@class=&quot;nick&quot;]/text()&#39;)</code></p>
+<p>这个段代码意思是，找到class为“nick”的<code>i</code>标签，返回其中的文本信息，当然你也可以返回<code>i</code>标签中的<code>title</code>，写法如下：</p>
+<p><code>s.xpath(&#39;//i[@class=&quot;nick&quot;]/@title&#39;)</code></p>
+<p><code>text()</code>返回的是文本信息，<code>@title</code>则是标签里面的具体属性的值，例如我想知道观众人数</p>
+<pre><code>import requests
+from lxml import etree
+
+url = &apos;http://www.huya.com/g/lol&apos;
+headers = {&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&apos;}
+res = requests.get(url,headers=headers).text
+s = etree.HTML(res)
+print(s.xpath(&apos;//i[@class=&quot;js-num&quot;]/text()&apos;))
+</code></pre><p>只需在原来基础上修改一个属性，<code>i</code>标签class为“js-num”里面的值</p>
+<p><img src="http://i.imgur.com/jTKeBqW.png" alt=""></p>
+<pre><code>print(s.xpath(&apos;//i[@class=&quot;js-num&quot;]/text()&apos;))
+</code></pre><p>返回结果是：</p>
+<p><img src="http://i.imgur.com/nuuT658.png" alt=""></p>
+<p>说明：在运行代码中，发现虎牙反爬虫做得挺好的，瞬间就识别爬虫身份并封了IP，所以我换了IP去访问，至于如何设置代理，在我的上一篇文章中有说到，去看看吧。</p>
+<p>在实际操作中，你可能会遇到更加复杂的情况，所以一定记得去看看详细的教程。<a href="https://zhuanlan.zhihu.com/p/25572729" target="_blank" rel="external">爬虫入门到精通-网页的解析（xpath）</a></p>
+<p>小广告：喜欢爬虫、数据的可以关注一下我的微信公众号（<strong>zhangslob</strong>），多多交流。</p>
+<p><img src="http://i.imgur.com/PZMOvTP.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十四篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Dw2WeLb.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;爬虫三步走：获取源码、解析源码、数据储存&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Python入门" scheme="https://zhangslob.github.io/tags/Python%E5%85%A5%E9%97%A8/"/>
+    
+  </entry>
   
   <entry>
     <title>爬虫三步走（一）获取源码</title>
@@ -1571,9 +1652,9 @@ hexo deploy #部署发布
     </summary>
     
     
-      <category term="个人博客" scheme="https://zhangslob.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    
       <category term="黑魔法" scheme="https://zhangslob.github.io/tags/%E9%BB%91%E9%AD%94%E6%B3%95/"/>
+    
+      <category term="个人博客" scheme="https://zhangslob.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     
       <category term="Markdown语法" scheme="https://zhangslob.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
