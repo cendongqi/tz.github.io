@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-05-26T12:16:58.084Z</updated>
+  <updated>2017-11-29T15:04:13.031Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,156 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Scrapy学习实例（一）</title>
+    <link href="https://zhangslob.github.io/2017/11/29/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>https://zhangslob.github.io/2017/11/29/Scrapy学习实例（一）/</id>
+    <published>2017-11-29T13:52:32.000Z</published>
+    <updated>2017-11-29T15:04:13.031Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十五篇原创文章
+</code></pre><p><img src="https://i.imgur.com/n1TnhMv.png" alt=""><br><a id="more"></a></p>
+<p>Hello，我又回来啦。以后就在这发文章吧，记录自己的学习历程。</p>
+<blockquote>
+<p>举头卖竹鼠，低头嘤嘤嘤。</p>
+</blockquote>
+<p>我会记录自己对Scrapy的学历经历，更重要的是理解。下面就开始吧，首先当然是创建一个项目啦！</p>
+<p>我选择爬取<a href="https://www.huxiu.com/" target="_blank" rel="external">虎嗅网</a>首页的新闻列表。</p>
+<h1 id="1、创建项目"><a href="#1、创建项目" class="headerlink" title="1、创建项目"></a>1、创建项目</h1><pre><code>F:\Python\huxiu&gt;scrapy startproject huxiu
+New Scrapy project &apos;huxiu&apos;, using template directory &apos;c:\\users\\administrator\\appdata\\local\\programs\\python\\python36\\lib\\site-packages\\scrapy\\templates\\pro
+ject&apos;, created in:
+    F:\Python\huxiu\huxiu
+
+You can start your first spider with:
+    cd huxiu
+    scrapy genspider example example.com
+
+F:\Python\huxiu&gt;cd huxiu
+
+F:\Python\huxiu\huxiu&gt;scrapy genspider huxiu huxiu.com
+Cannot create a spider with the same name as your project
+
+F:\Python\huxiu\huxiu&gt;scrapy genspider HuXiu huxiu.com
+Created spider &apos;HuXiu&apos; using template &apos;basic&apos; in module:
+  huxiu.spiders.HuXiu
+</code></pre><p><img src="https://i.imgur.com/MrrcuLg.png" alt=""></p>
+<blockquote>
+<p>记住爬虫和项目命名不一样</p>
+</blockquote>
+<h1 id="2、定义Item"><a href="#2、定义Item" class="headerlink" title="2、定义Item"></a>2、定义Item</h1><p>在<code>item.py</code>中创建<code>scrapy.Item</code>类，并定义它的类型为<code>scrapy.Field</code>的属性。</p>
+<pre><code>import scrapy
+
+
+class HuxiuItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    title = scrapy.Field() #标题
+    link = scrapy.Field() #链接
+    author = scrapy.Field() #作者
+    introduction = scrapy.Field() #简介
+    time = scrapy.Field() #时间
+</code></pre><h1 id="3、编写Spider"><a href="#3、编写Spider" class="headerlink" title="3、编写Spider"></a>3、编写Spider</h1><p><img src="https://i.imgur.com/uK5EU0x.png" alt=""></p>
+<blockquote>
+<p>一目了然</p>
+</blockquote>
+<p>在<code>huxiu/spider/HuXiu.py</code>中编写代码</p>
+<pre><code># -*- coding: utf-8 -*-
+import scrapy
+from huxiu.items import HuxiuItem
+
+
+class HuxiuSpider(scrapy.Spider):
+    name = &apos;HuXiu&apos;
+    allowed_domains = [&apos;huxiu.com&apos;]
+    start_urls = [&apos;http://huxiu.com/&apos;]
+
+
+    def parse(self, response):
+        for s in response.xpath(&apos;//div[@class=&quot;mod-info-flow&quot;]/div/div[@class=&quot;mob-ctt&quot;]&apos;):
+            item = HuxiuItem()
+            item[&apos;title&apos;] = s.xpath(&apos;h2/a/text()&apos;)[0].extract()
+            item[&apos;link&apos;] = s.xpath(&apos;h2/a/@href&apos;)[0].extract()
+            url = response.urljoin(item[&apos;link&apos;])
+            item[&apos;author&apos;] = s.xpath(&apos;div/a/span/text()&apos;)[0].extract()
+            item[&apos;introduction&apos;] = s.xpath(&apos;div[2]/text()&apos;)[0].extract()
+            item[&apos;time&apos;] = s.xpath(&apos;div/span/text()&apos;)[0].extract()
+            print(item)
+</code></pre><p>在终端输入命令</p>
+<pre><code>scrapy crawl HuXiu
+</code></pre><p>部分输出</p>
+<p><img src="https://i.imgur.com/MqWJ2vP.png" alt=""></p>
+<h1 id="4、深度爬取"><a href="#4、深度爬取" class="headerlink" title="4、深度爬取"></a>4、深度爬取</h1><p>哈哈，这里借用造数的命名了。其实就是爬取新闻详情页。</p>
+<pre><code># -*- coding: utf-8 -*-
+import scrapy
+from huxiu.items import HuxiuItem
+
+
+class HuxiuSpider(scrapy.Spider):
+    name = &apos;HuXiu&apos;
+    allowed_domains = [&apos;huxiu.com&apos;]
+    start_urls = [&apos;http://huxiu.com/&apos;]
+
+
+    def parse(self, response):
+        for s in response.xpath(&apos;//div[@class=&quot;mod-info-flow&quot;]/div/div[@class=&quot;mob-ctt&quot;]&apos;):
+            item = HuxiuItem()
+            item[&apos;title&apos;] = s.xpath(&apos;h2/a/text()&apos;)[0].extract()
+            item[&apos;link&apos;] = s.xpath(&apos;h2/a/@href&apos;)[0].extract()
+            url = response.urljoin(item[&apos;link&apos;])
+            item[&apos;author&apos;] = s.xpath(&apos;div/a/span/text()&apos;)[0].extract()
+            item[&apos;introduction&apos;] = s.xpath(&apos;div[2]/text()&apos;)[0].extract()
+            item[&apos;time&apos;] = s.xpath(&apos;div/span/text()&apos;)[0].extract()
+            #print(item)
+            yield scrapy.Request(url, callback=self.parse_article)
+
+    def parse_article(self, response):
+        item = HuxiuItem()
+        detail = response.xpath(&apos;//div[@class=&quot;article-wrap&quot;]&apos;)
+        item[&apos;title&apos;] = detail.xpath(&apos;h1/text()&apos;)[0].extract().strip()
+        item[&apos;link&apos;] = response.url
+        item[&apos;author&apos;] = detail.xpath(&apos;div[@class=&quot;article-author&quot;]/span/a/text()&apos;)[0].extract()
+        item[&apos;time&apos;] = detail.xpath(&apos;div[@class=&quot;article-author&quot;]/div[@class=&quot;column-link-box&quot;]/span/text()&apos;)[0].extract()
+        print(item)
+        word = detail.xpath(&apos;div[5]&apos;)
+        print(word[0].xpath(&apos;string(.)&apos;).extract()[0])
+        yield item
+</code></pre><p>输出结果</p>
+<p><img src="https://i.imgur.com/JJoTvtU.png" alt=""></p>
+<p>说明一点，<code>如何使用xpath获得多个标签下的文本</code>，这里参考了<a href="http://blog.csdn.net/MrLevo520/article/details/53158050" target="_blank" rel="external">解决：xpath取出指定多标签内所有文字text</a>，把文章详细内容打印出来，但是会遇到一些错误，可以使用<code>goose</code>来试试看。</p>
+<h1 id="Python-Goose-Article-Extractor"><a href="#Python-Goose-Article-Extractor" class="headerlink" title="Python-Goose - Article Extractor"></a><a href="https://github.com/grangier/python-goose" target="_blank" rel="external">Python-Goose - Article Extractor</a></h1><pre><code>&gt;&gt;&gt; from goose import Goose
+&gt;&gt;&gt; from goose.text import StopWordsChinese
+&gt;&gt;&gt; url  = &apos;http://www.bbc.co.uk/zhongwen/simp/chinese_news/2012/12/121210_hongkong_politics.shtml&apos;
+&gt;&gt;&gt; g = Goose({&apos;stopwords_class&apos;: StopWordsChinese})
+&gt;&gt;&gt; article = g.extract(url=url)
+&gt;&gt;&gt; print article.cleaned_text[:150]
+香港行政长官梁振英在各方压力下就其大宅的违章建筑（僭建）问题到立法会接受质询，并向香港民众道歉。
+
+梁振英在星期二（12月10日）的答问大会开始之际在其演说中道歉，但强调他在违章建筑问题上没有隐瞒的意图和动机。
+
+一些亲北京阵营议员欢迎梁振英道歉，且认为应能获得香港民众接受，但这些议员也质问梁振英有
+</code></pre><h1 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h1><ul>
+<li><a href="https://www.xncoding.com/2016/03/10/scrapy-02.html" target="_blank" rel="external">Scrapy笔记02- 完整示例</a></li>
+<li><a href="http://blog.csdn.net/MrLevo520/article/details/53158050" target="_blank" rel="external">解决：xpath取出指定多标签内所有文字text</a></li>
+</ul>
+<blockquote>
+<p>若想评论，先翻长城</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十五篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/n1TnhMv.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
+    
+  </entry>
   
   <entry>
     <title>爬虫三步走（二）解析源码</title>
