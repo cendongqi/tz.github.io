@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-11-30T15:29:24.599Z</updated>
+  <updated>2017-11-30T15:54:13.007Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,100 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>统计学学习笔记（一）</title>
+    <link href="https://zhangslob.github.io/2017/11/30/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>https://zhangslob.github.io/2017/11/30/统计学学习笔记（一）/</id>
+    <published>2017-11-30T15:45:14.000Z</published>
+    <updated>2017-11-30T15:54:13.007Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十六篇原创文章
+</code></pre><p><img src="https://i.imgur.com/gmL4oSK.jpg" alt=""></p>
+<a id="more"></a>
+<p>这是学习统计学的第一篇笔记，以后尽量都放在这里吧。</p>
+<p>下面是正文：</p>
+<hr>
+<h1 id="1、统计中的基本概念"><a href="#1、统计中的基本概念" class="headerlink" title="1、统计中的基本概念"></a>1、统计中的基本概念</h1><ol>
+<li><strong>总体和样本</strong>。总体：所研究的全部个体；样本：总体中的一部分</li>
+<li><strong>参数和统计量</strong>。参数：用来描述<strong>总体</strong>特征的概括性数字度量；统计量：用来描述<strong>样本</strong>特征的概括性数字度量。</li>
+<li><strong>变量</strong>。变量、分类变量（事物类别的一个名称）、顺序变量（事物有序类别的一个名称）、数值型变量、离散型变量（只能取可数值的变量）、连续性变量。</li>
+</ol>
+<h1 id="2、数据的收集"><a href="#2、数据的收集" class="headerlink" title="2、数据的收集"></a>2、数据的收集</h1><h3 id="1、数据的间接来源"><a href="#1、数据的间接来源" class="headerlink" title="1、数据的间接来源"></a>1、数据的间接来源</h3><p><strong>二手数据</strong>：公开出版的或公开报道的数据。</p>
+<h3 id="2、数据的直接来源"><a href="#2、数据的直接来源" class="headerlink" title="2、数据的直接来源"></a>2、数据的直接来源</h3><h4 id="（1）统计调查方式"><a href="#（1）统计调查方式" class="headerlink" title="（1）统计调查方式"></a>（1）统计调查方式</h4><ol>
+<li>抽样调查：经济性、时效性强、适应面广、准确性高。</li>
+<li>普查：一次性或周期性、规定调查时间、数据比较准确、范围比较狭窄。</li>
+</ol>
+<h4 id="（2）数据的手机方法"><a href="#（2）数据的手机方法" class="headerlink" title="（2）数据的手机方法"></a>（2）数据的手机方法</h4><ol>
+<li>询问调查：访问调查、邮寄调查、电话调查、计算机辅助调查、座谈会、个别深度访问。</li>
+<li>观察与实验：观察法、实验法。</li>
+</ol>
+<h3 id="3、调查设计"><a href="#3、调查设计" class="headerlink" title="3、调查设计"></a>3、调查设计</h3><h4 id="（1）调查方案设计"><a href="#（1）调查方案设计" class="headerlink" title="（1）调查方案设计"></a>（1）调查方案设计</h4><ol>
+<li>调查目的</li>
+<li>调查对象和调查单位</li>
+<li>调查项目和调查表</li>
+</ol>
+<h4 id="（2）调查问卷设计"><a href="#（2）调查问卷设计" class="headerlink" title="（2）调查问卷设计"></a>（2）调查问卷设计</h4><h5 id="a-调查问卷的基本结构："><a href="#a-调查问卷的基本结构：" class="headerlink" title="a.调查问卷的基本结构："></a>a.调查问卷的基本结构：</h5><ul>
+<li>开头部分（问候语、填表说明、问卷编号 ）</li>
+<li>甄别部分：过滤——筛选掉不需要的部分——针对特定人群</li>
+<li>主体部分：调查的全部问题</li>
+<li>背景部分：被调查者的背景资料</li>
+</ul>
+<h5 id="b-提问项目的设计："><a href="#b-提问项目的设计：" class="headerlink" title="b.提问项目的设计："></a>b.提问项目的设计：</h5><ul>
+<li>提问的内容尽可能短</li>
+<li>用词要确切、通俗</li>
+<li>一个项目只包含一项内容</li>
+<li>避免诱导性提问</li>
+<li>避免否定式提问</li>
+<li>避免敏感性问题</li>
+</ul>
+<h5 id="c-回答项目的设计"><a href="#c-回答项目的设计" class="headerlink" title="c.回答项目的设计"></a>c.回答项目的设计</h5><ul>
+<li>开放性问题：灵活；整理资料困难</li>
+<li>封闭性问题：两项选择法、多项选择法（单项选择型、多项选择型、限制选择型）</li>
+<li>顺序选择法：按顺序排列</li>
+<li>评定尺度法：和NPS有点像哦</li>
+<li>双向列联法：表格表现</li>
+</ul>
+<h5 id="d-问题顺序的设计"><a href="#d-问题顺序的设计" class="headerlink" title="d.问题顺序的设计"></a>d.问题顺序的设计</h5><ul>
+<li>问题的安排硬具有逻辑性</li>
+<li>问题的顺序应先难后易</li>
+<li>能引起被调查者兴趣的问题放在最前面</li>
+<li>开放性问题放在后面</li>
+</ul>
+<h4 id="（3）统计数据的质量"><a href="#（3）统计数据的质量" class="headerlink" title="（3）统计数据的质量"></a>（3）统计数据的质量</h4><h5 id="a-统计数据的误差"><a href="#a-统计数据的误差" class="headerlink" title="a.统计数据的误差"></a>a.统计数据的误差</h5><h5 id="b-统计数据的误差"><a href="#b-统计数据的误差" class="headerlink" title="b.统计数据的误差"></a>b.统计数据的误差</h5><ul>
+<li>精度</li>
+<li>准确性</li>
+<li>关联性</li>
+<li>及时性</li>
+<li>一致性</li>
+<li><p>最低成本</p>
+<hr>
+</li>
+</ul>
+<p>这是统计学基础 第三版 (贾俊平)的记录，看了前两章，感觉受益匪浅，尤其是问卷的设计，比较系统、完整，可以应用在以后的工作中。</p>
+<blockquote>
+<p>书名：统计学基础 第三版</p>
+<p>作者：贾俊平</p>
+<p>出版社：中国人民大学出版社</p>
+</blockquote>
+<p><img src="https://78.media.tumblr.com/9e847ba472ba84afca2eac076b34d9d1/tumblr_o96md10Ppq1vqhed4o1_1280.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十六篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/gmL4oSK.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="统计学" scheme="https://zhangslob.github.io/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
+    
+    
+      <category term="统计学" scheme="https://zhangslob.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
+    
+      <category term="数据" scheme="https://zhangslob.github.io/tags/%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
   
   <entry>
     <title>Scrapy学习实例（一）</title>
