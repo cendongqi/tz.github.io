@@ -92,7 +92,7 @@
 <meta property="og:image" content="http://i.imgur.com/Dw2WeLb.png">
 <meta property="og:image" content="http://i.imgur.com/RKDWmZY.png">
 <meta property="og:image" content="http://i.imgur.com/0oZDwG4.png">
-<meta property="og:updated_time" content="2017-05-25T07:29:53.451Z">
+<meta property="og:updated_time" content="2017-11-30T15:21:41.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬虫三步走（一）获取源码">
 <meta name="twitter:description" content="这是崔斯特的第十三篇原创文章
@@ -452,12 +452,8 @@
 <p>爬虫三步走：获取源码、解析源码、数据储存</p>
 <a id="more"></a>
 <p>举个例子，爬一爬知乎日报的相关数据 <a href="http://daily.zhihu.com/" target="_blank" rel="external">知乎日报 - 每天 3 次，每次 7 分钟</a></p>
-<h1 id="1、获取源码"><a href="#1、获取源码" class="headerlink" title="1、获取源码"></a>1、获取源码</h1><pre><code>import requests
-
-url = &apos;http://daily.zhihu.com/&apos;
-res = requests.get(url).text
-print(res)
-</code></pre><p>个人喜欢requests，直接访问，发现返回500错误</p>
+<h1 id="1、获取源码"><a href="#1、获取源码" class="headerlink" title="1、获取源码"></a>1、获取源码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line">	</div><div class="line">url = <span class="string">'http://daily.zhihu.com/'</span></div><div class="line">res = requests.get(url).text</div><div class="line">print(res)</div></pre></td></tr></table></figure>
+<p>个人喜欢requests，直接访问，发现返回500错误</p>
 <pre><code>C:\Python35\python.exe F:/PyCharm/爬虫/daily.py
 &lt;html&gt;&lt;body&gt;&lt;h1&gt;500 Server Error&lt;/h1&gt;
 An internal server error occured.
@@ -830,6 +826,15 @@ print(div)
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
             
 
             
