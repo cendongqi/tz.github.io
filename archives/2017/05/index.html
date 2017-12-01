@@ -145,12 +145,43 @@
 
 </head>
 
+
+<div id="hexo-helper-live2d">
+  <canvas id="live2dcanvas" width="150" height="300"></canvas>
+</div>
+<style>
+  #live2dcanvas{
+    position: fixed;
+    width: 150px;
+    height: 300px;
+    opacity:0.7;
+    right: 0px;
+    z-index: 999;
+    pointer-events: none;
+    bottom: -20px;
+  }
+</style>
+<script type="text/javascript" src="/live2d/device.min.js"></script>
+<script type="text/javascript">
+const loadScript = function loadScript(c,b){var a=document.createElement("script");a.type="text/javascript";"undefined"!=typeof b&&(a.readyState?a.onreadystatechange=function(){if("loaded"==a.readyState||"complete"==a.readyState)a.onreadystatechange=null,b()}:a.onload=function(){b()});a.src=c;document.body.appendChild(a)};
+(function(){
+  if((typeof(device) != 'undefined') && (device.mobile())){
+    document.getElementById("live2dcanvas").style.width = '75px';
+    document.getElementById("live2dcanvas").style.height = '150px';
+  }else
+    if (typeof(device) === 'undefined') console.error('Cannot find current-device script.');
+  loadScript("/live2d/script.js", function(){loadlive2d("live2dcanvas", "/live2d/assets/koharu.model.json", 0.5);});
+})();
+</script>
+
+
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
     
   
+
 
   <div class="container sidebar-position-left page-archive">
     <div class="headband"></div>
@@ -623,6 +654,7 @@
                 </span>
               
             
+            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=350 height=450 src="//music.163.com/outchain/player?type=0&id=467175469&auto=0&height=470"></iframe>
           </div>
 
           
@@ -644,7 +676,6 @@
               </ul>
             </div>
           
-
           
 
         </div>
@@ -689,11 +720,16 @@
 
 
 
-
+<br/>
 <div class="powered-by">
 <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
   一共来了<span id="busuanzi_value_site_uv"></span>位朋友啦
 </span>
+</div>
+<br/>
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">嗨，全站共17.0k字</span>
 </div>
 
 
@@ -1289,5 +1325,8 @@
 
   
 
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
 </body>
 </html>
+
