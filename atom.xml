@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-11-30T15:54:13.007Z</updated>
+  <updated>2017-12-01T14:48:31.526Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -20,12 +20,14 @@
     <link href="https://zhangslob.github.io/2017/11/30/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>https://zhangslob.github.io/2017/11/30/统计学学习笔记（一）/</id>
     <published>2017-11-30T15:45:14.000Z</published>
-    <updated>2017-11-30T15:54:13.007Z</updated>
+    <updated>2017-12-01T14:48:31.526Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第十六篇原创文章
 </code></pre><p><img src="https://i.imgur.com/gmL4oSK.jpg" alt=""></p>
 <a id="more"></a>
 <p>这是学习统计学的第一篇笔记，以后尽量都放在这里吧。</p>
+<p>发现使用hexo发文章的快捷键：</p>
+<p><code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code></p>
 <p>下面是正文：</p>
 <hr>
 <h1 id="1、统计中的基本概念"><a href="#1、统计中的基本概念" class="headerlink" title="1、统计中的基本概念"></a>1、统计中的基本概念</h1><ol>
@@ -38,10 +40,13 @@
 <li>抽样调查：经济性、时效性强、适应面广、准确性高。</li>
 <li>普查：一次性或周期性、规定调查时间、数据比较准确、范围比较狭窄。</li>
 </ol>
-<h4 id="（2）数据的手机方法"><a href="#（2）数据的手机方法" class="headerlink" title="（2）数据的手机方法"></a>（2）数据的手机方法</h4><ol>
+<h4 id="（2）数据的收集方法"><a href="#（2）数据的收集方法" class="headerlink" title="（2）数据的收集方法"></a>（2）数据的收集方法</h4><ol>
 <li>询问调查：访问调查、邮寄调查、电话调查、计算机辅助调查、座谈会、个别深度访问。</li>
 <li>观察与实验：观察法、实验法。</li>
 </ol>
+<blockquote>
+<p>竟然没网络爬虫，嘤嘤嘤</p>
+</blockquote>
 <h3 id="3、调查设计"><a href="#3、调查设计" class="headerlink" title="3、调查设计"></a>3、调查设计</h3><h4 id="（1）调查方案设计"><a href="#（1）调查方案设计" class="headerlink" title="（1）调查方案设计"></a>（1）调查方案设计</h4><ol>
 <li>调查目的</li>
 <li>调查对象和调查单位</li>
@@ -90,7 +95,28 @@
 <p>作者：贾俊平</p>
 <p>出版社：中国人民大学出版社</p>
 </blockquote>
-<p><img src="https://78.media.tumblr.com/9e847ba472ba84afca2eac076b34d9d1/tumblr_o96md10Ppq1vqhed4o1_1280.jpg" alt=""></p>
+<h1 id="最后说一说为什么要学统计学"><a href="#最后说一说为什么要学统计学" class="headerlink" title="最后说一说为什么要学统计学"></a>最后说一说为什么要学统计学</h1><p>最直接原因是<strong>工资高</strong>。可以去拉勾上看看“数据分析”、“数据挖掘”、“数据科学家”等职位，他们对学历的要求基本上都会有“统计学”。</p>
+<p>对于我这种文科生来说，学习统计学是必经之路。<strong>敲门砖啊！</strong></p>
+<p>最后记录下最近学习的数据科学的流程：</p>
+<ol>
+<li>业务理解</li>
+<li>分析方法</li>
+<li>数据要求</li>
+<li>收集数据</li>
+<li>数据理解</li>
+<li>数据准备</li>
+<li>建模（use and test）</li>
+<li>模型评估</li>
+<li>部署与反馈</li>
+</ol>
+<p>自己判断，缺少的是业务理解，对相关的业务知识了解太少；分析方法知道的太少了，接下来会着重学习一些常见的算法；数据准备也是一个大坑，不过好在自己有一些Python基础；建模才是最难的，慢慢来吧。</p>
+<p><strong>最近几天需要个自己定一个学习任务，内容主要包括：统计学基础、常见算法、pandas处理数据及可视化、业务理解、Scrapy框架学习、前端（没错，学点前端很有必要）</strong></p>
+<p>欢迎加我微信，一起来学习，嘤嘤嘤</p>
+<blockquote>
+<p>下面是常见的分析方法</p>
+</blockquote>
+<p><img src="https://i.imgur.com/poRqKVo.png" alt=""></p>
+<p><img src="https://i.imgur.com/FLfwzDU.png" alt=""></p>
 ]]></content>
     
     <summary type="html">
