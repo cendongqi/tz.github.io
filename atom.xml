@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-12-01T14:48:31.526Z</updated>
+  <updated>2017-12-03T13:36:38.652Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Scrapy学习实例（二）采集无限滚动页面</title>
+    <link href="https://zhangslob.github.io/2017/12/03/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E9%87%87%E9%9B%86%E6%97%A0%E9%99%90%E6%BB%9A%E5%8A%A8%E9%A1%B5%E9%9D%A2/"/>
+    <id>https://zhangslob.github.io/2017/12/03/Scrapy学习实例（二）采集无限滚动页面/</id>
+    <published>2017-12-03T11:48:53.000Z</published>
+    <updated>2017-12-03T13:36:38.652Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十六篇原创文章
+</code></pre><p><img src="https://i.imgur.com/ON4MMPT.jpg" alt=""><br><a id="more"></a></p>
+<p>上一篇写的是<a href="https://zhangslob.github.io/2017/11/29/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%B8%80%EF%BC%89/">采集虎嗅网首页的新闻数据</a>，有朋友对我说，采集多页试试看。后来研究下，虎嗅网首页是POST加载，<code>Form Data</code>中携带参数，所以只需要带上一个循环就好了。这是我最初的想法，先让我们看看Scrapy中<br>如何采集无限滚动页面？</p>
+<p>先举个栗子，采集网站是<a href="http://spidyquotes.herokuapp.com/scroll" target="_blank" rel="external">quotes</a></p>
+<p><img src="https://i.imgur.com/jztJDKa.png" alt=""></p>
+<h1 id="分析网页"><a href="#分析网页" class="headerlink" title="分析网页"></a>分析网页</h1><p><img src="https://i.imgur.com/aaLuLEx.png" alt=""></p>
+<p>下拉时，会发现更多新的请求，观察这些请求，返回的都是json数据，也就是我们所需的，再看看他们的不同，也就是参数的改变，完整链接是：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">http:<span class="regexp">//</span>spidyquotes.herokuapp.com<span class="regexp">/api/</span>quotes?page=<span class="number">2</span></div><div class="line">http:<span class="regexp">//</span>spidyquotes.herokuapp.com<span class="regexp">/api/</span>quotes?page=<span class="number">3</span></div><div class="line">http:<span class="regexp">//</span>spidyquotes.herokuapp.com<span class="regexp">/api/</span>quotes?page=<span class="number">4</span></div></pre></td></tr></table></figure>
+<p>这就很清晰了。</p>
+<p><img src="https://i.imgur.com/PT2kb8b.png" alt=""></p>
+<p>返回的是json，我们需要解析，然后提取数据，那我们如何知道最多有多少条json呢，文件已经告诉我们了：</p>
+<p><code>has_next:true</code></p>
+<h1 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h1><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">scrapy startproject <span class="selector-tag">quote</span></div><div class="line"></div><div class="line">cd <span class="selector-tag">quote</span></div><div class="line"></div><div class="line">scrapy genspider spiderquote http:<span class="comment">//spidyquotes.herokuapp.com/scroll</span></div></pre></td></tr></table></figure>
+<h1 id="定义Item"><a href="#定义Item" class="headerlink" title="定义Item"></a>定义Item</h1><p>查看网站，采集text、author和tags这三个</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuoteItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    text = scrapy.Field()</div><div class="line">    author = scrapy.Field()</div><div class="line">    tag = scrapy.Field()</div></pre></td></tr></table></figure>
+<h1 id="编写spider"><a href="#编写spider" class="headerlink" title="编写spider"></a>编写spider</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">import</span> json</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SpiderquoteSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">'spiderquote'</span></div><div class="line">    quotes_base_url = <span class="string">'http://spidyquotes.herokuapp.com/api/quotes?page=%s'</span></div><div class="line">    start_urls = [quotes_base_url % <span class="number">1</span>]</div><div class="line">    download_delay = <span class="number">1.5</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        data = json.loads(response.body)</div><div class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> data.get(<span class="string">'quotes'</span>, []):</div><div class="line">            <span class="keyword">yield</span> &#123;</div><div class="line">                <span class="string">'text'</span>: item.get(<span class="string">'text'</span>),</div><div class="line">                <span class="string">'author'</span>: item.get(<span class="string">'author'</span>, &#123;&#125;).get(<span class="string">'name'</span>),</div><div class="line">                <span class="string">'tags'</span>: item.get(<span class="string">'tags'</span>),</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">if</span> data[<span class="string">'has_next'</span>]:</div><div class="line">            next_page = data[<span class="string">'page'</span>] + <span class="number">1</span></div><div class="line">            <span class="keyword">yield</span> scrapy.Request(self.quotes_base_url % next_page)</div></pre></td></tr></table></figure>
+<p>运行爬虫，然后就可以看到结果了。</p>
+<h1 id="应用到虎嗅网"><a href="#应用到虎嗅网" class="headerlink" title="应用到虎嗅网"></a>应用到虎嗅网</h1><p>那么如何应用到虎嗅网呢？首先还是要去分析网页。</p>
+<p><img src="https://i.imgur.com/x7YoUYW.png" alt=""></p>
+<p>虎嗅网的参数有3个：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">huxiu_hash_code:</span><span class="number">13</span>a3a353c52d424e1e263dda4d594e59</div><div class="line"><span class="symbol">page:</span><span class="number">3</span></div><div class="line"><span class="symbol">last_dateline:</span><span class="number">1512026700</span></div></pre></td></tr></table></figure>
+<p>我们知道<code>page</code>就是翻页页码，<code>huxiu_hash_code</code>是一个不变的字符，<code>last_dateline</code>看起来像unix时间戳，验证确实如此。这个时间戳有必要带上吗，我想验证试试看。</p>
+<p><img src="https://i.imgur.com/fF0ivj5.png" alt=""></p>
+<p>在postman中测试，不带上<code>last_dateline</code>也是可以返回数据，并且这个json中已经告诉我们一共有多少页：</p>
+<p><code>&quot;total_page&quot;: 1654</code></p>
+<p>在主函数中我们可以依葫芦画瓢</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> huxiu.items <span class="keyword">import</span> HuxiuItem</div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HuxiuSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">'HuXiu'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_requests</span><span class="params">(self)</span>:</span></div><div class="line">        url = <span class="string">'https://www.huxiu.com/v2_action/article_list'</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">10</span>):</div><div class="line">        <span class="comment"># FormRequest 是Scrapy发送POST请求的方法</span></div><div class="line">            <span class="keyword">yield</span> scrapy.FormRequest(</div><div class="line">                url = url,</div><div class="line">                formdata = &#123;<span class="string">"huxiu_hash_code"</span> : <span class="string">"13a3a353c52d424e1e263dda4d594e59"</span>, <span class="string">"page"</span> : str(i)&#125;,</div><div class="line">                callback = self.parse</div><div class="line">            )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        item = HuxiuItem()</div><div class="line">        data = json.loads(response.text)</div><div class="line">        s = etree.HTML(data[<span class="string">'data'</span>])</div><div class="line"></div><div class="line">        item[<span class="string">'title'</span>] = s.xpath(<span class="string">'//a[@class="transition msubstr-row2"]/text()'</span>)</div><div class="line">        item[<span class="string">'link'</span>] = s.xpath(<span class="string">'//a[@class="transition msubstr-row2"]/@href'</span>)</div><div class="line">        item[<span class="string">'author'</span>] = s.xpath(<span class="string">'//span[@class="author-name"]/text()'</span>)</div><div class="line">        item[<span class="string">'introduction'</span>] = s.xpath(<span class="string">'//div[@class="mob-sub"]/text()'</span>)</div><div class="line"></div><div class="line">        <span class="keyword">yield</span> item</div></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/cntFATT.png" alt=""></p>
+<p>输出的数据有点难看，是一段一段的。。</p>
+<p>因为<code>data[&#39;data&#39;]</code>是一段html文件，所以这里选择的是xpath，不清楚这里是否直接使用Scrapy的xpath解析工具，如果可以，欢迎在评论中告诉我。</p>
+<h1 id="本篇收获"><a href="#本篇收获" class="headerlink" title="本篇收获"></a>本篇收获</h1><ol>
+<li>Scrapy采集动态网站：分析网页</li>
+<li>使用Scrapy模拟post请求方法，<a href="https://doc.scrapy.org/en/latest/topics/request-response.html" target="_blank" rel="external">文档在这</a></li>
+<li>刘亦菲好漂亮</li>
+</ol>
+<h1 id="待做事宜"><a href="#待做事宜" class="headerlink" title="待做事宜"></a>待做事宜</h1><ol>
+<li>完善文件保存与解析</li>
+<li>全站抓取大概用了3分钟，速度有点慢</li>
+</ol>
+<blockquote>
+<p>若想评论，先翻长城</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十六篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ON4MMPT.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Scrapy" scheme="https://zhangslob.github.io/categories/Scrapy/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
+    
+      <category term="虎嗅" scheme="https://zhangslob.github.io/tags/%E8%99%8E%E5%97%85/"/>
+    
+  </entry>
   
   <entry>
     <title>统计学学习笔记（一）</title>
@@ -140,7 +209,7 @@
     <link href="https://zhangslob.github.io/2017/11/29/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>https://zhangslob.github.io/2017/11/29/Scrapy学习实例（一）/</id>
     <published>2017-11-29T13:52:32.000Z</published>
-    <updated>2017-11-30T15:29:24.599Z</updated>
+    <updated>2017-12-03T13:36:18.610Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第十五篇原创文章
 </code></pre><p><img src="https://i.imgur.com/n1TnhMv.png" alt=""><br><a id="more"></a></p>
@@ -194,6 +263,8 @@
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
+    
+      <category term="虎嗅" scheme="https://zhangslob.github.io/tags/%E8%99%8E%E5%97%85/"/>
     
   </entry>
   
@@ -1830,9 +1901,9 @@ hexo deploy #部署发布
     </summary>
     
     
-      <category term="个人博客" scheme="https://zhangslob.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    
       <category term="黑魔法" scheme="https://zhangslob.github.io/tags/%E9%BB%91%E9%AD%94%E6%B3%95/"/>
+    
+      <category term="个人博客" scheme="https://zhangslob.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
     
       <category term="Markdown语法" scheme="https://zhangslob.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
