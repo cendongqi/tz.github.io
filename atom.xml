@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-12-03T13:36:38.652Z</updated>
+  <updated>2017-12-06T15:00:29.414Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,13 +16,140 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>统计学学习笔记（二）数据整理与展示</title>
+    <link href="https://zhangslob.github.io/2017/12/06/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E6%95%B0%E6%8D%AE%E6%95%B4%E7%90%86%E4%B8%8E%E5%B1%95%E7%A4%BA/"/>
+    <id>https://zhangslob.github.io/2017/12/06/统计学学习笔记（二）数据整理与展示/</id>
+    <published>2017-12-06T14:19:18.000Z</published>
+    <updated>2017-12-06T15:00:29.414Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十八篇原创文章
+</code></pre><p><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3270851487,1770960951&amp;fm=27&amp;gp=0.jpg" alt=""></p>
+<a id="more"></a>
+<p>这是统计学的第二篇笔记，主要记录了如何整理数据与展示数据，书本上是这样说，但是我觉得现在人们会更多的叫做数据清洗与数据可视化。命名无所谓，掌握方法就好。</p>
+<p>下面是正文。</p>
+<blockquote>
+<p>可以接着这里看哦 <a href="https://zhangslob.github.io/2017/11/30/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">统计学学习笔记（一）</a></p>
+</blockquote>
+<hr>
+<h1 id="数据整理与展示"><a href="#数据整理与展示" class="headerlink" title="数据整理与展示"></a>数据整理与展示</h1><h3 id="3-1-数据的预处理"><a href="#3-1-数据的预处理" class="headerlink" title="3.1 数据的预处理"></a>3.1 数据的预处理</h3><h4 id="3-1-1-数据审核"><a href="#3-1-1-数据审核" class="headerlink" title="3.1.1 数据审核"></a>3.1.1 数据审核</h4><ul>
+<li>概念：检查数据是否有错误</li>
+<li>对于通过调查取得的原始数据，主要从完整性和准确性两个方面去审核</li>
+<li>对于通过其他渠道获得的二手数据，主要审核数据的适用性和时效性</li>
+</ul>
+<h4 id="3-1-2-数据筛选"><a href="#3-1-2-数据筛选" class="headerlink" title="3.1.2 数据筛选"></a>3.1.2 数据筛选</h4><ul>
+<li>删除某些不符合要求的数据和有明显错误的数据</li>
+<li>将符合某种特定条件的数据筛选出来，而将不符合特定条件的数据予以剔除</li>
+<li>Excel举例</li>
+</ul>
+<h4 id="3-1-3-数据排序"><a href="#3-1-3-数据排序" class="headerlink" title="3.1.3 数据排序"></a>3.1.3 数据排序</h4><ul>
+<li>概念：按一定顺序将数据排列，以便于研究者通过数据发现一些明显的特征或趋势，找到解决问题的线索</li>
+<li>通过数据类型选择排序方式：字母型数据、汉字型数据、数值型数据</li>
+</ul>
+<blockquote>
+<p>这个好像也叫做数据清洗</p>
+</blockquote>
+<h3 id="3-2-品质数据的整理与展示"><a href="#3-2-品质数据的整理与展示" class="headerlink" title="3.2 品质数据的整理与展示"></a>3.2 品质数据的整理与展示</h3><h4 id="3-2-1-频数与频数分布"><a href="#3-2-1-频数与频数分布" class="headerlink" title="3.2.1 频数与频数分布"></a>3.2.1 频数与频数分布</h4><ul>
+<li>落在某一特定类别中的数据个数，成为频数</li>
+<li>把各个类别及落在其中的相应频数全部列出，并用表格形式表现出来，成为频数分布</li>
+</ul>
+<blockquote>
+<p>好像不止表格吧</p>
+</blockquote>
+<ul>
+<li>一个总体（或样本）中各个部分的数据与全部数据之比，成为比例</li>
+<li>将比例乘以100得到的数值，成为百分比或百分数用%表示</li>
+<li>总体（或样本）中各不同类别数值之间的比值，成为比率</li>
+</ul>
+<h4 id="3-2-2-品质数据的展示"><a href="#3-2-2-品质数据的展示" class="headerlink" title="3.2.2 品质数据的展示"></a>3.2.2 品质数据的展示</h4><ol>
+<li>条形图</li>
+<li>饼图</li>
+<li>环形图</li>
+</ol>
+<h3 id="3-3-数值型数据的整理与展示"><a href="#3-3-数值型数据的整理与展示" class="headerlink" title="3.3 数值型数据的整理与展示"></a>3.3 数值型数据的整理与展示</h3><h4 id="3-3-1-数据分组"><a href="#3-3-1-数据分组" class="headerlink" title="3.3.1 数据分组"></a>3.3.1 数据分组</h4><ul>
+<li>根据统计分析的需要，将原始数据按照某种标准划分成不同的组别，成为数据分组</li>
+<li>在组距分组中，一个组的最小值称为下限，一个组的最大值称为上限</li>
+<li>每一组的上限和下限之间的中间值称为组中值</li>
+</ul>
+<h4 id="3-3-2-数值型数据的图示"><a href="#3-3-2-数值型数据的图示" class="headerlink" title="3.3.2 数值型数据的图示"></a>3.3.2 数值型数据的图示</h4><ul>
+<li>分组数据看分布：直方图（histogram）</li>
+<li>未分组数据看分布：茎叶图和箱型图</li>
+<li>多变量数据的展示：雷达图</li>
+</ul>
+<h3 id="3-4-使用图表的注意事项"><a href="#3-4-使用图表的注意事项" class="headerlink" title="3.4 使用图表的注意事项"></a>3.4 使用图表的注意事项</h3><h4 id="优秀图表特征："><a href="#优秀图表特征：" class="headerlink" title="优秀图表特征："></a>优秀图表特征：</h4><ol>
+<li>显示数据</li>
+<li>让读者把注意力放在图表内容上</li>
+<li>避免歪曲</li>
+<li>强调数据之间的比较</li>
+<li>服务于一个明确的目的</li>
+<li>有对图形的描述统计和文字说明</li>
+</ol>
+<h4 id="优秀图形应当："><a href="#优秀图形应当：" class="headerlink" title="优秀图形应当："></a>优秀图形应当：</h4><ol>
+<li>精心设计，有助于洞察问题的实质</li>
+<li>使复杂的观点得到简明、确切、高效的阐述</li>
+<li>能在最短的时间内、以最少的笔墨给读者提供大量的信息</li>
+<li>是多维的</li>
+<li>表述数据的真实情况</li>
+</ol>
+<h1 id="品质数据"><a href="#品质数据" class="headerlink" title="品质数据"></a>品质数据</h1><p>您应该会和我一样提问，什么是品质数据？</p>
+<p>品质数据:对产品或商品进行各种化学、物理、力学等试验后所得出的数据。</p>
+<ol>
+<li>品质数据：对产品或商品进行各种化学、物理、力学等试验后所得出的数据。</li>
+<li>品质型数据：按品质标志分组所得到数据，包括分类数据和顺序数据，他们在整理和图形展示上的方法大体相同。</li>
+</ol>
+<blockquote>
+<p>本文中提到的品质数据应该是后者</p>
+</blockquote>
+<h1 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h1><p>这里重点说下数据图表的选择。</p>
+<p>就我自己的工作中，比较常用的就是直方图、折线图与饼图，词云图（如果算的话）。教材中也说了很多没用过的图，这个东西还是要根据自己的具体业务来操作。</p>
+<p>这里推荐一个很好的网站，<a href="https://antv.alipay.com/zh-cn/vis/chart/tag-compare.html" target="_blank" rel="external">图表使用</a></p>
+<p><img src="https://i.imgur.com/gxGglUB.png" alt=""></p>
+<p>这个网站有多好，你一看便知，不多解释。</p>
+<h1 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h1><p>有人说：一个分析项目基本八成时间在洗数据。那么什么是清洗数据。</p>
+<blockquote>
+<p>数据清洗是指发现并纠正数据文件中可识别的错误的最后一道程序，包括检查数据一致性，处理无效值和缺失值等。与问卷审核不同，录入后的数据清理一般是由计算机而不是人工完成。</p>
+</blockquote>
+<p><strong>数据清洗的方法 </strong></p>
+<ol>
+<li>解决不完整数据（ 即值缺失）的方法</li>
+<li>错误值的检测及解决方法</li>
+<li>重复记录的检测及消除方法</li>
+<li>不一致性（ 数据源内部及数据源之间）的检测及解决方法</li>
+<li>转换构造</li>
+<li>数据压缩</li>
+</ol>
+<p>老规矩，还是放一点代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> matplotlib.patches <span class="keyword">as</span> patches</div><div class="line"><span class="keyword">import</span> matplotlib.path <span class="keyword">as</span> path</div><div class="line"></div><div class="line">fig, ax = plt.subplots()</div><div class="line"></div><div class="line"><span class="comment"># Fixing random state for reproducibility</span></div><div class="line">np.random.seed(<span class="number">19680801</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># histogram our data with numpy</span></div><div class="line"></div><div class="line">data = np.random.randn(<span class="number">1000</span>)</div><div class="line">n, bins = np.histogram(data, <span class="number">50</span>)</div><div class="line"></div><div class="line"><span class="comment"># get the corners of the rectangles for the histogram</span></div><div class="line">left = np.array(bins[:<span class="number">-1</span>])</div><div class="line">right = np.array(bins[<span class="number">1</span>:])</div><div class="line">bottom = np.zeros(len(left))</div><div class="line">top = bottom + n</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># we need a (numrects x numsides x 2) numpy array for the path helper</span></div><div class="line"><span class="comment"># function to build a compound path</span></div><div class="line">XY = np.array([[left, left, right, right], [bottom, top, top, bottom]]).T</div><div class="line"></div><div class="line"><span class="comment"># get the Path object</span></div><div class="line">barpath = path.Path.make_compound_path_from_polys(XY)</div><div class="line"></div><div class="line"><span class="comment"># make a patch out of it</span></div><div class="line">patch = patches.PathPatch(barpath)</div><div class="line">ax.add_patch(patch)</div><div class="line"></div><div class="line"><span class="comment"># update the view limits</span></div><div class="line">ax.set_xlim(left[<span class="number">0</span>], right[<span class="number">-1</span>])</div><div class="line">ax.set_ylim(bottom.min(), top.max())</div><div class="line"></div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+<p><img src="http://matplotlib.org/_images/sphx_glr_histogram_path_001.png" alt="直方图绘制"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="http://wiki.mbalib.com/wiki/%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97" target="_blank" rel="external">数据清洗</a></li>
+<li><a href="https://www.zhihu.com/question/22077960" target="_blank" rel="external">数据挖掘中常用的数据清洗方法有哪些？</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十八篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3270851487,1770960951&amp;amp;fm=27&amp;amp;gp=0.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="统计学" scheme="https://zhangslob.github.io/categories/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
+    
+    
+      <category term="统计学" scheme="https://zhangslob.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
+    
+      <category term="数据" scheme="https://zhangslob.github.io/tags/%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Scrapy学习实例（二）采集无限滚动页面</title>
     <link href="https://zhangslob.github.io/2017/12/03/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%BA%8C%EF%BC%89%E9%87%87%E9%9B%86%E6%97%A0%E9%99%90%E6%BB%9A%E5%8A%A8%E9%A1%B5%E9%9D%A2/"/>
     <id>https://zhangslob.github.io/2017/12/03/Scrapy学习实例（二）采集无限滚动页面/</id>
     <published>2017-12-03T11:48:53.000Z</published>
-    <updated>2017-12-03T13:36:38.652Z</updated>
+    <updated>2017-12-06T14:34:14.165Z</updated>
     
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十六篇原创文章
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十七篇原创文章
 </code></pre><p><img src="https://i.imgur.com/ON4MMPT.jpg" alt=""><br><a id="more"></a></p>
 <p>上一篇写的是<a href="https://zhangslob.github.io/2017/11/29/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%B8%80%EF%BC%89/">采集虎嗅网首页的新闻数据</a>，有朋友对我说，采集多页试试看。后来研究下，虎嗅网首页是POST加载，<code>Form Data</code>中携带参数，所以只需要带上一个循环就好了。这是我最初的想法，先让我们看看Scrapy中<br>如何采集无限滚动页面？</p>
 <p>先举个栗子，采集网站是<a href="http://spidyquotes.herokuapp.com/scroll" target="_blank" rel="external">quotes</a></p>
@@ -68,7 +195,7 @@
     
     <summary type="html">
     
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十六篇原创文章
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十七篇原创文章
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ON4MMPT.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;
     
     </summary>
