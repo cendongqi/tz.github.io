@@ -4,6 +4,30 @@
 
     
   <url>
+    <loc>https://zhangslob.github.io/2017/12/12/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%B8%89%EF%BC%89%E9%87%87%E9%9B%86%E6%89%B9%E9%87%8F%E7%BD%91%E9%A1%B5/</loc>
+    <lastmod>2017-12-12T14:32:44.271Z</lastmod>
+    <data>
+        <display>
+        <title>Scrapy学习实例（三）采集批量网页</title>
+        <pubTime>2017-12-12T13:11:17.000Z</pubTime>
+        
+        <tag>爬虫</tag>
+         
+        <tag>Scrapy</tag>
+         
+        <tag>Rules</tag>
+         
+         
+           
+             
+              <breadCrumb title="Scrapy" url="https://zhangslob.github.io/categories/Scrapy/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://zhangslob.github.io/2017/12/06/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E6%95%B0%E6%8D%AE%E6%95%B4%E7%90%86%E4%B8%8E%E5%B1%95%E7%A4%BA/</loc>
     <lastmod>2017-12-06T15:00:29.414Z</lastmod>
     <data>
@@ -330,9 +354,9 @@
         <title>利用HEXO搭建的博客及Markdown语法介绍</title>
         <pubTime>2017-02-26T09:20:57.000Z</pubTime>
         
-        <tag>黑魔法</tag>
-         
         <tag>个人博客</tag>
+         
+        <tag>黑魔法</tag>
          
         <tag>Markdown语法</tag>
          

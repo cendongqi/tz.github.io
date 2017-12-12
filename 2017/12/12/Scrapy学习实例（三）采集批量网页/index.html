@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="爬虫,Scrapy,Rules," />
 
 
 
@@ -79,15 +79,19 @@
 
 
 
-<meta name="description" content="网络爬虫、数据分析、人生感悟!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小歪的博客">
-<meta property="og:url" content="https://zhangslob.github.io/archives/page/2/index.html">
+<meta name="description" content="这是崔斯特的第十九篇原创文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy学习实例（三）采集批量网页">
+<meta property="og:url" content="https://zhangslob.github.io/2017/12/12/Scrapy学习实例（三）采集批量网页/index.html">
 <meta property="og:site_name" content="小歪的博客">
-<meta property="og:description" content="网络爬虫、数据分析、人生感悟!">
+<meta property="og:description" content="这是崔斯特的第十九篇原创文章">
+<meta property="og:image" content="https://i.imgur.com/ALWvu6F.png">
+<meta property="og:image" content="http://jbcdn2.b0.upaiyun.com/2016/10/c24dade2ab6bc0143a2abc9d271136d0.png">
+<meta property="og:updated_time" content="2017-12-12T14:32:44.271Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小歪的博客">
-<meta name="twitter:description" content="网络爬虫、数据分析、人生感悟!">
+<meta name="twitter:title" content="Scrapy学习实例（三）采集批量网页">
+<meta name="twitter:description" content="这是崔斯特的第十九篇原创文章">
+<meta name="twitter:image" content="https://i.imgur.com/ALWvu6F.png">
 
 
 
@@ -117,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://zhangslob.github.io/archives/page/2/"/>
+  <link rel="canonical" href="https://zhangslob.github.io/2017/12/12/Scrapy学习实例（三）采集批量网页/"/>
 
 
 
 
 
-  <title>归档 | 小歪的博客</title>
+  <title>Scrapy学习实例（三）采集批量网页 | 小歪的博客</title>
   
 
 
@@ -183,7 +187,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
   
 
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 		<a href="https://github.com/zhangslob"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -331,374 +335,385 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2017/12/12/Scrapy学习实例（三）采集批量网页/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小歪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1488291259&di=9b54b1ab9a4a02ec51e4344e960692d6&src=http://ni.ppsrc.com/aR24MryiGC7HFCEJTB-wgQ@640w_640h_75Q.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小歪的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Scrapy学习实例（三）采集批量网页</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-12T21:11:17+08:00">
+                2017-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 19 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Scrapy/" itemprop="url" rel="index">
+                    <span itemprop="name">Scrapy</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/12/Scrapy学习实例（三）采集批量网页/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/12/Scrapy学习实例（三）采集批量网页/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2017/12/12/Scrapy学习实例（三）采集批量网页/" class="leancloud_visitors" data-flag-title="Scrapy学习实例（三）采集批量网页">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/28/使用Python计算文章中的字词频率丨学习笔记和反思/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">使用Python计算文章中的字词频率丨学习笔记和反思</span>
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,437
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-28T18:58:18+08:00"
-              content="2017-03-28" >
-          03-28
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/24/昨天看球时，球迷都说了啥——弹幕抓取与分析/" itemprop="url">
-              
-                <span itemprop="name">昨天看球时，球迷都说了啥——弹幕抓取与分析</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-24T20:41:58+08:00"
-              content="2017-03-24" >
-          03-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <pre><code>这是崔斯特的第十九篇原创文章
+</code></pre><p><img src="https://i.imgur.com/ALWvu6F.png" alt=""></p>
+<a id="more"></a>
+<p>先来首火影压压惊  (｡・`ω´･)</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=784594&auto=1&height=66"></iframe>
 
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/24/利用Python对直播弹幕的分析/" itemprop="url">
-              
-                <span itemprop="name">利用Python对直播弹幕的分析</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-24T20:12:58+08:00"
-              content="2017-03-24" >
-          03-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<p>最开始接触 <code>Rules</code>是在Scrapy的文档上看到的，但是并看读懂这是什么意思。接下来看别人的案例，有使用到Rules，便花了很多时间去了解。</p>
+<blockquote>
+<p>解释：<br>Rule是在定义抽取链接的规则，上面的两条规则分别对应列表页的各个分页页面和详情页，关键点在于通过<code>restrict_xpath</code>来限定只从页面特定的部分来抽取接下来将要爬取的链接。 </p>
+</blockquote>
+<p>其实用我的话来说就是，一个是可以便捷的进行翻页操作，二是可以采集二级页面，相当于打开获得详情页内容。所以若使用了 <code>Rules</code>，可以便捷的帮助我们采集批量网页。</p>
+<h1 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h1><p><a href="http://python.usyiyi.cn/documents/scrapy_12/topics/spiders.html#crawlspider-example" target="_blank" rel="external">CrawlSpider示例</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'example.com'</span></div><div class="line">    allowed_domains = [<span class="string">'example.com'</span>]</div><div class="line">    start_urls = [<span class="string">'http://www.example.com'</span>]</div><div class="line"></div><div class="line">    rules = (</div><div class="line">        <span class="comment"># Extract links matching 'category.php' (but not matching 'subsection.php')</span></div><div class="line">        <span class="comment"># and follow links from them (since no callback means follow=True by default).</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">'category\.php'</span>, ), deny=(<span class="string">'subsection\.php'</span>, ))),</div><div class="line"></div><div class="line">        <span class="comment"># Extract links matching 'item.php' and parse them with the spider's method parse_item</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">'item\.php'</span>, )), callback=<span class="string">'parse_item'</span>),</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        self.logger.info(<span class="string">'Hi, this is an item page! %s'</span>, response.url)</div><div class="line">        item = scrapy.Item()</div><div class="line">        item[<span class="string">'id'</span>] = response.xpath(<span class="string">'//td[@id="item_id"]/text()'</span>).re(<span class="string">r'ID: (\d+)'</span>)</div><div class="line">        item[<span class="string">'name'</span>] = response.xpath(<span class="string">'//td[@id="item_name"]/text()'</span>).extract()</div><div class="line">        item[<span class="string">'description'</span>] = response.xpath(<span class="string">'//td[@id="item_description"]/text()'</span>).extract()</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<blockquote>
+<p>该spider将从example.com的首页开始爬取，获取category以及item的链接并对后者使用 parse_item 方法。 对于每个item response，将使用XPath从HTML中提取一些数据，并使用它填充Item。</p>
+</blockquote>
+<h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><p>为了更好的理解，我们来看看实际案例中<code>Rules</code>如何使用</p>
+<h2 id="豆瓣应用"><a href="#豆瓣应用" class="headerlink" title="豆瓣应用"></a>豆瓣应用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">rules = [Rule(LinkExtractor(allow=(<span class="string">r'https://movie.douban.com/top250\?start=\d+.*'</span>))),</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'https://movie.douban.com/subject/\d+'</span>)),</div><div class="line">            callback=<span class="string">'parse_item'</span>, follow=<span class="keyword">False</span>)</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>如果接触过<code>django</code>，那么可以发现这个规则与<code>django</code>的路由系统十分相似（django都已经忘完了 -_-！），其实这里使用的正则匹配。</p>
+<p>使用 <code>r&#39;https://movie.douban.com/top250\?start=\d+.*&#39;</code>来匹配翻页链接，如：</p>
+<ul>
+<li><a href="https://movie.douban.com/top250?start=25&amp;filter=" target="_blank" rel="external">https://movie.douban.com/top250?start=25&amp;filter=</a></li>
+<li><a href="https://movie.douban.com/top250?start=50&amp;filter=" target="_blank" rel="external">https://movie.douban.com/top250?start=50&amp;filter=</a></li>
+</ul>
+<p>使用<code>https://movie.douban.com/subject/\d+</code>来匹配具体电影的链接，如：</p>
+<ul>
+<li><a href="https://movie.douban.com/subject/1292052/" target="_blank" rel="external">https://movie.douban.com/subject/1292052/</a></li>
+<li><a href="https://movie.douban.com/subject/1291546/" target="_blank" rel="external">https://movie.douban.com/subject/1291546/</a></li>
+</ul>
+<h2 id="链家应用"><a href="#链家应用" class="headerlink" title="链家应用"></a>链家应用</h2><p>爬虫的通常需要在一个网页里面爬去其他的链接，然后一层一层往下爬，scrapy提供了LinkExtractor类用于对网页链接的提取，使用LinkExtractor需要使用<code>CrawlSpider</code>爬虫类中，<code>CrawlSpider</code>与<code>Spider</code>相比主要是多了<code>rules</code>，可以添加一些规则，先看下面这个例子，爬取链家网的链接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LianjiaSpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">"lianjia"</span></div><div class="line"></div><div class="line">    allowed_domains = [<span class="string">"lianjia.com"</span>]</div><div class="line"></div><div class="line">    start_urls = [</div><div class="line">        <span class="string">"http://bj.lianjia.com/ershoufang/"</span></div><div class="line">    ]</div><div class="line"></div><div class="line">    rules = [</div><div class="line">        <span class="comment"># 匹配正则表达式,处理下一页</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http://bj.lianjia.com/ershoufang/pg\s+$'</span>,)), callback=<span class="string">'parse_item'</span>),</div><div class="line"></div><div class="line">        <span class="comment"># 匹配正则表达式,结果加到url列表中,设置请求预处理函数</span></div><div class="line">        <span class="comment"># Rule(FangLinkExtractor(allow=('http://www.lianjia.com/client/', )), follow=True, process_request='add_cookie')</span></div><div class="line">    ]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># 这里与之前的parse方法一样，处理</span></div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>同样的，使用<code>r&#39;http://bj.lianjia.com/ershoufang/pg\s+$&#39;</code>来匹配下一页链接，如：</p>
+<ul>
+<li><a href="https://bj.lianjia.com/ershoufang/pg2/" target="_blank" rel="external">https://bj.lianjia.com/ershoufang/pg2/</a></li>
+<li><a href="https://bj.lianjia.com/ershoufang/pg3/" target="_blank" rel="external">https://bj.lianjia.com/ershoufang/pg3/</a></li>
+</ul>
+<p>还可以使用 <code>r&#39;https://bj.lianjia.com/ershoufang/\d+.html&#39;</code>来匹配详情页链接，如：</p>
+<ul>
+<li><a href="https://bj.lianjia.com/ershoufang/101102126888.html" target="_blank" rel="external">https://bj.lianjia.com/ershoufang/101102126888.html</a></li>
+<li><a href="https://bj.lianjia.com/ershoufang/101100845676.html" target="_blank" rel="external">https://bj.lianjia.com/ershoufang/101100845676.html</a></li>
+</ul>
+<h1 id="学习参数"><a href="#学习参数" class="headerlink" title="学习参数"></a>学习参数</h1><h2 id="Rule对象"><a href="#Rule对象" class="headerlink" title="Rule对象"></a>Rule对象</h2><p>Role对象有下面参数</p>
+<ul>
+<li><code>link_extractor</code>：链接提取规则</li>
+<li><code>callback</code>：link_extractor提取的链接的请求结果的回调</li>
+<li><code>cb_kwargs</code>：附加参数，可以在回调函数中获取到</li>
+<li><code>follow</code>：表示提取的链接请求完成后是否还要应用当前规则（boolean），如果为False则不会对提取出来的网页进行进一步提取，默认为False</li>
+<li><code>process_links</code>：处理所有的链接的回调，用于处理从response提取的links，通常用于过滤（参数为link列表）</li>
+<li><code>process_request</code>：链接请求预处理（添加header或cookie等）</li>
+</ul>
+<h2 id="LinkExtractor"><a href="#LinkExtractor" class="headerlink" title="LinkExtractor"></a>LinkExtractor</h2><p>LinkExtractor常用的参数有：</p>
+<ul>
+<li><code>allow</code>：提取满足正则表达式的链接</li>
+<li><code>deny</code>：排除正则表达式匹配的链接（优先级高于allow）</li>
+<li><code>allow_domains</code>：允许的域名（可以是str或list）</li>
+<li><code>deny_domains</code>：排除的域名（可以是str或list）</li>
+<li><code>restrict_xpaths</code>：提取满足XPath选择条件的链接（可以是str或list）</li>
+<li><code>restrict_css</code>：提取满足css选择条件的链接（可以是str或list）</li>
+<li><code>tags</code>：提取指定标签下的链接，默认从a和area中提取（可以是str或list）</li>
+<li><code>attrs</code>：提取满足拥有属性的链接，默认为href（类型为list）</li>
+<li><code>unique</code>：链接是否去重（类型为boolean）</li>
+<li><code>process_value</code>：值处理函数（优先级大于allow）</li>
+</ul>
+<p>关于LinkExtractor的详细参数介绍见<a href="https://doc.scrapy.org/en/latest/topics/link-extractors.html#module-scrapy.linkextractors.lxmlhtml" target="_blank" rel="external">官网</a></p>
+<blockquote>
+<p>注意：在编写抓取Spider规则时，避免使用<code>parse</code>作为回调，因为<code>CrawlSpider</code>使用<code>parse</code>方法自己实现其逻辑。因此，如果你覆盖<code>parse</code>方法，爬行<code>Spider</code>将不再工作。</p>
+</blockquote>
+<p>最后说一个自己犯过的低级错误，我用Scrapy有个习惯，创建一个项目之后，直接<code>cd</code>目录，然后使用<code>genspider</code>命令，然后。。</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">D:<span class="symbol">\B</span>ackup<span class="symbol">\桌</span>面</div><div class="line">λ scrapy startproject example</div><div class="line">New Scrapy project 'example', using template directory 'c:<span class="symbol">\\</span>users<span class="symbol">\\</span>administrator<span class="symbol">\\</span>appdata<span class="symbol">\\</span>local<span class="symbol">\\</span>programs<span class="symbol">\\</span>python<span class="symbol">\\</span>python36<span class="symbol">\\</span>lib<span class="symbol">\\</span>site-packages<span class="symbol">\\</span>scrapy<span class="symbol">\\</span>templates<span class="symbol">\\</span>project', created in:</div><div class="line">    D:<span class="symbol">\B</span>ackup<span class="symbol">\桌</span>面<span class="symbol">\e</span>xample</div><div class="line"></div><div class="line">You can start your first spider with:</div><div class="line">    cd example</div><div class="line">    scrapy genspider example example.com</div><div class="line"></div><div class="line">D:<span class="symbol">\B</span>ackup<span class="symbol">\桌</span>面</div><div class="line">λ cd example</div><div class="line"></div><div class="line">D:<span class="symbol">\B</span>ackup<span class="symbol">\桌</span>面<span class="symbol">\e</span>xample</div><div class="line">λ scrapy genspider em example.com</div><div class="line">Created spider 'em' using template 'basic' in module:</div><div class="line">  example.spiders.em</div></pre></td></tr></table></figure>
+<p>然后我的<code>em.py</code>就变成了这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">'em'</span></div><div class="line">    allowed_domains = [<span class="string">'example.com'</span>]</div><div class="line">    start_urls = [<span class="string">'http://example.com/'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>注意，这个时候是不能使用<code>Rules</code>方法的，因为object不对，应该是</p>
+<p><code>class EmSpider(CrawlSpider)</code></p>
+<p>而不是<code>class EmSpider(scrapy.Spider):</code></p>
+<p>共勉！！！</p>
+<p>下一节应该会讲到Scrapy中各个组件的作用，以及这张神图</p>
+<p><img src="http://jbcdn2.b0.upaiyun.com/2016/10/c24dade2ab6bc0143a2abc9d271136d0.png" alt=""></p>
+<h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><ul>
+<li><a href="http://python.usyiyi.cn/documents/scrapy_12/topics/spiders.html#crawlspider-example" target="_blank" rel="external">CrawlSpider示例</a></li>
+<li><a href="https://segmentfault.com/a/1190000007073049#articleHeader14" target="_blank" rel="external">scrapy学习笔记</a></li>
+</ul>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/20/如何优雅的“轮带逛”初级篇——获取单张图片/" itemprop="url">
-              
-                <span itemprop="name">如何优雅的“轮带逛”初级篇——获取单张图片</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-20T20:35:00+08:00"
-              content="2017-03-20" >
-          03-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/19/Python爬虫实战——免费图片-Pixabay/" itemprop="url">
-              
-                <span itemprop="name">Python爬虫实战——免费图片 - Pixabay</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-19T17:24:58+08:00"
-              content="2017-03-19" >
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/14/Python练习第九题，爬取贴吧图片/" itemprop="url">
-              
-                <span itemprop="name">Python练习第九题，爬取贴吧图片</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-14T19:56:07+08:00"
-              content="2017-03-14" >
-          03-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/06/Python练习第七题，我要倒过来看/" itemprop="url">
-              
-                <span itemprop="name">Python练习第七题，我要倒过来看</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-06T18:47:46+08:00"
-              content="2017-03-06" >
-          03-06
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/02/28/教你免费搭建个人博客，Hexo-Github/" itemprop="url">
-              
-                <span itemprop="name">教你免费搭建个人博客，Hexo&Github</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-02-28T20:01:50+08:00"
-              content="2017-02-28" >
-          02-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/02/26/利用HEXO搭建的博客/" itemprop="url">
-              
-                <span itemprop="name">利用HEXO搭建的博客及Markdown语法介绍</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-02-26T17:20:57+08:00"
-              content="2017-02-26" >
-          02-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+      <div>
+        
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2017/12/12/Scrapy学习实例（三）采集批量网页/">Scrapy学习实例（三）采集批量网页</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 小歪 的个人博客">小歪</a></p>
+  <p><span>发布时间:</span>2017年12月12日 - 21:12</p>
+  <p><span>最后更新:</span>2017年12月12日 - 22:12</p>
+  <p><span>原始链接:</span><a href="/2017/12/12/Scrapy学习实例（三）采集批量网页/" title="Scrapy学习实例（三）采集批量网页">https://zhangslob.github.io/2017/12/12/Scrapy学习实例（三）采集批量网页/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhangslob.github.io/2017/12/12/Scrapy学习实例（三）采集批量网页/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+
+        
+      </div>
+      <div>
+          <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="小歪 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>打发点咯！嘤嘤嘤</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="小歪 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"> <i class="fa fa-tag"></i>爬虫</a>
+          
+            <a href="/tags/Scrapy/" rel="tag"> <i class="fa fa-tag"></i>Scrapy</a>
+          
+            <a href="/tags/Rules/" rel="tag"> <i class="fa fa-tag"></i>Rules</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/06/统计学学习笔记（二）数据整理与展示/" rel="next" title="统计学学习笔记（二）数据整理与展示">
+                <i class="fa fa-chevron-left"></i> 统计学学习笔记（二）数据整理与展示
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a2005c4149dd2fc" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -706,6 +721,20 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -726,8 +755,17 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -833,6 +871,22 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#官方文档"><span class="nav-number">1.</span> <span class="nav-text">官方文档</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实际应用"><span class="nav-number">2.</span> <span class="nav-text">实际应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#豆瓣应用"><span class="nav-number">2.1.</span> <span class="nav-text">豆瓣应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链家应用"><span class="nav-number">2.2.</span> <span class="nav-text">链家应用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#学习参数"><span class="nav-number">3.</span> <span class="nav-text">学习参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Rule对象"><span class="nav-number">3.1.</span> <span class="nav-text">Rule对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkExtractor"><span class="nav-number">3.2.</span> <span class="nav-text">LinkExtractor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考："><span class="nav-number">4.</span> <span class="nav-text">参考：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -995,6 +1049,10 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -1012,6 +1070,18 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       <script id="dsq-count-scr" src="https://https-zhangslob-github-io.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://zhangslob.github.io/2017/12/12/Scrapy学习实例（三）采集批量网页/';
+          this.page.identifier = '2017/12/12/Scrapy学习实例（三）采集批量网页/';
+          this.page.title = 'Scrapy学习实例（三）采集批量网页';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://https-zhangslob-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-12-06T15:00:29.414Z</updated>
+  <updated>2017-12-12T14:32:44.271Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,114 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Scrapy学习实例（三）采集批量网页</title>
+    <link href="https://zhangslob.github.io/2017/12/12/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%B8%89%EF%BC%89%E9%87%87%E9%9B%86%E6%89%B9%E9%87%8F%E7%BD%91%E9%A1%B5/"/>
+    <id>https://zhangslob.github.io/2017/12/12/Scrapy学习实例（三）采集批量网页/</id>
+    <published>2017-12-12T13:11:17.000Z</published>
+    <updated>2017-12-12T14:32:44.271Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十九篇原创文章
+</code></pre><p><img src="https://i.imgur.com/ALWvu6F.png" alt=""></p>
+<a id="more"></a>
+<p>先来首火影压压惊  (｡・`ω´･)</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=784594&auto=1&height=66"></iframe>
+
+<p>最开始接触 <code>Rules</code>是在Scrapy的文档上看到的，但是并看读懂这是什么意思。接下来看别人的案例，有使用到Rules，便花了很多时间去了解。</p>
+<blockquote>
+<p>解释：<br>Rule是在定义抽取链接的规则，上面的两条规则分别对应列表页的各个分页页面和详情页，关键点在于通过<code>restrict_xpath</code>来限定只从页面特定的部分来抽取接下来将要爬取的链接。 </p>
+</blockquote>
+<p>其实用我的话来说就是，一个是可以便捷的进行翻页操作，二是可以采集二级页面，相当于打开获得详情页内容。所以若使用了 <code>Rules</code>，可以便捷的帮助我们采集批量网页。</p>
+<h1 id="官方文档"><a href="#官方文档" class="headerlink" title="官方文档"></a>官方文档</h1><p><a href="http://python.usyiyi.cn/documents/scrapy_12/topics/spiders.html#crawlspider-example" target="_blank" rel="external">CrawlSpider示例</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'example.com'</span></div><div class="line">    allowed_domains = [<span class="string">'example.com'</span>]</div><div class="line">    start_urls = [<span class="string">'http://www.example.com'</span>]</div><div class="line"></div><div class="line">    rules = (</div><div class="line">        <span class="comment"># Extract links matching 'category.php' (but not matching 'subsection.php')</span></div><div class="line">        <span class="comment"># and follow links from them (since no callback means follow=True by default).</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">'category\.php'</span>, ), deny=(<span class="string">'subsection\.php'</span>, ))),</div><div class="line"></div><div class="line">        <span class="comment"># Extract links matching 'item.php' and parse them with the spider's method parse_item</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">'item\.php'</span>, )), callback=<span class="string">'parse_item'</span>),</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        self.logger.info(<span class="string">'Hi, this is an item page! %s'</span>, response.url)</div><div class="line">        item = scrapy.Item()</div><div class="line">        item[<span class="string">'id'</span>] = response.xpath(<span class="string">'//td[@id="item_id"]/text()'</span>).re(<span class="string">r'ID: (\d+)'</span>)</div><div class="line">        item[<span class="string">'name'</span>] = response.xpath(<span class="string">'//td[@id="item_name"]/text()'</span>).extract()</div><div class="line">        item[<span class="string">'description'</span>] = response.xpath(<span class="string">'//td[@id="item_description"]/text()'</span>).extract()</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<blockquote>
+<p>该spider将从example.com的首页开始爬取，获取category以及item的链接并对后者使用 parse_item 方法。 对于每个item response，将使用XPath从HTML中提取一些数据，并使用它填充Item。</p>
+</blockquote>
+<h1 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h1><p>为了更好的理解，我们来看看实际案例中<code>Rules</code>如何使用</p>
+<h2 id="豆瓣应用"><a href="#豆瓣应用" class="headerlink" title="豆瓣应用"></a>豆瓣应用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">rules = [Rule(LinkExtractor(allow=(<span class="string">r'https://movie.douban.com/top250\?start=\d+.*'</span>))),</div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'https://movie.douban.com/subject/\d+'</span>)),</div><div class="line">            callback=<span class="string">'parse_item'</span>, follow=<span class="keyword">False</span>)</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>如果接触过<code>django</code>，那么可以发现这个规则与<code>django</code>的路由系统十分相似（django都已经忘完了 -_-！），其实这里使用的正则匹配。</p>
+<p>使用 <code>r&#39;https://movie.douban.com/top250\?start=\d+.*&#39;</code>来匹配翻页链接，如：</p>
+<ul>
+<li><a href="https://movie.douban.com/top250?start=25&amp;filter=" target="_blank" rel="external">https://movie.douban.com/top250?start=25&amp;filter=</a></li>
+<li><a href="https://movie.douban.com/top250?start=50&amp;filter=" target="_blank" rel="external">https://movie.douban.com/top250?start=50&amp;filter=</a></li>
+</ul>
+<p>使用<code>https://movie.douban.com/subject/\d+</code>来匹配具体电影的链接，如：</p>
+<ul>
+<li><a href="https://movie.douban.com/subject/1292052/" target="_blank" rel="external">https://movie.douban.com/subject/1292052/</a></li>
+<li><a href="https://movie.douban.com/subject/1291546/" target="_blank" rel="external">https://movie.douban.com/subject/1291546/</a></li>
+</ul>
+<h2 id="链家应用"><a href="#链家应用" class="headerlink" title="链家应用"></a>链家应用</h2><p>爬虫的通常需要在一个网页里面爬去其他的链接，然后一层一层往下爬，scrapy提供了LinkExtractor类用于对网页链接的提取，使用LinkExtractor需要使用<code>CrawlSpider</code>爬虫类中，<code>CrawlSpider</code>与<code>Spider</code>相比主要是多了<code>rules</code>，可以添加一些规则，先看下面这个例子，爬取链家网的链接</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LianjiaSpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">"lianjia"</span></div><div class="line"></div><div class="line">    allowed_domains = [<span class="string">"lianjia.com"</span>]</div><div class="line"></div><div class="line">    start_urls = [</div><div class="line">        <span class="string">"http://bj.lianjia.com/ershoufang/"</span></div><div class="line">    ]</div><div class="line"></div><div class="line">    rules = [</div><div class="line">        <span class="comment"># 匹配正则表达式,处理下一页</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">r'http://bj.lianjia.com/ershoufang/pg\s+$'</span>,)), callback=<span class="string">'parse_item'</span>),</div><div class="line"></div><div class="line">        <span class="comment"># 匹配正则表达式,结果加到url列表中,设置请求预处理函数</span></div><div class="line">        <span class="comment"># Rule(FangLinkExtractor(allow=('http://www.lianjia.com/client/', )), follow=True, process_request='add_cookie')</span></div><div class="line">    ]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="comment"># 这里与之前的parse方法一样，处理</span></div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>同样的，使用<code>r&#39;http://bj.lianjia.com/ershoufang/pg\s+$&#39;</code>来匹配下一页链接，如：</p>
+<ul>
+<li><a href="https://bj.lianjia.com/ershoufang/pg2/" target="_blank" rel="external">https://bj.lianjia.com/ershoufang/pg2/</a></li>
+<li><a href="https://bj.lianjia.com/ershoufang/pg3/" target="_blank" rel="external">https://bj.lianjia.com/ershoufang/pg3/</a></li>
+</ul>
+<p>还可以使用 <code>r&#39;https://bj.lianjia.com/ershoufang/\d+.html&#39;</code>来匹配详情页链接，如：</p>
+<ul>
+<li><a href="https://bj.lianjia.com/ershoufang/101102126888.html" target="_blank" rel="external">https://bj.lianjia.com/ershoufang/101102126888.html</a></li>
+<li><a href="https://bj.lianjia.com/ershoufang/101100845676.html" target="_blank" rel="external">https://bj.lianjia.com/ershoufang/101100845676.html</a></li>
+</ul>
+<h1 id="学习参数"><a href="#学习参数" class="headerlink" title="学习参数"></a>学习参数</h1><h2 id="Rule对象"><a href="#Rule对象" class="headerlink" title="Rule对象"></a>Rule对象</h2><p>Role对象有下面参数</p>
+<ul>
+<li><code>link_extractor</code>：链接提取规则</li>
+<li><code>callback</code>：link_extractor提取的链接的请求结果的回调</li>
+<li><code>cb_kwargs</code>：附加参数，可以在回调函数中获取到</li>
+<li><code>follow</code>：表示提取的链接请求完成后是否还要应用当前规则（boolean），如果为False则不会对提取出来的网页进行进一步提取，默认为False</li>
+<li><code>process_links</code>：处理所有的链接的回调，用于处理从response提取的links，通常用于过滤（参数为link列表）</li>
+<li><code>process_request</code>：链接请求预处理（添加header或cookie等）</li>
+</ul>
+<h2 id="LinkExtractor"><a href="#LinkExtractor" class="headerlink" title="LinkExtractor"></a>LinkExtractor</h2><p>LinkExtractor常用的参数有：</p>
+<ul>
+<li><code>allow</code>：提取满足正则表达式的链接</li>
+<li><code>deny</code>：排除正则表达式匹配的链接（优先级高于allow）</li>
+<li><code>allow_domains</code>：允许的域名（可以是str或list）</li>
+<li><code>deny_domains</code>：排除的域名（可以是str或list）</li>
+<li><code>restrict_xpaths</code>：提取满足XPath选择条件的链接（可以是str或list）</li>
+<li><code>restrict_css</code>：提取满足css选择条件的链接（可以是str或list）</li>
+<li><code>tags</code>：提取指定标签下的链接，默认从a和area中提取（可以是str或list）</li>
+<li><code>attrs</code>：提取满足拥有属性的链接，默认为href（类型为list）</li>
+<li><code>unique</code>：链接是否去重（类型为boolean）</li>
+<li><code>process_value</code>：值处理函数（优先级大于allow）</li>
+</ul>
+<p>关于LinkExtractor的详细参数介绍见<a href="https://doc.scrapy.org/en/latest/topics/link-extractors.html#module-scrapy.linkextractors.lxmlhtml" target="_blank" rel="external">官网</a></p>
+<blockquote>
+<p>注意：在编写抓取Spider规则时，避免使用<code>parse</code>作为回调，因为<code>CrawlSpider</code>使用<code>parse</code>方法自己实现其逻辑。因此，如果你覆盖<code>parse</code>方法，爬行<code>Spider</code>将不再工作。</p>
+</blockquote>
+<p>最后说一个自己犯过的低级错误，我用Scrapy有个习惯，创建一个项目之后，直接<code>cd</code>目录，然后使用<code>genspider</code>命令，然后。。</p>
+<figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">D:<span class="symbol">\B</span>ackup<span class="symbol">\桌</span>面</div><div class="line">λ scrapy startproject example</div><div class="line">New Scrapy project 'example', using template directory 'c:<span class="symbol">\\</span>users<span class="symbol">\\</span>administrator<span class="symbol">\\</span>appdata<span class="symbol">\\</span>local<span class="symbol">\\</span>programs<span class="symbol">\\</span>python<span class="symbol">\\</span>python36<span class="symbol">\\</span>lib<span class="symbol">\\</span>site-packages<span class="symbol">\\</span>scrapy<span class="symbol">\\</span>templates<span class="symbol">\\</span>project', created in:</div><div class="line">    D:<span class="symbol">\B</span>ackup<span class="symbol">\桌</span>面<span class="symbol">\e</span>xample</div><div class="line"></div><div class="line">You can start your first spider with:</div><div class="line">    cd example</div><div class="line">    scrapy genspider example example.com</div><div class="line"></div><div class="line">D:<span class="symbol">\B</span>ackup<span class="symbol">\桌</span>面</div><div class="line">λ cd example</div><div class="line"></div><div class="line">D:<span class="symbol">\B</span>ackup<span class="symbol">\桌</span>面<span class="symbol">\e</span>xample</div><div class="line">λ scrapy genspider em example.com</div><div class="line">Created spider 'em' using template 'basic' in module:</div><div class="line">  example.spiders.em</div></pre></td></tr></table></figure>
+<p>然后我的<code>em.py</code>就变成了这样：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">EmSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">'em'</span></div><div class="line">    allowed_domains = [<span class="string">'example.com'</span>]</div><div class="line">    start_urls = [<span class="string">'http://example.com/'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>注意，这个时候是不能使用<code>Rules</code>方法的，因为object不对，应该是</p>
+<p><code>class EmSpider(CrawlSpider)</code></p>
+<p>而不是<code>class EmSpider(scrapy.Spider):</code></p>
+<p>共勉！！！</p>
+<p>下一节应该会讲到Scrapy中各个组件的作用，以及这张神图</p>
+<p><img src="http://jbcdn2.b0.upaiyun.com/2016/10/c24dade2ab6bc0143a2abc9d271136d0.png" alt=""></p>
+<h1 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h1><ul>
+<li><a href="http://python.usyiyi.cn/documents/scrapy_12/topics/spiders.html#crawlspider-example" target="_blank" rel="external">CrawlSpider示例</a></li>
+<li><a href="https://segmentfault.com/a/1190000007073049#articleHeader14" target="_blank" rel="external">scrapy学习笔记</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十九篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ALWvu6F.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Scrapy" scheme="https://zhangslob.github.io/categories/Scrapy/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
+    
+      <category term="Rules" scheme="https://zhangslob.github.io/tags/Rules/"/>
+    
+  </entry>
   
   <entry>
     <title>统计学学习笔记（二）数据整理与展示</title>
@@ -2028,9 +2136,9 @@ hexo deploy #部署发布
     </summary>
     
     
-      <category term="黑魔法" scheme="https://zhangslob.github.io/tags/%E9%BB%91%E9%AD%94%E6%B3%95/"/>
-    
       <category term="个人博客" scheme="https://zhangslob.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
+    
+      <category term="黑魔法" scheme="https://zhangslob.github.io/tags/%E9%BB%91%E9%AD%94%E6%B3%95/"/>
     
       <category term="Markdown语法" scheme="https://zhangslob.github.io/tags/Markdown%E8%AF%AD%E6%B3%95/"/>
     
