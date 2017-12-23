@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2017-12-20T14:40:46.728Z</updated>
+  <updated>2017-12-23T13:48:09.728Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,101 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>采集方案策略之App抓包</title>
+    <link href="https://zhangslob.github.io/2017/12/23/%E9%87%87%E9%9B%86%E6%96%B9%E6%A1%88%E7%AD%96%E7%95%A5%E4%B9%8BApp%E6%8A%93%E5%8C%85/"/>
+    <id>https://zhangslob.github.io/2017/12/23/采集方案策略之App抓包/</id>
+    <published>2017-12-23T13:40:26.000Z</published>
+    <updated>2017-12-23T13:48:09.728Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十二篇原创文章
+</code></pre><p><img src="https://i.imgur.com/NRBPj4t.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="采集方案策略设计"><a href="#采集方案策略设计" class="headerlink" title="采集方案策略设计"></a>采集方案策略设计</h1><p>在群里看到有人询问饿了么的参数，正好感兴趣，就来时间一番。</p>
+<p>这里引用下大佬的一段话：</p>
+<p>首先大的地方，我们想抓取某个数据源，我们要知道大概有哪些路径可以获取到数据源，基本上无外乎三种：</p>
+<ul>
+<li>PC端网站</li>
+<li>针对移动设备响应式设计的网站（也就是很多人说的H5, 虽然不一定是H5）；</li>
+<li>移动App</li>
+</ul>
+<p>原则是能抓移动App的，最好抓移动App，如果有针对移动设备优化的网站，就抓针对移动设备优化的网站，最后考虑PC网站。因为移动App基本都是API很简单，而移动设备访问优化的网站一般来讲都是结构简单清晰的HTML，而PC网站自然是最复杂的了；<br>针对PC端网站和移动网站的做法一样，分析思路可以一起讲，移动App单独分析。</p>
+<p>其实很多网页都有移动端，像微博，我知道这三个：</p>
+<ol>
+<li>weibo.com</li>
+<li>weibo.cn</li>
+<li>m.weibo.cn</li>
+</ol>
+<p>最简单的当然是第二种了，对于今天的受害者——饿了么来说，当然，首选也是移动端。</p>
+<h1 id="饿了么抓包分析"><a href="#饿了么抓包分析" class="headerlink" title="饿了么抓包分析"></a>饿了么抓包分析</h1><p>这里抓包工具选择<strong>Fiddler</strong>，这里不讲如何配置，具体参考 <a href="https://www.cnblogs.com/abao0/p/7008995.html" target="_blank" rel="external">用Fiddler对Android应用进行抓包</a></p>
+<p>下面打开手机的饿了么，原本以为会有数据，结果，竟然是这样</p>
+<p><img src="https://i.imgur.com/KmL5L9d.png" alt=""></p>
+<p>去询问了专业人士，了解了有些应用不允许用户抓包，会有相应的限制。好吧，这就能难倒我了吗？？</p>
+<p>当我切换到<strong>发现</strong>类目下，发现有奇怪的提示</p>
+<p><img src="https://i.imgur.com/zF1e1iV.png" alt=""></p>
+<p>在疯狂点击<strong>继续访问</strong>后，我终于可以正常访问了。</p>
+<p><img src="https://i.imgur.com/DwDXNM8.jpg" alt=""></p>
+<p>那么就可以在Fiddler中查看对应的数据了。这里直接把接口展示出来：<a href="https://restapi.ele.me/shopping/v1/find/recommendation?offset=20&amp;limit=40&amp;latitude=39.93245&amp;longitude=116.50097" target="_blank" rel="external">饿了么接口</a></p>
+<p>浏览器直接打开，貌似没有啥验证</p>
+<p><img src="https://i.imgur.com/S2IcQvP.png" alt=""></p>
+<p>具体分析里面的参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">offset:20</div><div class="line">limit:40</div><div class="line">latitude:39.93245</div><div class="line">longitude:116.50097</div></pre></td></tr></table></figure>
+<p>有4个参数， <code>offset</code> 和 <code>limit</code> 就很常见了，翻页和每页的数据，至于 <code>latitude</code> 和 <code>longitude</code> 仔细观察就知道，经纬度嘛，把它该修改为你想采集的位置的经纬度就好。</p>
+<p>抓包分析之后，接下来采集数据就很简单了，数据字段标识：</p>
+<p><code>food_id</code> 是商品ID，接口是：<code>https://www.ele.me/restapi/shopping/v1/foods?food_ids%5B%5D=712859937</code></p>
+<p>打开此链接就是商品详情内容</p>
+<p><img src="https://i.imgur.com/n5zMOEl.png" alt=""></p>
+<p><img src="https://i.imgur.com/YzUyohN.jpg" alt=""></p>
+<blockquote>
+<p>可爱的小笼包</p>
+</blockquote>
+<p><code>restaurant_id</code> 是店铺ID，接口 <code>https://www.ele.me/shop/157458556</code></p>
+<p>打开就是店铺详情页，当然，也有移动端：<code>https://h5.ele.me/shop/#id=157458556</code></p>
+<p>这样进行商品采集就比较轻松了。</p>
+<p>好饿，容我先点个外卖。</p>
+<hr>
+<h1 id="微信公众号抓包分析"><a href="#微信公众号抓包分析" class="headerlink" title="微信公众号抓包分析"></a>微信公众号抓包分析</h1><p>既然都看了饿了么，那也来看看微信吧。</p>
+<p>使用Fiddler抓出来的curl命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -k -i --raw -o 0.dat &quot;https://mp.weixin.qq.com/mp/profile_ext?action=getmsg&amp;__biz=MzA4NzA1OTc5Nw==&amp;f=json&amp;offset=20&amp;count=10&amp;appmsg_token=936_iWFH%%252F9haOTPb6GApBj6wXjPGKg9eeU7slzmH2Q~~&quot; -H &quot;User-Agent: Mozilla/5.0 (Linux; Android 7.1.1; MI 6 Build/NMF26X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043632 Safari/537.36 MicroMessenger/6.5.23.1180 NetType/WIFI Language/zh_CN&quot; -H &quot;Accept-Encoding: gzip, deflate&quot; -H &quot;Accept: */*&quot; -H &quot;Connection: keep-alive&quot; -H &quot;Host: mp.weixin.qq.com&quot; -H &quot;X-Requested-With: XMLHttpRequest&quot; -H &quot;Referer: https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzA4NzA1OTc5Nw==&amp;scene=124&amp;devicetype=android-25&amp;version=26051732&amp;lang=zh_CN&amp;nettype=WIFI&amp;a8scene=3&amp;pass_ticket=lLCqBwwrZ581bGDqrEkRsgjKkWYNPdUBs9grSaFjd79hSX0mdvR8%%2BLUbHoWGGBEp&amp;wx_header=1&quot; -H &quot;Accept-Language: zh-CN,en-US;q=0.8&quot; -H &quot;Cookie: pgv_pvi=4831552512; pgv_si=s989715456; sd_userid=18991505459750403; sd_cookie_crttime=1505459750403; tvfe_boss_uuid=a8e4e4f1ab6cd93d; pgv_info=ssid=s8735681072; pgv_pvid=4201362299; rewardsn=8d8b49dfb1811092eefe; wxtokenkey=19643e9f2ee569a10857d365bba88556d220fd33c1a0666b5d028a72b5bcd901; wxuin=838107840; devicetype=android-25; version=26051732; lang=zh_CN; pass_ticket=lLCqBwwrZ581bGDqrEkRsgjKkWYNPdUBs9grSaFjd79hSX0mdvR8+LUbHoWGGBEp; wap_sid2=CMCF0o8DElxUVDVJR3o1ZldpbDlHWWdjQ0xMU3lxM3BWTUozTFFuZFhrUEJaanhoSmZ1aEVncnU0VzFIaWR3QkVVVXFuTUlMTlkxNFZjTnRCMEt1VHJjV3UzQVNOYWdEQUFBfjD6rvjRBTgMQJRO&quot; -H &quot;Q-UA2: QV=3&amp;PL=ADR&amp;PR=WX&amp;PP=com.tencent.mm&amp;PPVN=6.5.23&amp;TBSVC=43602&amp;CO=BK&amp;COVC=043632&amp;PB=GE&amp;VE=GA&amp;DE=PHONE&amp;CHID=0&amp;LCID=9422&amp;MO= MI6 &amp;RL=1080*1920&amp;OS=7.1.1&amp;API=25&quot; -H &quot;Q-GUID: 569ade09b5931656e4f49098113e88cb&quot; -H &quot;Q-Auth: 31045b957cf33acf31e40be2f3e71c5217597676a9729f1b&quot; -H &quot;Content-Type: application/json; charset=UTF-8&quot; -H &quot;Cache-Control: no-cache, must-revalidate&quot; -H &quot;RetKey: 14&quot; -H &quot;LogicRet: 0&quot;</div></pre></td></tr></table></figure>
+<p>直接在浏览器中打开，会提示错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">ret: -3,</div><div class="line">errmsg: &quot;no session&quot;,</div><div class="line">cookie_count: 0</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用postman分析，最后Python的代码是</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">url = <span class="string">"https://mp.weixin.qq.com/mp/profile_ext"</span></div><div class="line"></div><div class="line">querystring = &#123;<span class="string">"action"</span>:<span class="string">"getmsg"</span>,<span class="string">"__biz"</span>:<span class="string">"MzA4NzA1OTc5Nw=="</span>,<span class="string">"f"</span>:<span class="string">"json"</span>,<span class="string">"offset"</span>:<span class="string">"20"</span>,<span class="string">"count"</span>:<span class="string">"10"</span>,<span class="string">"appmsg_token"</span>:<span class="string">"936_iWFH%2F9haOTPb6GApBj6wXjPGKg9eeU7slzmH2Q~~"</span>&#125;</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'user-agent'</span>: <span class="string">"Mozilla/5.0 (Linux; Android 7.1.1; MI 6 Build/NMF26X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/53.0.2785.49 Mobile MQQBrowser/6.2 TBS/043632 Safari/537.36 MicroMessenger/6.5.23.1180 NetType/WIFI Language/zh_CN"</span>,</div><div class="line">    <span class="string">'accept-encoding'</span>: <span class="string">"gzip, deflate"</span>,</div><div class="line">    <span class="string">'accept'</span>: <span class="string">"*/*"</span>,</div><div class="line">    <span class="string">'connection'</span>: <span class="string">"keep-alive"</span>,</div><div class="line">    <span class="string">'host'</span>: <span class="string">"mp.weixin.qq.com"</span>,</div><div class="line">    <span class="string">'x-requested-with'</span>: <span class="string">"XMLHttpRequest"</span>,</div><div class="line">    <span class="string">'referer'</span>: <span class="string">"https://mp.weixin.qq.com/mp/profile_ext?action=home&amp;__biz=MzA4NzA1OTc5Nw==&amp;scene=124&amp;devicetype=android-25&amp;version=26051732&amp;lang=zh_CN&amp;nettype=WIFI&amp;a8scene=3&amp;pass_ticket=lLCqBwwrZ581bGDqrEkRsgjKkWYNPdUBs9grSaFjd79hSX0mdvR8%%2BLUbHoWGGBEp&amp;wx_header=1"</span>,</div><div class="line">    <span class="string">'accept-language'</span>: <span class="string">"zh-CN,en-US;q=0.8"</span>,</div><div class="line">    <span class="string">'cookie'</span>: <span class="string">"pgv_pvi=4831552512; pgv_si=s989715456; sd_userid=18991505459750403; sd_cookie_crttime=1505459750403; tvfe_boss_uuid=a8e4e4f1ab6cd93d; pgv_info=ssid=s8735681072; pgv_pvid=4201362299; rewardsn=8d8b49dfb1811092eefe; wxtokenkey=19643e9f2ee569a10857d365bba88556d220fd33c1a0666b5d028a72b5bcd901; wxuin=838107840; devicetype=android-25; version=26051732; lang=zh_CN; pass_ticket=lLCqBwwrZ581bGDqrEkRsgjKkWYNPdUBs9grSaFjd79hSX0mdvR8+LUbHoWGGBEp; wap_sid2=CMCF0o8DElxUVDVJR3o1ZldpbDlHWWdjQ0xMU3lxM3BWTUozTFFuZFhrUEJaanhoSmZ1aEVncnU0VzFIaWR3QkVVVXFuTUlMTlkxNFZjTnRCMEt1VHJjV3UzQVNOYWdEQUFBfjD6rvjRBTgMQJRO"</span>,</div><div class="line">    <span class="string">'q-ua2'</span>: <span class="string">"QV=3&amp;PL=ADR&amp;PR=WX&amp;PP=com.tencent.mm&amp;PPVN=6.5.23&amp;TBSVC=43602&amp;CO=BK&amp;COVC=043632&amp;PB=GE&amp;VE=GA&amp;DE=PHONE&amp;CHID=0&amp;LCID=9422&amp;MO= MI6 &amp;RL=1080*1920&amp;OS=7.1.1&amp;API=25"</span>,</div><div class="line">    <span class="string">'q-guid'</span>: <span class="string">"569ade09b5931656e4f49098113e88cb"</span>,</div><div class="line">    <span class="string">'q-auth'</span>: <span class="string">"31045b957cf33acf31e40be2f3e71c5217597676a9729f1b"</span>,</div><div class="line">    <span class="string">'content-type'</span>: <span class="string">"application/json; charset=UTF-8"</span>,</div><div class="line">    <span class="string">'cache-control'</span>: <span class="string">"no-cache"</span>,</div><div class="line">    <span class="string">'retkey'</span>: <span class="string">"14"</span>,</div><div class="line">    <span class="string">'logicret'</span>: <span class="string">"0"</span>,</div><div class="line">    &#125;</div><div class="line"></div><div class="line">response = requests.request(<span class="string">"GET"</span>, url, headers=headers, params=querystring, verify=<span class="keyword">False</span>)</div><div class="line"></div><div class="line">print(response.json())</div></pre></td></tr></table></figure>
+<p>这个时候的参数有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">action:getmsg</div><div class="line">__biz:MzA4NzA1OTc5Nw==</div><div class="line">f:json</div><div class="line">offset:20</div><div class="line">count:10</div><div class="line">appmsg_token:936_iWFH%%252F9haOTPb6GApBj6wXjPGKg9eeU7slzmH2Q~~</div></pre></td></tr></table></figure>
+<p>目前还不清楚这些参数的作用，再抓一个试试</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">action:getmsg</div><div class="line">__biz:MjM5NzI3NDg4MA==</div><div class="line">f:json</div><div class="line">offset:10</div><div class="line">count:10</div><div class="line">appmsg_token:936_kFNdYU3DJ%%252B%%252BVfHfEGImXqB5DMbIeqtSR75ZFZQ~~</div></pre></td></tr></table></figure>
+<p>估计就是 <code>__biz</code> 和 <code>appmsg_token</code> 这两个参数对应不同的公众号</p>
+<p>对了，上面的代码会出现一个问题</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">InsecureRequestWarning: Unverified HTTPS request <span class="keyword">is</span> being made. Adding certificate verification <span class="keyword">is</span> strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html<span class="comment">#ssl-warnings</span></div><div class="line">  InsecureRequestWarning)</div></pre></td></tr></table></figure>
+<p>解决方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> requests.packages <span class="keyword">import</span> urllib3</div><div class="line">urllib3.disable_warnings()</div></pre></td></tr></table></figure>
+<h1 id="App的分析"><a href="#App的分析" class="headerlink" title="App的分析"></a>App的分析</h1><p>App类使用的工具是Fidder，手机和电脑在一个局域网内，先用Fidder配置好端口，然后手机设置代理，ip为电脑的ip，端口为设置的端口，然后如果手机上请求网络内容时，Fidder会显示相应地请求，那么就ok了，分析的大体逻辑基本一致，限制会相对少很多，但是也有几种情况需要注意：</p>
+<ul>
+<li>加密，App有时候也有一些加密的字段，这个时候,一般来讲都会进行反编译进行分析，找到对应的代码片段，逆推出加密方法；</li>
+<li>gzip压缩或者base64编码，base64编码的辨别度较高，有时候数据被gzip压缩了，不过Charles都是有自动解密的；</li>
+<li>https证书，有的https请求会验证证书, Fidder提供了证书，可以在官网找到，手机访问，然后信任添加就可以。</li>
+</ul>
+<p>最后，<strong>祝大家圣诞节快乐</strong></p>
+<p><img src="https://i.imgur.com/zQTLLCy.gif" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十二篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/NRBPj4t.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="抓包" scheme="https://zhangslob.github.io/tags/%E6%8A%93%E5%8C%85/"/>
+    
+  </entry>
   
   <entry>
     <title>【RNG vs SKT】弹幕的自然语言的初步分析</title>
@@ -2292,169 +2387,6 @@ print(FirstReverse(input()))
       <category term="Python语法" scheme="https://zhangslob.github.io/tags/Python%E8%AF%AD%E6%B3%95/"/>
     
       <category term="切片介绍" scheme="https://zhangslob.github.io/tags/%E5%88%87%E7%89%87%E4%BB%8B%E7%BB%8D/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>教你免费搭建个人博客，Hexo&amp;Github</title>
-    <link href="https://zhangslob.github.io/2017/02/28/%E6%95%99%E4%BD%A0%E5%85%8D%E8%B4%B9%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%EF%BC%8CHexo-Github/"/>
-    <id>https://zhangslob.github.io/2017/02/28/教你免费搭建个人博客，Hexo-Github/</id>
-    <published>2017-02-28T12:01:50.000Z</published>
-    <updated>2017-03-06T11:15:58.554Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二篇原创文章
-</code></pre><blockquote>
-<p>说在前面：</p>
-<p>为什么自己搭建博客，知乎不行吗？<br>可以看看刘未鹏<a href="http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/" target="_blank" rel="external"> | Mind Hacks</a>，前些天发布了某篇文章应该是被人举报了，结果知乎就删了。有自己的博客自由，自在。更多请看为什么要自建博客？<a href="https://www.zhihu.com/question/19916345" target="_blank" rel="external">https://www.zhihu.com/question/19916345</a><br><a id="more"></a></p>
-</blockquote>
-<h1 id="说在前面："><a href="#说在前面：" class="headerlink" title="说在前面："></a>说在前面：</h1><ul>
-<li><p>为什么自己搭建博客，知乎不行吗？<br>可以看看刘未鹏<a href="http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/" target="_blank" rel="external"> | Mind Hacks</a>，前些天发布了某篇文章应该是被人举报了，结果知乎就删了。有自己的博客自由，自在。更多请看为什么要自建博客？<a href="https://www.zhihu.com/question/19916345" target="_blank" rel="external">https://www.zhihu.com/question/19916345</a></p>
-</li>
-<li><p>我用了多久才完成博客的搭建？<br>不瞒您说，我花了有3天时间。对着别人的“<strong>5分钟 搭建免费个人博客</strong>”花了3天才完成，中间遇到了无数困难。查看很多资料，所以当你遇到困难，别放弃，仔细看文档或资料。</p>
-</li>
-<li><p>为了发布这篇教程，重新注册了Github，崔斯特的博客<a href="https://zhangslob.github.io/">https://zhangslob.github.io/</a>这个是我自己的博客，崔斯特测试所用博客<a href="https://zhihuya.github.io/" target="_blank" rel="external">https://zhihuya.github.io/</a>这个是我一边写这篇教程一边搭建的。所以如果你也和我一样，喜欢自由，喜欢捣腾，那就来吧。</p>
-</li>
-</ul>
-<ul>
-<li>系统：windows 7 64位，编辑器：sublime text3，控制台：cmder<br>搭建博客使用hexo+Github</li>
-</ul>
-<p><img src="http://i.imgur.com/KIXk5P1.jpg" alt=""></p>
-<h1 id="什么是-Hexo？"><a href="#什么是-Hexo？" class="headerlink" title="什么是 Hexo？"></a>什么是 Hexo？</h1><p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="external">https://hexo.io/zh-cn/docs/</a></p>
-<p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<h1 id="一、配置Github"><a href="#一、配置Github" class="headerlink" title="一、配置Github"></a>一、配置Github</h1><p>首先注册、登录 <a href="https://github.com/" target="_blank" rel="external">https://github.com/</a></p>
-<p>记住自己的Username（很重要）</p>
-<p>然后右上角选择 Create a new repository <a href="https://github.com/new" target="_blank" rel="external">https://github.com/new</a></p>
-<p>Repository name （填自己的名字） <strong>yourname.github.io</strong>(yourname与你的注册用户名一致,这个就是你博客的域名了)</p>
-<p>例如，我的域名是github.com/zhihuya，就填入zhihuya.github.io。成功后出现下面的画面</p>
-<p><img src="http://i.imgur.com/JNWXHHS.jpg" alt=""></p>
-<h1 id="二、环境安装（node、git）"><a href="#二、环境安装（node、git）" class="headerlink" title="二、环境安装（node、git）"></a>二、环境安装（node、git）</h1><p>1、安装 Node.js <a href="https://nodejs.org/en/" target="_blank" rel="external">https://nodejs.org/en/</a></p>
-<p>2、安装 Git <a href="https://github.com/waylau/git-for-win" target="_blank" rel="external">https://github.com/waylau/git-for-win</a></p>
-<p>Git教程 <a href="https://github.com/waylau/git-for-win" target="_blank" rel="external">https://github.com/waylau/git-for-win</a>廖雪峰老师的教程，非常好。</p>
-<p>3、安装完成后，在开始菜单里找到“Git”-&gt;“Git Bash”，名称和邮箱是Github上的</p>
-<p><img src="http://i.imgur.com/FAVYz0C.jpg" alt=""></p>
-<p>4、安装 Hexo。所有必备的应用程序安装完成后，即可使用 npm 安装 Hexo。</p>
-<pre><code>$ npm install -g hexo-cli
-</code></pre><p><img src="http://i.imgur.com/xWjp6U3.jpg" alt=""></p>
-<p>（使用的cmder，超级好用~~。等待时间可能有点长）</p>
-<p>好了到这一步我们环境全部安装好了。</p>
-<h1 id="三、设置"><a href="#三、设置" class="headerlink" title="三、设置"></a>三、设置</h1><p>在电脑F盘（自己随意）目录下新建文件夹 test，进入test，按住Shift键点击鼠标右键</p>
-<p><img src="http://i.imgur.com/jOekzIE.png" alt=""></p>
-<p>因为我有安装Cmder，没有安装的点击“在此处打开命令窗口”，输入</p>
-<pre><code>hexo init blog
-</code></pre><p>稍微等待下，速度有点慢。成功提示</p>
-<pre><code>INFO  Start blogging with Hexo!
-</code></pre><p>因为你初始化hexo 之后source目录下自带一篇hello world文章, 所以直接执行下方命令</p>
-<pre><code>$ hexo generate
-# 启动本地服务器
-$ hexo server
-# 在浏览器输入 http://localhost:4000/就可以看见网页和模板了
-INFO  Start processing
-INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.
-</code></pre><p>访问<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a>，便可以看到网站初步的模样，不要激动，我们还要把网页发布到Github上去。</p>
-<p><img src="http://i.imgur.com/wk2ybMK.jpg" alt=""></p>
-<p>重新打开CMD，输入：</p>
-<pre><code>ssh-keygen -t rsa -C &quot;Github的注册邮箱地址&quot;
-</code></pre><p>一路Enter过来就好，得到信息：</p>
-<pre><code>Your public key has been saved in /c/Users/user/.ssh/id_rsa.pub.
-</code></pre><p>找到该文件，打开（sublime text），Ctrl + a复制里面的所有内容，然后进入Sign in to GitHub：<a href="https://github.com/settings/ssh" target="_blank" rel="external">https://github.com/settings/ssh</a></p>
-<p>New SSH key ——Title：blog —— Key：输入刚才复制的—— Add SSH key</p>
-<h1 id="四、配置博客"><a href="#四、配置博客" class="headerlink" title="四、配置博客"></a>四、配置博客</h1><p>在blog目录下，用sublime打开_config.yml文件，修改参数信息</p>
-<p><strong>特别提醒，在每个参数的：后都要加一个空格</strong></p>
-<p>修改网站相关信息</p>
-<pre><code>title: 崔斯特测试所用博客
-subtitle: 副标题
-description: 网页描述
-author: 崔斯特
-language: zh-CN
-timezone: Asia/Shanghai
-</code></pre><p>配置部署（我的是zhihuya，修改成自己的）</p>
-<pre><code>deploy: 
-  type: git
-  repo: https://github.com/zhihuya/zhihuya.github.io.git
-  branch: master
-</code></pre><h1 id="五、发表文章"><a href="#五、发表文章" class="headerlink" title="五、发表文章"></a>五、发表文章</h1><p>在CMD中输入</p>
-<pre><code>$ hexo new &quot;崔斯特测试文章&quot;
-INFO  Created: F:\test\blog\source\_posts\崔斯特测试文章.md
-</code></pre><p>找到该文章，打开，使用Markdown语法，该语法介绍可以查看<a href="https://zhangslob.github.io/2017/02/26/%E5%88%A9%E7%94%A8HEXO%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2/">https://zhangslob.github.io/2017/02/26/%E5%88%A9%E7%94%A8HEXO%E6%90%AD%E5%BB%BA%E7%9A%84%E5%8D%9A%E5%AE%A2/</a></p>
-<pre><code>---
-title: 崔斯特测试文章
-date: 2017-02-28 13:03:44
-tags:
----
-这是一篇测试文章，欢迎关注作者博客[1]: https://zhangslob.github.io/
-</code></pre><p>保存，然后执行下列步骤：</p>
-<pre><code>F:\test\blog
-$ hexo clean
-INFO  Deleted database.
-INFO  Deleted public folder.
-
-F:\test\blog
-$ hexo generate
-INFO  Start processing
-INFO  Files loaded in 1.48 s
-#省略
-INFO  29 files generated in 4.27 s
-
-F:\test\blog
-$ hexo server
-INFO  Start processing
-INFO  Hexo is running at http://localhost:4000/. Press Ctrl+C to stop.
-</code></pre><p>这个时候，打开<a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a>，发现刚才的文章已经成功了</p>
-<p><img src="http://i.imgur.com/fGVNxkn.jpg" alt=""></p>
-<p>最后一步，发布到网上，执行：</p>
-<pre><code>F:\test\blog
-$ hexo deploy
-INFO  Deploying: git
-INFO  Clearing .deploy_git folder...
-INFO  Copying files from public folder...
-#省略
-</code></pre><p><img src="http://i.imgur.com/kKRV0UB.jpg" alt=""></p>
-<p>其中会跳出Github登录，直接登录，如果没有问题输入zhihuya（换成你的）.github.io/</p>
-<p>崔斯特测试所用博客<a href="https://zhihuya.github.io/" target="_blank" rel="external">https://zhihuya.github.io/</a></p>
-<p>然后就可以看到已经发布了</p>
-<p><img src="http://i.imgur.com/g9wtZVk.jpg" alt=""></p>
-<h1 id="六、总结"><a href="#六、总结" class="headerlink" title="六、总结"></a>六、总结</h1><p>发布文章的步骤：</p>
-<p>1、hexo new 创建文章</p>
-<p>2、Markdown语法编辑文章</p>
-<p>3、部署（所有打开CMD都是在blog目录下）</p>
-<pre><code>hexo clean #清除缓存 网页正常情况下可以忽略此条命令
-hexo generate #生成
-hexo server #启动服务预览，非必要，可本地浏览网页
-hexo deploy #部署发布
-</code></pre><p>简写Tips：</p>
-<blockquote>
-<p>hexo n “我的博客” == hexo new “我的博客” #新建文章</p>
-<p>hexo p == hexo publish</p>
-<p>hexo g == hexo generate#生成</p>
-<p>hexo s == hexo server #启动服务预览</p>
-<p>hexo d == hexo deploy#部署</p>
-</blockquote>
-<p>如果在执行 hexo deploy 后,出现 error deployer not found:github 的错误，执行：</p>
-<pre><code>npm install hexo-deployer-git --save
-</code></pre><p>出错是正常的，出错了自己先百度或google，实在不知道的可以询问我。</p>
-<p>托管的话不仅有github可以用，还有个国内的<a href="https://coding.net/" target="_blank" rel="external">https://coding.net/</a>可选</p>
-<hr>
-<p>到这里已经完成了博客的搭建，但是还有很多需要设置和调整的。这是我的博客，也许你会发现，我和刚才搭建的不一样，因为我修改了博客主题，简洁、优美。</p>
-<p>主题介绍<a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="external">https://github.com/litten/hexo-theme-yilia</a></p>
-<p><img src="http://i.imgur.com/ocad5xV.jpg" alt=""></p>
-<p>欢迎大家关注，定会有更多精彩</p>
-<p>知乎<a href="https://www.zhihu.com/people/cuishite" target="_blank" rel="external">https://www.zhihu.com/people/cuishite</a></p>
-<p>博客<a href="https://zhangslob.github.io/">https://zhangslob.github.io/</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
-&lt;p&gt;说在前面：&lt;/p&gt;
-&lt;p&gt;为什么自己搭建博客，知乎不行吗？&lt;br&gt;可以看看刘未鹏&lt;a href=&quot;http://mindhacks.cn/2009/02/15/why-you-should-start-blogging-now/&quot;&gt; | Mind Hacks&lt;/a&gt;，前些天发布了某篇文章应该是被人举报了，结果知乎就删了。有自己的博客自由，自在。更多请看为什么要自建博客？&lt;a href=&quot;https://www.zhihu.com/question/19916345&quot;&gt;https://www.zhihu.com/question/19916345&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="个人博客" scheme="https://zhangslob.github.io/tags/%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/"/>
-    
-      <category term="Hexo&amp;Github" scheme="https://zhangslob.github.io/tags/Hexo-Github/"/>
     
   </entry>
   
