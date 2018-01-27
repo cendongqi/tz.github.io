@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-01-15T13:43:53.655Z</updated>
+  <updated>2018-01-27T10:59:40.517Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>学点算法之字符串的乱序检查</title>
+    <link href="https://zhangslob.github.io/2018/01/27/%E5%AD%A6%E7%82%B9%E7%AE%97%E6%B3%95%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E4%B9%B1%E5%BA%8F%E6%A3%80%E6%9F%A5/"/>
+    <id>https://zhangslob.github.io/2018/01/27/学点算法之字符串的乱序检查/</id>
+    <published>2018-01-27T10:52:56.000Z</published>
+    <updated>2018-01-27T10:59:40.517Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十五篇原创文章
+</code></pre><p>老板，我要做算法工程师！</p>
+<p><img src="https://i.imgur.com/z10Tn6k.jpg" alt=""><br><a id="more"></a></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>字符串的乱序检查。</p>
+<p>一个字符串是另一个字符串的乱序。如果第二个字符串只是第一个的重新排列，例如，’heart’ 和 ‘earth’ 就是乱序字符串。’python’ 和 ‘typhon’ 也是。为了简单起见，我们假设所讨论的两个字符串具有<strong>相等的长度</strong>，并且他们由 26 个小写字母集合组成。我们的目标是写一个布尔函数，它将两个字符串做参数并返回它们是不是回文。</p>
+<h1 id="解法1-检查"><a href="#解法1-检查" class="headerlink" title="解法1:检查"></a>解法1:检查</h1><p>我们对乱序问题的第一个解法是检查第一个字符串是不是出现在第二个字符串中。如果可以检验到每一个字符，那两个字符串一定是回文。可以通过用 None 替换字符来完成检查。但是，由于 Python 字符串是不可变的，所以第一步是将第二个字符串转换为列表。第一个字符串中的每个字符可以通过检查在第二个列表中检查元素是否存在，如果存在，替换成 None。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">anagramSolution1</span><span class="params">(s1,s2)</span>:</span></div><div class="line">    alist = list(s2)</div><div class="line"></div><div class="line">    pos1 = <span class="number">0</span></div><div class="line">    stillOK = <span class="keyword">True</span></div><div class="line"></div><div class="line">    <span class="keyword">while</span> pos1 &lt; len(s1) <span class="keyword">and</span> stillOK:</div><div class="line">        pos2 = <span class="number">0</span></div><div class="line">        found = <span class="keyword">False</span></div><div class="line">        <span class="keyword">while</span> pos2 &lt; len(alist) <span class="keyword">and</span> <span class="keyword">not</span> found:</div><div class="line">            <span class="keyword">if</span> s1[pos1] == alist[pos2]:</div><div class="line">                found = <span class="keyword">True</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                pos2 = pos2 + <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> found:</div><div class="line">            alist[pos2] = <span class="keyword">None</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            stillOK = <span class="keyword">False</span></div><div class="line"></div><div class="line">        pos1 = pos1 + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> stillOK</div><div class="line"></div><div class="line">print(anagramSolution1(<span class="string">'abcd'</span>,<span class="string">'dcba'</span>))</div></pre></td></tr></table></figure>
+<p>s1 的每个字符都会在 s2 中进行最多 n 个字符的迭代</p>
+<p>s2 列表中的 n 个位置将被访问一次来匹配来自 s1 的字符。访问次数可以写成 1 到 n 整数的和，可以写成</p>
+<p><img src="https://xidianwlc.gitbooks.io/python-data-structrue-and-algrothms/content/2.%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/2.4.%E4%B8%80%E4%B8%AA%E4%B9%B1%E5%BA%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A3%80%E6%9F%A5%E7%9A%84%E4%BE%8B%E5%AD%90/assets/2.4.1%20%E6%B1%82%E5%92%8C.png" alt=""></p>
+<p>当 n 变大，n^2 这项占据主导，1/2 可以忽略。所以这个算法复杂度为 O(n^2 )。</p>
+<p><img src="https://wx1.sinaimg.cn/orj360/b04b21b7ly1fnssg4x3mdj20dc0dcgno.jpg" alt=""></p>
+<h1 id="解法2-排序和比较"><a href="#解法2-排序和比较" class="headerlink" title="解法2:排序和比较"></a>解法2:排序和比较</h1><p>另一个解决方案是利用这么一个事实，即使 s1,s2 不同，它们只有由完全相同的字符组成，它们才是回文。所以，如果我们按照字母顺序排列每个字符串，从 a 到 z，如果两个字符串相同，则这两个字符串为回文。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">anagramSolution2</span><span class="params">(s1,s2)</span>:</span></div><div class="line">    alist1 = list(s1)</div><div class="line">    alist2 = list(s2)</div><div class="line"></div><div class="line">    alist1.sort()</div><div class="line">    alist2.sort()</div><div class="line"></div><div class="line">    <span class="keyword">if</span> alist1 == alist2:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">print(anagramSolution2(<span class="string">'abcde'</span>,<span class="string">'edcba'</span>))</div></pre></td></tr></table></figure>
+<p>这个算法比较简单，只用到了排序算法，那么排序算法的复杂度还是多少呢？</p>
+<p>在<a href="https://github.com/qiwsir/algorithm/blob/master/python_sort.md" target="_blank" rel="external">这里</a>找到了答案</p>
+<p>python中的sorted算法，网上有人撰文，说比较低级。其实不然，通过阅读官方文档，发现python中的sorted排序，真的是高大上，用的Timsort算法。什么是Timsort，请看 wiki的解释：<a href="http://en.wikipedia.org/wiki/Timsort" target="_blank" rel="external">http://en.wikipedia.org/wiki/Timsort</a></p>
+<p>另外，国内有一个文档，适当翻译：<a href="http://blog.csdn.net/yangzhongblog/article/details/8184707" target="_blank" rel="external">http://blog.csdn.net/yangzhongblog/article/details/8184707</a>，这里截取一个不同排序算法比较的图示，就明白sorted的威力了。</p>
+<p>从时间复杂度来看，Timsort是威武的。</p>
+<p><img src="https://github.com/qiwsir/algorithm/raw/master/pics/timsort1.png" alt=""></p>
+<p>从空间复杂度来讲，需要的开销在数量大的时候会增大。</p>
+<p><img src="https://github.com/qiwsir/algorithm/raw/master/pics/timsort2.png" alt=""></p>
+<p><img src="https://wx2.sinaimg.cn/orj360/b04b21b7ly1fnssg5nhwuj20dc0dcmz2.jpg" alt=""></p>
+<h1 id="解法3-穷举法"><a href="#解法3-穷举法" class="headerlink" title="解法3: 穷举法"></a>解法3: 穷举法</h1><p>解决这类问题的强力方法是<strong>穷举所有可能性</strong>。</p>
+<p>对于回文检测，我们可以生成 s1 的所有乱序字符串列表，然后查看是不是有 s2。这种方法有一点困难。当 s1 生成所有可能的字符串时，第一个位置有 n 种可能，第二个位置有 n-1 种，第三个位置有 n-3 种，等等。总数为 <code>n∗(n−1)∗(n−2)∗...∗3∗2∗1n∗(n−1)∗(n−2)∗...∗3∗2∗1</code>， 即 <code>n!</code> 。</p>
+<p>虽然一些字符串可能是重复的，程序也不可能提前知道这样，所以他仍然会生成 <code>n!</code> 个字符串。<br>事实证明，n! 比 n^2 增长还快，事实上，如果 s1 有 20个字符长，则将有 <code>20! = 2,432,902,008,176,640,000</code> 个字符串产生。如果我们每秒处理一种可能字符串，那么需要 <code>77,146,816,596</code> 年才能过完整个列表。</p>
+<p>所以当然不会采取这种方案了。</p>
+<p><img src="https://wx2.sinaimg.cn/orj360/b04b21b7ly1fnssg6fej0j20dc0dc40h.jpg" alt=""></p>
+<h1 id="解法4-计数和比较"><a href="#解法4-计数和比较" class="headerlink" title="解法4: 计数和比较"></a>解法4: 计数和比较</h1><p>我们最终解决回文的方法是利用两个乱序字符串具有相同的 a, b, c 等等的事实。</p>
+<p>我们首先计算的是每个字母出现的次数。由于有 26 个可能的字符，我们就用 一个长度为 26 的列表，每个可能的字符占一个位置。每次看到一个特定的字符，就增加该位置的计数器。最后如果两个列表的计数器一样，则字符串为乱序字符串。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">anagramSolution4</span><span class="params">(s1,s2)</span>:</span></div><div class="line">    c1 = [<span class="number">0</span>]*<span class="number">26</span></div><div class="line">    c2 = [<span class="number">0</span>]*<span class="number">26</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s1)):</div><div class="line">        pos = ord(s1[i])-ord(<span class="string">'a'</span>)</div><div class="line">        c1[pos] = c1[pos] + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s2)):</div><div class="line">        pos = ord(s2[i])-ord(<span class="string">'a'</span>)</div><div class="line">        c2[pos] = c2[pos] + <span class="number">1</span></div><div class="line"></div><div class="line">    j = <span class="number">0</span></div><div class="line">    stillOK = <span class="keyword">True</span></div><div class="line">    <span class="keyword">while</span> j&lt;<span class="number">26</span> <span class="keyword">and</span> stillOK:</div><div class="line">        <span class="keyword">if</span> c1[j]==c2[j]:</div><div class="line">            j = j + <span class="number">1</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            stillOK = <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> stillOK</div><div class="line"></div><div class="line">print(anagramSolution4(<span class="string">'apple'</span>,<span class="string">'pleap'</span>))</div></pre></td></tr></table></figure>
+<p>同样，这个方案有多个迭代，但是和第一个解法不一样，它不是嵌套的。两个迭代都是 n, 第三个迭代，比较两个计数列表，需要 26 步，因为有 26 个字母。一共 T(n)=2n+26T(n)=2n+26，即 O(n)，我们找到了一个线性量级的算法解决这个问题。</p>
+<p>如果让我自己来选择，我可能会选第二种，第二种最简单，也最好理解。但是最后的结论表明 <strong>解法4</strong> 才是最优解法，排序固然简单，但是但数量很大的时候，可能远不止我们想的那么简单。</p>
+<p>在结束这个例子之前，我们来讨论下空间花费，虽然最后一个方案在线性时间执行，但它需要额外的存储来保存两个字符计数列表。换句话说，该算法牺牲了空间以获得时间。</p>
+<p>很多情况下，你需要在空间和时间之间做出权衡。这种情况下，额外空间不重要，但是如果有数百万个字符，就需要关注下。作为一个计算机科学家，当给定一个特定的算法，将由你决定如何使用计算资源。</p>
+<blockquote>
+<p>如有错误，请指出</p>
+</blockquote>
+<p><a href="https://m.weibo.cn/status/4200069676754911" target="_blank" rel="external">图片来源</a></p>
+<p>各位下期见，不聊了，又该搬砖了。。。</p>
+<p><img src="https://wx2.sinaimg.cn/orj360/b04b21b7ly1fnssg6v2b1j20dc0dcq4t.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十五篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;老板，我要做算法工程师！&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/z10Tn6k.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="算法" scheme="https://zhangslob.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="https://zhangslob.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="Python" scheme="https://zhangslob.github.io/tags/Python/"/>
+    
+      <category term="排序" scheme="https://zhangslob.github.io/tags/%E6%8E%92%E5%BA%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>使用logging管理爬虫</title>
@@ -2264,151 +2333,6 @@ if __name__ == &apos;__main__&apos;:
       <category term="知乎爬虫" scheme="https://zhangslob.github.io/tags/%E7%9F%A5%E4%B9%8E%E7%88%AC%E8%99%AB/"/>
     
       <category term="轮带逛" scheme="https://zhangslob.github.io/tags/%E8%BD%AE%E5%B8%A6%E9%80%9B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python爬虫实战——免费图片 - Pixabay</title>
-    <link href="https://zhangslob.github.io/2017/03/19/Python%E7%88%AC%E8%99%AB%E5%AE%9E%E6%88%98%E2%80%94%E2%80%94%E5%85%8D%E8%B4%B9%E5%9B%BE%E7%89%87-Pixabay/"/>
-    <id>https://zhangslob.github.io/2017/03/19/Python爬虫实战——免费图片-Pixabay/</id>
-    <published>2017-03-19T09:24:58.000Z</published>
-    <updated>2017-03-19T09:52:39.786Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五篇原创文章
-</code></pre><p><img src="http://i.imgur.com/jUTb7Pw.jpg" alt=""></p>
-<p>Pixabay，一个挺不错的高清无码图片网站，可以免费下载。</p>
-<p><a href="https://pixabay.com/" target="_blank" rel="external">https://pixabay.com/</a></p>
-<a id="more"></a>
-<p><em>一些介绍</em></p>
-<blockquote>
-<p>超过 900000 高质量照片、 插图和矢量图形。可免费用于商业用途。没有所需的归属。</p>
-<p>Pixabay是一家高质量图片分享网站。最初，该网站由Hans Braxmeier和Simon Steinberger在德国发展起来。2013年2月，网站拥有由影师和其社区的插画家提供的大约7万张免费的照片和矢量图形。该公司于2010年12月在德国乌尔姆成立。</p>
-<p>2012年3月，Pixabay开始从一个私人图像搜集网站转变成一个互动的网上社区，该网站支持20种语言。同年5月，网站推出公共应用程序编程接口，从而使第三方用户和网站开发人员搜索其图像数据库。网站还与Flickr，YouTube和维基共享资源。</p>
-<p>Pixabay用户无需注册就可以获得免费版权的高质量图像。根据知识共享契约CC0相关的肖像权，用户在该网站通过上传图片就默认放弃图片版权，从而使图片广泛流通。网站允许任何人使用，修改图片 - 即便是在商业应用 - 不要求许可并且未认可。 </p>
-<p>Pixabay为了确保高品质图片标准，用户上传的所有图片将由网站工作人员手动审批。大约27％的用户会说英语，20％的用户会说西班牙语，11％的用户会说葡萄牙语，7％的用户会说德语和5％的用户会说法语。其用户主要是博客、图形设计师、作家、记者和广告商。</p>
-</blockquote>
-<p>今天的目标就是爬取小编精选的图片  <a href="https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=1" target="_blank" rel="external">https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=1</a></p>
-<h1 id="一、分析"><a href="#一、分析" class="headerlink" title="一、分析"></a>一、分析</h1><p>我们需要写3个函数</p>
-<blockquote>
-<p>一个Download(url)，用来下载图片</p>
-<p>一个用来获取小编精选一共有的165页FullUrl()</p>
-<p>最后用来调用main()</p>
-</blockquote>
-<p>下面开始一个个写吧~</p>
-<p><a href="https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=1" title="小编精选 - 照片" target="_blank" rel="external">https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=1</a></p>
-<p>打开网页，F12，查看图片链接所在的标签</p>
-<p><img src="http://i.imgur.com/TlQbPlN.jpg" alt=""><br><img src="http://i.imgur.com/D3kTbAR.jpg" alt=""></p>
-<p>可以看到图片链接都在<code>&lt;img&gt;</code>标签下，但是我自己发现前几张和后几张的属性是不一样的，提取出<code>&lt;img&gt;</code>中“src”就可以了，使用的是xpath</p>
-<pre><code>import requests
-from lxml import etree
-
-header = {&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&apos;}
-url = &apos;https://pixabay.com/zh/editors_choice/&apos;
-r = requests.get(url,headers=header).text
-s = etree.HTML(r)
-print(s.xpath(&apos;//img/@src&apos;))
-</code></pre><p>结果是</p>
-<p><img src="http://i.imgur.com/uWgYPa4.png" alt=""></p>
-<p>前面都是正确的图片链接，可是后面出现了’/static/img/blank.gif’，这个是什么鬼，查看网页源代码，搜索</p>
-<p><img src="http://i.imgur.com/Mxqh6Qu.png" alt=""></p>
-<p>可以发现确实有这一段字符串，我自己在这一点上花了很多时间。感谢@李宏杰的帮助，<br><a href="https://www.zhihu.com/question/57188290" title="Python爬虫动态页面抓取问题？ - 爬虫（计算机网络） - 知乎" target="_blank" rel="external">https://www.zhihu.com/question/57188290</a></p>
-<blockquote>
-<p>浏览器中的代码是JavaScript修改过的, 你直接用requests请求然后打印出来看就会发现</p>
-</blockquote>
-<pre><code>&lt;div class=&quot;item&quot; data-w=&quot;640&quot; data-h=&quot;426&quot;&gt;
-                    &lt;a href=&quot;/zh/%E8%9B%8B%E7%B3%95-%E4%B8%80%E5%9D%97%E8%9B%8B%E7%B3%95-%E9%A3%9F%E8%B0%B1-%E4%B8%80%E7%89%87-%E7%B3%96%E6%9E%9C-%E6%8F%92%E5%9B%BE-%E7%83%98%E7%83%A4-%E7%94%9C%E7%82%B9-%E9%A3%9F%E5%93%81-1971556/&quot;&gt;
-                        &lt;img src=&quot;/static/img/blank.gif&quot; data-lazy-srcset=&quot;https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971556__340.jpg 1x, https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971556__480.jpg 2x&quot; data-lazy=&quot;https://cdn.pixabay.com/photo/2017/01/11/11/33/cake-1971556__340.jpg&quot; alt=&quot;&quot;&gt;
-
-                    &lt;/a&gt;
-                    &lt;div&gt;
-</code></pre><p>requests返回的数据中可以看到，“data-lazy”总含有我们需要的数据，修改代码</p>
-<p><img src="http://i.imgur.com/PgU67mV.png" alt=""></p>
-<p>发现现在返回的数据是我们需要的，打开一张图片查看</p>
-<p><img src="http://i.imgur.com/caZqMpt.png" alt=""><br><img src="http://i.imgur.com/AE8qAph.png" alt=""></p>
-<p>下面的图片要清晰很多，我们只需要把<code>__340</code>换成<code>_960_720</code>即可</p>
-<p>小编精选一共有165页，我们需要获取下一页URL</p>
-<pre><code>https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=2
-https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=3
-。。。
-</code></pre><p>规律很简单</p>
-<pre><code>full_link = []
-for i in range(1,165):
-    #print(i)
-    full_link.append( &apos;https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=&apos;+ str(i))
-</code></pre><p>到现在，准备工作做好了，思路可能不是很清楚，请谅解~</p>
-<h1 id="二、代码"><a href="#二、代码" class="headerlink" title="二、代码"></a>二、代码</h1><pre><code>import requests
-from lxml import etree
-import time
-import urllib
-
-def Download(url):
-    header = {
-        &apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&apos;}
-    r = s.get(url, headers=header).text
-    s = etree.HTML(r)
-    r = s.xpath(&apos;//img/@data-lazy&apos;)
-    for i in r:
-        imglist = i.replace(&apos;__340&apos;, &apos;_960_720&apos;)
-        name = imglist.split(&apos;/&apos;)[-1]#图片名称
-        urllib.request.urlretrieve(imglist,name)
-        time.sleep(1)
-
-
-def FullUrl():
-    full_link = []
-    for i in range(2,165):
-        #print(i)
-        full_link.append( &apos;https://pixabay.com/zh/editors_choice/?media_type=photo&amp;pagi=&apos;+ str(i))
-        #print(full)
-    return full_link
-
-if __name__ == &apos;__main__&apos;:
-    urls = FullUrl()
-    for url in urls:
-        Download(url)
-</code></pre><p>爬取图片的工作就完成了，粗略的计算6600张，每一张下载需要5秒钟，一分钟60秒、一小时60分钟，天呐，需要<strong>9个小时</strong>才能爬取全部的图片。想一想还是算了吧，整站爬取还是要使用Scrapy+mongodb。</p>
-<pre><code>&gt;&gt;&gt; 165*40
-6600
-&gt;&gt;&gt; from __future__ import division
-&gt;&gt;&gt; 6600*5/60/60
-9.166666666666666
-</code></pre><p>下载了700多张，108M，也算是留着看看吧。</p>
-<p>一会上传到Github上</p>
-<h1 id="三、结语"><a href="#三、结语" class="headerlink" title="三、结语"></a>三、结语</h1><p>昨天学习了<strong>崔庆才</strong>老师的爬虫，感觉真的学习到了好多，对Python爬虫提高很有帮助，还有，原来他就是<strong>静觅</strong>，刚开始学习爬虫就在看他的博客，没想到他现在又在出爬虫教程，打算跟着学习。</p>
-<p><img src="http://i.imgur.com/SYdEM8X.png" alt=""></p>
-<pre><code>分享内容：  
-
-1. 分析知乎Ajax请求及爬取逻辑
-
-2. 用Scrapy实现递归爬取
-
-3. 爬取结果存储到MongoDB   
-</code></pre><p>废话不多说，自己看看就知道了。</p>
-<p>静觅丨崔庆才的个人博客<a href="http://cuiqingcai.com/" target="_blank" rel="external">http://cuiqingcai.com/</a></p>
-<p>微课录播 | 03月17日 爬取知乎所有用户详细信息<a href="https://edu.hellobi.com/course/163" target="_blank" rel="external">https://edu.hellobi.com/course/163</a></p>
-<blockquote>
-<p>最后的小广告</p>
-<p>有朋友竟然叫我去作一期直播，讲一讲Python。</p>
-<p>打算根据自己的经历分享一些经验，主要是关于Python入门的，想听听可以私信我。</p>
-<p>时间是周二晚9点~</p>
-<p><strong>Hello World！ Try to be a Pythoner！</strong></p>
-</blockquote>
-<p><img src="http://i.imgur.com/6MorRwD.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/jUTb7Pw.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;Pixabay，一个挺不错的高清无码图片网站，可以免费下载。&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://pixabay.com/&quot;&gt;https://pixabay.com/&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="图片下载" scheme="https://zhangslob.github.io/tags/%E5%9B%BE%E7%89%87%E4%B8%8B%E8%BD%BD/"/>
     
   </entry>
   
