@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-01-27T10:59:40.517Z</updated>
+  <updated>2018-01-29T13:34:38.856Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,93 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>烦人的Git ( ´•︵•` )</title>
+    <link href="https://zhangslob.github.io/2018/01/29/%E7%83%A6%E4%BA%BA%E7%9A%84Git%20%E7%BB%88%E4%BA%8E%E5%AD%A6%E4%BC%9A%E4%BA%86%20-%C2%B4%E2%80%A2%EF%B8%B5%E2%80%A2/"/>
+    <id>https://zhangslob.github.io/2018/01/29/烦人的Git 终于学会了 -´•︵•/</id>
+    <published>2018-01-29T13:30:41.000Z</published>
+    <updated>2018-01-29T13:34:38.856Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十六篇原创文章
+</code></pre><p>终于会用Git了 (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/WPD1iB7.jpg" alt=""></p>
+<a id="more"></a>
+<p>Git对于新手来说，真的很烦人哎，好在找到了好工具 ——　PyCharm</p>
+<h1 id="使用PyCharm进行代码管理"><a href="#使用PyCharm进行代码管理" class="headerlink" title="使用PyCharm进行代码管理"></a>使用PyCharm进行代码管理</h1><p>在VCS里有Git，里面有常用的操作，clone、pull、push等等。</p>
+<p><img src="https://i.imgur.com/DALuEKz.png" alt=""></p>
+<p>更方便的是，在左下角，有Version Control，可以清晰的看到日志改变，图中另一个标记的位置可以直接进行commit，如下图所示</p>
+<p><img src="https://i.imgur.com/32W836Q.png" alt=""></p>
+<p><img src="https://i.imgur.com/7Zx6Nps.png" alt=""></p>
+<p>更多参考官方文档 <a href="https://www.jetbrains.com/help/pycharm/enabling-version-control.html" target="_blank" rel="external">Enabling Version Control</a></p>
+<p>我修改了主题，可以在这里改 <a href="https://plugins.jetbrains.com/plugin/8006-material-theme-ui" target="_blank" rel="external">Material Theme UI</a></p>
+<p><img src="https://plugins.jetbrains.com/files/8006/screenshot_17528.png" alt=""></p>
+<p>emmm，简单的方法就是这样，还是需要了解下Git的基本操作的</p>
+<h1 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h1><p>创建新文件夹，打开，然后执行 </p>
+<p><code>git init</code></p>
+<p>以创建新的 git 仓库。</p>
+<p>或者按照官方推荐的例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">git clone git@github.com:zhangslob/test_test.git</div><div class="line">echo <span class="string">"# test_test"</span> &gt;&gt; README.md</div><div class="line">git init</div><div class="line">git add README.md</div><div class="line">git commit -m <span class="string">"first commit"</span></div><div class="line">git remote add origin git@github.com:zhangslob/test_test.git</div><div class="line">git push -u origin master</div><div class="line"></div><div class="line"><span class="comment"># 其中的命令下面会讲到</span></div></pre></td></tr></table></figure>
+<h1 id="克隆仓库"><a href="#克隆仓库" class="headerlink" title="克隆仓库"></a>克隆仓库</h1><p>执行如下命令以创建一个本地仓库的克隆版本：</p>
+<p><code>git clone /path/to/repository</code></p>
+<p>如果是远端服务器上的仓库，你的命令会是这个样子：</p>
+<p><code>git clone username@host:/path/to/repository</code></p>
+<h1 id="添加和提交"><a href="#添加和提交" class="headerlink" title="添加和提交"></a>添加和提交</h1><p>你可以提出更改（把它们添加到暂存区），使用如下命令：</p>
+<p><code>git add .</code></p>
+<p>这是 git 基本工作流程的第一步；使用如下命令以实际提交改动：</p>
+<p><code>git commit -m &quot;代码提交信息&quot;</code></p>
+<p>现在，你的改动已经提交到了 HEAD，但是还没到你的远端仓库。</p>
+<h1 id="推送改动"><a href="#推送改动" class="headerlink" title="推送改动"></a>推送改动</h1><p>你的改动现在已经在本地仓库的 HEAD 中了。执行如下命令以将这些改动提交到远端仓库：</p>
+<p><code>git push origin master</code></p>
+<p>可以把 master 换成你想要推送的任何分支。 </p>
+<h1 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h1><p>分支是用来将特性开发绝缘开来的。在你创建仓库的时候，master 是“默认的”分支。在其他分支上进行开发，完成后再将它们合并到主分支上。</p>
+<p>创建一个叫做“develop”的分支，并切换过去：</p>
+<p><code>git checkout -b develop</code></p>
+<p>切换回主分支：</p>
+<p><code>git checkout master</code></p>
+<p>再把新建的分支删掉：</p>
+<p><code>git branch -d develop</code></p>
+<p>除非你将分支推送到远端仓库，不然该分支就是 不为他人所见的：</p>
+<p><code>git push origin &lt;branch&gt;</code></p>
+<h1 id="更新与合并"><a href="#更新与合并" class="headerlink" title="更新与合并"></a>更新与合并</h1><p>要更新你的本地仓库至最新改动，执行：</p>
+<p><code>git pull</code></p>
+<p>以在你的工作目录中 获取（fetch） 并 合并（merge） 远端的改动。</p>
+<p>要合并其他分支到你的当前分支（例如 master），执行：</p>
+<p><code>git merge &lt;branch&gt;</code></p>
+<p>在这两种情况下，git 都会尝试去自动合并改动。遗憾的是，这可能并非每次都成功，并可能出现冲突（conflicts）。 这时候就需要你修改这些文件来手动合并这些冲突（conflicts）。改完之后，你需要执行如下命令以将它们标记为合并成功：</p>
+<p><code>git add &lt;filename&gt;</code></p>
+<p>在合并改动之前，你可以使用如下命令预览差异：</p>
+<p><code>git diff &lt;source_branch&gt; &lt;target_branch&gt;</code></p>
+<h1 id="替换本地改动"><a href="#替换本地改动" class="headerlink" title="替换本地改动"></a>替换本地改动</h1><p>假如你操作失误，你可以使用如下命令替换掉本地改动：</p>
+<p><code>git checkout -- &lt;filename&gt;</code></p>
+<p>此命令会使用 HEAD 中的最新内容替换掉你的工作目录中的文件。已添加到暂存区的改动以及新文件都不会受到影响。</p>
+<p>假如你想丢弃你在本地的所有改动与提交，可以到服务器上获取最新的版本历史，并将你本地主分支指向它：<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git fetch <span class="built_in">origin</span></div><div class="line">git <span class="built_in">reset</span> --hard <span class="built_in">origin</span>/master</div></pre></td></tr></table></figure></p>
+<h1 id="小技巧"><a href="#小技巧" class="headerlink" title="小技巧"></a>小技巧</h1><ol>
+<li>使用 <code>git status</code> 可以迅速查看当前状态，若添加文件，会显示绿色的文字</li>
+<li>使用Github的客户端，可以事半功倍 <a href="https://desktop.github.com/" target="_blank" rel="external">https://desktop.github.com/</a></li>
+</ol>
+<p>更多可以参考</p>
+<p><a href="https://git-scm.com/book/zh/v2" target="_blank" rel="external">Git 文档</a></p>
+<h1 id="Git-Commit-Message-模版"><a href="#Git-Commit-Message-模版" class="headerlink" title="Git Commit Message 模版"></a>Git Commit Message 模版</h1><h2 id="模版命名约定"><a href="#模版命名约定" class="headerlink" title="模版命名约定"></a>模版命名约定</h2><p>模版名称由以下部分组成</p>
+<p><code>gitmessage-${语言}[-full]</code></p>
+<p>以 <code>-full</code> 结尾的模版包含了 message 组成区域的解释以及书写的指导，推荐新手选择该模版上手，在熟悉书写规范后换成简单版本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#    feat     (新功能)</div><div class="line">#    fix      (问题修复)</div><div class="line">#    refactor (代码重构)</div><div class="line">#    style    (代码风格改动、格式变化等，无实现改动)</div><div class="line">#    docs     (文档更新)</div><div class="line">#    test     (增加、重构测试，无实现改动)</div><div class="line">#    chore    (修改一些配置文件如 .gitignore 等，无实现改动)</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十六篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;终于会用Git了 (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/WPD1iB7.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Git" scheme="https://zhangslob.github.io/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="https://zhangslob.github.io/tags/Git/"/>
+    
+  </entry>
   
   <entry>
     <title>学点算法之字符串的乱序检查</title>
@@ -195,9 +282,9 @@
       <category term="Python" scheme="https://zhangslob.github.io/categories/Python/"/>
     
     
-      <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
-    
       <category term="logging" scheme="https://zhangslob.github.io/tags/logging/"/>
+    
+      <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
     
   </entry>
   
@@ -254,9 +341,9 @@
       <category term="总结" scheme="https://zhangslob.github.io/categories/%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="年度总结" scheme="https://zhangslob.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/"/>
-    
       <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
+    
+      <category term="年度总结" scheme="https://zhangslob.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/"/>
     
   </entry>
   
@@ -2247,92 +2334,6 @@ plt.show()
       <category term="直播" scheme="https://zhangslob.github.io/tags/%E7%9B%B4%E6%92%AD/"/>
     
       <category term="文本分析" scheme="https://zhangslob.github.io/tags/%E6%96%87%E6%9C%AC%E5%88%86%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何优雅的“轮带逛”初级篇——获取单张图片</title>
-    <link href="https://zhangslob.github.io/2017/03/20/%E5%A6%82%E4%BD%95%E4%BC%98%E9%9B%85%E7%9A%84%E2%80%9C%E8%BD%AE%E5%B8%A6%E9%80%9B%E2%80%9D%E5%88%9D%E7%BA%A7%E7%AF%87%E2%80%94%E2%80%94%E8%8E%B7%E5%8F%96%E5%8D%95%E5%BC%A0%E5%9B%BE%E7%89%87/"/>
-    <id>https://zhangslob.github.io/2017/03/20/如何优雅的“轮带逛”初级篇——获取单张图片/</id>
-    <published>2017-03-20T12:35:00.000Z</published>
-    <updated>2017-03-20T12:58:51.891Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第六篇原创文章
-</code></pre><p><img src="http://i.imgur.com/Oi3WEZu.png" alt=""></p>
-<p>轮子哥护体</p>
-<a id="more"></a>
-<p>首先上收藏夹 <a href="https://www.zhihu.com/collection/78172986?page=1" target="_blank" rel="external">https://www.zhihu.com/collection/78172986?page=1</a></p>
-<p>由@vega13创建，内容挺多的。例如，</p>
-<p><img src="http://i.imgur.com/EgCezYY.jpg" alt=""></p>
-<p><img src="http://i.imgur.com/4fVMbpi.jpg" alt=""></p>
-<p>等等，看的老夫脸都红了</p>
-<p>写了一个简单爬取图片的程序。记录下过程。手动 @轮子哥</p>
-<h1 id="1、分析网页"><a href="#1、分析网页" class="headerlink" title="1、分析网页"></a>1、分析网页</h1><p>收藏夹只收藏了问题的一个答案，初步想法是获取当前页面的图片</p>
-<p>因为上一次原因，直接去网页源代码</p>
-<p><img src="http://i.imgur.com/3DMEaf7.png" alt=""></p>
-<p><img src="http://i.imgur.com/lIQzPy9.png" alt=""></p>
-<pre><code>&lt;img src=&quot;https://pic4.zhimg.com/de5ecb16bcb912e99a83f647eb96c5bb_200x112.jpg&quot; data-rawwidth=&quot;1080&quot; data-rawheight=&quot;1080&quot; class=&quot;origin_image inline-img zh-lightbox-thumb&quot; data-original=&quot;https://pic4.zhimg.com/de5ecb16bcb912e99a83f647eb96c5bb_r.jpg&quot;&gt;
-
-&lt;img data-rawwidth=&quot;1280&quot; data-rawheight=&quot;1836&quot; src=&quot;https://pic2.zhimg.com/v2-61ba67d910104f99acdb805a3568ab05_200x112.jpg&quot; class=&quot;origin_image inline-img zh-lightbox-thumb&quot; data-original=&quot;https://pic2.zhimg.com/v2-61ba67d910104f99acdb805a3568ab05_r.jpg&quot;&gt;
-</code></pre><p>在<code>&lt;img&gt;</code>标签下，<code>src</code>和<code>data-original</code>都含有图片链接，经验证<code>data-original</code>是大图，那就把每个问题的图片链接找到了，接下来就很简单了。</p>
-<h1 id="2、代码"><a href="#2、代码" class="headerlink" title="2、代码"></a>2、代码</h1><p>就18行的代码。简单吧~</p>
-<pre><code>import requests,urllib
-from lxml import etree
-
-def get_img(url):
-    headers = {&apos;User-Agent&apos;:&apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36&apos;}
-    r= requests.get(url,headers=headers).text
-    s = etree.HTML(r)
-    #print(r)
-    link = s.xpath(&apos;//img/@data-original&apos;)
-    for i in link:
-        print(i)
-        name = i.split(&apos;/&apos;)[-1]#图片名称
-        urllib.request.urlretrieve(i,name)
-
-if __name__ == &apos;__main__&apos;:
-    for i in range(1,43):
-        url = &apos;https://www.zhihu.com/collection/78172986?page=&apos; + str(i)
-        get_img(url)
-</code></pre><p>但是这样存在一个问题</p>
-<pre><code>link = s.xpath(&apos;//img/@data-original&apos;)
-</code></pre><p>这里的link只有每个回答的第一张图片，更多的图片藏在文本中，除了正则不知道还有没有更好的办法</p>
-<p><img src="http://i.imgur.com/L51i5jA.png" alt=""></p>
-<p><img src="http://i.imgur.com/uStQpvw.jpg" alt=""></p>
-<p>只有200多张图片。结尾有百度云</p>
-<p>下载了几分钟出现错误，有一张图片下载不了，知友们有什么好办法吗？</p>
-<h1 id="三、“轮带逛”高级篇"><a href="#三、“轮带逛”高级篇" class="headerlink" title="三、“轮带逛”高级篇"></a>三、“轮带逛”高级篇</h1><p>既然有初级篇，肯定还有高级篇。</p>
-<p>其实这个收藏夹中每一个问题下面都含有很多回答，收藏夹只是选取其中一个，也就是被轮子哥点赞的那个，那么还有那些没有被点赞的呢？</p>
-<p>下一期讲一讲怎么获取所有图片链接。</p>
-<p>放一张图片，卡死我程序的</p>
-<p><img src="http://i.imgur.com/12b0X70.jpg" alt=""></p>
-<p>—————————————最后的小广告—————————————–</p>
-<p>有朋友竟然叫我去作一期直播，讲一讲Python。</p>
-<p>打算根据自己的经历分享一些经验，主要是关于Python入门的，想听听可以私信我。</p>
-<p>时间是周二晚9点~</p>
-<hr>
-<p><strong>百度云下载</strong></p>
-<p>链接：<a href="http://pan.baidu.com/s/1dFOPbUx" target="_blank" rel="external">http://pan.baidu.com/s/1dFOPbUx</a> 密码：abrl</p>
-<p><img src="http://i.imgur.com/RF2P6MR.jpg" alt=""></p>
-<p><img src="http://i.imgur.com/jFbuAcb.jpg" alt=""></p>
-<p><img src="http://i.imgur.com/7pm3j4M.jpg" alt=""></p>
-<p><img src="http://i.imgur.com/B80rUbw.jpg" alt=""></p>
-<p><img src="http://i.imgur.com/Ra4Lkr1.jpg" alt=""></p>
-<p><img src="http://i.imgur.com/VTA6Ll4.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第六篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Oi3WEZu.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;轮子哥护体&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="知乎爬虫" scheme="https://zhangslob.github.io/tags/%E7%9F%A5%E4%B9%8E%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="轮带逛" scheme="https://zhangslob.github.io/tags/%E8%BD%AE%E5%B8%A6%E9%80%9B/"/>
     
   </entry>
   

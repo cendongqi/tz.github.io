@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[烦人的Git ( ´•︵•` )]]></title>
+    <url>%2F2018%2F01%2F29%2F%E7%83%A6%E4%BA%BA%E7%9A%84Git%20%E7%BB%88%E4%BA%8E%E5%AD%A6%E4%BC%9A%E4%BA%86%20-%C2%B4%E2%80%A2%EF%B8%B5%E2%80%A2%2F</url>
+    <content type="text"><![CDATA[这是崔斯特的第二十六篇原创文章 终于会用Git了 (๑• . •๑) Git对于新手来说，真的很烦人哎，好在找到了好工具 —— PyCharm 使用PyCharm进行代码管理在VCS里有Git，里面有常用的操作，clone、pull、push等等。 更方便的是，在左下角，有Version Control，可以清晰的看到日志改变，图中另一个标记的位置可以直接进行commit，如下图所示 更多参考官方文档 Enabling Version Control 我修改了主题，可以在这里改 Material Theme UI emmm，简单的方法就是这样，还是需要了解下Git的基本操作的 创建新仓库创建新文件夹，打开，然后执行 git init 以创建新的 git 仓库。 或者按照官方推荐的例子 123456789git clone git@github.com:zhangslob/test_test.gitecho "# test_test" &gt;&gt; README.mdgit initgit add README.mdgit commit -m "first commit"git remote add origin git@github.com:zhangslob/test_test.gitgit push -u origin master# 其中的命令下面会讲到 克隆仓库执行如下命令以创建一个本地仓库的克隆版本： git clone /path/to/repository 如果是远端服务器上的仓库，你的命令会是这个样子： git clone username@host:/path/to/repository 添加和提交你可以提出更改（把它们添加到暂存区），使用如下命令： git add . 这是 git 基本工作流程的第一步；使用如下命令以实际提交改动： git commit -m &quot;代码提交信息&quot; 现在，你的改动已经提交到了 HEAD，但是还没到你的远端仓库。 推送改动你的改动现在已经在本地仓库的 HEAD 中了。执行如下命令以将这些改动提交到远端仓库： git push origin master 可以把 master 换成你想要推送的任何分支。 分支分支是用来将特性开发绝缘开来的。在你创建仓库的时候，master 是“默认的”分支。在其他分支上进行开发，完成后再将它们合并到主分支上。 创建一个叫做“develop”的分支，并切换过去： git checkout -b develop 切换回主分支： git checkout master 再把新建的分支删掉： git branch -d develop 除非你将分支推送到远端仓库，不然该分支就是 不为他人所见的： git push origin &lt;branch&gt; 更新与合并要更新你的本地仓库至最新改动，执行： git pull 以在你的工作目录中 获取（fetch） 并 合并（merge） 远端的改动。 要合并其他分支到你的当前分支（例如 master），执行： git merge &lt;branch&gt; 在这两种情况下，git 都会尝试去自动合并改动。遗憾的是，这可能并非每次都成功，并可能出现冲突（conflicts）。 这时候就需要你修改这些文件来手动合并这些冲突（conflicts）。改完之后，你需要执行如下命令以将它们标记为合并成功： git add &lt;filename&gt; 在合并改动之前，你可以使用如下命令预览差异： git diff &lt;source_branch&gt; &lt;target_branch&gt; 替换本地改动假如你操作失误，你可以使用如下命令替换掉本地改动： git checkout -- &lt;filename&gt; 此命令会使用 HEAD 中的最新内容替换掉你的工作目录中的文件。已添加到暂存区的改动以及新文件都不会受到影响。 假如你想丢弃你在本地的所有改动与提交，可以到服务器上获取最新的版本历史，并将你本地主分支指向它：12git fetch origingit reset --hard origin/master 小技巧 使用 git status 可以迅速查看当前状态，若添加文件，会显示绿色的文字 使用Github的客户端，可以事半功倍 https://desktop.github.com/ 更多可以参考 Git 文档 Git Commit Message 模版模版命名约定模版名称由以下部分组成 gitmessage-${语言}[-full] 以 -full 结尾的模版包含了 message 组成区域的解释以及书写的指导，推荐新手选择该模版上手，在熟悉书写规范后换成简单版本。 1234567# feat (新功能)# fix (问题修复)# refactor (代码重构)# style (代码风格改动、格式变化等，无实现改动)# docs (文档更新)# test (增加、重构测试，无实现改动)# chore (修改一些配置文件如 .gitignore 等，无实现改动)]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[学点算法之字符串的乱序检查]]></title>
     <url>%2F2018%2F01%2F27%2F%E5%AD%A6%E7%82%B9%E7%AE%97%E6%B3%95%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E4%B9%B1%E5%BA%8F%E6%A3%80%E6%9F%A5%2F</url>
     <content type="text"><![CDATA[这是崔斯特的第二十五篇原创文章 老板，我要做算法工程师！ 问题字符串的乱序检查。 一个字符串是另一个字符串的乱序。如果第二个字符串只是第一个的重新排列，例如，’heart’ 和 ‘earth’ 就是乱序字符串。’python’ 和 ‘typhon’ 也是。为了简单起见，我们假设所讨论的两个字符串具有相等的长度，并且他们由 26 个小写字母集合组成。我们的目标是写一个布尔函数，它将两个字符串做参数并返回它们是不是回文。 解法1:检查我们对乱序问题的第一个解法是检查第一个字符串是不是出现在第二个字符串中。如果可以检验到每一个字符，那两个字符串一定是回文。可以通过用 None 替换字符来完成检查。但是，由于 Python 字符串是不可变的，所以第一步是将第二个字符串转换为列表。第一个字符串中的每个字符可以通过检查在第二个列表中检查元素是否存在，如果存在，替换成 None。 12345678910111213141516171819202122232425def anagramSolution1(s1,s2): alist = list(s2) pos1 = 0 stillOK = True while pos1 &lt; len(s1) and stillOK: pos2 = 0 found = False while pos2 &lt; len(alist) and not found: if s1[pos1] == alist[pos2]: found = True else: pos2 = pos2 + 1 if found: alist[pos2] = None else: stillOK = False pos1 = pos1 + 1 return stillOKprint(anagramSolution1('abcd','dcba')) s1 的每个字符都会在 s2 中进行最多 n 个字符的迭代 s2 列表中的 n 个位置将被访问一次来匹配来自 s1 的字符。访问次数可以写成 1 到 n 整数的和，可以写成 当 n 变大，n^2 这项占据主导，1/2 可以忽略。所以这个算法复杂度为 O(n^2 )。 解法2:排序和比较另一个解决方案是利用这么一个事实，即使 s1,s2 不同，它们只有由完全相同的字符组成，它们才是回文。所以，如果我们按照字母顺序排列每个字符串，从 a 到 z，如果两个字符串相同，则这两个字符串为回文。 12345678910111213def anagramSolution2(s1,s2): alist1 = list(s1) alist2 = list(s2) alist1.sort() alist2.sort() if alist1 == alist2: return True else: return Falseprint(anagramSolution2('abcde','edcba')) 这个算法比较简单，只用到了排序算法，那么排序算法的复杂度还是多少呢？ 在这里找到了答案 python中的sorted算法，网上有人撰文，说比较低级。其实不然，通过阅读官方文档，发现python中的sorted排序，真的是高大上，用的Timsort算法。什么是Timsort，请看 wiki的解释：http://en.wikipedia.org/wiki/Timsort 另外，国内有一个文档，适当翻译：http://blog.csdn.net/yangzhongblog/article/details/8184707，这里截取一个不同排序算法比较的图示，就明白sorted的威力了。 从时间复杂度来看，Timsort是威武的。 从空间复杂度来讲，需要的开销在数量大的时候会增大。 解法3: 穷举法解决这类问题的强力方法是穷举所有可能性。 对于回文检测，我们可以生成 s1 的所有乱序字符串列表，然后查看是不是有 s2。这种方法有一点困难。当 s1 生成所有可能的字符串时，第一个位置有 n 种可能，第二个位置有 n-1 种，第三个位置有 n-3 种，等等。总数为 n∗(n−1)∗(n−2)∗...∗3∗2∗1n∗(n−1)∗(n−2)∗...∗3∗2∗1， 即 n! 。 虽然一些字符串可能是重复的，程序也不可能提前知道这样，所以他仍然会生成 n! 个字符串。事实证明，n! 比 n^2 增长还快，事实上，如果 s1 有 20个字符长，则将有 20! = 2,432,902,008,176,640,000 个字符串产生。如果我们每秒处理一种可能字符串，那么需要 77,146,816,596 年才能过完整个列表。 所以当然不会采取这种方案了。 解法4: 计数和比较我们最终解决回文的方法是利用两个乱序字符串具有相同的 a, b, c 等等的事实。 我们首先计算的是每个字母出现的次数。由于有 26 个可能的字符，我们就用 一个长度为 26 的列表，每个可能的字符占一个位置。每次看到一个特定的字符，就增加该位置的计数器。最后如果两个列表的计数器一样，则字符串为乱序字符串。 1234567891011121314151617181920212223def anagramSolution4(s1,s2): c1 = [0]*26 c2 = [0]*26 for i in range(len(s1)): pos = ord(s1[i])-ord('a') c1[pos] = c1[pos] + 1 for i in range(len(s2)): pos = ord(s2[i])-ord('a') c2[pos] = c2[pos] + 1 j = 0 stillOK = True while j&lt;26 and stillOK: if c1[j]==c2[j]: j = j + 1 else: stillOK = False return stillOKprint(anagramSolution4('apple','pleap')) 同样，这个方案有多个迭代，但是和第一个解法不一样，它不是嵌套的。两个迭代都是 n, 第三个迭代，比较两个计数列表，需要 26 步，因为有 26 个字母。一共 T(n)=2n+26T(n)=2n+26，即 O(n)，我们找到了一个线性量级的算法解决这个问题。 如果让我自己来选择，我可能会选第二种，第二种最简单，也最好理解。但是最后的结论表明 解法4 才是最优解法，排序固然简单，但是但数量很大的时候，可能远不止我们想的那么简单。 在结束这个例子之前，我们来讨论下空间花费，虽然最后一个方案在线性时间执行，但它需要额外的存储来保存两个字符计数列表。换句话说，该算法牺牲了空间以获得时间。 很多情况下，你需要在空间和时间之间做出权衡。这种情况下，额外空间不重要，但是如果有数百万个字符，就需要关注下。作为一个计算机科学家，当给定一个特定的算法，将由你决定如何使用计算资源。 如有错误，请指出 图片来源 各位下期见，不聊了，又该搬砖了。。。]]></content>
@@ -21,8 +32,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>2017</tag>
         <tag>logging</tag>
+        <tag>2017</tag>
       </tags>
   </entry>
   <entry>
@@ -33,8 +44,8 @@
         <category>总结</category>
       </categories>
       <tags>
-        <tag>年度总结</tag>
         <tag>2017</tag>
+        <tag>年度总结</tag>
       </tags>
   </entry>
   <entry>
