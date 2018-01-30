@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[有了她，谁敢阻止我学习]]></title>
+    <url>%2F2018%2F01%2F30%2F%E6%9C%89%E4%BA%86%E5%A5%B9%EF%BC%8C%E8%B0%81%E6%95%A2%E9%98%BB%E6%AD%A2%E6%88%91%E5%AD%A6%E4%B9%A0%2F</url>
+    <content type="text"><![CDATA[这是崔斯特的第二十七篇原创文章 我爱学习 (๑• . •๑) 公众号Python爱好者社区，微信号：python_shequ 人生苦短，我用Python。分享Python相关的技术文章、工具资源、精选课程、视频教程、热点资讯、学习资料等。每天自动更新和推送。 Python爬虫分享，微信号：python_shequ 知乎专栏“爬虫从入门到放弃”作者。目前在知乎连载爬虫从入门到放弃到精通系列文章 张俊红，微信号：zhangjunhong0428 中国统计网专栏作者，数据分析路上的学习者与实践者，与你分享我的所见、所学、所想。 数据小魔方，微信号：datamofang 专注于数据可视化及商务智能的原创技能分享平台！ Python爬虫与算法进阶，微信号：zhangslob 分享Python知识，关注爬虫与算法,让我们一起从萌新变成大牛吧! 在线书籍 关于Python的面试题 草根学Python python数据结构和算法 Python最佳实践指南！ Python Cookbook 3rd Edition Documentation Stackoverflow about Python Python进阶 免费视频 零基础入门学习Python 话说我当时就看的小甲鱼视频入门的 Python语言程序设计 嵩天老师的一系列课程 Google机器学习 简单入门 算法基础 北大博士的课程。。 吴恩达机器学习 这个就不评价了，都知道 爬虫教程 爬虫教程 某位大佬所写，由浅入深 Scrapy分类 质量非常高 Python3网络爬虫实战 崔大的书，马上会出版 大数据之网络爬虫 主要是垂直型网络爬虫 使用Scrapy-redis实现分布式爬取 分布式资料 使用Docker部署scrapy-redis分布式爬虫 同样是分布式资料 最重要的一点是：不要光收藏，不去看]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[烦人的Git ( ´•︵•` )]]></title>
     <url>%2F2018%2F01%2F29%2F%E7%83%A6%E4%BA%BA%E7%9A%84Git%20%E7%BB%88%E4%BA%8E%E5%AD%A6%E4%BC%9A%E4%BA%86%20-%C2%B4%E2%80%A2%EF%B8%B5%E2%80%A2%2F</url>
     <content type="text"><![CDATA[这是崔斯特的第二十六篇原创文章 终于会用Git了 (๑• . •๑) Git对于新手来说，真的很烦人哎，好在找到了好工具 —— PyCharm 使用PyCharm进行代码管理在VCS里有Git，里面有常用的操作，clone、pull、push等等。 更方便的是，在左下角，有Version Control，可以清晰的看到日志改变，图中另一个标记的位置可以直接进行commit，如下图所示 更多参考官方文档 Enabling Version Control 我修改了主题，可以在这里改 Material Theme UI emmm，简单的方法就是这样，还是需要了解下Git的基本操作的 创建新仓库创建新文件夹，打开，然后执行 git init 以创建新的 git 仓库。 或者按照官方推荐的例子 123456789git clone git@github.com:zhangslob/test_test.gitecho "# test_test" &gt;&gt; README.mdgit initgit add README.mdgit commit -m "first commit"git remote add origin git@github.com:zhangslob/test_test.gitgit push -u origin master# 其中的命令下面会讲到 克隆仓库执行如下命令以创建一个本地仓库的克隆版本： git clone /path/to/repository 如果是远端服务器上的仓库，你的命令会是这个样子： git clone username@host:/path/to/repository 添加和提交你可以提出更改（把它们添加到暂存区），使用如下命令： git add . 这是 git 基本工作流程的第一步；使用如下命令以实际提交改动： git commit -m &quot;代码提交信息&quot; 现在，你的改动已经提交到了 HEAD，但是还没到你的远端仓库。 推送改动你的改动现在已经在本地仓库的 HEAD 中了。执行如下命令以将这些改动提交到远端仓库： git push origin master 可以把 master 换成你想要推送的任何分支。 分支分支是用来将特性开发绝缘开来的。在你创建仓库的时候，master 是“默认的”分支。在其他分支上进行开发，完成后再将它们合并到主分支上。 创建一个叫做“develop”的分支，并切换过去： git checkout -b develop 切换回主分支： git checkout master 再把新建的分支删掉： git branch -d develop 除非你将分支推送到远端仓库，不然该分支就是 不为他人所见的： git push origin &lt;branch&gt; 更新与合并要更新你的本地仓库至最新改动，执行： git pull 以在你的工作目录中 获取（fetch） 并 合并（merge） 远端的改动。 要合并其他分支到你的当前分支（例如 master），执行： git merge &lt;branch&gt; 在这两种情况下，git 都会尝试去自动合并改动。遗憾的是，这可能并非每次都成功，并可能出现冲突（conflicts）。 这时候就需要你修改这些文件来手动合并这些冲突（conflicts）。改完之后，你需要执行如下命令以将它们标记为合并成功： git add &lt;filename&gt; 在合并改动之前，你可以使用如下命令预览差异： git diff &lt;source_branch&gt; &lt;target_branch&gt; 替换本地改动假如你操作失误，你可以使用如下命令替换掉本地改动： git checkout -- &lt;filename&gt; 此命令会使用 HEAD 中的最新内容替换掉你的工作目录中的文件。已添加到暂存区的改动以及新文件都不会受到影响。 假如你想丢弃你在本地的所有改动与提交，可以到服务器上获取最新的版本历史，并将你本地主分支指向它：12git fetch origingit reset --hard origin/master 小技巧 使用 git status 可以迅速查看当前状态，若添加文件，会显示绿色的文字 使用Github的客户端，可以事半功倍 https://desktop.github.com/ 更多可以参考 Git 文档 Git Commit Message 模版模版命名约定模版名称由以下部分组成 gitmessage-${语言}[-full] 以 -full 结尾的模版包含了 message 组成区域的解释以及书写的指导，推荐新手选择该模版上手，在熟悉书写规范后换成简单版本。 1234567# feat (新功能)# fix (问题修复)# refactor (代码重构)# style (代码风格改动、格式变化等，无实现改动)# docs (文档更新)# test (增加、重构测试，无实现改动)# chore (修改一些配置文件如 .gitignore 等，无实现改动)]]></content>
@@ -32,8 +43,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>logging</tag>
         <tag>2017</tag>
+        <tag>logging</tag>
       </tags>
   </entry>
   <entry>
@@ -44,8 +55,8 @@
         <category>总结</category>
       </categories>
       <tags>
-        <tag>2017</tag>
         <tag>年度总结</tag>
+        <tag>2017</tag>
       </tags>
   </entry>
   <entry>

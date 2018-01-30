@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-01-29T13:34:38.856Z</updated>
+  <updated>2018-01-30T13:44:02.289Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,69 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>有了她，谁敢阻止我学习</title>
+    <link href="https://zhangslob.github.io/2018/01/30/%E6%9C%89%E4%BA%86%E5%A5%B9%EF%BC%8C%E8%B0%81%E6%95%A2%E9%98%BB%E6%AD%A2%E6%88%91%E5%AD%A6%E4%B9%A0/"/>
+    <id>https://zhangslob.github.io/2018/01/30/有了她，谁敢阻止我学习/</id>
+    <published>2018-01-30T13:31:40.000Z</published>
+    <updated>2018-01-30T13:44:02.289Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十七篇原创文章
+</code></pre><p>我爱学习 (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/Y5AMeSm.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="公众号"><a href="#公众号" class="headerlink" title="公众号"></a>公众号</h1><p><strong>Python爱好者社区，微信号：python_shequ</strong></p>
+<p>人生苦短，我用Python。分享Python相关的技术文章、工具资源、精选课程、视频教程、热点资讯、学习资料等。每天自动更新和推送。</p>
+<p><strong>Python爬虫分享，微信号：python_shequ</strong></p>
+<p>知乎专栏“爬虫从入门到放弃”作者。目前在知乎连载爬虫从入门到放弃到精通系列文章</p>
+<p><strong>张俊红，微信号：zhangjunhong0428</strong></p>
+<p>中国统计网专栏作者，数据分析路上的学习者与实践者，与你分享我的所见、所学、所想。</p>
+<p><strong>数据小魔方，微信号：datamofang</strong></p>
+<p>专注于数据可视化及商务智能的原创技能分享平台！</p>
+<p><strong>Python爬虫与算法进阶，微信号：zhangslob</strong></p>
+<p>分享Python知识，关注爬虫与算法,让我们一起从萌新变成大牛吧!</p>
+<h1 id="在线书籍"><a href="#在线书籍" class="headerlink" title="在线书籍"></a>在线书籍</h1><ol>
+<li><a href="https://github.com/taizilongxu/interview_python" target="_blank" rel="external">关于Python的面试题</a></li>
+<li><a href="https://www.readwithu.com/" target="_blank" rel="external">草根学Python</a></li>
+<li><a href="https://xidianwlc.gitbooks.io/python-data-structrue-and-algrothms/content/" target="_blank" rel="external">python数据结构和算法</a></li>
+<li><a href="http://pythonguidecn.readthedocs.io/zh/latest/" target="_blank" rel="external">Python最佳实践指南！</a></li>
+<li><a href="http://python3-cookbook.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="external">Python Cookbook 3rd Edition Documentation</a></li>
+<li><a href="https://taizilongxu.gitbooks.io/stackoverflow-about-python/content/" target="_blank" rel="external">Stackoverflow about Python</a></li>
+<li><a href="https://eastlakeside.gitbooks.io/interpy-zh/content/" target="_blank" rel="external">Python进阶</a></li>
+</ol>
+<h1 id="免费视频"><a href="#免费视频" class="headerlink" title="免费视频"></a>免费视频</h1><ol>
+<li><a href="http://study.163.com/course/courseMain.htm?courseId=378003" target="_blank" rel="external">零基础入门学习Python</a> 话说我当时就看的小甲鱼视频入门的</li>
+<li><a href="https://www.icourse163.org/course/BIT-268001?tid=1002001005" target="_blank" rel="external">Python语言程序设计</a> 嵩天老师的一系列课程</li>
+<li><a href="https://chinagdg.org/2016/03/machine-learning-recipes-for-new-developers/" target="_blank" rel="external">Google机器学习</a> 简单入门</li>
+<li><a href="https://www.coursera.org/learn/suanfa-jichu/home/welcome" target="_blank" rel="external">算法基础</a> 北大博士的课程。。</li>
+<li><a href="http://study.163.com/course/courseMain.htm?courseId=1004570029" target="_blank" rel="external">吴恩达机器学习</a> 这个就不评价了，都知道</li>
+</ol>
+<h1 id="爬虫教程"><a href="#爬虫教程" class="headerlink" title="爬虫教程"></a>爬虫教程</h1><ol>
+<li><a href="https://piaosanlang.gitbooks.io/spiders/" target="_blank" rel="external">爬虫教程</a> 某位大佬所写，由浅入深</li>
+<li><a href="http://lawtech0902.com/categories/Scrapy/" target="_blank" rel="external">Scrapy分类</a> 质量非常高</li>
+<li><a href="https://germey.gitbooks.io/python3webspider/content/" target="_blank" rel="external">Python3网络爬虫实战</a> 崔大的书，马上会出版</li>
+<li><a href="https://liangqingyu.gitbooks.io/bigdata-crawler/content/" target="_blank" rel="external">大数据之网络爬虫</a> 主要是垂直型网络爬虫</li>
+<li><a href="https://www.biaodianfu.com/scrapy-redis.html" target="_blank" rel="external">使用Scrapy-redis实现分布式爬取</a> 分布式资料</li>
+<li><a href="http://zhxfei.com/2017/06/03/scrapy_redis/" target="_blank" rel="external">使用Docker部署scrapy-redis分布式爬虫</a> 同样是分布式资料</li>
+</ol>
+<p>最重要的一点是：不要光收藏，不去看</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十七篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我爱学习 (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/Y5AMeSm.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Git" scheme="https://zhangslob.github.io/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="https://zhangslob.github.io/tags/Git/"/>
+    
+  </entry>
   
   <entry>
     <title>烦人的Git ( ´•︵•` )</title>
@@ -282,9 +345,9 @@
       <category term="Python" scheme="https://zhangslob.github.io/categories/Python/"/>
     
     
-      <category term="logging" scheme="https://zhangslob.github.io/tags/logging/"/>
-    
       <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
+    
+      <category term="logging" scheme="https://zhangslob.github.io/tags/logging/"/>
     
   </entry>
   
@@ -341,9 +404,9 @@
       <category term="总结" scheme="https://zhangslob.github.io/categories/%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
-    
       <category term="年度总结" scheme="https://zhangslob.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
     
   </entry>
   
@@ -2267,73 +2330,6 @@ plt.show()
       <category term="足球" scheme="https://zhangslob.github.io/tags/%E8%B6%B3%E7%90%83/"/>
     
       <category term="数据分析" scheme="https://zhangslob.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>利用Python对直播弹幕的分析</title>
-    <link href="https://zhangslob.github.io/2017/03/24/%E5%88%A9%E7%94%A8Python%E5%AF%B9%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95%E7%9A%84%E5%88%86%E6%9E%90/"/>
-    <id>https://zhangslob.github.io/2017/03/24/利用Python对直播弹幕的分析/</id>
-    <published>2017-03-24T12:12:58.000Z</published>
-    <updated>2017-03-24T12:39:06.414Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第七篇原创文章
-</code></pre><p>弹幕（ barrage），中文流行词语，原意指用大量或少量火炮提供密集炮击。而<br>弹幕，顾名思义是指子弹多而形成的幕布， 大量吐槽评论从屏幕飘过时效果看<br>上去像是飞行射击游戏里的弹幕。<br><img src="http://i.imgur.com/UMR9Lme.jpg" alt=""><br><a id="more"></a></p>
-<p>今天就来说说游戏直播中， 弹幕都有哪些。</p>
-<h1 id="一、准备"><a href="#一、准备" class="headerlink" title="一、准备"></a>一、准备</h1><p>利用 danmu 弹幕接口对斗鱼主播赏金术士直播间的弹幕进行抓取，抓取时间约<br>2 小时，共计 2534 条弹幕。赏金直播间：<a href="https://www.douyu.com/846805" target="_blank" rel="external"> https://www.douyu.com/846805</a></p>
-<p><img src="http://i.imgur.com/cmDvHBM.png" alt=""></p>
-<h1 id="二、-分析"><a href="#二、-分析" class="headerlink" title="二、 分析"></a>二、 分析</h1><h2 id="1、-弹幕词云"><a href="#1、-弹幕词云" class="headerlink" title="1、 弹幕词云"></a>1、 弹幕词云</h2><p>词云， 由词汇组成类似云的彩色图形。 使用的是 Python 的模块 wordcloud。 通<br>过 jieba 分词对弹幕中文分词， 使用 wordcloud 对结果构造词云， 最终结果为：</p>
-<p><img src="http://i.imgur.com/NlePiqC.png" alt=""></p>
-<p>可以看到，高频率词语有：</p>
-<p>外甥、无敌、厉害、可以、无限、火力、什么、垃圾、赏金。</p>
-<h2 id="2、关键词"><a href="#2、关键词" class="headerlink" title="2、关键词"></a>2、关键词</h2><p>TextRank算法可以用来从文本中提取关键词和摘要</p>
-<p><strong>关键词：</strong></p>
-<pre><code>不    0.010922664205428556
-外甥    0.010484629632807344
-玩    0.008177160003721682
-无限    0.0058741805660283575
-没    0.005665342357801469
-说    0.005548941560115147
-大    0.005541099430280024
-主播    0.005498954448927515
-出    0.0054948076800822405
-看    0.0051528084835430555
-</code></pre><p>可以看出来，作为汉字常用字，‘不’、‘玩’、‘没’、‘说’、‘大’、‘出’、‘看’这7个字出现频率高，这不奇怪。但是，‘外甥’、‘无限’、‘主播’就和英雄联盟主播赏金术士有责很大关系了。</p>
-<p>外甥是赏金双排的一位选手、扮演着搞笑、逗乐的角色。‘无限’则是“无限火力”，一个特定模式，颇受玩家喜爱。主播可能是赏金，也有可能说别的主播。</p>
-<p><img src="http://i.imgur.com/QAB31Jb.jpg" alt=""></p>
-<p><strong>关键短语：</strong></p>
-<pre><code>对面不会
-垃圾主播
-不出
-没带
-不大
-赏金玩
-对面德玛
-外甥说
-大不
-外甥大
-</code></pre><p><strong>摘要：</strong></p>
-<pre><code>7337 0.0006968086282134394 真的有护眼模式666
-3059 0.0006968086282134393 护眼模式为什么这么绿
-10503 0.00047342729603724247 找儿子，爱好护眼
-</code></pre><p>从摘要中看到三条弹幕中，都含有“<strong>护眼</strong>”二字，这是为什么呢？</p>
-<p>lol护眼一词，其实主要来源于英雄联盟的直播平台，随着叫的人多了，这个词便火热了起来。起初是有人带节奏，说打护眼斗鱼可以进入护眼模式。一般在直播lol的主播使用的英雄死掉后，界面会呈现暗灰色的，亮度降低有利于防护眼睛，从而就有了lol护眼，当然意思就是嘲讽主播很菜的意思。</p>
-<h1 id="三、总结："><a href="#三、总结：" class="headerlink" title="三、总结："></a>三、总结：</h1><p>由于自己所收集的数据过少、而且仅保存了一位主播的弹幕，造成结果不具有通用性，可以通过对各大直播平台的热门主播弹幕的爬取，获得观众的心理变化和网络风气。</p>
-<p><strong>以及主播有没有过气一说~</strong></p>
-<p>github：<a href="https://github.com/zhangslob/DanmuFenxi" target="_blank" rel="external">https://github.com/zhangslob/DanmuFenxi</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第七篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;弹幕（ barrage），中文流行词语，原意指用大量或少量火炮提供密集炮击。而&lt;br&gt;弹幕，顾名思义是指子弹多而形成的幕布， 大量吐槽评论从屏幕飘过时效果看&lt;br&gt;上去像是飞行射击游戏里的弹幕。&lt;br&gt;&lt;img src=&quot;http://i.imgur.com/UMR9Lme.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="直播" scheme="https://zhangslob.github.io/tags/%E7%9B%B4%E6%92%AD/"/>
-    
-      <category term="文本分析" scheme="https://zhangslob.github.io/tags/%E6%96%87%E6%9C%AC%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
