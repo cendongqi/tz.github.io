@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-01-30T13:44:02.289Z</updated>
+  <updated>2018-01-31T15:42:34.859Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,67 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>或许你应该学学 postman</title>
+    <link href="https://zhangslob.github.io/2018/01/31/%E6%88%96%E8%AE%B8%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AD%A6%E5%AD%A6-postman/"/>
+    <id>https://zhangslob.github.io/2018/01/31/或许你应该学学-postman/</id>
+    <published>2018-01-31T14:59:36.000Z</published>
+    <updated>2018-01-31T15:42:34.859Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十八篇原创文章
+</code></pre><p>简单模拟请求的工具 (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/7BTDQgq.png" alt=""></p>
+<a id="more"></a>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p>最简单的方法就是直接在浏览器中复制 <code>Copy as cURL</code> ，然后把数据导入 postman，然后 <code>send</code> ，收工。</p>
+<p>我们这里拿 <a href="https://www.zhihu.com/" target="_blank" rel="external">知乎首页</a> 举例</p>
+<p><img src="https://i.imgur.com/ZLG75Wm.png" alt=""></p>
+<blockquote>
+<p>在对应的请求下复制 cURL</p>
+</blockquote>
+<p>打开 postman ， 点击左上角的 <code>Import</code> ， 选择<code>Paste Raw Text</code> ，最后 <code>Import</code>，点击 <code>send</code>发送请求</p>
+<p><img src="https://i.imgur.com/EzUmrVP.png" alt=""></p>
+<p>发送请求之后就可以查看了，如下图，标箭头的地方可以打开看更多。比如可以预览web界面，查看 <code>Headers</code> 信息，查看状态，复制代码。</p>
+<p><img src="https://i.imgur.com/QbUhi6y.png" alt=""></p>
+<p>同时可以打开 <code>Headers</code> ，用来调试，哪些是需要的，哪些不需要</p>
+<p><img src="https://i.imgur.com/cJSncW7.png" alt=""></p>
+<p>最方便的一点是，可以直接生成对应的编程语言，并复制，例如Python的requests方法：</p>
+<p><img src="https://i.imgur.com/LCxVJMe.png" alt=""></p>
+<p>好了，到这里 postman 的简单功能就说完了，他的全部功能当然不止这一点，更多的就去看 <a href="https://www.getpostman.com/docs/" target="_blank" rel="external">文档啦</a></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>在我的使用过程中，发现了 postman 的一些问题，如：导入错误，参数错误，请求失误。</p>
+<h2 id="导入错误"><a href="#导入错误" class="headerlink" title="导入错误"></a>导入错误</h2><p>例如知乎这个例子，如果我们复制的是 <code>Copy as cURL (cmd)</code> ，可能你会遇到下面的错误</p>
+<p><img src="https://i.imgur.com/dCZ5PAy.png" alt=""></p>
+<p>这个时候选用 <code>Copy as cURL (bush)</code> 就好了，具体原因是啥，我也不清楚。我在这里找到了别人的描述</p>
+<blockquote>
+<p>There is no difference between the two cURL command because there is a difference between ” and ‘.</p>
+</blockquote>
+<p>Refer : <a href="http://technote.thispage.me/index.php/2016/12/23/use-curl-to-get-the-same-results-as-a-web-browser/" target="_blank" rel="external">Use cURL to get the same results as a web browser</a></p>
+<h2 id="参数错误"><a href="#参数错误" class="headerlink" title="参数错误"></a>参数错误</h2><p>举个例子，今天在帮朋友查看 <a href="https://www.crunchbase.com/organization/500-startups/investments/investments_list" target="_blank" rel="external">这个网站</a> 的翻页，复制用postman打开， copy cURL 内容是</p>
+<figure class="highlight parser3"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="xml">curl "https://www.crunchbase.com/v4/data/entities/organizations/</span><span class="number">56e40</span><span class="xml">f50</span><span class="number">-97</span><span class="xml">c7</span><span class="number">-2</span><span class="xml">a77</span><span class="number">-255</span><span class="xml">d</span><span class="number">-1</span><span class="xml">d97d5f30646/overrides?field_ids=^%</span><span class="keyword">^5B</span><span class="xml">^%</span><span class="keyword">^22identifier</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">,^%</span><span class="keyword">^22layout_id</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">,^%</span><span class="keyword">^22facet_ids</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">,^%</span><span class="keyword">^22title</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">,^%</span><span class="keyword">^22short_description</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">,^%</span><span class="keyword">^22is_locked</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^5D</span><span class="xml">^&amp;card_ids=^%</span><span class="keyword">^5B</span><span class="xml">^%</span><span class="keyword">^22investments_list</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^5D</span><span class="xml">" -H "cookie: _ga=GA1</span><span class="number">.2</span><span class="xml"></span><span class="number">.35962729</span><span class="xml"></span><span class="number">.1517412509</span><span class="xml">; _gid=GA1</span><span class="number">.2</span><span class="xml"></span><span class="number">.2072770006</span><span class="xml"></span><span class="number">.1517412509</span><span class="xml">; _vdl=</span><span class="number">1</span><span class="xml">; _hp2_ses_props</span><span class="number">.973801186</span><span class="xml">=^%</span><span class="keyword">^7B</span><span class="xml">^%</span><span class="keyword">^22ts</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A1517412512548</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22d</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^22www.crunchbase.com</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22h</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^2Fsearch</span><span class="xml">^%</span><span class="keyword">^2Fprincipal.investors</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^7D</span><span class="xml">; __qca=P0</span><span class="number">-1969245879</span><span class="xml"></span><span class="number">-1517412512628</span><span class="xml">; D_IID=</span><span class="number">1</span><span class="xml">B7344D2</span><span class="number">-1</span><span class="xml">C8F</span><span class="number">-3327</span><span class="xml"></span><span class="number">-8607</span><span class="xml">-D786306444AE; D_UID=</span><span class="number">208</span><span class="xml">F925B</span><span class="number">-3</span><span class="xml">D1C</span><span class="number">-3491</span><span class="xml">-A532-C82375EE187D; D_ZID=</span><span class="number">497</span><span class="xml">DB63C</span><span class="number">-5101</span><span class="xml"></span><span class="number">-3</span><span class="xml">F49-BE35</span><span class="number">-1752</span><span class="xml">A80F8DDA; D_ZUID=D89FCBAA-BF79</span><span class="number">-340</span><span class="xml">C-BF55-B860768D0993; D_HID=</span><span class="number">57</span><span class="xml">B19D5F</span><span class="number">-5069</span><span class="xml"></span><span class="number">-3</span><span class="xml">A82</span><span class="number">-94</span><span class="xml">CB-D42821D1CD10; D_SID=</span><span class="number">123.120</span><span class="xml"></span><span class="number">.141</span><span class="xml"></span><span class="number">.63</span><span class="xml">:bXaeU41PWi5vyYIflFmiShQiK1qwq/nC4G9IljWo+</span><span class="number">6</span><span class="xml">A; AMCVS_6B25357E519160E40A490D44^%</span><span class="keyword">^40AdobeOrg</span><span class="xml">=</span><span class="number">1</span><span class="xml">; wcsid=KZbgLoopx4WnyMOW3F6pZ0H92JEzMrBd; hblid=cfw6lOKzm4FpCUou3F6pZ0H92JE6rBWB; s_cc=true; AMCV_6B25357E519160E40A490D44^%</span><span class="keyword">^40AdobeOrg</span><span class="xml">=</span><span class="number">1099438348</span><span class="xml">^%</span><span class="keyword">^7CMCMID</span><span class="xml">^%</span><span class="keyword">^7C05859477990281579603868663655860142263</span><span class="xml">^%</span><span class="keyword">^7CMCAAMLH-1518017313</span><span class="xml">^%</span><span class="keyword">^7C11</span><span class="xml">^%</span><span class="keyword">^7CMCAAMB-1518017313</span><span class="xml">^%</span><span class="keyword">^7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y</span><span class="xml">^%</span><span class="keyword">^7CMCOPTOUT-1517419713s</span><span class="xml">^%</span><span class="keyword">^7CNONE</span><span class="xml">^%</span><span class="keyword">^7CMCAID</span><span class="xml">^%</span><span class="keyword">^7CNONE</span><span class="xml">^%</span><span class="keyword">^7CMCSYNCSOP</span><span class="xml">^%</span><span class="keyword">^7C411-17570</span><span class="xml">^%</span><span class="keyword">^7CvVersion</span><span class="xml">^%</span><span class="keyword">^7C2.1.0</span><span class="xml">; _okdetect=^%</span><span class="keyword">^7B</span><span class="xml">^%</span><span class="keyword">^22token</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^2215174125149410</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22proto</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^22https</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22host</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^22www.crunchbase.com</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^7D</span><span class="xml">; olfsk=olfsk8562990481377502; _okbk=cd4^%</span><span class="keyword">^3Dtrue</span><span class="xml">^%</span><span class="keyword">^2Cvi5</span><span class="xml">^%</span><span class="keyword">^3D0</span><span class="xml">^%</span><span class="keyword">^2Cvi4</span><span class="xml">^%</span><span class="keyword">^3D1517412515909</span><span class="xml">^%</span><span class="keyword">^2Cvi3</span><span class="xml">^%</span><span class="keyword">^3Dactive</span><span class="xml">^%</span><span class="keyword">^2Cvi2</span><span class="xml">^%</span><span class="keyword">^3Dfalse</span><span class="xml">^%</span><span class="keyword">^2Cvi1</span><span class="xml">^%</span><span class="keyword">^3Dfalse</span><span class="xml">^%</span><span class="keyword">^2Ccd8</span><span class="xml">^%</span><span class="keyword">^3Dchat</span><span class="xml">^%</span><span class="keyword">^2Ccd6</span><span class="xml">^%</span><span class="keyword">^3D0</span><span class="xml">^%</span><span class="keyword">^2Ccd5</span><span class="xml">^%</span><span class="keyword">^3Daway</span><span class="xml">^%</span><span class="keyword">^2Ccd3</span><span class="xml">^%</span><span class="keyword">^3Dfalse</span><span class="xml">^%</span><span class="keyword">^2Ccd2</span><span class="xml">^%</span><span class="keyword">^3D0</span><span class="xml">^%</span><span class="keyword">^2Ccd1</span><span class="xml">^%</span><span class="keyword">^3D0</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">; _ok=</span><span class="number">1554</span><span class="xml"></span><span class="number">-355</span><span class="xml"></span><span class="number">-10</span><span class="xml"></span><span class="number">-6773</span><span class="xml">; _hp2_props</span><span class="number">.973801186</span><span class="xml">=^%</span><span class="keyword">^7B</span><span class="xml">^%</span><span class="keyword">^22Logged</span><span class="xml">^%</span><span class="keyword">^20In</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3Afalse</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22Pro</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3Afalse</span><span class="xml">^%</span><span class="keyword">^7D</span><span class="xml">; _hp2_id</span><span class="number">.973801186</span><span class="xml">=^%</span><span class="keyword">^7B</span><span class="xml">^%</span><span class="keyword">^22userId</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^228805156096536097</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22pageviewId</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^221700148784936413</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22sessionId</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^225929107734453151</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22identity</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3Anull</span><span class="xml">^%</span><span class="keyword">^2C</span><span class="xml">^%</span><span class="keyword">^22trackerVersion</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^3A</span><span class="xml">^%</span><span class="keyword">^223.0</span><span class="xml">^%</span><span class="keyword">^22</span><span class="xml">^%</span><span class="keyword">^7D</span><span class="xml">; _oklv=</span><span class="number">1517412548852</span><span class="xml">^%</span><span class="keyword">^2CKZbgLoopx4WnyMOW3F6pZ0H92JEzMrBd</span><span class="xml">; s_pers=^%</span><span class="keyword">^20s_nrgvo</span><span class="xml">^%</span><span class="keyword">^3DNew</span><span class="xml">^%</span><span class="keyword">^7C1580484574965</span><span class="xml">^%</span><span class="keyword">^3B</span><span class="xml">" -H "origin: https://www.crunchbase.com" -H "accept-encoding: gzip, deflate, br" -H "x-distil-ajax: dfdvfavtsysazfberrtudvwabwe" -H "user-agent: Mozilla/</span><span class="number">5.0</span><span class="xml"> (Windows NT </span><span class="number">6.1</span><span class="xml">; Win64; x64) AppleWebKit/</span><span class="number">537.36</span><span class="xml"> (KHTML, like Gecko) Chrome/</span><span class="number">63.0</span><span class="xml"></span><span class="number">.3239</span><span class="xml"></span><span class="number">.84</span><span class="xml"> Safari/</span><span class="number">537.36</span><span class="xml">" -H "content-type: application/json" -H "accept-language: zh-CN,zh;q=</span><span class="number">0.9</span><span class="xml">,en;q=</span><span class="number">0.8</span><span class="xml">" -H "accept: application/json, text/plain, */*" -H "referer: https://www.crunchbase.com/organization/</span><span class="number">500</span><span class="xml">-startups/investments/investments_list" -H "authority: www.crunchbase.com" -H "x-requested-with: XMLHttpRequest" --data-binary ^"^&#123;^</span></div><div class="line"></div><div class="line">  ^\^"card_lookups^\^": ^[^</div><div class="line"></div><div class="line">    ^&#123;^</div><div class="line"></div><div class="line">      ^\^"card_id^\^": ^\^"investments_list^\^",^</div><div class="line"></div><div class="line">      ^\^"limit^\^": <span class="number">100</span><span class="xml">,^</span></div><div class="line"></div><div class="line">      ^\^"after_id^\^": ^\^"<span class="number">07</span><span class="xml">a9c686</span><span class="number">-4590</span><span class="xml">-fa0f</span><span class="number">-3</span><span class="xml">ac4-fc7b898c0b7a^\^"^</span></div><div class="line"></div><div class="line">    ^&#125;^</div><div class="line"></div><div class="line">  ^]^</div><div class="line"></div><div class="line">^&#125;^" --compressed</div></pre></td></tr></table></figure>
+<p>导入之后，<code>send</code>，返回 400 错误。</p>
+<p>postman 转义的code是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">url = <span class="string">"https://www.crunchbase.com/v4/data/entities/organizations/56e40f50-97c7-2a77-255d-1d97d5f30646/overrides"</span></div><div class="line"></div><div class="line">querystring = &#123;<span class="string">"field_ids"</span>:<span class="string">"^%^5B^%^22identifier^%^22,^%^22layout_id^%^22,^%^22facet_ids^%^22,^%^22title^%^22,^%^22short_description^%^22,^%^22is_locked^%^22^%^5D^"</span>,<span class="string">"card_ids"</span>:<span class="string">"^%^5B^%^22investments_list^%^22^%^5D"</span>&#125;</div><div class="line"></div><div class="line">payload = <span class="string">"^^&#123;^\n\n  ^\\^card_lookups^^: ^[^\n\n    ^&#123;^\n\n      ^\\^card_id^^: ^\\^investments_list^^,^\n\n      ^\\^limit^^: 100,^\n\n      ^\\^after_id^^: ^\\^07a9c686-4590-fa0f-3ac4-fc7b898c0b7a^^^\n\n    ^&#125;^\n\n  ^]^\n\n^&#125;^"</span></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'cookie'</span>: <span class="string">"_ga=GA1.2.35962729.1517412509; _gid=GA1.2.2072770006.1517412509; _vdl=1; _hp2_ses_props.973801186=^%^7B^%^22ts^%^22^%^3A1517412512548^%^2C^%^22d^%^22^%^3A^%^22www.crunchbase.com^%^22^%^2C^%^22h^%^22^%^3A^%^22^%^2Fsearch^%^2Fprincipal.investors^%^22^%^7D; __qca=P0-1969245879-1517412512628; D_IID=1B7344D2-1C8F-3327-8607-D786306444AE; D_UID=208F925B-3D1C-3491-A532-C82375EE187D; D_ZID=497DB63C-5101-3F49-BE35-1752A80F8DDA; D_ZUID=D89FCBAA-BF79-340C-BF55-B860768D0993; D_HID=57B19D5F-5069-3A82-94CB-D42821D1CD10; D_SID=123.120.141.63:bXaeU41PWi5vyYIflFmiShQiK1qwq/nC4G9IljWo+6A; AMCVS_6B25357E519160E40A490D44^%^40AdobeOrg=1; wcsid=KZbgLoopx4WnyMOW3F6pZ0H92JEzMrBd; hblid=cfw6lOKzm4FpCUou3F6pZ0H92JE6rBWB; s_cc=true; AMCV_6B25357E519160E40A490D44^%^40AdobeOrg=1099438348^%^7CMCMID^%^7C05859477990281579603868663655860142263^%^7CMCAAMLH-1518017313^%^7C11^%^7CMCAAMB-1518017313^%^7CRKhpRz8krg2tLO6pguXWp5olkAcUniQYPHaMWWgdJ3xzPWQmdj0y^%^7CMCOPTOUT-1517419713s^%^7CNONE^%^7CMCAID^%^7CNONE^%^7CMCSYNCSOP^%^7C411-17570^%^7CvVersion^%^7C2.1.0; _okdetect=^%^7B^%^22token^%^22^%^3A^%^2215174125149410^%^22^%^2C^%^22proto^%^22^%^3A^%^22https^%^3A^%^22^%^2C^%^22host^%^22^%^3A^%^22www.crunchbase.com^%^22^%^7D; olfsk=olfsk8562990481377502; _okbk=cd4^%^3Dtrue^%^2Cvi5^%^3D0^%^2Cvi4^%^3D1517412515909^%^2Cvi3^%^3Dactive^%^2Cvi2^%^3Dfalse^%^2Cvi1^%^3Dfalse^%^2Ccd8^%^3Dchat^%^2Ccd6^%^3D0^%^2Ccd5^%^3Daway^%^2Ccd3^%^3Dfalse^%^2Ccd2^%^3D0^%^2Ccd1^%^3D0^%^2C; _ok=1554-355-10-6773; _hp2_props.973801186=^%^7B^%^22Logged^%^20In^%^22^%^3Afalse^%^2C^%^22Pro^%^22^%^3Afalse^%^7D; _hp2_id.973801186=^%^7B^%^22userId^%^22^%^3A^%^228805156096536097^%^22^%^2C^%^22pageviewId^%^22^%^3A^%^221700148784936413^%^22^%^2C^%^22sessionId^%^22^%^3A^%^225929107734453151^%^22^%^2C^%^22identity^%^22^%^3Anull^%^2C^%^22trackerVersion^%^22^%^3A^%^223.0^%^22^%^7D; _oklv=1517412548852^%^2CKZbgLoopx4WnyMOW3F6pZ0H92JEzMrBd; s_pers=^%^20s_nrgvo^%^3DNew^%^7C1580484574965^%^3B"</span>,</div><div class="line">    <span class="string">'origin'</span>: <span class="string">"https://www.crunchbase.com"</span>,</div><div class="line">    <span class="string">'accept-encoding'</span>: <span class="string">"gzip, deflate, br"</span>,</div><div class="line">    <span class="string">'x-distil-ajax'</span>: <span class="string">"dfdvfavtsysazfberrtudvwabwe"</span>,</div><div class="line">    <span class="string">'user-agent'</span>: <span class="string">"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36"</span>,</div><div class="line">    <span class="string">'content-type'</span>: <span class="string">"application/json"</span>,</div><div class="line">    <span class="string">'accept-language'</span>: <span class="string">"zh-CN,zh;q=0.9,en;q=0.8"</span>,</div><div class="line">    <span class="string">'accept'</span>: <span class="string">"application/json, text/plain, */*"</span>,</div><div class="line">    <span class="string">'referer'</span>: <span class="string">"https://www.crunchbase.com/organization/500-startups/investments/investments_list"</span>,</div><div class="line">    <span class="string">'authority'</span>: <span class="string">"www.crunchbase.com"</span>,</div><div class="line">    <span class="string">'x-requested-with'</span>: <span class="string">"XMLHttpRequest"</span>,</div><div class="line">    <span class="string">'cache-control'</span>: <span class="string">"no-cache"</span>,</div><div class="line">    <span class="string">'postman-token'</span>: <span class="string">"1df3b2b6-b682-edf7-4804-572ac5a03420"</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">response = requests.request(<span class="string">"POST"</span>, url, data=payload, headers=headers, params=querystring)</div><div class="line"></div><div class="line">print(response.text)</div></pre></td></tr></table></figure>
+<p>可以看到 加入了大量的 <code>^</code> 符号，这个在Python中是运算符<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">^	按位异或运算符：当两对应的二进位相异时，结果为<span class="number">1</span>	(a ^ b) 输出结果 <span class="number">49</span> ，二进制解释： <span class="number">0011</span> <span class="number">0001</span></div></pre></td></tr></table></figure></p>
+<p>这也是 postman 的一个问题</p>
+<h2 id="请求失误"><a href="#请求失误" class="headerlink" title="请求失误"></a>请求失误</h2><p>这个问题，我也不是很懂，有的请求 postman 返回错误，但是复制代码到 Python 环境中运行是可以获得数据的，所以最好是多次验证。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十八篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;简单模拟请求的工具 (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/7BTDQgq.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="postman" scheme="https://zhangslob.github.io/tags/postman/"/>
+    
+  </entry>
   
   <entry>
     <title>有了她，谁敢阻止我学习</title>
@@ -2255,81 +2316,6 @@ c=Counter(speech2)
       <category term="学习笔记" scheme="https://zhangslob.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
       <category term="文字处理" scheme="https://zhangslob.github.io/tags/%E6%96%87%E5%AD%97%E5%A4%84%E7%90%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>昨天看球时，球迷都说了啥——弹幕抓取与分析</title>
-    <link href="https://zhangslob.github.io/2017/03/24/%E6%98%A8%E5%A4%A9%E7%9C%8B%E7%90%83%E6%97%B6%EF%BC%8C%E7%90%83%E8%BF%B7%E9%83%BD%E8%AF%B4%E4%BA%86%E5%95%A5%E2%80%94%E2%80%94%E5%BC%B9%E5%B9%95%E6%8A%93%E5%8F%96%E4%B8%8E%E5%88%86%E6%9E%90/"/>
-    <id>https://zhangslob.github.io/2017/03/24/昨天看球时，球迷都说了啥——弹幕抓取与分析/</id>
-    <published>2017-03-24T12:41:58.000Z</published>
-    <updated>2017-03-24T12:51:54.996Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第八篇原创文章
-</code></pre><p><img src="http://i.imgur.com/m7Aarx4.jpg" alt=""><br><a id="more"></a></p>
-<p>数据来源：<a href="http://star.longzhu.com/teamchina" target="_blank" rel="external">http://star.longzhu.com/teamchina</a></p>
-<p>本次弹幕记录（开始时间: 2017-03-23-19:43:34，结束21:29:33)，共记录20788条数据。</p>
-<p>使用OBS弹幕助手记录<a href="http://www.obsapp.com/apps/obsdanmu/" target="_blank" rel="external">http://www.obsapp.com/apps/obsdanmu/</a></p>
-<p><img src="http://i.imgur.com/fk9G55o.png" alt=""></p>
-<h1 id="1、分析"><a href="#1、分析" class="headerlink" title="1、分析"></a>1、分析</h1><p><img src="http://i.imgur.com/dcdvVir.png" alt=""></p>
-<p>文件中含有时间记录，观众ID和送礼记录，其次是弹幕内容，所以决定对前两列内容不分析。</p>
-<p>首先需要对文本分词，这里采用jieba分词 <a href="https://github.com/fxsjy/jieba/" target="_blank" rel="external">https://github.com/fxsjy/jieba/</a></p>
-<p>去除空格，使用<code>strip()</code>函数， 去掉换行符”\n” </p>
-<pre><code>line = line.strip(&apos;\n&apos;)
-</code></pre><p>把分析结果写入新的文档’text.txt’，Python join() 方法用于将序列中的元素以指定的字符连接生成一个新的字符串</p>
-<pre><code>text = &apos;&apos;
-with open(&apos;danmu.txt&apos;,encoding=&apos;utf-8&apos;) as fin:
-    for line in fin.readlines():
-         line = line.strip(&apos;\n&apos;)
-         text += &apos;/&apos;.join(jieba.cut(line))
-         text += &apos; &apos;
-fout = open(&apos;text.txt&apos;,&apos;wb&apos;)#以二进制写模式写入
-pickle.dump(text,fout)
-fout.close()
-</code></pre><p>这样就完成了分词过程，结果如下：</p>
-<p><img src="http://i.imgur.com/Yxki3q6.png" alt=""></p>
-<h1 id="2、绘制图云"><a href="#2、绘制图云" class="headerlink" title="2、绘制图云"></a>2、绘制图云</h1><pre><code># 直接从文件读取数据
-fr = open(&apos;text.txt&apos;,&apos;rb&apos;)
-text = pickle.load(fr)
-</code></pre><p>使用word_cloud，具体用法<a href="https://github.com/amueller/word_cloud" target="_blank" rel="external">https://github.com/amueller/word_cloud</a></p>
-<pre><code>backgroud_Image = plt.imread(&apos;girl.jpg&apos;)
-wc = WordCloud( background_color = &apos;white&apos;,    # 设置背景颜色
-                mask = backgroud_Image,        # 设置背景图片
-                max_words = 2000,            # 设置最大现实的字数
-                stopwords = STOPWORDS,        # 设置停用词
-                font_path = &apos;C:/Users/Windows/fonts/msyh.ttf&apos;,# 设置字体格式，如不设置显示不了中文
-                max_font_size = 300,            # 设置字体最大值
-                random_state = 50,            # 设置有多少种随机生成状态，即有多少种配色方案
-                )
-</code></pre><p>使用matplotlib绘图<a href="http://matplotlib.org/2.0.0/index.html" target="_blank" rel="external">http://matplotlib.org/2.0.0/index.html</a></p>
-<pre><code>wc.generate(text)
-image_colors = ImageColorGenerator(backgroud_Image)
-#wc.recolor(color_func = image_colors)
-plt.imshow(wc)
-plt.axis(&apos;off&apos;)
-plt.show()
-</code></pre><p>OK，这样就完成了，附上结果</p>
-<p><img src="http://i.imgur.com/JE54yKZ.png" alt=""><br>有没有你发过的弹幕呢？</p>
-<p>可自形修改数据，得到更好看图片。</p>
-<p>能力有限，分析很少，如果你想进行更深入分析，请找我要文件。</p>
-<p>对英雄联盟感兴趣的小伙伴可以看看这篇，对游戏直播弹幕的分析。</p>
-<p><a href="https://zhangslob.github.io/2017/03/24/%E5%88%A9%E7%94%A8Python%E5%AF%B9%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95%E7%9A%84%E5%88%86%E6%9E%90/">https://zhangslob.github.io/2017/03/24/%E5%88%A9%E7%94%A8Python%E5%AF%B9%E7%9B%B4%E6%92%AD%E5%BC%B9%E5%B9%95%E7%9A%84%E5%88%86%E6%9E%90/</a></p>
-<blockquote>
-<p>github：<a href="https://github.com/zhangslob/DanmuFenxi" target="_blank" rel="external">https://github.com/zhangslob/DanmuFenxi</a></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第八篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/m7Aarx4.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="足球" scheme="https://zhangslob.github.io/tags/%E8%B6%B3%E7%90%83/"/>
-    
-      <category term="数据分析" scheme="https://zhangslob.github.io/tags/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
