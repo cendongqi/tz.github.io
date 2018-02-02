@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="爬虫,Selenium," />
 
 
 
@@ -79,15 +79,24 @@
 
 
 
-<meta name="description" content="网络爬虫、数据分析、人生感悟!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小歪的博客">
-<meta property="og:url" content="https://zhangslob.github.io/tags/轮带逛/index.html">
+<meta name="description" content="这是崔斯特的第二十九篇原创文章
+如果可以使用 Requests 完成的，别用 Selenium (๑• . •๑)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么不推荐Selenium写爬虫">
+<meta property="og:url" content="https://zhangslob.github.io/2018/02/02/为什么不推荐Selenium写爬虫/index.html">
 <meta property="og:site_name" content="小歪的博客">
-<meta property="og:description" content="网络爬虫、数据分析、人生感悟!">
+<meta property="og:description" content="这是崔斯特的第二十九篇原创文章
+如果可以使用 Requests 完成的，别用 Selenium (๑• . •๑)">
+<meta property="og:image" content="https://raw.githubusercontent.com/requests/requests/master/docs/_static/requests-logo-small.png">
+<meta property="og:image" content="https://i.imgur.com/QwKXgfH.jpg">
+<meta property="og:image" content="https://i.imgur.com/6D1Plgm.png">
+<meta property="og:image" content="https://i.imgur.com/LyndQTt.jpg">
+<meta property="og:updated_time" content="2018-02-02T12:41:05.500Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小歪的博客">
-<meta name="twitter:description" content="网络爬虫、数据分析、人生感悟!">
+<meta name="twitter:title" content="为什么不推荐Selenium写爬虫">
+<meta name="twitter:description" content="这是崔斯特的第二十九篇原创文章
+如果可以使用 Requests 完成的，别用 Selenium (๑• . •๑)">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/requests/requests/master/docs/_static/requests-logo-small.png">
 
 
 
@@ -117,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="https://zhangslob.github.io/tags/轮带逛/"/>
+  <link rel="canonical" href="https://zhangslob.github.io/2018/02/02/为什么不推荐Selenium写爬虫/"/>
 
 
 
 
 
-  <title>标签: 轮带逛 | 小歪的博客</title>
+  <title>为什么不推荐Selenium写爬虫 | 小歪的博客</title>
   
 
 
@@ -183,7 +192,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
   
 
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 		<a href="https://github.com/zhangslob"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -331,54 +340,361 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>轮带逛<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2018/02/02/为什么不推荐Selenium写爬虫/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小歪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1488291259&di=9b54b1ab9a4a02ec51e4344e960692d6&src=http://ni.ppsrc.com/aR24MryiGC7HFCEJTB-wgQ@640w_640h_75Q.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小歪的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/03/20/如何优雅的“轮带逛”初级篇——获取单张图片/" itemprop="url">
-              
-                <span itemprop="name">如何优雅的“轮带逛”初级篇——获取单张图片</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">为什么不推荐Selenium写爬虫</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-20T20:35:00+08:00"
-              content="2017-03-20" >
-          03-20
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T20:35:02+08:00">
+                2018-02-02
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/02/02/为什么不推荐Selenium写爬虫/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/02/02/为什么不推荐Selenium写爬虫/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/02/02/为什么不推荐Selenium写爬虫/" class="leancloud_visitors" data-flag-title="为什么不推荐Selenium写爬虫">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,812
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <pre><code>这是崔斯特的第二十九篇原创文章
+</code></pre><p>如果可以使用 <code>Requests</code> 完成的，别用 <code>Selenium</code> (๑• . •๑)</p>
+<p><img src="https://raw.githubusercontent.com/requests/requests/master/docs/_static/requests-logo-small.png" alt=""></p>
+<a id="more"></a>
+<p>最近在群里经常会看到有些朋友说，使用Selenium去采集网站，我看到其实内心是很难受的，哎！为什么要用Selenium呢？</p>
+<p>我想说下自己的看法，欢迎各位大佬批评。</p>
+<h1 id="观点"><a href="#观点" class="headerlink" title="观点"></a>观点</h1><p>如果可以使用 <code>Requests</code> 完成的，别用 <code>Selenium</code></p>
+<h1 id="数据采集的顺序"><a href="#数据采集的顺序" class="headerlink" title="数据采集的顺序"></a>数据采集的顺序</h1><p>接到一个项目或者有一个采集需求时，第一步就是明确自己的需求。经常会遇到半路改需求的事情，真的很难受。</p>
+<p>第二步就是去分析这个网站，这个在之前有提到过 <a href="https://zhangslob.github.io/2017/12/23/%E9%87%87%E9%9B%86%E6%96%B9%E6%A1%88%E7%AD%96%E7%95%A5%E4%B9%8BApp%E6%8A%93%E5%8C%85/">采集方案策略之App抓包</a>  :</p>
+<blockquote>
+<p>首先大的地方，我们想抓取某个数据源，我们要知道大概有哪些路径可以获取到数据源，基本上无外乎三种：<br>PC端网站<br>针对移动设备响应式设计的网站（也就是很多人说的H5, 虽然不一定是H5）；<br>移动App<br>原则是能抓移动App的，最好抓移动App，如果有针对移动设备优化的网站，就抓针对移动设备优化的网站，最后考虑PC网站。因为移动App基本都是API很简单，而移动设备访问优化的网站一般来讲都是结构简单清晰的HTML，而PC网站自然是最复杂的了；针对PC端网站和移动网站的做法一样，分析思路可以一起讲，移动App单独分析。</p>
+</blockquote>
+<p>这个时候可以借用 <code>postman</code> 来分析请求，参考 <a href="https://zhangslob.github.io/2018/01/31/%E6%88%96%E8%AE%B8%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AD%A6%E5%AD%A6-postman/">或许你应该学学 postman</a></p>
+<p>然后下一步可能就是工程开始，各种配置，以及选择哪种采集方式，一般来说 Scrapy 是最好用、也是最常见的框架。当然你也可以使用 <code>requests + xpath</code> 或者 <code>Selenium</code> 。下面就我自己的看法来说说这三种采集方式。</p>
+<h1 id="三种采集差异"><a href="#三种采集差异" class="headerlink" title="三种采集差异"></a>三种采集差异</h1><h2 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a>Scrapy</h2><p>在 <a href="https://scrapy.org/" target="_blank" rel="external">Scrapy 官网 </a> 上是这样写的：</p>
+<blockquote>
+<p>Scrapy | A Fast and Powerful Scraping and Web Crawling Framework</p>
+</blockquote>
+<p>关键词是 <code>Fast</code> 和 <code>Powerful</code>，使用过确实感觉如此。我感觉 <code>Scrapy</code> 就是一个全家桶，它把爬虫所需要的大部分东西（为什么不是全部，下面会说到）都集成到这个框架中，如：下载器、中间件、调度器、Spider、调试、数据流等等所有功能全部都在这一个框架中，你所需要做的只是在命令行中输入：<code>scrapy startproject yourproject</code></p>
+<p>Scrapy 的缺点也是显而易见的：不支持分布式。scrapy中scheduler是运行在队列中的，而队列是在单机内存中的，服务器上爬虫是无法利用内存的队列做任何处理。但是也有解决办法，参见<a href="https://github.com/rmax/scrapy-redis" target="_blank" rel="external">rmax/scrapy-redis</a></p>
+<h2 id="Requests"><a href="#Requests" class="headerlink" title="Requests"></a>Requests</h2><p>来看看 <a href="http://docs.python-requests.org/zh_CN/latest/" target="_blank" rel="external">Requests的文档</a></p>
+<blockquote>
+<p>Requests 唯一的一个非转基因的 Python HTTP 库，人类可以安全享用。</p>
+<p>警告：非专业使用其他 HTTP 库会导致危险的副作用，包括：安全缺陷症、冗余代码症、重新发明轮子症、啃文档症、抑郁、头疼、甚至死亡。</p>
+</blockquote>
+<p>作者真幽默</p>
+<p><a href="https://gist.github.com/kennethreitz/973705" target="_blank" rel="external">urllib2 VS requests</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> urllib2</div><div class="line"></div><div class="line">gh_url = <span class="string">'https://api.github.com'</span></div><div class="line"></div><div class="line">req = urllib2.Request(gh_url)</div><div class="line"></div><div class="line">password_manager = urllib2.HTTPPasswordMgrWithDefaultRealm()</div><div class="line">password_manager.add_password(<span class="keyword">None</span>, gh_url, <span class="string">'user'</span>, <span class="string">'pass'</span>)</div><div class="line"></div><div class="line">auth_manager = urllib2.HTTPBasicAuthHandler(password_manager)</div><div class="line">opener = urllib2.build_opener(auth_manager)</div><div class="line"></div><div class="line">urllib2.install_opener(opener)</div><div class="line"></div><div class="line">handler = urllib2.urlopen(req)</div><div class="line"></div><div class="line"><span class="keyword">print</span> handler.getcode()</div><div class="line"><span class="keyword">print</span> handler.headers.getheader(<span class="string">'content-type'</span>)</div><div class="line"></div><div class="line"><span class="comment"># ------</span></div><div class="line"><span class="comment"># 200</span></div><div class="line"><span class="comment"># 'application/json'</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">r = requests.get(<span class="string">'https://api.github.com'</span>, auth=(<span class="string">'user'</span>, <span class="string">'pass'</span>))</div><div class="line"></div><div class="line"><span class="keyword">print</span> r.status_code</div><div class="line"><span class="keyword">print</span> r.headers[<span class="string">'content-type'</span>]</div><div class="line"></div><div class="line"><span class="comment"># ------</span></div><div class="line"><span class="comment"># 200</span></div><div class="line"><span class="comment"># 'application/json'</span></div></pre></td></tr></table></figure>
+<p>简单对比发现 <code>requests</code> 的好用之处了，刚开始学习爬虫的时候也是从 <code>urllib</code> 开始，当看到 <code>requests</code> 果断抛弃，就像看到 <code>xpath</code> 抛弃 <code>bs4</code> 一样</p>
+<p><img src="https://i.imgur.com/QwKXgfH.jpg" alt=""></p>
+<p>所以如果你是初学者，那么请毫不犹豫的选择 <code>requests</code> </p>
+<h2 id="Selenium"><a href="#Selenium" class="headerlink" title="Selenium"></a>Selenium</h2><p>最后来到今天的主角 <a href="http://www.seleniumhq.org/" target="_blank" rel="external">Selenium</a>， 首先看看官方怎么说</p>
+<blockquote>
+<p>What is Selenium?<br>Selenium automates browsers. That’s it! What you do with that power is entirely up to you. Primarily, it is for automating web applications for testing purposes, but is certainly not limited to just that. Boring web-based administration tasks can (and should!) be automated as well.</p>
+<p>Selenium has the support of some of the largest browser vendors who have taken (or are taking) steps to make Selenium a native part of their browser. It is also the core technology in countless other browser automation tools, APIs and frameworks.</p>
+</blockquote>
+<p>重点是：<code>it is for automating web applications for testing purposes, but is certainly not limited to just that</code>，翻译过来就是：<strong>它是用于自动化Web应用程序的测试目的，但肯定不仅限于此</strong>，简单来说，Selenium 是web自动化测试工具集，如果你去Google上搜索 Selenium ，大多结果都是 <code>利用Selenium 自动化web 测试</code>相关内容，比较出名的有<a href="http://www.cnblogs.com/fnng/category/349036.html" target="_blank" rel="external">博客园的虫师</a>，写的两本书也都是关于自动化测试方面的</p>
+<p><img src="https://i.imgur.com/6D1Plgm.png" alt=""></p>
+<p>至于为啥爬虫要用selenium，我在某些博客上找到有人这样说，我也不知道怎么说</p>
+<blockquote>
+<p>　对于一般网站来说scrapy、requests、beautifulsoup等都可以爬取，但是有些信息需要执行js才能显现，而且你肉眼所能看到的基本都能爬取下来，在学习中遇到了，就记录下来方便以后查看。</p>
+<p>webdrive是selenium中一个函数：</p>
+<p>from selenium import webdriver<br>driver = webdriver.Chrome()<br>driver.get(‘网址’)</p>
+<p>其中PhantomJS同时可以换成Chrome、Firefox、Ie等等，但是PhantomJS是一个无头的浏览器，运行是不会跳出相应的浏览器，运行相对效率较高。在调试中可以先换成Chrome，方便调试，最后再换成PhantomJS即可。</p>
+</blockquote>
+<p>下面是吐槽时间，说一说 <code>Selenium</code> 的缺点：</p>
+<ol>
+<li><strong>速度慢</strong>。每次运行爬虫都打开一个浏览器，如果没有设置，还会加载图片、JS等等一大堆东西；</li>
+<li><strong>占用资源太多</strong>。有人说，把<code>Chrome</code>换成无头浏览器<code>PhantomJS</code>，原理都是一样的，都是打开浏览器，而且很多网站会验证参数，如果对方看到你是以<code>PhantomJS</code>去访问，会BAN掉你的请求，然后你又要考虑更换请求头的事情，事情复杂程度不知道多了多少，为啥学Python？因为Python简单啊，如果有更快、更简单的库可以实现同样的功能，为什么不去使用呢？</li>
+<li><strong>对网络的要求会更高</strong>。 <code>Selenium</code> 加载了很多可能对您没有价值的补充文件（如css，js和图像文件）。 与仅仅请求您真正需要的资源（使用单独的HTTP请求）相比，这可能会产生更多的流量。</li>
+<li><strong>爬取规模不能太大</strong>。你有看到哪家公司用<code>Selenium</code>作为生产环境吗？</li>
+<li><strong>难</strong>。学习<code>Selenium</code>的成本太高，只有我一个人觉得<code>Selenium</code>比<code>Requests</code>难一百倍吗？</li>
+</ol>
+<p>我能想到的就这么多了，欢迎各位大佬补充。所以，如果可以使用 <code>Requests</code> 完成的，别用 <code>Selenium</code>，OK，洗脑完成。</p>
+<p>之前面试爬虫工程师有一题就是：如何处理网站的登录系统？ A.浏览器模拟   B.HTTP请求</p>
+<p>如果你想做测试工程师，那肯定需要学会 <code>Selenium</code>，公司一个妹子就是测试，现在学了 <code>Selenium</code>，工作轻松了好多。</p>
+<p>最后，无耻的来个广告，本公司招聘爬虫工程师，希望和你成为队友!</p>
+<p><img src="https://i.imgur.com/LyndQTt.jpg" alt=""></p>
 
       
     </div>
+    
+    
+    
 
+    
+      <div>
+        
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/02/02/为什么不推荐Selenium写爬虫/">为什么不推荐Selenium写爬虫</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 小歪 的个人博客">小歪</a></p>
+  <p><span>发布时间:</span>2018年02月02日 - 20:02</p>
+  <p><span>最后更新:</span>2018年02月02日 - 20:02</p>
+  <p><span>原始链接:</span><a href="/2018/02/02/为什么不推荐Selenium写爬虫/" title="为什么不推荐Selenium写爬虫">https://zhangslob.github.io/2018/02/02/为什么不推荐Selenium写爬虫/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhangslob.github.io/2018/02/02/为什么不推荐Selenium写爬虫/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+
+        
+      </div>
+      <div>
+          <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="小歪 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>打发点咯！嘤嘤嘤</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="小歪 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"> <i class="fa fa-tag"></i>爬虫</a>
+          
+            <a href="/tags/Selenium/" rel="tag"> <i class="fa fa-tag"></i>Selenium</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/31/或许你应该学学-postman/" rel="next" title="或许你应该学学 postman">
+                <i class="fa fa-chevron-left"></i> 或许你应该学学 postman
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5a2005c4149dd2fc" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -386,6 +702,20 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -406,8 +736,17 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -513,6 +852,22 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#观点"><span class="nav-number">1.</span> <span class="nav-text">观点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据采集的顺序"><span class="nav-number">2.</span> <span class="nav-text">数据采集的顺序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三种采集差异"><span class="nav-number">3.</span> <span class="nav-text">三种采集差异</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Scrapy"><span class="nav-number">3.1.</span> <span class="nav-text">Scrapy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Requests"><span class="nav-number">3.2.</span> <span class="nav-text">Requests</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Selenium"><span class="nav-number">3.3.</span> <span class="nav-text">Selenium</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -675,6 +1030,10 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -692,6 +1051,18 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       <script id="dsq-count-scr" src="https://https-zhangslob-github-io.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://zhangslob.github.io/2018/02/02/为什么不推荐Selenium写爬虫/';
+          this.page.identifier = '2018/02/02/为什么不推荐Selenium写爬虫/';
+          this.page.title = '为什么不推荐Selenium写爬虫';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://https-zhangslob-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
