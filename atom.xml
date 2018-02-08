@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-02-05T14:12:58.317Z</updated>
+  <updated>2018-02-08T13:13:47.006Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,170 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PEP8规则及Pycharm应用</title>
+    <link href="https://zhangslob.github.io/2018/02/08/PEP8%E8%A7%84%E5%88%99%E5%8F%8APycharm%E5%BA%94%E7%94%A8/"/>
+    <id>https://zhangslob.github.io/2018/02/08/PEP8规则及Pycharm应用/</id>
+    <published>2018-02-08T13:06:23.000Z</published>
+    <updated>2018-02-08T13:13:47.006Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十一篇原创文章
+</code></pre><p>学习下 Python增强建议书  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/8HyHkph.png" alt=""></p>
+<a id="more"></a>
+<h1 id="PEP8"><a href="#PEP8" class="headerlink" title="PEP8"></a>PEP8</h1><blockquote>
+<p>PEP是 Python Enhancement Proposal 的缩写，翻译过来就是 Python增强建议书 </p>
+</blockquote>
+<p>PEP8 是什么呢，简单说就是一种编码规范，是为了让代码“更好看”，更容易被阅读。</p>
+<p>具体有这些规范，参考 <a href="https://www.python.org/dev/peps/pep-0008/" target="_blank" rel="external">PEP 8 – Style Guide for Python Code</a></p>
+<p>For example</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Yes: <span class="keyword">import</span> os</div><div class="line">     <span class="keyword">import</span> sys</div><div class="line"></div><div class="line">No:  <span class="keyword">import</span> sys, os</div><div class="line"></div><div class="line"></div><div class="line">Yes:</div><div class="line">i = i + <span class="number">1</span></div><div class="line">submitted += <span class="number">1</span></div><div class="line">x = x*<span class="number">2</span> - <span class="number">1</span></div><div class="line">hypot2 = x*x + y*y</div><div class="line">c = (a+b) * (a-b)</div><div class="line"></div><div class="line"></div><div class="line">No:</div><div class="line">i=i+<span class="number">1</span></div><div class="line">submitted +=<span class="number">1</span></div><div class="line">x = x * <span class="number">2</span> - <span class="number">1</span></div><div class="line">hypot2 = x * x + y * y</div><div class="line">c = (a + b) * (a - b)</div></pre></td></tr></table></figure>
+<p>对于初学者（例如我）来说，这些标准太多，在实际coding中可能很难记住所有的。之前招聘爬虫工程师，会PEP8也会加分，所以学习下PEP8还是有帮助的。</p>
+<h1 id="Pycharm-设置"><a href="#Pycharm-设置" class="headerlink" title="Pycharm 设置"></a>Pycharm 设置</h1><p>PyCharm 配置 PEP 8 代码提示<br> 直接在右下角调整 Highlighting Level 为 Inspections 就能自动 PEP 8提示 (一般默认就是这个)</p>
+<p><img src="https://i.imgur.com/OrCItzF.png" alt=""></p>
+<p>For example</p>
+<p><img src="https://i.imgur.com/qK1iZVM.png" alt=""></p>
+<p>鼠标移到上方会提示： <code>PEP 8: expected 2 blank lines, found 1</code>，我们再增加一个空格就好了，你的代码中有任何不符合 PEP8 规范的地方都会有“<del>~</del>”提示</p>
+<p><img src="https://i.imgur.com/kq4POwe.png" alt=""></p>
+<p>这是一个困扰了我很久的问题，我一直不知道是哪里出了错，看英文也不懂，最后去Google才知道，创建字典的写法不规范，应该这样写：</p>
+<p><code>item = dict()</code></p>
+<h1 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h1><p>除了Pycharm，还有其他工具可以提示</p>
+<ol>
+<li>Google 开源的 Python 文件格式化工具：<a href="https://github.com/google/yapf" target="_blank" rel="external">github.com/google/yapf</a></li>
+<li>pyflakes, pylint 等工具及各种编辑器的插件</li>
+</ol>
+<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>好吧，这里才是正文，正确的规范如下：</p>
+<h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><ul>
+<li>不要使用 tab 缩进</li>
+<li>使用任何编辑器写 Python，请把一个 tab 展开为 4 个空格</li>
+<li>绝对不要混用 tab 和空格，否则容易出现 <code>IndentationError</code></li>
+</ul>
+<h2 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h2><ul>
+<li>在 list, dict, tuple, set, 参数列表的 , 后面加一个空格</li>
+<li>在 dict 的 : 后面加一个空格</li>
+<li>在注释符号 # 后面加一个空格，但是 <code>#!/usr/bin/python</code> 的 <code>#</code> 后不能有空格</li>
+<li>操作符两端加一个空格，如 +, -, *, /, |, &amp;, =</li>
+<li>接上一条，在参数列表里的 = 两端不需要空格</li>
+<li>括号（(), {}, []）内的两端不需要空格</li>
+</ul>
+<h2 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h2><ul>
+<li>function 和 class 顶上两个空行</li>
+<li>class 的 method 之间一个空行</li>
+<li>函数内逻辑无关的段落之间空一行，不要过度使用空行</li>
+<li>不要把多个语句写在一行，然后用 ; 隔开</li>
+<li><code>if/for/while</code> 语句中，即使执行语句只有一句，也要另起一行</li>
+</ul>
+<h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><ul>
+<li>每一行代码控制在 80 字符以内</li>
+<li>使用 \ 或 () 控制换行，举例：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(first, second, third, fourth, fifth,</span></span></div><div class="line">        sixth, and_some_other_very_long_param):</div><div class="line">    user = User.objects.filter_by(first=first, second=second, third=third) \</div><div class="line">        .skip(<span class="number">100</span>).limit(<span class="number">100</span>) \</div><div class="line">        .all()</div><div class="line"></div><div class="line">text = (<span class="string">'Long strings can be made up '</span></div><div class="line">        <span class="string">'of several shorter strings.'</span>)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><ul>
+<li>使用有意义的，英文单词或词组，绝对不要使用汉语拼音</li>
+<li>package/module 名中不要出现 -</li>
+<li>各种类型的命名规范：</li>
+</ul>
+<p><img src="https://i.imgur.com/0sVNGR9.png" alt=""></p>
+<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><ul>
+<li>所有 import 尽量放在文件开头，在 docstring 下面，其他变量定义的上面</li>
+<li>不要使用 from foo imort *</li>
+<li>import 需要分组，每组之间一个空行，每个分组内的顺序尽量采用字典序，分组顺序是：<ol>
+<li>标准库</li>
+<li>第三方库</li>
+<li>本项目的 package 和 module</li>
+</ol>
+</li>
+<li>不要使用隐式的相对导入（implicit relative imports），可是使用显示的相对导入（explicit relative imports），如 <code>from ..utils import parse</code>，最好使用全路径导入（absolute imports）</li>
+<li>对于不同的 package，一个 import 单独一行，同一个 package/module 下的内容可以写一起：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># bad</span></div><div class="line"><span class="keyword">import</span> sys, os, time</div><div class="line"></div><div class="line"><span class="comment"># good</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="comment"># ok</span></div><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template, jsonify</div></pre></td></tr></table></figure>
+<ul>
+<li>为了避免可能出现的命名冲突，可以使用 as 或导入上一级命名空间</li>
+<li>不要出现循环导入(cyclic import)</li>
+</ul>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ul>
+<li>文档字符串 docstring, 是 package, module, class, method, function 级别的注释，可以通过 <strong>doc</strong> 成员访问到，注释内容在一对 “”” 符号之间</li>
+<li>function, method 的文档字符串应当描述其功能、输入参数、返回值，如果有复杂的算法和实现，也需要写清楚</li>
+<li>不要写错误的注释，不要无谓的注释</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># bad 无谓的注释</span></div><div class="line">x = x + <span class="number">1</span>       <span class="comment"># increase x by 1</span></div><div class="line"></div><div class="line"><span class="comment"># bad 错误的注释</span></div><div class="line">x = x - <span class="number">1</span>       <span class="comment"># increase x by 1</span></div></pre></td></tr></table></figure>
+<ul>
+<li>优先使用英文写注释，英文不好全部写中文，否则更加看不懂</li>
+</ul>
+<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><ul>
+<li>不要轻易使用 try/except</li>
+<li>except 后面需要指定捕捉的异常，裸露的 except 会捕捉所有异常，意味着会隐藏潜在的问题</li>
+<li>可以有多个 except 语句，捕捉多种异常，分别做异常处理</li>
+<li>使用 finally 子句来处理一些收尾操作</li>
+<li><p>try/except 里的内容不要太多，只在可能抛出异常的地方使用，如：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># bad</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    user = User()</div><div class="line">    user.name = <span class="string">"leon"</span></div><div class="line">    user.age = int(age) <span class="comment"># 可能抛出异常</span></div><div class="line">    user.created_at = datetime.datetime.utcnow()</div><div class="line"></div><div class="line">    db.session.add(user)</div><div class="line">    db.session.commit() <span class="comment"># 可能抛出异常</span></div><div class="line"><span class="keyword">except</span>:</div><div class="line">    db.session.rollback()</div><div class="line"></div><div class="line"><span class="comment"># better</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    age = int(age)</div><div class="line"><span class="keyword">except</span> (TypeError, ValueError):</div><div class="line">    <span class="keyword">return</span> <span class="comment"># 或别的操作</span></div><div class="line"></div><div class="line">user = User()</div><div class="line">user.name = <span class="string">"leon"</span></div><div class="line">user.age = age</div><div class="line">user.created_at = datetime.datetime.utcnow()</div><div class="line">db.session.add(user)</div><div class="line"></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    db.session.commit()</div><div class="line"><span class="keyword">except</span> sqlalchemy.exc.SQLAlchemyError: <span class="comment"># 或者更具体的异常</span></div><div class="line">    db.session.rollback()</div><div class="line"><span class="keyword">finally</span>:</div><div class="line">    db.session.close()</div></pre></td></tr></table></figure>
+</li>
+<li><p>从 <code>Exception</code> 而不是 <code>BaseException</code> 继承自定义的异常类</p>
+</li>
+</ul>
+<h2 id="Class（类）"><a href="#Class（类）" class="headerlink" title="Class（类）"></a>Class（类）</h2><ul>
+<li>显示的写明父类，如果不是继承自别的类，就继承自 object 类</li>
+<li>使用 super 调用父类的方法</li>
+<li>支持多继承，即同时有多个父类，建议使用 Mixin</li>
+</ul>
+<h2 id="编码建议"><a href="#编码建议" class="headerlink" title="编码建议"></a>编码建议</h2><hr>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><ul>
+<li>使用字符串的 <code>join</code> 方法拼接字符串</li>
+<li>使用字符串类型的方法，而不是 <code>string</code> 模块的方法</li>
+<li>使用 <code>startswith</code> 和 <code>endswith</code> 方法比较前缀和后缀</li>
+<li>使用 <code>format</code> 方法格式化字符串</li>
+</ul>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><ul>
+<li>空的 list, str, tuple, set, dict 和 0, 0.0, None 都是 False</li>
+<li>使用 if some_list 而不是 if len(some_list) 判断某个 list 是否为空，其他类型同理</li>
+<li>使用 is 和 is not 与单例（如 None）进行比较，而不是用 == 和 !=</li>
+<li>使用 if a is not None 而不是 if not a is None</li>
+<li>用 isinstance 而不是 type 判断类型</li>
+<li>不要用 == 和 != 与 True 和 False 比较（除非有特殊情况，如在 sqlalchemy 中可能用到）</li>
+<li><p>使用 in 操作：</p>
+<ol>
+<li><p>用 key in dict 而不是 dict.has_key()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># bad</span></div><div class="line"><span class="keyword">if</span> d.has_key(k):</div><div class="line">    do_something()</div><div class="line"></div><div class="line"><span class="comment"># good</span></div><div class="line"><span class="keyword">if</span> k <span class="keyword">in</span> d:</div><div class="line">    do_something()</div></pre></td></tr></table></figure>
+<p>2.用 set 加速 “存在性” 检查，list 的查找是线性的，复杂度 O(n)，set 底层是 hash table, 复杂度 O(1)，但用 set 需要比 list 更多内存空间</p>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>使用列表表达式（<a href="https://www.python.org/dev/peps/pep-0202/" target="_blank" rel="external">list comprehension</a>），字典表达式(<a href="https://www.python.org/dev/peps/pep-0274/" target="_blank" rel="external">dict comprehension</a>, Python 2.7+) 和生成器(generator)</li>
+<li>dict 的 get 方法可以指定默认值，但有些时候应该用 [] 操作，使得可以抛出 KeyError</li>
+<li>使用 for item in list 迭代 list, for index, item in enumerate(list) 迭代 list 并获取下标</li>
+<li>使用内建函数 sorted 和 list.sort 进行排序</li>
+<li>适量使用 map, reduce, filter 和 lambda，使用内建的 all, any 处理多个条件的判断</li>
+<li>使用 defaultdict (Python 2.5+), Counter(Python 2.7+) 等 “冷门” 但好用的标准库算法和数据结构</li>
+<li>使用装饰器(decorator)</li>
+<li>使用 with 语句处理上下文</li>
+<li>有些时候不要对类型做太过严格的限制，利用 Python 的鸭子类型（Duck Type）特性</li>
+<li>使用 logging 记录日志，配置好格式和级别</li>
+<li>了解 Python 的 Magic Method：<a href="https://github.com/RafeKettler/magicmethods" target="_blank" rel="external">A Guide to Python’s Magic Methods</a>, <a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue6/a-guide-to-pythons-magic-methods.html" target="_blank" rel="external">Python 魔术方法指南</a></li>
+<li>阅读优秀的开源代码，如 <a href="https://github.com/pallets/flask" target="_blank" rel="external">Flask</a> 框架, <a href="https://github.com/requests/requests" target="_blank" rel="external">Requests for Humans</a></li>
+<li>不要重复造轮子，查看标准库、PyPi、Github、Google 等使用现有的优秀的解决方案</li>
+</ul>
+<h1 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h1><p>写程序的好习惯在于理解、坚持，然后就是运用自如！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十一篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;学习下 Python增强建议书  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/8HyHkph.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Python" scheme="https://zhangslob.github.io/categories/Python/"/>
+    
+    
+      <category term="PEP8" scheme="https://zhangslob.github.io/tags/PEP8/"/>
+    
+      <category term="Pycharm" scheme="https://zhangslob.github.io/tags/Pycharm/"/>
+    
+  </entry>
   
   <entry>
     <title>学点算法之栈的学习与应用</title>
@@ -2143,136 +2307,6 @@ plt.show()
       <category term="知乎" scheme="https://zhangslob.github.io/tags/%E7%9F%A5%E4%B9%8E/"/>
     
       <category term="妹子" scheme="https://zhangslob.github.io/tags/%E5%A6%B9%E5%AD%90/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode_4.Median of Two Sorted Arrays</title>
-    <link href="https://zhangslob.github.io/2017/05/19/Leetcode-4-Median-of-Two-Sorted-Arrays/"/>
-    <id>https://zhangslob.github.io/2017/05/19/Leetcode-4-Median-of-Two-Sorted-Arrays/</id>
-    <published>2017-05-19T14:03:18.147Z</published>
-    <updated>2017-05-19T15:07:32.244Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十一篇原创文章
-</code></pre><p><img src="http://i.imgur.com/67W64sr.png" alt=""></p>
-<p>参考<a href="https://my.oschina.net/u/1994258/blog/303757" target="_blank" rel="external">Median of Two Sorted Arrays</a><br><a id="more"></a></p>
-<h1 id="1、题目"><a href="#1、题目" class="headerlink" title="1、题目"></a>1、题目</h1><p>There are two sorted arrays nums1 and nums2 of size m and n respectively.</p>
-<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
-<p>Example 1:</p>
-<pre><code>nums1 = [1, 3]
-nums2 = [2]
-
-The median is 2.0
-</code></pre><p>Example 2:</p>
-<pre><code>nums1 = [1, 2]
-nums2 = [3, 4]
-
-The median is (2 + 3)/2 = 2.5
-</code></pre><h1 id="2、思路"><a href="#2、思路" class="headerlink" title="2、思路"></a>2、思路</h1><p>蛋疼的说，我有看不懂题目了，尤其是<code>O(log (m+n))</code>，啥玩意。没办法，去网上搜索，看看前辈们的想法。</p>
-<p>翻译如下：</p>
-<blockquote>
-<p>给你两个排序数组，容量为m的数组A，容量为n的数组B。求出两个数组的中位数（啥玩意？），硬性要求时间复杂度O(log (m+n)).</p>
-<p>1：太汗颜了，median到底是个啥，查一下：</p>
-<p>中位数是在一组数据中居于中间的数(特别注意的地方是：这组数据之前已经经过升序排列！！！)，即在这组数据中，有一半的数据比它大，有一半的数据比它小。如果这组数据包含偶数个数字，中值是位于中间的两个数的平均值。</p>
-<p>2：好吧，中位数是这么个玩意，那么理论上首先我们需要先将两个数组合为一，再求这个新合并的数组的中位数。</p>
-<p>3：但是，已经限定死了时间复杂度为log（m+n），原来LeetCode的题目也思路不开放嘛。</p>
-<p>4：问题可以转化成两个有序序列找第num大的数，由于时间复杂度已经限定死了，只能采用类似二分的思想，每个步骤去掉一半数据元素。</p>
-</blockquote>
-<p>出现了一个词语：<strong>时间复杂度</strong>，这是个啥？</p>
-<p><img src="http://i.imgur.com/NTEILO2.jpg" alt=""></p>
-<p>完全不懂，换个思路来吧，不去看题目了，直接看第四点：</p>
-<blockquote>
-<p>问题可以转化成两个有序序列找第num大的数，由于时间复杂度已经限定死了，只能采用类似二分的思想，每个步骤去掉一半数据元素。</p>
-</blockquote>
-<p>二分，又是二分，赶紧去复习下。</p>
-<blockquote>
-<p>二分查找就是将查找的键和子数组的中间键作比较，如果被查找的键小于中间键，就在左子数组继续查找；如果大于中间键，就在右子数组中查找，否则中间键就是要找的元素。</p>
-</blockquote>
-<p>这个好像还可以看得懂，嘿嘿。我还发现了Python源代码（百度这样说的）：</p>
-<pre><code>def bin_search(data_list, val):    
-    low = 0                         # 最小数下标    
-    high = len(data_list) - 1       # 最大数下标    
-    while low &lt;= high:        
-        mid = (low + high) // 2     # 中间数下标        
-        if data_list[mid] == val:   # 如果中间数下标等于val, 返回            
-            return mid        
-        elif data_list[mid] &gt; val:  # 如果val在中间数左边, 移动high下标            
-            high = mid - 1        
-        else:                       # 如果val在中间数右边, 移动low下标            
-            low = mid + 1    
-     return # val不存在, 返回None
-ret = bin_search(list(range(1, 10)), 3)
-print(ret)
-</code></pre><p>大概明白他的意思了。</p>
-<h1 id="3、解法"><a href="#3、解法" class="headerlink" title="3、解法"></a>3、解法</h1><p>很多解法都提到：<code>如果我们可以在两个数列中求出第K小的元素，便可以解决该问题</code></p>
-<blockquote>
-<p>解题思路：这道题要求两个已经排好序的数列的中位数。中位数的定义：如果数列有偶数个数，那么中位数为中间两个数的平均值；如果数列有奇数个数，那么中位数为中间的那个数。比如{1，2，3，4，5}的中位数为3。{1，2，3，4，5，6}的中位数为（3+4）/ 2 = 3.5。那么这题最直接的思路就是将两个数列合并在一起，然后排序，然后找到中位数就行了。可是这样最快也要O((m+n)log(m+n))的时间复杂度，而题目要求O(log(m+n))的时间复杂度。这道题其实考察的是二分查找，是《算法导论》的一道课后习题，难度还是比较大的。</p>
-<p>首先我们来看如何找到两个数列的第k小个数，即程序中getKth(A, B , k)函数的实现。用一个例子来说明这个问题：A = {1，3，5，7}；B = {2，4，6，8，9，10}；如果要求第7个小的数，A数列的元素个数为4，B数列的元素个数为6；k/2 = 7/2 = 3，而A中的第3个数A[2]=5；B中的第3个数B[2]=6；而A[2]&lt;B[2]；则A[0]，A[1]，A[2]中必然不可能有第7个小的数。因为A[2]&lt;B[2]，所以比A[2]小的数最多可能为A[0], A[1], B[0], B[1]这四个数，也就是说A[2]最多可能是第5个大的数，由于我们要求的是getKth(A, B, 7)；现在就变成了求getKth(A’, B, 4)；即A’ = {7}；B不变，求这两个数列的第4个小的数，因为A[0]，A[1]，A[2]中没有解，所以我们直接删掉它们就可以了。这个可以使用递归来实现。</p>
-</blockquote>
-<pre><code>class Solution:
-    # @return a float
-    # @line20 must multiply 0.5 for return a float else it will return an int
-    def getKth(self, A, B, k):
-        lenA = len(A); lenB = len(B)
-        if lenA &gt; lenB: return self.getKth(B, A, k)
-        if lenA == 0: return B[k - 1]
-        if k == 1: return min(A[0], B[0])
-        pa = min(k/2, lenA); pb = k - pa
-        if A[pa - 1] &lt;= B[pb - 1]:
-            return self.getKth(A[pa:], B, pb)
-        else:
-            return self.getKth(A, B[pb:], pa)
-
-    def findMedianSortedArrays(self, A, B):
-        lenA = len(A); lenB = len(B)
-        if (lenA + lenB) % 2 == 1: 
-            return self.getKth(A, B, (lenA + lenB)/2 + 1)
-        else:
-            return (self.getKth(A, B, (lenA + lenB)/2) + self.getKth(A, B, (lenA + lenB)/2 + 1)) * 0.5
-</code></pre><p>在我提交了代码之后，发现超过50.24 % </p>
-<p><img src="http://i.imgur.com/COEyBaw.png" alt=""></p>
-<p>我找出最快的解法，来学习下：</p>
-<pre><code>class Solution(object):
-    def findMedianSortedArrays(self, a, b):
-        &quot;&quot;&quot;
-        :type nums1: List[int]
-        :type nums2: List[int]
-        :rtype: float
-        &quot;&quot;&quot;
-        c = a+b
-        c.sort()
-        m = len(c) / 2 
-        mm = len(c) % 2
-        if mm &gt; 0 :
-            return c[m]
-        return (c[m-1]+c[m])/2.# + (c[m-1]+c[m])%2
-</code></pre><p>第二名的：</p>
-<pre><code>class Solution(object):
-    def findMedianSortedArrays(self, nums1, nums2):
-        &quot;&quot;&quot;
-        :type nums1: List[int]
-        :type nums2: List[int]
-        :rtype: float
-        &quot;&quot;&quot;
-        nums3 = nums1 + nums2
-        nums3.sort()
-        l = len(nums3)
-        if l%2 == 1:
-            return nums3[l/2]
-        else:
-            return (float(nums3[l/2]) + float(nums3[l/2-1]))/2
-</code></pre><p><img src="http://i.imgur.com/rcobwfC.jpg" alt=""></p>
-<p>每做一题，都会被打击好多次，但是算法是一定要学习的。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十一篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/67W64sr.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;参考&lt;a href=&quot;https://my.oschina.net/u/1994258/blog/303757&quot;&gt;Median of Two Sorted Arrays&lt;/a&gt;&lt;br&gt;
-    
-    </summary>
-    
     
   </entry>
   
