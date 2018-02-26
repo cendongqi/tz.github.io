@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="统计学,数据," />
+  <meta name="keywords" content="爬虫,Scrapy," />
 
 
 
@@ -79,20 +79,22 @@
 
 
 
-<meta name="description" content="这是崔斯特的第十六篇原创文章">
+<meta name="description" content="这是崔斯特的第三十三篇原创文章
+开始学习Scrapy源码  (๑• . •๑)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="统计学学习笔记（一）">
-<meta property="og:url" content="https://zhangslob.github.io/2017/11/30/统计学学习笔记（一）/index.html">
+<meta property="og:title" content="Scrapy源码（2）——爬虫开始的地方">
+<meta property="og:url" content="https://zhangslob.github.io/2018/02/26/Scrapy源码（2）——爬虫开始的地方/index.html">
 <meta property="og:site_name" content="小歪的博客">
-<meta property="og:description" content="这是崔斯特的第十六篇原创文章">
-<meta property="og:image" content="https://i.imgur.com/gmL4oSK.jpg">
-<meta property="og:image" content="https://i.imgur.com/poRqKVo.png">
-<meta property="og:image" content="https://i.imgur.com/FLfwzDU.png">
-<meta property="og:updated_time" content="2017-12-01T14:48:31.526Z">
+<meta property="og:description" content="这是崔斯特的第三十三篇原创文章
+开始学习Scrapy源码  (๑• . •๑)">
+<meta property="og:image" content="https://i.imgur.com/5wP0fKB.png">
+<meta property="og:image" content="https://i.imgur.com/bG560BG.png">
+<meta property="og:updated_time" content="2018-02-26T15:14:48.399Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="统计学学习笔记（一）">
-<meta name="twitter:description" content="这是崔斯特的第十六篇原创文章">
-<meta name="twitter:image" content="https://i.imgur.com/gmL4oSK.jpg">
+<meta name="twitter:title" content="Scrapy源码（2）——爬虫开始的地方">
+<meta name="twitter:description" content="这是崔斯特的第三十三篇原创文章
+开始学习Scrapy源码  (๑• . •๑)">
+<meta name="twitter:image" content="https://i.imgur.com/5wP0fKB.png">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://zhangslob.github.io/2017/11/30/统计学学习笔记（一）/"/>
+  <link rel="canonical" href="https://zhangslob.github.io/2018/02/26/Scrapy源码（2）——爬虫开始的地方/"/>
 
 
 
 
 
-  <title>统计学学习笔记（一） | 小歪的博客</title>
+  <title>Scrapy源码（2）——爬虫开始的地方 | 小歪的博客</title>
   
 
 
@@ -340,7 +342,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2017/11/30/统计学学习笔记（一）/">
+    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2018/02/26/Scrapy源码（2）——爬虫开始的地方/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="小歪">
@@ -357,7 +359,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
         
         
-          <h1 class="post-title" itemprop="name headline">统计学学习笔记（一）</h1>
+          <h1 class="post-title" itemprop="name headline">Scrapy源码（2）——爬虫开始的地方</h1>
         
 
         <div class="post-meta">
@@ -369,8 +371,8 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-30T23:45:14+08:00">
-                2017-11-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T22:48:13+08:00">
+                2018-02-26
               </time>
             
 
@@ -392,8 +394,8 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/统计学/" itemprop="url" rel="index">
-                    <span itemprop="name">统计学</span>
+                  <a href="/categories/Scrapy/" itemprop="url" rel="index">
+                    <span itemprop="name">Scrapy</span>
                   </a>
                 </span>
 
@@ -410,9 +412,9 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/11/30/统计学学习笔记（一）/#comments" itemprop="discussionUrl">
+                <a href="/2018/02/26/Scrapy源码（2）——爬虫开始的地方/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/11/30/统计学学习笔记（一）/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/02/26/Scrapy源码（2）——爬虫开始的地方/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -420,7 +422,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
           
           
-             <span id="/2017/11/30/统计学学习笔记（一）/" class="leancloud_visitors" data-flag-title="统计学学习笔记（一）">
+             <span id="/2018/02/26/Scrapy源码（2）——爬虫开始的地方/" class="leancloud_visitors" data-flag-title="Scrapy源码（2）——爬虫开始的地方">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -448,7 +450,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,096
+                  1,091
                 </span>
               
 
@@ -464,7 +466,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  5
                 </span>
               
             </div>
@@ -485,101 +487,63 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
 
       
-        <pre><code>这是崔斯特的第十六篇原创文章
-</code></pre><p><img src="https://i.imgur.com/gmL4oSK.jpg" alt=""></p>
+        <pre><code>这是崔斯特的第三十三篇原创文章
+</code></pre><p>开始学习<code>Scrapy</code>源码  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/5wP0fKB.png" alt=""></p>
 <a id="more"></a>
-<p>这是学习统计学的第一篇笔记，以后尽量都放在这里吧。</p>
-<p>发现使用hexo发文章的快捷键：</p>
-<p><code>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</code></p>
-<p>下面是正文：</p>
-<hr>
-<h1 id="1、统计中的基本概念"><a href="#1、统计中的基本概念" class="headerlink" title="1、统计中的基本概念"></a>1、统计中的基本概念</h1><ol>
-<li><strong>总体和样本</strong>。总体：所研究的全部个体；样本：总体中的一部分</li>
-<li><strong>参数和统计量</strong>。参数：用来描述<strong>总体</strong>特征的概括性数字度量；统计量：用来描述<strong>样本</strong>特征的概括性数字度量。</li>
-<li><strong>变量</strong>。变量、分类变量（事物类别的一个名称）、顺序变量（事物有序类别的一个名称）、数值型变量、离散型变量（只能取可数值的变量）、连续性变量。</li>
-</ol>
-<h1 id="2、数据的收集"><a href="#2、数据的收集" class="headerlink" title="2、数据的收集"></a>2、数据的收集</h1><h3 id="1、数据的间接来源"><a href="#1、数据的间接来源" class="headerlink" title="1、数据的间接来源"></a>1、数据的间接来源</h3><p><strong>二手数据</strong>：公开出版的或公开报道的数据。</p>
-<h3 id="2、数据的直接来源"><a href="#2、数据的直接来源" class="headerlink" title="2、数据的直接来源"></a>2、数据的直接来源</h3><h4 id="（1）统计调查方式"><a href="#（1）统计调查方式" class="headerlink" title="（1）统计调查方式"></a>（1）统计调查方式</h4><ol>
-<li>抽样调查：经济性、时效性强、适应面广、准确性高。</li>
-<li>普查：一次性或周期性、规定调查时间、数据比较准确、范围比较狭窄。</li>
-</ol>
-<h4 id="（2）数据的收集方法"><a href="#（2）数据的收集方法" class="headerlink" title="（2）数据的收集方法"></a>（2）数据的收集方法</h4><ol>
-<li>询问调查：访问调查、邮寄调查、电话调查、计算机辅助调查、座谈会、个别深度访问。</li>
-<li>观察与实验：观察法、实验法。</li>
-</ol>
+<h1 id="Scrapy运行命令"><a href="#Scrapy运行命令" class="headerlink" title="Scrapy运行命令"></a>Scrapy运行命令</h1><p>一般来说，运行Scrapy项目的写法有，（这里不考虑从脚本运行Scrapy）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Usage examples:</div><div class="line"></div><div class="line">$ scrapy crawl myspider</div><div class="line">[ ... myspider starts crawling ... ]</div><div class="line"></div><div class="line">$ scrapy runspider myspider.py</div><div class="line">[ ... spider starts crawling ... ]</div></pre></td></tr></table></figure>
+<p>但是更好的写法是，新建一个Python文件，如下，（便于调试）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> cmdline</div><div class="line"></div><div class="line">cmdline.execute(<span class="string">"scrapy crawl myspider"</span>.split())</div></pre></td></tr></table></figure></p>
+<p>很容易就发现，Scrapy运行文件是<code>cmdline.py</code>文件里面的<code>execute()</code>函数，下面学习下这个函数在做什么。</p>
+<h1 id="分析源码"><a href="#分析源码" class="headerlink" title="分析源码"></a>分析源码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">execute</span><span class="params">(argv=None, settings=None)</span>:</span></div><div class="line">    <span class="keyword">if</span> argv <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        argv = sys.argv</div><div class="line"></div><div class="line">    <span class="comment"># --- backwards compatibility for scrapy.conf.settings singleton ---</span></div><div class="line">    <span class="keyword">if</span> settings <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">and</span> <span class="string">'scrapy.conf'</span> <span class="keyword">in</span> sys.modules:</div><div class="line">        <span class="keyword">from</span> scrapy <span class="keyword">import</span> conf</div><div class="line">        <span class="keyword">if</span> hasattr(conf, <span class="string">'settings'</span>):</div><div class="line">            settings = conf.settings</div><div class="line">    <span class="comment"># ------------------------------------------------------------------</span></div></pre></td></tr></table></figure>
+<p>寻找 <code>scrapy.conf</code>配置文件，argv直接取sys.argv</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> settings <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">    settings = get_project_settings()</div><div class="line">    <span class="comment"># set EDITOR from environment if available</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        editor = os.environ[<span class="string">'EDITOR'</span>]</div><div class="line">    <span class="keyword">except</span> KeyError: <span class="keyword">pass</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        settings[<span class="string">'EDITOR'</span>] = editor</div><div class="line">check_deprecated_settings(settings)</div><div class="line"></div><div class="line"><span class="comment"># --- backwards compatibility for scrapy.conf.settings singleton ---</span></div><div class="line"><span class="keyword">import</span> warnings</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> ScrapyDeprecationWarning</div><div class="line"><span class="keyword">with</span> warnings.catch_warnings():</div><div class="line">    warnings.simplefilter(<span class="string">"ignore"</span>, ScrapyDeprecationWarning)</div><div class="line">    <span class="keyword">from</span> scrapy <span class="keyword">import</span> conf</div><div class="line">    conf.settings = settings</div><div class="line"><span class="comment"># ------------------------------------------------------------------</span></div></pre></td></tr></table></figure>
 <blockquote>
-<p>竟然没网络爬虫，嘤嘤嘤</p>
+<p>set EDITOR from environment if available</p>
 </blockquote>
-<h3 id="3、调查设计"><a href="#3、调查设计" class="headerlink" title="3、调查设计"></a>3、调查设计</h3><h4 id="（1）调查方案设计"><a href="#（1）调查方案设计" class="headerlink" title="（1）调查方案设计"></a>（1）调查方案设计</h4><ol>
-<li>调查目的</li>
-<li>调查对象和调查单位</li>
-<li>调查项目和调查表</li>
-</ol>
-<h4 id="（2）调查问卷设计"><a href="#（2）调查问卷设计" class="headerlink" title="（2）调查问卷设计"></a>（2）调查问卷设计</h4><h5 id="a-调查问卷的基本结构："><a href="#a-调查问卷的基本结构：" class="headerlink" title="a.调查问卷的基本结构："></a>a.调查问卷的基本结构：</h5><ul>
-<li>开头部分（问候语、填表说明、问卷编号 ）</li>
-<li>甄别部分：过滤——筛选掉不需要的部分——针对特定人群</li>
-<li>主体部分：调查的全部问题</li>
-<li>背景部分：被调查者的背景资料</li>
-</ul>
-<h5 id="b-提问项目的设计："><a href="#b-提问项目的设计：" class="headerlink" title="b.提问项目的设计："></a>b.提问项目的设计：</h5><ul>
-<li>提问的内容尽可能短</li>
-<li>用词要确切、通俗</li>
-<li>一个项目只包含一项内容</li>
-<li>避免诱导性提问</li>
-<li>避免否定式提问</li>
-<li>避免敏感性问题</li>
-</ul>
-<h5 id="c-回答项目的设计"><a href="#c-回答项目的设计" class="headerlink" title="c.回答项目的设计"></a>c.回答项目的设计</h5><ul>
-<li>开放性问题：灵活；整理资料困难</li>
-<li>封闭性问题：两项选择法、多项选择法（单项选择型、多项选择型、限制选择型）</li>
-<li>顺序选择法：按顺序排列</li>
-<li>评定尺度法：和NPS有点像哦</li>
-<li>双向列联法：表格表现</li>
-</ul>
-<h5 id="d-问题顺序的设计"><a href="#d-问题顺序的设计" class="headerlink" title="d.问题顺序的设计"></a>d.问题顺序的设计</h5><ul>
-<li>问题的安排硬具有逻辑性</li>
-<li>问题的顺序应先难后易</li>
-<li>能引起被调查者兴趣的问题放在最前面</li>
-<li>开放性问题放在后面</li>
-</ul>
-<h4 id="（3）统计数据的质量"><a href="#（3）统计数据的质量" class="headerlink" title="（3）统计数据的质量"></a>（3）统计数据的质量</h4><h5 id="a-统计数据的误差"><a href="#a-统计数据的误差" class="headerlink" title="a.统计数据的误差"></a>a.统计数据的误差</h5><h5 id="b-统计数据的误差"><a href="#b-统计数据的误差" class="headerlink" title="b.统计数据的误差"></a>b.统计数据的误差</h5><ul>
-<li>精度</li>
-<li>准确性</li>
-<li>关联性</li>
-<li>及时性</li>
-<li>一致性</li>
-<li><p>最低成本</p>
-<hr>
-</li>
-</ul>
-<p>这是统计学基础 第三版 (贾俊平)的记录，看了前两章，感觉受益匪浅，尤其是问卷的设计，比较系统、完整，可以应用在以后的工作中。</p>
+<p>读取<code>settings</code>设置文件，导入项目，调用<code>get_project_settings()</code>函数，此处为<code>utils</code>文件夹下的<code>project.py</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_project_settings</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">if</span> ENVVAR <span class="keyword">not</span> <span class="keyword">in</span> os.environ:</div><div class="line">        project = os.environ.get(<span class="string">'SCRAPY_PROJECT'</span>, <span class="string">'default'</span>)</div><div class="line">        init_env(project)</div></pre></td></tr></table></figure>
 <blockquote>
-<p>书名：统计学基础 第三版</p>
-<p>作者：贾俊平</p>
-<p>出版社：中国人民大学出版社</p>
+<p>project.py</p>
 </blockquote>
-<h1 id="最后说一说为什么要学统计学"><a href="#最后说一说为什么要学统计学" class="headerlink" title="最后说一说为什么要学统计学"></a>最后说一说为什么要学统计学</h1><p>最直接原因是<strong>工资高</strong>。可以去拉勾上看看“数据分析”、“数据挖掘”、“数据科学家”等职位，他们对学历的要求基本上都会有“统计学”。</p>
-<p>对于我这种文科生来说，学习统计学是必经之路。<strong>敲门砖啊！</strong></p>
-<p>最后记录下最近学习的数据科学的流程：</p>
+<p><code>init_env()</code> 函数如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_env</span><span class="params">(project=<span class="string">'default'</span>, set_syspath=True)</span>:</span></div><div class="line">    <span class="string">"""Initialize environment to use command-line tool from inside a project</span></div><div class="line">    dir. This sets the Scrapy settings module and modifies the Python path to</div><div class="line">    be able to locate the project module.</div><div class="line">    """</div><div class="line">    cfg = get_config()</div><div class="line">    <span class="keyword">if</span> cfg.has_option(<span class="string">'settings'</span>, project):</div><div class="line">        os.environ[<span class="string">'SCRAPY_SETTINGS_MODULE'</span>] = cfg.get(<span class="string">'settings'</span>, project)</div><div class="line">    closest = closest_scrapy_cfg()</div><div class="line">    <span class="keyword">if</span> closest:</div><div class="line">        projdir = os.path.dirname(closest)</div><div class="line">        <span class="keyword">if</span> set_syspath <span class="keyword">and</span> projdir <span class="keyword">not</span> <span class="keyword">in</span> sys.path:</div><div class="line">            sys.path.append(projdir)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>conf.py</p>
+</blockquote>
+<p>如注释所说，初始化环境,循环递归找到用户项目中的配置文件<code>settings.py</code>,并且将其设置到环境变量<code>Scrapy settings module</code>中。然后修改Python路径，确保能找到项目模块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">settings = Settings()</div><div class="line">settings_module_path = os.environ.get(ENVVAR)</div><div class="line"><span class="keyword">if</span> settings_module_path:</div><div class="line">    settings.setmodule(settings_module_path, priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">XXX:</span> remove this hack</span></div><div class="line">pickled_settings = os.environ.get(<span class="string">"SCRAPY_PICKLED_SETTINGS_TO_OVERRIDE"</span>)</div><div class="line"><span class="keyword">if</span> pickled_settings:</div><div class="line">    settings.setdict(pickle.loads(pickled_settings), priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">XXX:</span> deprecate and remove this functionality</span></div><div class="line">env_overrides = &#123;k[<span class="number">7</span>:]: v <span class="keyword">for</span> k, v <span class="keyword">in</span> os.environ.items() <span class="keyword">if</span></div><div class="line">                 k.startswith(<span class="string">'SCRAPY_'</span>)&#125;</div><div class="line"><span class="keyword">if</span> env_overrides:</div><div class="line">    settings.setdict(env_overrides, priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="keyword">return</span> settings</div></pre></td></tr></table></figure>
+<blockquote>
+<p>project.py</p>
+</blockquote>
+<p>至此，<code>get_project_settings()</code>该函数结束，如函数名字一样，最后返回项目配置，到此为止，接着往下看</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">inproject = inside_project()</div><div class="line">cmds = _get_commands_dict(settings, inproject)</div><div class="line">cmdname = _pop_command_name(argv)</div><div class="line">parser = optparse.OptionParser(formatter=optparse.TitledHelpFormatter(), \</div><div class="line">    conflict_handler=<span class="string">'resolve'</span>)</div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> cmdname:</div><div class="line">    _print_commands(settings, inproject)</div><div class="line">    sys.exit(<span class="number">0</span>)</div><div class="line"><span class="keyword">elif</span> cmdname <span class="keyword">not</span> <span class="keyword">in</span> cmds:</div><div class="line">    _print_unknown_command(settings, cmdname, inproject)</div><div class="line">    sys.exit(<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>导入相应的module爬虫模块（inside_project）</p>
+<p>执行环境是否在项目中，主要检查scrapy.cfg配置文件是否存在，读取commands文件夹，把所有的命令类转换为<code>{cmd_name: cmd_instance}</code>的字典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cmd = cmds[cmdname]</div><div class="line">parser.usage = <span class="string">"scrapy %s %s"</span> % (cmdname, cmd.syntax())</div><div class="line">parser.description = cmd.long_desc()</div><div class="line">settings.setdict(cmd.default_settings, priority=<span class="string">'command'</span>)</div><div class="line">cmd.settings = settings</div><div class="line">cmd.add_options(parser)</div><div class="line">opts, args = parser.parse_args(args=argv[<span class="number">1</span>:])</div><div class="line">_run_print_help(parser, cmd.process_options, args, opts)</div></pre></td></tr></table></figure>
+<p>根据命令名称找到对应的命令实例，设置项目配置和级别为command，添加解析规则，解析命令参数，并交由Scrapy命令实例处理。</p>
+<p>最后，看看下面这段代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd.crawler_process = CrawlerProcess(settings)</div><div class="line">_run_print_help(parser, _run_command, cmd, args, opts)</div><div class="line">sys.exit(cmd.exitcode)</div></pre></td></tr></table></figure>
+<p>初始化<code>CrawlerProcess</code>实例，将对应的命令执行，这里是<code>crawl</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_run_command</span><span class="params">(cmd, args, opts)</span>:</span></div><div class="line">    <span class="keyword">if</span> opts.profile:</div><div class="line">        _run_command_profiled(cmd, args, opts)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        cmd.run(args, opts)</div></pre></td></tr></table></figure>
+<p>看到这，想起了文档中的介绍 <a href="https://doc.scrapy.org/en/latest/topics/practices.html#run-scrapy-from-a-script" target="_blank" rel="external">Run Scrapy from a script</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Here’s an example showing how to run a single spider with it.</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.crawler <span class="keyword">import</span> CrawlerProcess</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    <span class="comment"># Your spider definition</span></div><div class="line">    ...</div><div class="line"></div><div class="line">process = CrawlerProcess(&#123;</div><div class="line">    <span class="string">'USER_AGENT'</span>: <span class="string">'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line">process.crawl(MySpider)</div><div class="line">process.start() <span class="comment"># the script will block here until the crawling is finished</span></div></pre></td></tr></table></figure>
+<p>所以Scrapy爬虫运行都有用使用到<code>CrawlerProcess</code>，想要深入了解可以去看看源码 <a href="https://github.com/scrapy/scrapy/blob/1.5/scrapy/crawler.py#L225" target="_blank" rel="external">scrapy/scrapy/crawler.py</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">A class to run multiple scrapy crawlers in a process simultaneously.</div><div class="line"></div><div class="line">This class extends :class:`~scrapy.crawler.CrawlerRunner` by adding support</div><div class="line">for starting a Twisted `reactor`_ and handling shutdown signals, like the</div><div class="line">keyboard interrupt command Ctrl-C. It also configures top-level logging.</div><div class="line"></div><div class="line">This utility should be a better fit than</div><div class="line">:class:`~scrapy.crawler.CrawlerRunner` if you aren't running another</div><div class="line">Twisted `reactor`_ within your application.</div><div class="line"></div><div class="line">The CrawlerProcess object must be instantiated with a</div><div class="line">:class:`~scrapy.settings.Settings` object.</div><div class="line"></div><div class="line">:param install_root_handler: whether to install root logging handler</div><div class="line">    (default: True)</div><div class="line"></div><div class="line">This class shouldn't be needed (since Scrapy is responsible of using it</div><div class="line">accordingly) unless writing scripts that manually handle the crawling</div><div class="line">process. See :ref:`run-from-script` for an example.</div><div class="line">"""</div></pre></td></tr></table></figure>
+<p>最后，附上Scrapy的路径图</p>
+<p><img src="https://i.imgur.com/bG560BG.png" alt=""></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>简单来说，有这么几步：</p>
 <ol>
-<li>业务理解</li>
-<li>分析方法</li>
-<li>数据要求</li>
-<li>收集数据</li>
-<li>数据理解</li>
-<li>数据准备</li>
-<li>建模（use and test）</li>
-<li>模型评估</li>
-<li>部署与反馈</li>
+<li>读取配置文件，应用到爬虫中</li>
+<li>把所有的命令类转换名称与实例字典</li>
+<li>初始化<code>CrawlerProcess</code>实例，运行爬虫</li>
 </ol>
-<p>自己判断，缺少的是业务理解，对相关的业务知识了解太少；分析方法知道的太少了，接下来会着重学习一些常见的算法；数据准备也是一个大坑，不过好在自己有一些Python基础；建模才是最难的，慢慢来吧。</p>
-<p><strong>最近几天需要个自己定一个学习任务，内容主要包括：统计学基础、常见算法、pandas处理数据及可视化、业务理解、Scrapy框架学习、前端（没错，学点前端很有必要）</strong></p>
-<p>欢迎加我微信，一起来学习，嘤嘤嘤</p>
-<blockquote>
-<p>下面是常见的分析方法</p>
-</blockquote>
-<p><img src="https://i.imgur.com/poRqKVo.png" alt=""></p>
-<p><img src="https://i.imgur.com/FLfwzDU.png" alt=""></p>
+<p>(看的头疼，好多函数名记不住)</p>
+<p>回顾：</p>
+<ol>
+<li><a href="https://zhangslob.github.io/2018/02/24/Scrapy%E6%BA%90%E7%A0%81%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B%E6%A6%82%E8%A7%88/">Scrapy源码（1）——爬虫流程概览</a></li>
+<li>Scrapy源码（2）——爬虫开始的地方</li>
+</ol>
 
       
     </div>
@@ -591,6 +555,37 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       <div>
         
         
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/02/26/Scrapy源码（2）——爬虫开始的地方/">Scrapy源码（2）——爬虫开始的地方</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 小歪 的个人博客">小歪</a></p>
+  <p><span>发布时间:</span>2018年02月26日 - 22:02</p>
+  <p><span>最后更新:</span>2018年02月26日 - 23:02</p>
+  <p><span>原始链接:</span><a href="/2018/02/26/Scrapy源码（2）——爬虫开始的地方/" title="Scrapy源码（2）——爬虫开始的地方">https://zhangslob.github.io/2018/02/26/Scrapy源码（2）——爬虫开始的地方/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhangslob.github.io/2018/02/26/Scrapy源码（2）——爬虫开始的地方/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
 
 
         
@@ -636,9 +631,9 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
         <div class="post-tags">
           
-            <a href="/tags/统计学/" rel="tag"> <i class="fa fa-tag"></i>统计学</a>
+            <a href="/tags/爬虫/" rel="tag"> <i class="fa fa-tag"></i>爬虫</a>
           
-            <a href="/tags/数据/" rel="tag"> <i class="fa fa-tag"></i>数据</a>
+            <a href="/tags/Scrapy/" rel="tag"> <i class="fa fa-tag"></i>Scrapy</a>
           
         </div>
       
@@ -651,8 +646,8 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/29/Scrapy学习实例（一）/" rel="next" title="Scrapy学习实例（一）">
-                <i class="fa fa-chevron-left"></i> Scrapy学习实例（一）
+              <a href="/2018/02/24/Scrapy源码（1）——爬虫流程概览/" rel="next" title="Scrapy源码（1）——爬虫流程概览">
+                <i class="fa fa-chevron-left"></i> Scrapy源码（1）——爬虫流程概览
               </a>
             
           </div>
@@ -660,10 +655,6 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/03/Scrapy学习实例（二）采集无限滚动页面/" rel="prev" title="Scrapy学习实例（二）采集无限滚动页面">
-                Scrapy学习实例（二）采集无限滚动页面 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -857,7 +848,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1、统计中的基本概念"><span class="nav-number">1.</span> <span class="nav-text">1、统计中的基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、数据的收集"><span class="nav-number">2.</span> <span class="nav-text">2、数据的收集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、数据的间接来源"><span class="nav-number">2.0.1.</span> <span class="nav-text">1、数据的间接来源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、数据的直接来源"><span class="nav-number">2.0.2.</span> <span class="nav-text">2、数据的直接来源</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）统计调查方式"><span class="nav-number">2.0.2.1.</span> <span class="nav-text">（1）统计调查方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）数据的收集方法"><span class="nav-number">2.0.2.2.</span> <span class="nav-text">（2）数据的收集方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、调查设计"><span class="nav-number">2.0.3.</span> <span class="nav-text">3、调查设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）调查方案设计"><span class="nav-number">2.0.3.1.</span> <span class="nav-text">（1）调查方案设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）调查问卷设计"><span class="nav-number">2.0.3.2.</span> <span class="nav-text">（2）调查问卷设计</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-调查问卷的基本结构："><span class="nav-number">2.0.3.2.1.</span> <span class="nav-text">a.调查问卷的基本结构：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-提问项目的设计："><span class="nav-number">2.0.3.2.2.</span> <span class="nav-text">b.提问项目的设计：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#c-回答项目的设计"><span class="nav-number">2.0.3.2.3.</span> <span class="nav-text">c.回答项目的设计</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#d-问题顺序的设计"><span class="nav-number">2.0.3.2.4.</span> <span class="nav-text">d.问题顺序的设计</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（3）统计数据的质量"><span class="nav-number">2.0.3.3.</span> <span class="nav-text">（3）统计数据的质量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#a-统计数据的误差"><span class="nav-number">2.0.3.3.1.</span> <span class="nav-text">a.统计数据的误差</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#b-统计数据的误差"><span class="nav-number">2.0.3.3.2.</span> <span class="nav-text">b.统计数据的误差</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后说一说为什么要学统计学"><span class="nav-number">3.</span> <span class="nav-text">最后说一说为什么要学统计学</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Scrapy运行命令"><span class="nav-number">1.</span> <span class="nav-text">Scrapy运行命令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析源码"><span class="nav-number">2.</span> <span class="nav-text">分析源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
@@ -1049,9 +1040,9 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'https://zhangslob.github.io/2017/11/30/统计学学习笔记（一）/';
-          this.page.identifier = '2017/11/30/统计学学习笔记（一）/';
-          this.page.title = '统计学学习笔记（一）';
+          this.page.url = 'https://zhangslob.github.io/2018/02/26/Scrapy源码（2）——爬虫开始的地方/';
+          this.page.identifier = '2018/02/26/Scrapy源码（2）——爬虫开始的地方/';
+          this.page.title = 'Scrapy源码（2）——爬虫开始的地方';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://https-zhangslob-github-io.disqus.com/embed.js';

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-02-24T13:26:15.034Z</updated>
+  <updated>2018-02-26T15:14:48.399Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,11 +16,94 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Scrapy源码（2）——爬虫开始的地方</title>
+    <link href="https://zhangslob.github.io/2018/02/26/Scrapy%E6%BA%90%E7%A0%81%EF%BC%882%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E5%BC%80%E5%A7%8B%E7%9A%84%E5%9C%B0%E6%96%B9/"/>
+    <id>https://zhangslob.github.io/2018/02/26/Scrapy源码（2）——爬虫开始的地方/</id>
+    <published>2018-02-26T14:48:13.000Z</published>
+    <updated>2018-02-26T15:14:48.399Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十三篇原创文章
+</code></pre><p>开始学习<code>Scrapy</code>源码  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/5wP0fKB.png" alt=""></p>
+<a id="more"></a>
+<h1 id="Scrapy运行命令"><a href="#Scrapy运行命令" class="headerlink" title="Scrapy运行命令"></a>Scrapy运行命令</h1><p>一般来说，运行Scrapy项目的写法有，（这里不考虑从脚本运行Scrapy）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Usage examples:</div><div class="line"></div><div class="line">$ scrapy crawl myspider</div><div class="line">[ ... myspider starts crawling ... ]</div><div class="line"></div><div class="line">$ scrapy runspider myspider.py</div><div class="line">[ ... spider starts crawling ... ]</div></pre></td></tr></table></figure>
+<p>但是更好的写法是，新建一个Python文件，如下，（便于调试）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> cmdline</div><div class="line"></div><div class="line">cmdline.execute(<span class="string">"scrapy crawl myspider"</span>.split())</div></pre></td></tr></table></figure></p>
+<p>很容易就发现，Scrapy运行文件是<code>cmdline.py</code>文件里面的<code>execute()</code>函数，下面学习下这个函数在做什么。</p>
+<h1 id="分析源码"><a href="#分析源码" class="headerlink" title="分析源码"></a>分析源码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">execute</span><span class="params">(argv=None, settings=None)</span>:</span></div><div class="line">    <span class="keyword">if</span> argv <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        argv = sys.argv</div><div class="line"></div><div class="line">    <span class="comment"># --- backwards compatibility for scrapy.conf.settings singleton ---</span></div><div class="line">    <span class="keyword">if</span> settings <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">and</span> <span class="string">'scrapy.conf'</span> <span class="keyword">in</span> sys.modules:</div><div class="line">        <span class="keyword">from</span> scrapy <span class="keyword">import</span> conf</div><div class="line">        <span class="keyword">if</span> hasattr(conf, <span class="string">'settings'</span>):</div><div class="line">            settings = conf.settings</div><div class="line">    <span class="comment"># ------------------------------------------------------------------</span></div></pre></td></tr></table></figure>
+<p>寻找 <code>scrapy.conf</code>配置文件，argv直接取sys.argv</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> settings <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">    settings = get_project_settings()</div><div class="line">    <span class="comment"># set EDITOR from environment if available</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        editor = os.environ[<span class="string">'EDITOR'</span>]</div><div class="line">    <span class="keyword">except</span> KeyError: <span class="keyword">pass</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        settings[<span class="string">'EDITOR'</span>] = editor</div><div class="line">check_deprecated_settings(settings)</div><div class="line"></div><div class="line"><span class="comment"># --- backwards compatibility for scrapy.conf.settings singleton ---</span></div><div class="line"><span class="keyword">import</span> warnings</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> ScrapyDeprecationWarning</div><div class="line"><span class="keyword">with</span> warnings.catch_warnings():</div><div class="line">    warnings.simplefilter(<span class="string">"ignore"</span>, ScrapyDeprecationWarning)</div><div class="line">    <span class="keyword">from</span> scrapy <span class="keyword">import</span> conf</div><div class="line">    conf.settings = settings</div><div class="line"><span class="comment"># ------------------------------------------------------------------</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>set EDITOR from environment if available</p>
+</blockquote>
+<p>读取<code>settings</code>设置文件，导入项目，调用<code>get_project_settings()</code>函数，此处为<code>utils</code>文件夹下的<code>project.py</code>文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_project_settings</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">if</span> ENVVAR <span class="keyword">not</span> <span class="keyword">in</span> os.environ:</div><div class="line">        project = os.environ.get(<span class="string">'SCRAPY_PROJECT'</span>, <span class="string">'default'</span>)</div><div class="line">        init_env(project)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>project.py</p>
+</blockquote>
+<p><code>init_env()</code> 函数如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_env</span><span class="params">(project=<span class="string">'default'</span>, set_syspath=True)</span>:</span></div><div class="line">    <span class="string">"""Initialize environment to use command-line tool from inside a project</span></div><div class="line">    dir. This sets the Scrapy settings module and modifies the Python path to</div><div class="line">    be able to locate the project module.</div><div class="line">    """</div><div class="line">    cfg = get_config()</div><div class="line">    <span class="keyword">if</span> cfg.has_option(<span class="string">'settings'</span>, project):</div><div class="line">        os.environ[<span class="string">'SCRAPY_SETTINGS_MODULE'</span>] = cfg.get(<span class="string">'settings'</span>, project)</div><div class="line">    closest = closest_scrapy_cfg()</div><div class="line">    <span class="keyword">if</span> closest:</div><div class="line">        projdir = os.path.dirname(closest)</div><div class="line">        <span class="keyword">if</span> set_syspath <span class="keyword">and</span> projdir <span class="keyword">not</span> <span class="keyword">in</span> sys.path:</div><div class="line">            sys.path.append(projdir)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>conf.py</p>
+</blockquote>
+<p>如注释所说，初始化环境,循环递归找到用户项目中的配置文件<code>settings.py</code>,并且将其设置到环境变量<code>Scrapy settings module</code>中。然后修改Python路径，确保能找到项目模块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">settings = Settings()</div><div class="line">settings_module_path = os.environ.get(ENVVAR)</div><div class="line"><span class="keyword">if</span> settings_module_path:</div><div class="line">    settings.setmodule(settings_module_path, priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">XXX:</span> remove this hack</span></div><div class="line">pickled_settings = os.environ.get(<span class="string">"SCRAPY_PICKLED_SETTINGS_TO_OVERRIDE"</span>)</div><div class="line"><span class="keyword">if</span> pickled_settings:</div><div class="line">    settings.setdict(pickle.loads(pickled_settings), priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">XXX:</span> deprecate and remove this functionality</span></div><div class="line">env_overrides = &#123;k[<span class="number">7</span>:]: v <span class="keyword">for</span> k, v <span class="keyword">in</span> os.environ.items() <span class="keyword">if</span></div><div class="line">                 k.startswith(<span class="string">'SCRAPY_'</span>)&#125;</div><div class="line"><span class="keyword">if</span> env_overrides:</div><div class="line">    settings.setdict(env_overrides, priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="keyword">return</span> settings</div></pre></td></tr></table></figure>
+<blockquote>
+<p>project.py</p>
+</blockquote>
+<p>至此，<code>get_project_settings()</code>该函数结束，如函数名字一样，最后返回项目配置，到此为止，接着往下看</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">inproject = inside_project()</div><div class="line">cmds = _get_commands_dict(settings, inproject)</div><div class="line">cmdname = _pop_command_name(argv)</div><div class="line">parser = optparse.OptionParser(formatter=optparse.TitledHelpFormatter(), \</div><div class="line">    conflict_handler=<span class="string">'resolve'</span>)</div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> cmdname:</div><div class="line">    _print_commands(settings, inproject)</div><div class="line">    sys.exit(<span class="number">0</span>)</div><div class="line"><span class="keyword">elif</span> cmdname <span class="keyword">not</span> <span class="keyword">in</span> cmds:</div><div class="line">    _print_unknown_command(settings, cmdname, inproject)</div><div class="line">    sys.exit(<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>导入相应的module爬虫模块（inside_project）</p>
+<p>执行环境是否在项目中，主要检查scrapy.cfg配置文件是否存在，读取commands文件夹，把所有的命令类转换为<code>{cmd_name: cmd_instance}</code>的字典</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cmd = cmds[cmdname]</div><div class="line">parser.usage = <span class="string">"scrapy %s %s"</span> % (cmdname, cmd.syntax())</div><div class="line">parser.description = cmd.long_desc()</div><div class="line">settings.setdict(cmd.default_settings, priority=<span class="string">'command'</span>)</div><div class="line">cmd.settings = settings</div><div class="line">cmd.add_options(parser)</div><div class="line">opts, args = parser.parse_args(args=argv[<span class="number">1</span>:])</div><div class="line">_run_print_help(parser, cmd.process_options, args, opts)</div></pre></td></tr></table></figure>
+<p>根据命令名称找到对应的命令实例，设置项目配置和级别为command，添加解析规则，解析命令参数，并交由Scrapy命令实例处理。</p>
+<p>最后，看看下面这段代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd.crawler_process = CrawlerProcess(settings)</div><div class="line">_run_print_help(parser, _run_command, cmd, args, opts)</div><div class="line">sys.exit(cmd.exitcode)</div></pre></td></tr></table></figure>
+<p>初始化<code>CrawlerProcess</code>实例，将对应的命令执行，这里是<code>crawl</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_run_command</span><span class="params">(cmd, args, opts)</span>:</span></div><div class="line">    <span class="keyword">if</span> opts.profile:</div><div class="line">        _run_command_profiled(cmd, args, opts)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        cmd.run(args, opts)</div></pre></td></tr></table></figure>
+<p>看到这，想起了文档中的介绍 <a href="https://doc.scrapy.org/en/latest/topics/practices.html#run-scrapy-from-a-script" target="_blank" rel="external">Run Scrapy from a script</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Here’s an example showing how to run a single spider with it.</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.crawler <span class="keyword">import</span> CrawlerProcess</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    <span class="comment"># Your spider definition</span></div><div class="line">    ...</div><div class="line"></div><div class="line">process = CrawlerProcess(&#123;</div><div class="line">    <span class="string">'USER_AGENT'</span>: <span class="string">'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line">process.crawl(MySpider)</div><div class="line">process.start() <span class="comment"># the script will block here until the crawling is finished</span></div></pre></td></tr></table></figure>
+<p>所以Scrapy爬虫运行都有用使用到<code>CrawlerProcess</code>，想要深入了解可以去看看源码 <a href="https://github.com/scrapy/scrapy/blob/1.5/scrapy/crawler.py#L225" target="_blank" rel="external">scrapy/scrapy/crawler.py</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">A class to run multiple scrapy crawlers in a process simultaneously.</div><div class="line"></div><div class="line">This class extends :class:`~scrapy.crawler.CrawlerRunner` by adding support</div><div class="line">for starting a Twisted `reactor`_ and handling shutdown signals, like the</div><div class="line">keyboard interrupt command Ctrl-C. It also configures top-level logging.</div><div class="line"></div><div class="line">This utility should be a better fit than</div><div class="line">:class:`~scrapy.crawler.CrawlerRunner` if you aren't running another</div><div class="line">Twisted `reactor`_ within your application.</div><div class="line"></div><div class="line">The CrawlerProcess object must be instantiated with a</div><div class="line">:class:`~scrapy.settings.Settings` object.</div><div class="line"></div><div class="line">:param install_root_handler: whether to install root logging handler</div><div class="line">    (default: True)</div><div class="line"></div><div class="line">This class shouldn't be needed (since Scrapy is responsible of using it</div><div class="line">accordingly) unless writing scripts that manually handle the crawling</div><div class="line">process. See :ref:`run-from-script` for an example.</div><div class="line">"""</div></pre></td></tr></table></figure>
+<p>最后，附上Scrapy的路径图</p>
+<p><img src="https://i.imgur.com/bG560BG.png" alt=""></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>简单来说，有这么几步：</p>
+<ol>
+<li>读取配置文件，应用到爬虫中</li>
+<li>把所有的命令类转换名称与实例字典</li>
+<li>初始化<code>CrawlerProcess</code>实例，运行爬虫</li>
+</ol>
+<p>(看的头疼，好多函数名记不住)</p>
+<p>回顾：</p>
+<ol>
+<li><a href="https://zhangslob.github.io/2018/02/24/Scrapy%E6%BA%90%E7%A0%81%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B%E6%A6%82%E8%A7%88/">Scrapy源码（1）——爬虫流程概览</a></li>
+<li>Scrapy源码（2）——爬虫开始的地方</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十三篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;开始学习&lt;code&gt;Scrapy&lt;/code&gt;源码  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/5wP0fKB.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Scrapy" scheme="https://zhangslob.github.io/categories/Scrapy/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Scrapy源码（1）——爬虫流程概览</title>
     <link href="https://zhangslob.github.io/2018/02/24/Scrapy%E6%BA%90%E7%A0%81%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B%E6%A6%82%E8%A7%88/"/>
     <id>https://zhangslob.github.io/2018/02/24/Scrapy源码（1）——爬虫流程概览/</id>
     <published>2018-02-24T13:16:23.000Z</published>
-    <updated>2018-02-24T13:26:15.034Z</updated>
+    <updated>2018-02-26T15:15:04.711Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十二篇原创文章
 </code></pre><p>开始学习<code>Scrapy</code>源码  (๑• . •๑)</p>
@@ -94,6 +177,11 @@
 <li>看：静态对代码进行分析，看相关资料，代码逻辑。</li>
 <li>跑：将项目在IDE里面跑起来，通过IDE调试参数，加Log等。</li>
 <li>查：阅读过程中肯定会遇到不懂的，这时候需要通过搜索引擎来解决你的疑惑。</li>
+</ol>
+<p>回顾：</p>
+<ol>
+<li>Scrapy源码（1）——爬虫流程概览</li>
+<li>Scrapy源码（2）——爬虫开始的地方</li>
 </ol>
 ]]></content>
     
@@ -1905,230 +1993,6 @@ print(s.xpath(&apos;//i[@class=&quot;js-num&quot;]/text()&apos;))
     <summary type="html">
     
       &lt;pre&gt;&lt;code&gt;这是崔斯特的第十四篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Dw2WeLb.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;爬虫三步走：获取源码、解析源码、数据储存&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="Python入门" scheme="https://zhangslob.github.io/tags/Python%E5%85%A5%E9%97%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>爬虫三步走（一）获取源码</title>
-    <link href="https://zhangslob.github.io/2017/05/25/%E7%88%AC%E8%99%AB%E4%B8%89%E6%AD%A5%E8%B5%B0%EF%BC%88%E4%B8%80%EF%BC%89%E8%8E%B7%E5%8F%96%E6%BA%90%E7%A0%81/"/>
-    <id>https://zhangslob.github.io/2017/05/25/爬虫三步走（一）获取源码/</id>
-    <published>2017-05-25T07:21:06.000Z</published>
-    <updated>2017-11-30T15:21:41.231Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十三篇原创文章
-</code></pre><p><img src="http://i.imgur.com/Dw2WeLb.png" alt=""></p>
-<p>爬虫三步走：获取源码、解析源码、数据储存</p>
-<a id="more"></a>
-<p>举个例子，爬一爬知乎日报的相关数据 <a href="http://daily.zhihu.com/" target="_blank" rel="external">知乎日报 - 每天 3 次，每次 7 分钟</a></p>
-<h1 id="1、获取源码"><a href="#1、获取源码" class="headerlink" title="1、获取源码"></a>1、获取源码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line">	</div><div class="line">url = <span class="string">'http://daily.zhihu.com/'</span></div><div class="line">res = requests.get(url).text</div><div class="line">print(res)</div></pre></td></tr></table></figure>
-<p>个人喜欢requests，直接访问，发现返回500错误</p>
-<pre><code>C:\Python35\python.exe F:/PyCharm/爬虫/daily.py
-&lt;html&gt;&lt;body&gt;&lt;h1&gt;500 Server Error&lt;/h1&gt;
-An internal server error occured.
-&lt;/body&gt;&lt;/html&gt;
-
-
-Process finished with exit code 0
-</code></pre><p>根据经验判断，是知乎禁止爬虫，需要加上一些伪装，让我们看看加上浏览器伪装效果</p>
-<pre><code>import requests
-
-headers = {&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&apos;}
-url = &apos;http://daily.zhihu.com/&apos;
-res = requests.get(url,headers=headers).text
-print(res)
-</code></pre><p>看看结果，已经返回我们需要的数据</p>
-<pre><code>C:\Python35\python.exe F:/PyCharm/爬虫/daily.py
-&lt;!DOCTYPE html&gt;&lt;html lang=&quot;zh-CN&quot;&gt;&lt;head&gt;&lt;title&gt;知乎日报 - 每天 3 次，每次 7 分钟&lt;/title&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;&gt;&lt;meta name=&quot;description&quot; content=&quot;在中国，资讯类移动应用的人均阅读时长是 5 分钟，而在知乎日报，这个数字是 21。以独有的方式为你提供最高质、最深度、最有收获的阅读体验。&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/base.auto.css&quot;&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/new_home_v3.auto.css&quot;&gt;&lt;script src=&quot;/js/jquery.1.9.1.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;/js/new_index_v3/home.js&quot;&gt;&lt;/script&gt;&lt;link rel=&quot;shortcut icon&quot; href=&quot;/favicon.ico&quot; type=&quot;image/x-icon&quot;&gt;&lt;base target=&quot;_blank&quot;&gt;&lt;style&gt;h1,h2,h3 {padding: 0;margin:0}&lt;/style&gt;&lt;base target=&quot;_blank&quot;&gt;&lt;/head&gt;&lt;body class=&quot;home&quot;&gt;&lt;a href=&quot;javascript:;&quot; title=&quot;回到顶部&quot; class=&quot;back-to-top&quot;&gt;&lt;/a&gt;&lt;div class=&quot;header navbar-fixed-top&quot;&gt;&lt;div class=&quot;container-fixed-width clearfix&quot;&gt;&lt;div class=&quot;top-nav-link&quot;&gt;&lt;a href=&quot;javascript:;&quot; data-offset=&quot;470&quot;&gt;&lt;span&gt;浏览内容&lt;/span&gt;&lt;/a&gt;&lt;a href=&quot;javascript:;&quot; data-offset=&quot;0&quot; class=&quot;active&quot;&gt;&lt;span&gt;App 下载&lt;/span&gt;&lt;/a&gt;&lt;/div&gt;&lt;h1 class=&quot;logo&quot;&gt;&lt;a href=&quot;http://daily.zhihu.com/&quot; title=&quot;知乎日报&quot; class=&quot;link-logo&quot;&gt;知乎日报&lt;/a&gt;&lt;/h1&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;download&quot;&gt;
-...
-</code></pre><p>但是这种写法是否可以应用到所有的网站，答案是“不”</p>
-<p><img src="http://i.imgur.com/RKDWmZY.png" alt=""></p>
-<h1 id="2、代理设置"><a href="#2、代理设置" class="headerlink" title="2、代理设置"></a>2、代理设置</h1><p>有时候同一个IP去爬取同一网站上的内容，久了之后就会被该网站服务器屏蔽。解决方法就是更换IP。这个时候，在对方网站上，显示的不是我们真实地IP地址，而是代理服务器的IP地址。</p>
-<p><a href="http://www.xicidaili.com/nn/" target="_blank" rel="external">国内高匿免费HTTP代理IP_国内高匿</a> 西刺代理提供了很多可用的国内IP，可以直接拿来使用。</p>
-<p>那么如何在爬虫里加入代理呢，看看requests的官方文档怎么说。<a href="http://docs.python-requests.org/zh_CN/latest/user/advanced.html#proxies" target="_blank" rel="external">高级用法 - Requests 2.10.0 文档</a></p>
-<p>如果需要使用代理，你可以通过为任意请求方法提供 proxies 参数来配置单个请求:</p>
-<pre><code>import requests
-
-proxies = {
-  &quot;http&quot;: &quot;http://10.10.1.10:3128&quot;,
-  &quot;https&quot;: &quot;http://10.10.1.10:1080&quot;,
-}
-
-requests.get(&quot;http://example.org&quot;, proxies=proxies)
-</code></pre><p>用法很简单，加入proxies参数即可 </p>
-<pre><code>import requests
-
-proxies = {
-  &quot;http&quot;: &quot;http://121.201.24.248：8088&quot;,
-  &quot;https&quot;: &quot;http://36.249.194.52：8118&quot;,
-}
-headers = {&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&apos;}
-url = &apos;http://daily.zhihu.com/&apos;
-res = requests.get(url,headers=headers，proxies=proxies).text
-print(len(res))
-</code></pre><p>为了便于测试，只打印出返回数据的长度</p>
-<pre><code>C:\Python35\python.exe F:/PyCharm/爬虫/daily.py
-10830
-
-Process finished with exit code 0
-</code></pre><p>发现代理服务器成功爬取知乎日报的信息，内容是10830，故意把代理IP写错一位数，看看结果</p>
-<pre><code>import requests
-
-proxies = {
-  &quot;http&quot;: &quot;http://121.201.24.248：8088&quot;,
-  &quot;https&quot;: &quot;http://36.249.194.52: 222&quot;,
-}
-headers = {&apos;User-Agent&apos;: &apos;Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36&apos;}
-url = &apos;http://daily.zhihu.com/&apos;
-res = requests.get(url,headers=headers,proxies=proxies).text
-print(len(res))
-</code></pre><p>我们把”https”: “<a href="http://36.249.194.52：8118&quot;修改为&quot;https" target="_blank" rel="external">http://36.249.194.52：8118&quot;修改为&quot;https</a>“: “<a href="http://36.249.194.52" target="_blank" rel="external">http://36.249.194.52</a>: 222”，此时返回的结果如下，发现不能获取网页数据。所以，在使用代理服务器爬去网站时，如果出现异常，要考虑代理IP是否失效了。 当然你也可以写一个爬虫，实时抓取最新的代理IP用来爬取。</p>
-<pre><code>Traceback (most recent call last):
-  File &quot;F:/PyCharm/爬虫/daily.py&quot;, line 9, in &lt;module&gt;
-    res = requests.get(url,headers=headers,proxies=proxies).text
-  File &quot;C:\Python35\lib\site-packages\requests\api.py&quot;, line 70, in get
-    return request(&apos;get&apos;, url, params=params, **kwargs)
-  File &quot;C:\Python35\lib\site-packages\requests\api.py&quot;, line 56, in request
-    return session.request(method=method, url=url, **kwargs)
-  File &quot;C:\Python35\lib\site-packages\requests\sessions.py&quot;, line 488, in request
-    resp = self.send(prep, **send_kwargs)
-  File &quot;C:\Python35\lib\site-packages\requests\sessions.py&quot;, line 609, in send
-    r = adapter.send(request, **kwargs)
-  File &quot;C:\Python35\lib\site-packages\requests\adapters.py&quot;, line 485, in send
-    raise ProxyError(e, request=request)
-requests.exceptions.ProxyError: HTTPConnectionPool(host=&apos;121.201.24.248：8088&apos;, port=80): Max retries exceeded with url: http://daily.zhihu.com/ (Caused by ProxyError(&apos;Cannot connect to proxy.&apos;, NewConnectionError(&apos;&lt;requests.packages.urllib3.connection.HTTPConnection object at 0x0000000003860DA0&gt;: Failed to establish a new connection: [Errno 11004] getaddrinfo failed&apos;,)))
-</code></pre><h1 id="3、模拟登录"><a href="#3、模拟登录" class="headerlink" title="3、模拟登录"></a>3、模拟登录</h1><p>有些网站是需要登录才能看到信息的，例如知乎，直接用requests获取知乎首页信息，返回数据是需要你登录的，只有登录了才能看到数据。</p>
-<pre><code>&lt;button type=&quot;button&quot; class=&quot;signin-switch-button&quot;&gt;手机验证码登录&lt;/button&gt;
-
-&lt;a class=&quot;unable-login&quot; href=&quot;#&quot;&gt;无法登录？&lt;/a&gt;
-&lt;/div&gt;
-
-&lt;div class=&quot;social-signup-wrapper&quot; data-za-module=&quot;SNSSignIn&quot;&gt;
-&lt;span class=&quot;name js-toggle-sns-buttons&quot;&gt;社交帐号登录&lt;/span&gt;
-
-&lt;div class=&quot;sns-buttons&quot;&gt;
-&lt;a title=&quot;微信登录&quot; class=&quot;js-bindwechat&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;sprite-index-icon-wechat&quot;&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;a title=&quot;微博登录&quot; class=&quot;js-bindweibo&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;sprite-index-icon-weibo&quot;&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;a title=&quot;QQ 登录&quot; class=&quot;js-bindqq&quot; href=&quot;#&quot;&gt;&lt;i class=&quot;sprite-index-icon-qq&quot;&gt;&lt;/i&gt;&lt;/a&gt;
-&lt;/div&gt;
-</code></pre><p>再次回到官方文档<a href="http://docs.python-requests.org/zh_CN/latest/user/quickstart.html#cookie" target="_blank" rel="external">快速上手 - Requests 2.10.0 文档</a></p>
-<pre><code>如果某个响应中包含一些 cookie，你可以快速访问它们：
-
-&gt;&gt;&gt; url = &apos;http://example.com/some/cookie/setting/url&apos;
-&gt;&gt;&gt; r = requests.get(url)
-
-&gt;&gt;&gt; r.cookies[&apos;example_cookie_name&apos;]
-&apos;example_cookie_value&apos;
-要想发送你的cookies到服务器，可以使用 cookies 参数：
-
-&gt;&gt;&gt; url = &apos;http://httpbin.org/cookies&apos;
-&gt;&gt;&gt; cookies = dict(cookies_are=&apos;working&apos;)
-
-&gt;&gt;&gt; r = requests.get(url, cookies=cookies)
-&gt;&gt;&gt; r.text
-&apos;{&quot;cookies&quot;: {&quot;cookies_are&quot;: &quot;working&quot;}}&apos;
-</code></pre><p>具体的分析过程可以参考xchaoinfo所写的文章和视频，讲解十分清晰<a href="https://zhuanlan.zhihu.com/p/25633789" target="_blank" rel="external">Python 模拟登录哪些事儿 - 知乎专栏</a> 下面是代码</p>
-<pre><code>import requests
-from bs4 import BeautifulSoup
-import os, time
-import re
-# import http.cookiejar as cookielib
-
-# 构造 Request headers
-agent = &apos;Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Mobile Safari/537.36&apos;
-headers = {
-    &quot;Host&quot;: &quot;www.zhihu.com&quot;,
-    &quot;Referer&quot;: &quot;https://www.zhihu.com/&quot;,
-    &apos;User-Agent&apos;: agent
-}
-
-######### 构造用于网络请求的session
-session = requests.Session()
-# session.cookies = cookielib.LWPCookieJar(filename=&apos;zhihucookie&apos;)
-# try:
-#     session.cookies.load(ignore_discard=True)
-# except:
-#     print(&apos;cookie 文件未能加载&apos;)
-
-############ 获取xsrf_token
-homeurl = &apos;https://www.zhihu.com&apos;
-homeresponse = session.get(url=homeurl, headers=headers)
-homesoup = BeautifulSoup(homeresponse.text, &apos;html.parser&apos;)
-xsrfinput = homesoup.find(&apos;input&apos;, {&apos;name&apos;: &apos;_xsrf&apos;})
-xsrf_token = xsrfinput[&apos;value&apos;]
-print(&quot;获取到的xsrf_token为： &quot;, xsrf_token)
-
-########## 获取验证码文件
-randomtime = str(int(time.time() * 1000))
-captchaurl = &apos;https://www.zhihu.com/captcha.gif?r=&apos;+\
-             randomtime+&quot;&amp;type=login&quot;
-captcharesponse = session.get(url=captchaurl, headers=headers)
-with open(&apos;checkcode.gif&apos;, &apos;wb&apos;) as f:
-    f.write(captcharesponse.content)
-    f.close()
-# os.startfile(&apos;checkcode.gif&apos;)
-captcha = input(&apos;请输入验证码：&apos;)
-print(captcha)
-
-########### 开始登陆
-headers[&apos;X-Xsrftoken&apos;] = xsrf_token
-headers[&apos;X-Requested-With&apos;] = &apos;XMLHttpRequest&apos;
-loginurl = &apos;https://www.zhihu.com/login/email&apos;
-postdata = {
-    &apos;_xsrf&apos;: xsrf_token,
-    &apos;email&apos;: &apos;邮箱@qq.com&apos;,
-    &apos;password&apos;: &apos;密码&apos;
-}
-loginresponse = session.post(url=loginurl, headers=headers, data=postdata)
-print(&apos;服务器端返回响应码：&apos;, loginresponse.status_code)
-print(loginresponse.json())
-# 验证码问题输入导致失败: 猜测这个问题是由于session中对于验证码的请求过期导致
-if loginresponse.json()[&apos;r&apos;]==1:
-    # 重新输入验证码，再次运行代码则正常。也就是说可以再第一次不输入验证码，或者输入一个错误的验证码，只有第二次才是有效的
-    randomtime = str(int(time.time() * 1000))
-    captchaurl = &apos;https://www.zhihu.com/captcha.gif?r=&apos; + \
-                 randomtime + &quot;&amp;type=login&quot;
-    captcharesponse = session.get(url=captchaurl, headers=headers)
-    with open(&apos;checkcode.gif&apos;, &apos;wb&apos;) as f:
-        f.write(captcharesponse.content)
-        f.close()
-    os.startfile(&apos;checkcode.gif&apos;)
-    captcha = input(&apos;请输入验证码：&apos;)
-    print(captcha)
-
-    postdata[&apos;captcha&apos;] = captcha
-    loginresponse = session.post(url=loginurl, headers=headers, data=postdata)
-    print(&apos;服务器端返回响应码：&apos;, loginresponse.status_code)
-    print(loginresponse.json())
-
-
-
-
-##########################保存登陆后的cookie信息
-# session.cookies.save()
-############################判断是否登录成功
-profileurl = &apos;https://www.zhihu.com/settings/profile&apos;
-profileresponse = session.get(url=profileurl, headers=headers)
-print(&apos;profile页面响应码：&apos;, profileresponse.status_code)
-profilesoup = BeautifulSoup(profileresponse.text, &apos;html.parser&apos;)
-div = profilesoup.find(&apos;div&apos;, {&apos;id&apos;: &apos;rename-section&apos;})
-print(div)
-</code></pre><p>好了关于爬虫的第一步，获取源码这一节讲了很多，其实大多数网站加上User-Agent和代理IP就可以正常爬取。下一节会讲讲如何利用xpath来解析网页，获取我们想要的数据。</p>
-<p>喜欢爬虫、数据的可以关注一下我的微信公众号，多多交流。</p>
-<p><img src="http://i.imgur.com/0oZDwG4.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十三篇原创文章
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;http://i.imgur.com/Dw2WeLb.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;爬虫三步走：获取源码、解析源码、数据储存&lt;/p&gt;
     
