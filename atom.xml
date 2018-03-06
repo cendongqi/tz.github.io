@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-03-06T13:59:07.107Z</updated>
+  <updated>2018-03-06T14:00:52.245Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://zhangslob.github.io/2018/03/06/%E5%AD%A6%E7%82%B9%E7%AE%97%E6%B3%95%E4%B9%8B%E9%98%9F%E5%88%97%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%8F%8A%E5%BA%94%E7%94%A8/"/>
     <id>https://zhangslob.github.io/2018/03/06/学点算法之队列的学习及应用/</id>
     <published>2018-03-06T12:54:00.000Z</published>
-    <updated>2018-03-06T13:59:07.107Z</updated>
+    <updated>2018-03-06T14:00:52.245Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十四篇原创文章
 </code></pre><p>从<code>约瑟夫问题</code>开始说起  (๑• . •๑)</p>
@@ -43,7 +43,6 @@
 <li>dequeue() 从队首移除项。它不需要参数并返回 item。 队列被修改。</li>
 <li>isEmpty() 查看队列是否为空。它不需要参数，并返回布尔值。</li>
 <li>size() 返回队列中的项数。它不需要参数，并返回一个整数。</li>
-<li>作为示例，我们假设 q 是已经创建并且当前为空的队列，则 Table 1 展示了队列操作序列的结果。右边表示队首。 4 是第一个入队的项，因此它 dequeue 返回的第一个项。</li>
 </ul>
 <p><img src="https://i.imgur.com/KkagGoc.png" alt=""></p>
 <h1 id="队列的Python算法实现"><a href="#队列的Python算法实现" class="headerlink" title="队列的Python算法实现"></a>队列的Python算法实现</h1><p>为了实现队列抽象数据类型创建一个新类</p>
@@ -988,9 +987,9 @@
       <category term="Python" scheme="https://zhangslob.github.io/categories/Python/"/>
     
     
-      <category term="logging" scheme="https://zhangslob.github.io/tags/logging/"/>
-    
       <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
+    
+      <category term="logging" scheme="https://zhangslob.github.io/tags/logging/"/>
     
   </entry>
   
@@ -1047,9 +1046,9 @@
       <category term="总结" scheme="https://zhangslob.github.io/categories/%E6%80%BB%E7%BB%93/"/>
     
     
-      <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
-    
       <category term="年度总结" scheme="https://zhangslob.github.io/tags/%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/"/>
+    
+      <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
     
   </entry>
   
