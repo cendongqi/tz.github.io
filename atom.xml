@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-03-06T14:00:52.245Z</updated>
+  <updated>2018-03-13T14:45:50.478Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,81 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>大佬，我代码哪错了？</title>
+    <link href="https://zhangslob.github.io/2018/03/13/%E5%A4%A7%E4%BD%AC%EF%BC%8C%E6%88%91%E4%BB%A3%E7%A0%81%E5%93%AA%E9%94%99%E4%BA%86%EF%BC%9F/"/>
+    <id>https://zhangslob.github.io/2018/03/13/大佬，我代码哪错了？/</id>
+    <published>2018-03-13T13:30:03.000Z</published>
+    <updated>2018-03-13T14:45:50.478Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十五篇原创文章
+</code></pre><p>到底哪错了  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/pTw3VCX.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="问题无处不在"><a href="#问题无处不在" class="headerlink" title="问题无处不在"></a>问题无处不在</h1><p>我： “大佬，帮我看看这个问题错在哪了？”</p>
+<p>大佬： “你的代码呢、你的错误提示呢？”</p>
+<p>我： “好的，我发给你”</p>
+<p><img src="https://i.imgur.com/4nSLl1h.jpg" alt=""></p>
+<p>大佬： “。。。 再见”</p>
+<p>留下一脸懵逼的我</p>
+<p><img src="https://i.imgur.com/pe57y3U.jpg" alt=""></p>
+<h1 id="如何解决问题"><a href="#如何解决问题" class="headerlink" title="如何解决问题"></a>如何解决问题</h1><p>最简单的方法是根据错误提示，查看对应位置的代码，Pycharm会提示具体是哪一行代码有问题，并抛出错误。</p>
+<p>找到错误首先应自己想办法解决，自己解决又分为几种：有经验的大佬看到<code>Error</code>就知道是哪里有问题了，没经验怎么办，那就自己去搜索了。</p>
+<p>下个结论，<strong>你遇到的问题，前人一定遇到过。</strong></p>
+<p>所以你只需要把你的错误提示搜索就好了。</p>
+<p>注意下面，你懂的。（给自己一个好点的环境）</p>
+<blockquote>
+<p>Google &gt; 百度</p>
+<p>stackoverflow &gt; 知乎</p>
+<p>github &gt; CSDN</p>
+</blockquote>
+<p>Github上有一个很有用的 <a href="https://github.com/trending" target="_blank" rel="external">trending</a> ，可以显示今天或本周或本月最火的项目，例如：</p>
+<p><a href="https://github.com/techGay/91porn" target="_blank" rel="external">techGay/91porn</a></p>
+<p><img src="https://i.imgur.com/v6RqtqZ.png" alt=""></p>
+<p>Github 作为全球最大的同性交友网站，上面有很多值得我们好好学习的东西。</p>
+<h1 id="如何向别人提问"><a href="#如何向别人提问" class="headerlink" title="如何向别人提问"></a>如何向别人提问</h1><p>如果你真的像上面哪样，发一张照片，估计大佬都要吐血了。</p>
+<p>在这里推荐大家使用Github上的 <a href="https://gist.github.com/" target="_blank" rel="external">gist</a> ，很适合分享代码片段。</p>
+<blockquote>
+<p>Instantly share code, notes, and snippets.</p>
+</blockquote>
+<p>例如这样</p>
+<p><a href="https://gist.github.com/zhangslob/b10a7753fb1b404c1111e09431da1433" target="_blank" rel="external">Issue in FromRequest #3144</a></p>
+<p><img src="https://i.imgur.com/kkLvFTn.png" alt=""></p>
+<p>这样看起来是不是舒服多了</p>
+<h1 id="如何才能-永无bug"><a href="#如何才能-永无bug" class="headerlink" title="如何才能 永无bug"></a>如何才能 永无bug</h1><h2 id="1、佛祖保佑-永无bug"><a href="#1、佛祖保佑-永无bug" class="headerlink" title="1、佛祖保佑 永无bug"></a>1、佛祖保佑 永无bug</h2><figure class="highlight 1c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//                            _ooOoo_</span></div><div class="line"><span class="comment">//                           o8888888o</span></div><div class="line"><span class="comment">//                           88" . "88</span></div><div class="line"><span class="comment">//                           (| -_- |)</span></div><div class="line"><span class="comment">//                            O\ = /O</span></div><div class="line"><span class="comment">//                        ____/`---'\____</span></div><div class="line"><span class="comment">//                      .   ' \\| |// `.</span></div><div class="line"><span class="comment">//                       / \\||| : |||// \</span></div><div class="line"><span class="comment">//                     / _||||| -:- |||||- \</span></div><div class="line"><span class="comment">//                       | | \\\ - /// | |</span></div><div class="line"><span class="comment">//                     | \_| ''\---/'' | |</span></div><div class="line"><span class="comment">//                      \ .-\__ `-` ___/-. /</span></div><div class="line"><span class="comment">//                   ___`. .' /--.--\ `. . __</span></div><div class="line"><span class="comment">//                ."" '&lt; `.___\_&lt;|&gt;_/___.' &gt;'"".</span></div><div class="line"><span class="comment">//               | | : `- \`.;`\ _ /`;.`/ - ` : | |</span></div><div class="line"><span class="comment">//                 \ \ `-. \_ __\ /__ _/ .-` / /</span></div><div class="line"><span class="comment">//         ======`-.____`-.___\_____/___.-`____.-'======</span></div><div class="line"><span class="comment">//                            `=---='</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//         .............................................</span></div><div class="line"><span class="comment">//                  佛祖镇楼                  BUG辟易</span></div><div class="line"><span class="comment">//             佛曰:</span></div><div class="line"><span class="comment">//                  写字楼里写字间，写字间里程序员；</span></div><div class="line"><span class="comment">//                  程序人员写程序，又拿程序换酒钱。</span></div><div class="line"><span class="comment">//                  酒醒只在网上坐，酒醉还来网下眠；</span></div><div class="line"><span class="comment">//                  酒醉酒醒日复日，网上网下年复年。</span></div><div class="line"><span class="comment">//                  但愿老死电脑间，不愿鞠躬老板前；</span></div><div class="line"><span class="comment">//                  奔驰宝马贵者趣，公交自行程序员。</span></div><div class="line"><span class="comment">//                  别人笑我忒疯癫，我笑自己命太贱；</span></div><div class="line"><span class="comment">//                  不见满街漂亮妹，哪个归得程序员？</span></div></pre></td></tr></table></figure>
+<h2 id="2、佛系编程-永无bug"><a href="#2、佛系编程-永无bug" class="headerlink" title="2、佛系编程 永无bug"></a>2、佛系编程 永无bug</h2><h4 id="No-Code"><a href="#No-Code" class="headerlink" title="No Code"></a>No Code</h4><p>No code is the best way to write secure and reliable applications. Write nothing; deploy nowhere.</p>
+<h4 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h4><p>Start by not writing any code.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<p>This is just an example application, but imagine it doing anything you want. Adding new features is easy too:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<p>The possibilities are endless.</p>
+<h4 id="Building-the-Application"><a href="#Building-the-Application" class="headerlink" title="Building the Application"></a>Building the Application</h4><p>Now that you have not done anything it’s time to build your application:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<p>Yep. That’s it. You should see the following output:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<h4 id="Deploying"><a href="#Deploying" class="headerlink" title="Deploying"></a>Deploying</h4><p>While you still have not done anything it’s time to deploy your application. By running the following command you can deploy your application absolutely nowhere.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<p>It’s that simple. And when it comes time to scale the application, all you have to do is:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<p>I know right?</p>
+<h4 id="Contributing"><a href="#Contributing" class="headerlink" title="Contributing"></a>Contributing</h4><p>You don’t.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十五篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;到底哪错了  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/pTw3VCX.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="编程" scheme="https://zhangslob.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
+    
+    
+      <category term="编程" scheme="https://zhangslob.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>学点算法之队列的学习及应用</title>
@@ -1925,70 +2000,6 @@
       <category term="统计学" scheme="https://zhangslob.github.io/tags/%E7%BB%9F%E8%AE%A1%E5%AD%A6/"/>
     
       <category term="数据" scheme="https://zhangslob.github.io/tags/%E6%95%B0%E6%8D%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Scrapy学习实例（一）</title>
-    <link href="https://zhangslob.github.io/2017/11/29/Scrapy%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%BE%8B%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>https://zhangslob.github.io/2017/11/29/Scrapy学习实例（一）/</id>
-    <published>2017-11-29T13:52:32.000Z</published>
-    <updated>2017-12-03T13:36:18.610Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第十五篇原创文章
-</code></pre><p><img src="https://i.imgur.com/n1TnhMv.png" alt=""><br><a id="more"></a></p>
-<p>Hello，我又回来啦。以后就在这发文章吧，记录自己的学习历程。</p>
-<blockquote>
-<p>举头卖竹鼠，低头嘤嘤嘤。</p>
-</blockquote>
-<p>我会记录自己对Scrapy的学历经历，更重要的是理解。下面就开始吧，首先当然是创建一个项目啦！</p>
-<p>我选择爬取<a href="https://www.huxiu.com/" target="_blank" rel="external">虎嗅网</a>首页的新闻列表。</p>
-<h1 id="1、创建项目"><a href="#1、创建项目" class="headerlink" title="1、创建项目"></a>1、创建项目</h1><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">F:\Python\huxiu&gt;scrapy startproject huxiu</div><div class="line">New Scrapy project 'huxiu', using template directory 'c:\\users\\administrator\\appdata\\local\\programs\\python\\python36\\lib\\site-packages\\scrapy\\templates\\pro</div><div class="line">ject', created in:</div><div class="line">    F:\Python\huxiu\huxiu</div><div class="line"></div><div class="line">You can start your first spider with:</div><div class="line">    cd huxiu</div><div class="line">    scrapy genspider example example.com</div><div class="line"></div><div class="line">F:\Python\huxiu&gt;cd huxiu</div><div class="line"></div><div class="line">F:\Python\huxiu\huxiu&gt;scrapy genspider huxiu huxiu.com</div><div class="line">Cannot create a spider with the same name as your project</div><div class="line"></div><div class="line">F:\Python\huxiu\huxiu&gt;scrapy genspider HuXiu huxiu.com</div><div class="line">Created spider 'HuXiu' using template 'basic' in module:</div><div class="line">  huxiu.spiders.HuXiu</div></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/MrrcuLg.png" alt=""></p>
-<blockquote>
-<p>记住爬虫和项目命名不一样</p>
-</blockquote>
-<h1 id="2、定义Item"><a href="#2、定义Item" class="headerlink" title="2、定义Item"></a>2、定义Item</h1><p>在<code>item.py</code>中创建<code>scrapy.Item</code>类，并定义它的类型为<code>scrapy.Field</code>的属性。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HuxiuItem</span><span class="params">(scrapy.Item)</span>:</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    title = scrapy.Field() <span class="comment">#标题</span></div><div class="line">    link = scrapy.Field() <span class="comment">#链接</span></div><div class="line">    author = scrapy.Field() <span class="comment">#作者</span></div><div class="line">    introduction = scrapy.Field() <span class="comment">#简介</span></div><div class="line">    time = scrapy.Field() <span class="comment">#时间</span></div></pre></td></tr></table></figure>
-<h1 id="3、编写Spider"><a href="#3、编写Spider" class="headerlink" title="3、编写Spider"></a>3、编写Spider</h1><p><img src="https://i.imgur.com/uK5EU0x.png" alt=""></p>
-<blockquote>
-<p>一目了然</p>
-</blockquote>
-<p>在<code>huxiu/spider/HuXiu.py</code>中编写代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> huxiu.items <span class="keyword">import</span> HuxiuItem</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HuxiuSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">'HuXiu'</span></div><div class="line">    allowed_domains = [<span class="string">'huxiu.com'</span>]</div><div class="line">    start_urls = [<span class="string">'http://huxiu.com/'</span>]</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> response.xpath(<span class="string">'//div[@class="mod-info-flow"]/div/div[@class="mob-ctt"]'</span>):</div><div class="line">            item = HuxiuItem()</div><div class="line">            item[<span class="string">'title'</span>] = s.xpath(<span class="string">'h2/a/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">            item[<span class="string">'link'</span>] = s.xpath(<span class="string">'h2/a/@href'</span>)[<span class="number">0</span>].extract()</div><div class="line">            url = response.urljoin(item[<span class="string">'link'</span>])</div><div class="line">            item[<span class="string">'author'</span>] = s.xpath(<span class="string">'div/a/span/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">            item[<span class="string">'introduction'</span>] = s.xpath(<span class="string">'div[2]/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">            item[<span class="string">'time'</span>] = s.xpath(<span class="string">'div/span/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">            print(item)</div></pre></td></tr></table></figure>
-<p>在终端输入命令</p>
-<pre><code>scrapy crawl HuXiu
-</code></pre><p>部分输出</p>
-<p><img src="https://i.imgur.com/MqWJ2vP.png" alt=""></p>
-<h1 id="4、深度爬取"><a href="#4、深度爬取" class="headerlink" title="4、深度爬取"></a>4、深度爬取</h1><p>哈哈，这里借用造数的命名了。其实就是爬取新闻详情页。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> huxiu.items <span class="keyword">import</span> HuxiuItem</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HuxiuSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">'HuXiu'</span></div><div class="line">    allowed_domains = [<span class="string">'huxiu.com'</span>]</div><div class="line">    start_urls = [<span class="string">'http://huxiu.com/'</span>]</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> response.xpath(<span class="string">'//div[@class="mod-info-flow"]/div/div[@class="mob-ctt"]'</span>):</div><div class="line">            item = HuxiuItem()</div><div class="line">            item[<span class="string">'title'</span>] = s.xpath(<span class="string">'h2/a/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">            item[<span class="string">'link'</span>] = s.xpath(<span class="string">'h2/a/@href'</span>)[<span class="number">0</span>].extract()</div><div class="line">            url = response.urljoin(item[<span class="string">'link'</span>])</div><div class="line">            item[<span class="string">'author'</span>] = s.xpath(<span class="string">'div/a/span/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">            item[<span class="string">'introduction'</span>] = s.xpath(<span class="string">'div[2]/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">            item[<span class="string">'time'</span>] = s.xpath(<span class="string">'div/span/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">            <span class="comment">#print(item)</span></div><div class="line">            <span class="keyword">yield</span> scrapy.Request(url, callback=self.parse_article)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_article</span><span class="params">(self, response)</span>:</span></div><div class="line">        item = HuxiuItem()</div><div class="line">        detail = response.xpath(<span class="string">'//div[@class="article-wrap"]'</span>)</div><div class="line">        item[<span class="string">'title'</span>] = detail.xpath(<span class="string">'h1/text()'</span>)[<span class="number">0</span>].extract().strip()</div><div class="line">        item[<span class="string">'link'</span>] = response.url</div><div class="line">        item[<span class="string">'author'</span>] = detail.xpath(<span class="string">'div[@class="article-author"]/span/a/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">        item[<span class="string">'time'</span>] = detail.xpath(<span class="string">'div[@class="article-author"]/div[@class="column-link-box"]/span/text()'</span>)[<span class="number">0</span>].extract()</div><div class="line">        print(item)</div><div class="line">        word = detail.xpath(<span class="string">'div[5]'</span>)</div><div class="line">        print(word[<span class="number">0</span>].xpath(<span class="string">'string(.)'</span>).extract()[<span class="number">0</span>])</div><div class="line">        <span class="keyword">yield</span> item</div></pre></td></tr></table></figure></p>
-<p>输出结果</p>
-<p><img src="https://i.imgur.com/JJoTvtU.png" alt=""></p>
-<p>说明一点，<code>如何使用xpath获得多个标签下的文本</code>，这里参考了<a href="http://blog.csdn.net/MrLevo520/article/details/53158050" target="_blank" rel="external">解决：xpath取出指定多标签内所有文字text</a>，把文章详细内容打印出来，但是会遇到一些错误，可以使用<code>goose</code>来试试看。</p>
-<h1 id="Python-Goose-Article-Extractor"><a href="#Python-Goose-Article-Extractor" class="headerlink" title="Python-Goose - Article Extractor"></a><a href="https://github.com/grangier/python-goose" target="_blank" rel="external">Python-Goose - Article Extractor</a></h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> goose <span class="keyword">import</span> Goose</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> goose.text <span class="keyword">import</span> StopWordsChinese</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>url  = <span class="string">'http://www.bbc.co.uk/zhongwen/simp/chinese_news/2012/12/121210_hongkong_politics.shtml'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>g = Goose(&#123;<span class="string">'stopwords_class'</span>: StopWordsChinese&#125;)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>article = g.extract(url=url)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> article.cleaned_text[:<span class="number">150</span>]</div><div class="line">香港行政长官梁振英在各方压力下就其大宅的违章建筑（僭建）问题到立法会接受质询，并向香港民众道歉。</div><div class="line"></div><div class="line">梁振英在星期二（<span class="number">12</span>月<span class="number">10</span>日）的答问大会开始之际在其演说中道歉，但强调他在违章建筑问题上没有隐瞒的意图和动机。</div><div class="line"></div><div class="line">一些亲北京阵营议员欢迎梁振英道歉，且认为应能获得香港民众接受，但这些议员也质问梁振英有</div></pre></td></tr></table></figure>
-<h1 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h1><ul>
-<li><a href="https://www.xncoding.com/2016/03/10/scrapy-02.html" target="_blank" rel="external">Scrapy笔记02- 完整示例</a></li>
-<li><a href="http://blog.csdn.net/MrLevo520/article/details/53158050" target="_blank" rel="external">解决：xpath取出指定多标签内所有文字text</a></li>
-</ul>
-<blockquote>
-<p>若想评论，先翻长城</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第十五篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/n1TnhMv.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Scrapy" scheme="https://zhangslob.github.io/categories/Scrapy/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
-    
-      <category term="虎嗅" scheme="https://zhangslob.github.io/tags/%E8%99%8E%E5%97%85/"/>
     
   </entry>
   
