@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[学习Git（一）起步]]></title>
+    <url>%2F2018%2F03%2F14%2F%E5%AD%A6%E4%B9%A0Git%EF%BC%88%E4%B8%80%EF%BC%89%E8%B5%B7%E6%AD%A5%2F</url>
+    <content type="text"><![CDATA[这是崔斯特的第三十六篇原创文章 开始补基础 (๑• . •๑) 什么是Git在Git官网上找到这样一段描述 Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency. 重点是 version control system (VCS)，翻译过来也就是 版本控制系统。（Pycharm中有一个） 关于版本控制版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。 （我的理解就是一个东西会有不同的版本，就像吃鸡，常常更新，每更新一次就是一个新的版本，如果刚发行的版本出现毒圈不掉血，这个时候就需要版本回退。。版本控制系统就体现作用了） 版本控制系统又分为：本地版本控制系统、集中化的版本控制系统、分布式版本控制系统。 本地版本控制系统 集中化的版本控制系统 分布式版本控制系统 更多介绍可以来看 1.1 起步 - 关于版本控制 谁开发了 Git2002 年，Linux 内核开源项目组开始启用一个专有的分布式版本控制系统 BitKeeper 来管理和维护代码。 但是到了 2005 年，开发 BitKeeper 的商业公司同 Linux 内核开源社区的合作关系结束，他们收回了 Linux 内核社区免费使用 BitKeeper 的权力。 这就迫使 Linux 开源社区（特别是 Linux 的缔造者 Linus Torvalds）基于使用 BitKeeper 时的经验教训，开发出自己的版本系统。 他们对新的系统制订了若干目标： 速度 简单的设计 对非线性开发模式的强力支持（允许成千上万个并行开发的分支） 完全分布式 有能力高效管理类似 Linux 内核一样的超大规模项目（速度和数据量） Git 特点Git 工作流基本的 Git 工作流程如下： 克隆 Git 资源作为工作目录。 在克隆的资源上添加或修改文件。 如果其他人修改了，你可以更新资源。 在提交前查看修改。 提交修改。 在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。 近乎所有操作都是本地执行在 Git 中的绝大多数操作都只需要访问本地文件和资源，一般不需要来自网络上其它计算机的信息。 举个例子，要浏览项目的历史，Git 不需外连到服务器去获取历史，然后再显示出来——它只需直接从本地数据库中读取。 你能立即看到项目历史。 如果你想查看当前版本与一个月前的版本之间引入的修改，Git 会查找到一个月前的文件做一次本地的差异计算，而不是由远程服务器处理或从远程服务器拉回旧版本文件再来本地处理。 Git 保证完整性Git 中所有数据在存储前都计算校验和，然后以校验和来引用。 这意味着不可能在 Git 不知情时更改任何文件内容或目录内容。 这个功能建构在 Git 底层，是构成 Git 哲学不可或缺的部分。 若你在传送过程中丢失信息或损坏文件，Git 就能发现。 Git 用以计算校验和的机制叫做 SHA-1 散列（hash，哈希）。 这是一个由 40 个十六进制字符（0-9 和 a-f）组成字符串，基于 Git 中文件的内容或目录结构计算出来。 SHA-1 哈希看起来是这样： 24b9da6552252987aa493b52f8696cd6d3b00373 Git 中使用这种哈希值的情况很多，你将经常看到这种哈希值。 实际上，Git 数据库中保存的信息都是以文件内容的哈希值来索引，而不是文件名。 Git 一般只添加数据你执行的 Git 操作，几乎只往 Git 数据库中增加数据。 很难让 Git 执行任何不可逆操作，或者让它以任何方式清除数据。 同别的 VCS 一样，未提交更新时有可能丢失或弄乱修改的内容；但是一旦你提交快照到 Git 中，就难以再丢失数据，特别是如果你定期的推送数据库到其它仓库的话。 Git 的三种状态 已提交（committed）：数据已经安全的保存在本地数据库中。 已修改（modified） ：修改了文件，但还没保存到数据库中。 已暂存（staged） ：对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中。 由此引入 Git 项目的三个工作区域的概念：Git 仓库、工作目录以及暂存区域。 安装 Git说了那么多，现在开始动手，安装Git。 Linux$ sudo yum install git 或者 $ sudo apt-get install git Mac下载安装包 Downloading Git 或者 $ brew install git Windows直接下载文件 Downloading Git 或者 安装 GitHub for Windows 初次运行 Git 前的配置用户信息12$ git config --global user.name &quot;name&quot;$ git config --global user.email example@example.com 如果使用了 --global 选项，那么该命令只需要运行一次，因为之后无论你在该系统上做任何事情， Git 都会使用那些信息。 检查配置信息12345678$ git config --listuser.name=nameuser.email=example@example.comcolor.status=autocolor.branch=autocolor.interactive=autocolor.diff=auto... 获取帮助若你使用 Git 时需要获取帮助，有三种方法可以找到 Git 命令的使用手册：123$ git help &lt;verb&gt;$ git &lt;verb&gt; --help$ man git-&lt;verb&gt; 例如，要想获得 config 命令的手册，执行 $ git help config 总结以前只是了解 Git常见的push、commit等命令，从没有对 Git进性过系统学习，抓紧时间学习。 目标：两周后，也就是3月28日，能熟练使用 Git进性开发。 这一篇主要讲了些背景知识吧，下一篇就是实际的操作了。 主要从Git文档上截取自己认为重要的部分，有条件可以去仔细阅读。]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[大佬，我代码哪错了？]]></title>
     <url>%2F2018%2F03%2F13%2F%E5%A4%A7%E4%BD%AC%EF%BC%8C%E6%88%91%E4%BB%A3%E7%A0%81%E5%93%AA%E9%94%99%E4%BA%86%EF%BC%9F%2F</url>
     <content type="text"><![CDATA[这是崔斯特的第三十五篇原创文章 到底哪错了 (๑• . •๑) 问题无处不在我： “大佬，帮我看看这个问题错在哪了？” 大佬： “你的代码呢、你的错误提示呢？” 我： “好的，我发给你” 大佬： “。。。 再见” 留下一脸懵逼的我 如何解决问题最简单的方法是根据错误提示，查看对应位置的代码，Pycharm会提示具体是哪一行代码有问题，并抛出错误。 找到错误首先应自己想办法解决，自己解决又分为几种：有经验的大佬看到Error就知道是哪里有问题了，没经验怎么办，那就自己去搜索了。 下个结论，你遇到的问题，前人一定遇到过。 所以你只需要把你的错误提示搜索就好了。 注意下面，你懂的。（给自己一个好点的环境） Google &gt; 百度 stackoverflow &gt; 知乎 github &gt; CSDN Github上有一个很有用的 trending ，可以显示今天或本周或本月最火的项目，例如： techGay/91porn Github 作为全球最大的同性交友网站，上面有很多值得我们好好学习的东西。 如何向别人提问如果你真的像上面哪样，发一张照片，估计大佬都要吐血了。 在这里推荐大家使用Github上的 gist ，很适合分享代码片段。 Instantly share code, notes, and snippets. 例如这样 Issue in FromRequest #3144 这样看起来是不是舒服多了 如何才能 永无bug1、佛祖保佑 永无bug12345678910111213141516171819202122232425262728293031// _ooOoo_// o8888888o// 88" . "88// (| -_- |)// O\ = /O// ____/`---'\____// . ' \\| |// `.// / \\||| : |||// \// / _||||| -:- |||||- \// | | \\\ - /// | |// | \_| ''\---/'' | |// \ .-\__ `-` ___/-. /// ___`. .' /--.--\ `. . __// ."" '&lt; `.___\_&lt;|&gt;_/___.' &gt;'"".// | | : `- \`.;`\ _ /`;.`/ - ` : | |// \ \ `-. \_ __\ /__ _/ .-` / /// ======`-.____`-.___\_____/___.-`____.-'======// `=---='//// .............................................// 佛祖镇楼 BUG辟易// 佛曰:// 写字楼里写字间，写字间里程序员；// 程序人员写程序，又拿程序换酒钱。// 酒醒只在网上坐，酒醉还来网下眠；// 酒醉酒醒日复日，网上网下年复年。// 但愿老死电脑间，不愿鞠躬老板前；// 奔驰宝马贵者趣，公交自行程序员。// 别人笑我忒疯癫，我笑自己命太贱；// 不见满街漂亮妹，哪个归得程序员？ 2、佛系编程 永无bugNo CodeNo code is the best way to write secure and reliable applications. Write nothing; deploy nowhere. Getting StartedStart by not writing any code. 12 This is just an example application, but imagine it doing anything you want. Adding new features is easy too: 12 The possibilities are endless. Building the ApplicationNow that you have not done anything it’s time to build your application: 12 Yep. That’s it. You should see the following output: 12 DeployingWhile you still have not done anything it’s time to deploy your application. By running the following command you can deploy your application absolutely nowhere. 12 It’s that simple. And when it comes time to scale the application, all you have to do is: 12 I know right? ContributingYou don’t.]]></content>
@@ -138,8 +149,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>2017</tag>
         <tag>logging</tag>
+        <tag>2017</tag>
       </tags>
   </entry>
   <entry>
@@ -150,8 +161,8 @@
         <category>总结</category>
       </categories>
       <tags>
-        <tag>年度总结</tag>
         <tag>2017</tag>
+        <tag>年度总结</tag>
       </tags>
   </entry>
   <entry>
