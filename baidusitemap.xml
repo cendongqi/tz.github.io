@@ -3,6 +3,26 @@
 
 
     
+  <url>
+    <loc>https://zhangslob.github.io/2018/03/19/%E5%AD%A6%E4%B9%A0Git%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</loc>
+    <lastmod>2018-03-19T14:46:11.372Z</lastmod>
+    <data>
+        <display>
+        <title>学习Git（二）基本操作</title>
+        <pubTime>2018-03-19T13:11:39.000Z</pubTime>
+        
+        <tag>Git</tag>
+         
+         
+           
+             
+              <breadCrumb title="Git" url="https://zhangslob.github.io/categories/Git/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>https://zhangslob.github.io/2018/03/14/%E5%AD%A6%E4%B9%A0Git%EF%BC%88%E4%B8%80%EF%BC%89%E8%B5%B7%E6%AD%A5/</loc>
@@ -272,9 +292,9 @@
         <title>使用logging管理爬虫</title>
         <pubTime>2018-01-15T13:39:35.000Z</pubTime>
         
-        <tag>logging</tag>
-         
         <tag>2017</tag>
+         
+        <tag>logging</tag>
          
          
            
@@ -294,9 +314,9 @@
         <title>2017 梦醒时分</title>
         <pubTime>2017-12-31T08:09:41.000Z</pubTime>
         
-        <tag>2017</tag>
-         
         <tag>年度总结</tag>
+         
+        <tag>2017</tag>
          
          
            
