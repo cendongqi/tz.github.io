@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="爬虫,Scrapy," />
 
 
 
@@ -79,15 +79,22 @@
 
 
 
-<meta name="description" content="网络爬虫、数据分析、人生感悟!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小歪的博客">
-<meta property="og:url" content="https://zhangslob.github.io/archives/2017/11/index.html">
+<meta name="description" content="这是崔斯特的第三十九篇原创文章
+长期更新  (๑• . •๑)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy中如何提高数据的插入速度">
+<meta property="og:url" content="https://zhangslob.github.io/2018/03/28/Scrapy中如何提高数据的插入速度/index.html">
 <meta property="og:site_name" content="小歪的博客">
-<meta property="og:description" content="网络爬虫、数据分析、人生感悟!">
+<meta property="og:description" content="这是崔斯特的第三十九篇原创文章
+长期更新  (๑• . •๑)">
+<meta property="og:image" content="https://i.imgur.com/ThJm8v5.jpg">
+<meta property="og:image" content="https://i.imgur.com/SQrGHds.png">
+<meta property="og:updated_time" content="2018-03-28T13:34:51.830Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小歪的博客">
-<meta name="twitter:description" content="网络爬虫、数据分析、人生感悟!">
+<meta name="twitter:title" content="Scrapy中如何提高数据的插入速度">
+<meta name="twitter:description" content="这是崔斯特的第三十九篇原创文章
+长期更新  (๑• . •๑)">
+<meta name="twitter:image" content="https://i.imgur.com/ThJm8v5.jpg">
 
 
 
@@ -117,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://zhangslob.github.io/archives/2017/11/"/>
+  <link rel="canonical" href="https://zhangslob.github.io/2018/03/28/Scrapy中如何提高数据的插入速度/"/>
 
 
 
 
 
-  <title>归档 | 小歪的博客</title>
+  <title>Scrapy中如何提高数据的插入速度 | 小歪的博客</title>
   
 
 
@@ -183,7 +190,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
   
 
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 		<a href="https://github.com/zhangslob"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -321,110 +328,375 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 目前共计 39 篇日志。 继续努力。
-      </span>
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2018/03/28/Scrapy中如何提高数据的插入速度/">
 
-      
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小歪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1488291259&di=9b54b1ab9a4a02ec51e4344e960692d6&src=http://ni.ppsrc.com/aR24MryiGC7HFCEJTB-wgQ@640w_640h_75Q.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小歪的博客">
+    </span>
+
+    
+      <header class="post-header">
 
         
         
+          <h1 class="post-title" itemprop="name headline">Scrapy中如何提高数据的插入速度</h1>
         
 
-        
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T21:18:32+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/30/统计学学习笔记（一）/" itemprop="url">
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
               
-                <span itemprop="name">统计学学习笔记（一）</span>
+                <span class="post-meta-item-text">分类于</span>
               
-            </a>
-        
-      </h2>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Scrapy/" itemprop="url" rel="index">
+                    <span itemprop="name">Scrapy</span>
+                  </a>
+                </span>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-30T23:45:14+08:00"
-              content="2017-11-30" >
-          11-30
-        </time>
-      </div>
+                
+                
+              
+            </span>
+          
 
-    </header>
-  </article>
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/28/Scrapy中如何提高数据的插入速度/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/03/28/Scrapy中如何提高数据的插入速度/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
+          
+          
+             <span id="/2018/03/28/Scrapy中如何提高数据的插入速度/" class="leancloud_visitors" data-flag-title="Scrapy中如何提高数据的插入速度">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
 
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,294
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/29/Scrapy学习实例（一）/" itemprop="url">
-              
-                <span itemprop="name">Scrapy学习实例（一）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-29T21:52:32+08:00"
-              content="2017-11-29" >
-          11-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <pre><code>这是崔斯特的第三十九篇原创文章
+</code></pre><p>长期更新  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/ThJm8v5.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="速度问题"><a href="#速度问题" class="headerlink" title="速度问题"></a>速度问题</h1><p>最近工作中遇到这么一个问题，全站抓取时采用分布式：爬虫A与爬虫B，爬虫A给爬虫B<code>喂饼</code>，爬虫B由于各种原因<code>运行</code>的比较慢，达不到预期效果，所以必须对爬虫B进行优化。</p>
+<p>提升Scrapy运行速度有很多方法，国外有大佬说过</p>
+<p><a href="https://stackoverflow.com/questions/17029752/speed-up-web-scraper" target="_blank" rel="external">Speed up web scraper
+</a></p>
+<p>Here’s a collection of things to try:</p>
+<ol>
+<li>use latest scrapy version (if not using already)</li>
+<li>check if non-standard middlewares are used</li>
+<li>try to increase CONCURRENT_REQUESTS_PER_DOMAIN, CONCURRENT_REQUESTS settings (docs)<br>turn off logging LOG_ENABLED = False (docs)</li>
+<li>try yielding an item in a loop instead of collecting items into the items list and returning them<br>use local cache DNS (see this thread)</li>
+<li>check if this site is using download threshold and limits your download speed (see this thread)<br>log cpu and memory usage during the spider run - see if there are any problems there</li>
+<li>try run the same spider under scrapyd service</li>
+<li>see if grequests + lxml will perform better (ask if you need any help with implementing this solution)</li>
+<li>try running Scrapy on pypy, see Running Scrapy on PyPy</li>
+</ol>
+<p>大致看了下，确实可以提高爬虫运行速度，但是对于海量数据（这里说的是百万级）还需要考虑一点的就是数据插入问题，这里我们使用的是 Mongo。</p>
+<h1 id="官方示例"><a href="#官方示例" class="headerlink" title="官方示例"></a>官方示例</h1><p>让我们先从官方文档开始 <a href="http://scrapy.readthedocs.io/en/latest/topics/item-pipeline.html#write-items-to-mongodb" target="_blank" rel="external">Write items to MongoDB</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoPipeline</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    collection_name = <span class="string">'scrapy_items'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, mongo_uri, mongo_db)</span>:</span></div><div class="line">        self.mongo_uri = mongo_uri</div><div class="line">        self.mongo_db = mongo_db</div><div class="line"></div><div class="line"><span class="meta">    @classmethod</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">from_crawler</span><span class="params">(cls, crawler)</span>:</span></div><div class="line">        <span class="keyword">return</span> cls(</div><div class="line">            mongo_uri=crawler.settings.get(<span class="string">'MONGO_URI'</span>),</div><div class="line">            mongo_db=crawler.settings.get(<span class="string">'MONGO_DATABASE'</span>, <span class="string">'items'</span>)</div><div class="line">        )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client = pymongo.MongoClient(self.mongo_uri)</div><div class="line">        self.db = self.client[self.mongo_db]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client.close()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        self.db[self.collection_name].insert_one(dict(item))</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<p>比较简单，这里插入使用的方法是 <code>insert_one</code>，继续文档：</p>
+<p><code>insert_one(document, bypass_document_validation=False, session=None)</code></p>
+<p>Insert a single document.<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; db.test.count(&#123;'x': <span class="number">1</span>&#125;)</div><div class="line"><span class="number">0</span></div><div class="line">&gt;&gt;&gt; result = db.test.insert_one(&#123;'x': <span class="number">1</span>&#125;)</div><div class="line">&gt;&gt;&gt; result.inserted_id</div><div class="line">ObjectId('<span class="number">54</span>f112defba522406c9cc208')</div><div class="line">&gt;&gt;&gt; db.test.find_one(&#123;'x': <span class="number">1</span>&#125;)</div><div class="line">&#123;u'x': <span class="number">1</span>, u'_id': ObjectId('<span class="number">54</span>f112defba522406c9cc208')&#125;</div></pre></td></tr></table></figure></p>
+<p>以前经常使用的 <code>insert</code> 方法，已经不被赞同</p>
+<p><code>insert(doc_or_docs, manipulate=True, check_keys=True, continue_on_error=False, **kwargs)</code></p>
+<p>Insert a document(s) into this collection.<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">DEPRECATED - Use insert_one() or insert_many() instead.</div><div class="line"></div><div class="line">Changed <span class="keyword">in</span> version <span class="number">3</span>.<span class="number">0</span>: Removed the safe parameter. Pass w=<span class="number">0</span> <span class="keyword">for</span> unacknowledged write operations.</div></pre></td></tr></table></figure></p>
+<p><code>insert</code> 简单理解就是插入，把我们采集到的 <code>item</code> 插入到数据库，这样存在一个很严重的问题，就是<strong>去重</strong></p>
+<h1 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h1><p>晚上有一种很流行的写法，使用 <code>update</code>命令，如：</p>
+<p><code>self.db[self.collection_name].update({&#39;id&#39;: item[&#39;id&#39;]}, {&#39;$set&#39;: dict(item)}, True)</code></p>
+<p>解释为：</p>
+<blockquote>
+<p>比较重要的一点就在于process_item，在这里使用了update方法，第一个参数传入查询条件，这里使用的是id，第二个参数传入字典类型的对象，就是我们的item，第三个参数传入True，这样就可以保证，如果查询数据存在的话就更新，不存在的话就插入。这样就可以保证去重了。</p>
+</blockquote>
+<p>这确实是一种很简单的方法，其实原理很简单，就是在每次插入数据前，对数据库中查询，是否有该 ID，如果没有就插入，如果有就放弃。</p>
+<p>对于数据量比较少的项目，这确实是一种很简单的方法，很简单就完成了目标。</p>
+<p>但是，我们现在说的是百万级数据，如果每一条数据在插入前，都需要去查询该数据是否在数据库，那会多么耗时，效率会大大较低，那么还有什么好办法呢？</p>
+<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h3 id="MongoDB-索引"><a href="#MongoDB-索引" class="headerlink" title="MongoDB 索引"></a>MongoDB 索引</h3><p>索引能够实现高效地查询。没有索引，MongoDB 就必须扫描集合中的所有文档，才能找到匹配查询语句的文档。这种扫描毫无效率可言，需要处理大量的数据。</p>
+<p>索引是一种特殊的数据结构，将一小块数据集保存为容易遍历的形式。索引能够存储某种特殊字段或字段集的值，并按照索引指定的方式将字段值进行排序。</p>
+<p>我们可以借助索引，使用 <code>insert_one</code>方法提高效率。代码实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client = mongodb_client</div><div class="line">        self.db = self.client.get_database()</div><div class="line">        self.collection = self.db[<span class="string">'test'</span>]</div><div class="line">        <span class="comment"># 添加唯一索引</span></div><div class="line">        self.collection.create_index(<span class="string">'id'</span>, unique=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client.close()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            self.collection.insert_one(dict(item))</div><div class="line">            <span class="keyword">return</span> item</div><div class="line">        <span class="keyword">except</span> DuplicateKeyError:</div><div class="line">            spider.logger.debug(<span class="string">' duplicate key error collection'</span>)</div><div class="line">            <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<p>其实很简单，就是在 <code>open_spider</code>先创建唯一索引，然后再插入数据。注意需要在<code>process_item</code>中使用异常处理，因为很有可能插入重复数据，到时候就会输出日志。</p>
+<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><p>mongo 除了 <code>insert_one</code>方法还有一种，<code>insert_many</code></p>
+<p><code>insert_many(documents, ordered=True, bypass_document_validation=False, session=None)</code></p>
+<p>Insert an iterable of documents.<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; db.test.count()</div><div class="line"><span class="number">0</span></div><div class="line">&gt;&gt;&gt; result = db.test.insert_many([&#123;'x': i&#125; <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>)])</div><div class="line">&gt;&gt;&gt; result.inserted_ids</div><div class="line">[ObjectId('<span class="number">54</span>f113fffba522406c9cc20e'), ObjectId('<span class="number">54</span>f113fffba522406c9cc20f')]</div><div class="line">&gt;&gt;&gt; db.test.count()</div><div class="line"><span class="number">2</span></div></pre></td></tr></table></figure></p>
+<p>这样插入的数据不再是一条，而是很多，</p>
+<p><a href="https://stackoverflow.com/questions/36792649/whats-the-difference-between-insert-insertone-and-insertmany-method" target="_blank" rel="external">What’s the difference between insert(), insertOne() and insertMany() methods on MongoDB</a></p>
+<p>大佬有写到，可以去看看。</p>
+<p>同时插入多条数据，减轻数据库压力。但是这个“多”到底还是多少，目前不得而知。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>除了更多机器和更多节点，还有很多方法可以提升 <code>Scrapy</code>运行速度。</p>
+<p>今天说到的是管道阻塞问题，还有其他地方也可以优化，还需要努力。</p>
+<p><img src="https://i.imgur.com/SQrGHds.png" alt=""></p>
+
+      
     </div>
+    
+    
+    
+
+    
+      <div>
+        
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/03/28/Scrapy中如何提高数据的插入速度/">Scrapy中如何提高数据的插入速度</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 小歪 的个人博客">小歪</a></p>
+  <p><span>发布时间:</span>2018年03月28日 - 21:03</p>
+  <p><span>最后更新:</span>2018年03月28日 - 21:03</p>
+  <p><span>原始链接:</span><a href="/2018/03/28/Scrapy中如何提高数据的插入速度/" title="Scrapy中如何提高数据的插入速度">https://zhangslob.github.io/2018/03/28/Scrapy中如何提高数据的插入速度/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhangslob.github.io/2018/03/28/Scrapy中如何提高数据的插入速度/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+
+        
+      </div>
+      <div>
+          <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="小歪 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>打发点咯！嘤嘤嘤</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="小歪 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/爬虫/" rel="tag"> <i class="fa fa-tag"></i>爬虫</a>
+          
+            <a href="/tags/Scrapy/" rel="tag"> <i class="fa fa-tag"></i>Scrapy</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/25/Hi，这里是我的爬虫笔记/" rel="next" title="Hi，这里是我的爬虫笔记">
+                <i class="fa fa-chevron-left"></i> Hi，这里是我的爬虫笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
 
 
           </div>
@@ -432,6 +704,20 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
           
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
 
         </div>
         
@@ -452,8 +738,17 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -559,6 +854,22 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#速度问题"><span class="nav-number">1.</span> <span class="nav-text">速度问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方示例"><span class="nav-number">2.</span> <span class="nav-text">官方示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#去重"><span class="nav-number">3.</span> <span class="nav-text">去重</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#索引"><span class="nav-number">4.</span> <span class="nav-text">索引</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-索引"><span class="nav-number">4.0.1.</span> <span class="nav-text">MongoDB 索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他方法"><span class="nav-number">4.0.2.</span> <span class="nav-text">其他方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -721,6 +1032,10 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -738,6 +1053,18 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       <script id="dsq-count-scr" src="https://https-zhangslob-github-io.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'https://zhangslob.github.io/2018/03/28/Scrapy中如何提高数据的插入速度/';
+          this.page.identifier = '2018/03/28/Scrapy中如何提高数据的插入速度/';
+          this.page.title = 'Scrapy中如何提高数据的插入速度';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://https-zhangslob-github-io.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
