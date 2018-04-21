@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-04-12T14:08:23.122Z</updated>
+  <updated>2018-04-21T10:09:16.779Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>scrapy-redis 和 scrapy 有什么区别？</title>
+    <link href="https://zhangslob.github.io/2018/04/21/%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/"/>
+    <id>https://zhangslob.github.io/2018/04/21/有什么区别？/</id>
+    <published>2018-04-21T10:03:14.000Z</published>
+    <updated>2018-04-21T10:09:16.779Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十一篇原创文章
+</code></pre><p>分布式爬虫  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/1uic8Qk.jpg" alt=""></p>
+<a id="more"></a>
+<p>最近在工作中一直使用 <code>redis</code> 来管理分发爬虫任务，让我对 <code>scrapy-redis</code> 有很深刻的理解，下面让我慢慢说来。</p>
+<blockquote>
+<p>在所有的问题开始之前，要先有一个前提：你使用 <code>Scrapy</code> 框架做开发</p>
+</blockquote>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p><code>scrapy-redis</code> 与 <code>Scrapy</code>的关系就像电脑与固态硬盘一样，是电脑中的一个插件，能让电脑更快的运行。</p>
+<p><code>Scrapy</code> 是一个爬虫框架，<code>scrapy-redis</code> 则是这个框架上可以选择的插件，它可以让爬虫跑的更快。</p>
+<h1 id="为什么使用-scrapy-redis"><a href="#为什么使用-scrapy-redis" class="headerlink" title="为什么使用 scrapy-redis"></a>为什么使用 <code>scrapy-redis</code></h1><p>首先，在实际开发中，我们总会对爬虫速度表示不满，为啥这么慢，能不能跑快点。除了爬虫本身的优化，我们就要引入<code>分布式爬虫</code>的概念。</p>
+<p>我自己对<code>分布式爬虫</code>的理解就是：<strong>多个爬虫执行同一个任务</strong></p>
+<blockquote>
+<p>这里说下，<code>Scrapy</code>本身是不支持分布式的，因为它的任务管理和去重全部是在机器内存中实现的。</p>
+</blockquote>
+<p>在 <code>Scrapy</code> 中最出名的分布式插件就是<code>scrapy-redis</code>了，<code>scrapy-redis</code>的作用就是让你的爬虫快、更快、超级快。</p>
+<h1 id="scrapy-redis-如何工作"><a href="#scrapy-redis-如何工作" class="headerlink" title="scrapy-redis 如何工作"></a><code>scrapy-redis</code> 如何工作</h1><p>最简单的方式是使用<code>redis</code>替换机器内存，那么具体如何操作呢？非常简单，你只需要在 <code>settings.py</code> 中加上三代码，就能让你的爬虫变为分布式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SCHEDULER = <span class="string">"scrapy_redis.scheduler.Scheduler"</span></div><div class="line"></div><div class="line">DUPEFILTER_CLASS = <span class="string">"scrapy_redis.dupefilter.RFPDupeFilter"</span></div><div class="line"></div><div class="line">REDIS_START_URLS_AS_SET = <span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p><code>SCHEDULER</code> 是任务分发与调度，把所有的爬虫开始的请求都放在redis里面，所有爬虫都去redis里面读取请求。<br><code>DUPEFILTER_CLASS</code> 是去重队列，负责所有请求的去重，<code>REDIS_START_URLS_AS_SET</code>指的是使用redis里面的set类型（简单完成去重），如果你没有设置，默认会选用list。</p>
+<p>如果你现在运行你的爬虫，你可以在redis中看到出现了这两个key:</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">spider_name:</span>dupefilter</div><div class="line"><span class="symbol">spider_name:</span>requests</div></pre></td></tr></table></figure>
+<p>格式是set，即不会有重复数据。前者就是redis的去重队列，对应<code>DUPEFILTER_CLASS</code>，后者是redis的请求调度，把里面的请求分发给爬虫，对应<code>SCHEDULER</code>。（里面的数据不会自动删除，如果你第二次跑，需要提前清空里面的数据）</p>
+<h1 id="scrapy-redis-优点"><a href="#scrapy-redis-优点" class="headerlink" title="scrapy-redis 优点"></a><code>scrapy-redis</code> 优点</h1><h3 id="速度快"><a href="#速度快" class="headerlink" title="速度快"></a>速度快</h3><p><code>scrapy-redis</code> 使用redis这个速度非常快的非关系型（NoSQL）内存键值数据库，<strong>速度快</strong>是最重要原因（但是也会产生负面想过，下面会说到）。</p>
+<p>为什么是<code>scrapy-redis</code>而不是<code>scrapy-mongo</code>呢，大家可以仔细想想。</p>
+<h3 id="用法简单"><a href="#用法简单" class="headerlink" title="用法简单"></a>用法简单</h3><p>前人已经造好轮子了，<a href="https://github.com/rmax/scrapy-redis" target="_blank" rel="external">scrapy-redis</a>。<br>我们直接拿来用就好，而用法也像上面提到的在 <code>settings.py</code> 文件中配置。在文档中还有另一种用法，即<code>Feeding a Spider from Redis</code></p>
+<ol>
+<li>run the spider:<br><code>scrapy runspider myspider.py</code></li>
+<li>push urls to redis:<br><code>redis-cli lpush myspider:start_urls http://google.com</code>（建议把<code>lpush</code>换为<code>zset</code>）</li>
+</ol>
+<p>其实这种用法就是先打开一个爬虫，他会一直在redis里面寻找key为 <code>myspider:start_urls</code>，如果存在，就提取里面的url。当然你也可以在爬虫中指定<code>redis_key</code>，默认的是爬虫的名字加上<code>:start_urls</code></p>
+<h3 id="去重简单"><a href="#去重简单" class="headerlink" title="去重简单"></a>去重简单</h3><p>爬虫中去重是一件大事，使用了<code>scrapy-redis</code>后就很简单了。上面提到过使用redis的set类型就可以很容易达到这个目标了，即<code>REDIS_START_URLS_AS_SET = True</code>。</p>
+<h1 id="scrapy-redis-缺点"><a href="#scrapy-redis-缺点" class="headerlink" title="scrapy-redis 缺点"></a><code>scrapy-redis</code> 缺点</h1><h3 id="内存问题"><a href="#内存问题" class="headerlink" title="内存问题"></a>内存问题</h3><p>为什么使用分布式爬虫，当然是因为会有很多链接需要跑，或者说会存放很多个<code>myspider:start_urls</code>到redis中，Redis是key-value数据库，面对key的内存搜索，优势明显，但是Redis吃的是纯内存，<code>myspider:start_urls</code>是一个有一个像<code>https://www.zhihu.com/people/cuishite</code>的链接，会占用大量的内存空间。之前就因为这个原因redis崩溃过无数次，那么如何优化？</p>
+<p>网络上有的方法是 <a href="https://blog.csdn.net/bone_ace/article/details/53099042" target="_blank" rel="external"> scrapy_redis去重优化（已有7亿条数据），附Demo福利</a>，可以参考下。如果你有好的解决方法，欢迎私信告诉我。（保密原因就不介绍我们的处理方法了）</p>
+<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><p>这个其实不算做问题，只是官方文档上我觉得的小BUG，在这里 <a href="https://github.com/rmax/scrapy-redis#usage" target="_blank" rel="external">Usage</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Store scraped item in redis for post-processing.</span></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="string">'scrapy_redis.pipelines.RedisPipeline'</span>: <span class="number">300</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Pipeline是这样写的<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">    key = self.item_key(item, spider)</div><div class="line">    data = self.serialize(item)</div><div class="line">    self.server.rpush(key, data)</div><div class="line">    <span class="keyword">return</span> item</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">item_key</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">    <span class="string">"""Returns redis key based on given spider.</span></div><div class="line"></div><div class="line">    Override this function to use a different key depending on the item</div><div class="line">    and/or spider.</div><div class="line"></div><div class="line">    """</div><div class="line">    <span class="keyword">return</span> self.key % &#123;<span class="string">'spider'</span>: spider.name&#125;</div></pre></td></tr></table></figure></p>
+<p>看不懂为什么要把数据储存在redis里面，这不又加大redis储存负担吗？对于新手来说真的不友好，或许可以考虑提一个pr。</p>
+<h1 id="redis可视化工具"><a href="#redis可视化工具" class="headerlink" title="redis可视化工具"></a>redis可视化工具</h1><p>最后介绍两个redis可视化工具</p>
+<ol>
+<li><a href="https://github.com/uglide/RedisDesktopManager" target="_blank" rel="external">RedisDesktopManager</a> 比较出名的工具，但是经常会崩溃</li>
+<li><a href="https://github.com/uniorder/kedis" target="_blank" rel="external">kedis</a> 国人开发的免费工具，这个界面还是可以的</li>
+</ol>
+<p><img src="https://camo.githubusercontent.com/de76115b295d30222fa0d6a1b79ffc9b31fb04e5/687474703a2f2f7777772e6b656861772e636f6d2f696d616765732f73637265656e73686f742e706e67" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十一篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;分布式爬虫  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/1uic8Qk.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="scrapy" scheme="https://zhangslob.github.io/categories/scrapy/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
+    
+  </entry>
   
   <entry>
     <title>来codewars与我一起玩耍吧</title>
@@ -1682,269 +1751,6 @@ e-packages\\lxml&#39;</code></p>
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="抓包" scheme="https://zhangslob.github.io/tags/%E6%8A%93%E5%8C%85/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【RNG vs SKT】弹幕的自然语言的初步分析</title>
-    <link href="https://zhangslob.github.io/2017/12/20/%E3%80%90RNG-vs-SKT%E3%80%91%E5%BC%B9%E5%B9%95%E7%9A%84%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E7%9A%84%E5%88%9D%E6%AD%A5%E5%88%86%E6%9E%90/"/>
-    <id>https://zhangslob.github.io/2017/12/20/【RNG-vs-SKT】弹幕的自然语言的初步分析/</id>
-    <published>2017-12-20T14:17:35.000Z</published>
-    <updated>2017-12-20T14:40:46.728Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十一篇原创文章
-</code></pre><p><img src="https://i.imgur.com/xf7kEI8.jpg" alt=""></p>
-<a id="more"></a>
-<p>前排 @皇族电子竞技俱乐部</p>
-<p>==================================</p>
-<p>S7中RNG对阵SKT，想必是全世界LOL玩家关注的重点。在比赛开始前，使用小葫芦把斗鱼S7直播间的弹幕都抓下来，想着做一小点分析，看看会得出什么结论。</p>
-<p>因为数据量和分析深度等原因，以下内容仅供娱乐观赏</p>
-<h1 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h1><p>使用小葫芦采集2万多条弹幕数据，RNG对阵SKT斗鱼直播间的弹幕，最后得到约4万可用数据</p>
-<h1 id="中文分词"><a href="#中文分词" class="headerlink" title="中文分词"></a>中文分词</h1><p>使用jieba分词，算法如下</p>
-<ul>
-<li>基于前缀词典实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图 (DAG)</li>
-<li>采用了动态规划查找最大概率路径, 找出基于词频的最大切分组合</li>
-<li>对于未登录词，采用了基于汉字成词能力的 HMM 模型，使用了 Viterbi 算法</li>
-</ul>
-<p>简单处理之后，看起来是这样</p>
-<p><img src="https://i.imgur.com/Zm6mMti.jpg" alt=""></p>
-<p>顺便做个统计，看看都在说什么。不加停用词是这样的，全是 “<strong>666</strong>”</p>
-<p><img src="https://i.imgur.com/df59MQw.jpg" alt=""></p>
-<p>RNG和牛逼是出现最多的词语，同时也发现“<strong>卢本伟牛逼</strong>”</p>
-<p><img src="https://i.imgur.com/6PcshNl.jpg" alt=""></p>
-<blockquote>
-<p>弱弱问一句“唐梦琼”是谁</p>
-</blockquote>
-<p>下面是词云，Python的词云做不来不好看，所以我使用的工具 <a href="https://timdream.org/wordcloud/#" target="_blank" rel="external">HTML5 Word Cloud</a></p>
-<p><img src="https://i.imgur.com/R6ltujq.jpg" alt=""></p>
-<blockquote>
-<p>弹幕内容词云</p>
-</blockquote>
-<p><img src="https://i.imgur.com/PMISApU.jpg" alt=""></p>
-<blockquote>
-<p>用户昵称词云</p>
-</blockquote>
-<h1 id="情感分析"><a href="#情感分析" class="headerlink" title="情感分析"></a>情感分析</h1><p>这里使用的是 <a href="https://github.com/isnowfy/snownlp" target="_blank" rel="external">isnowfy/snownlp</a>。SnowNLP是一个python写的类库，可以方便的处理中文文本内容，是受到了<a href="https://github.com/sloria/TextBlob" target="_blank" rel="external">TextBlob</a>的启发而写的。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> snownlp <span class="keyword">import</span> SnowNLP</div><div class="line"></div><div class="line">s = SnowNLP(<span class="string">u'这个东西真心很赞'</span>)</div><div class="line">s.sentiments    <span class="comment"># 0.9769663402895832 positive的概率</span></div></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/iEuDbFT.jpg" alt=""></p>
-<p>有点难看，直接看数据吧，得到的结果是在 [0，1] 之间的<strong>positive的概率</strong></p>
-<p>51659中有44705个大于0.5，占比86.54%，有 6954条弹幕低于0.5，占比13.46%。</p>
-<p>弹幕中积极的概率还是相当高的，说明观众还是比较赞赏比赛的。</p>
-<p><img src="https://i.imgur.com/FAOkrny.jpg" alt=""></p>
-<h1 id="特征提取"><a href="#特征提取" class="headerlink" title="特征提取"></a>特征提取</h1><p>TF-IDF是信息检索领域非常重要的搜索词重要性度量；tf-idf是一种统计方法，用以评估一字词对于一个文件集或一个语料库中的其中一份文件的重要程度。</p>
-<p>词频TF(Term Frequency)</p>
-<p>词w在文档d中出现次数count(w, d)和文档d中总词数size(d)的比值：</p>
-<p><img src="https://i.imgur.com/OttArJD.jpg" alt=""></p>
-<p>基于 TF-IDF 算法的关键词抽取：</p>
-<ul>
-<li>RNG</li>
-<li>rng</li>
-<li>贺电</li>
-<li>加油</li>
-<li>发来</li>
-<li>666</li>
-<li>6666</li>
-<li>66666</li>
-<li>恭喜</li>
-<li>66666666666666</li>
-<li>666666</li>
-<li>66666666666</li>
-<li>6666666</li>
-<li>skt</li>
-<li>李哥</li>
-<li>66666666666666666666</li>
-<li>SKT</li>
-<li>66666666</li>
-<li>666666666</li>
-<li>马甲</li>
-</ul>
-<p>在没有加上停用词的前提下，可以看到效果并不理想</p>
-<p>TextRank是在Google的PageRank算法启发下，针对文本里的句子设计的权重算法，目标是自动摘要。它利用投票的原理，让每一个单词给它的邻居（术语称窗口）投赞成票，票的权重取决于自己的票数。</p>
-<p><img src="https://i.imgur.com/AI6dJ5P.jpg" alt=""></p>
-<p>基于 TextRank 算法的关键词抽取：</p>
-<ul>
-<li>发来</li>
-<li>贺电</li>
-<li>加油</li>
-<li>学院</li>
-<li>机器人</li>
-<li>大学</li>
-<li>职业</li>
-<li>船长</li>
-<li>技术</li>
-<li>小炮</li>
-<li>没有</li>
-<li>解说</li>
-<li>中国</li>
-<li>经济</li>
-<li>开始</li>
-<li>无敌</li>
-<li>香锅</li>
-<li>垃圾</li>
-<li>老鼠</li>
-<li>科技</li>
-</ul>
-<h1 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h1><p>Word2vec是一个将单词表征成向量的形式，它可以把文本内容的处理简化为向量空间中的向量运算，计算出向量空间上的相似度，来表示文本语义上的相似度。</p>
-<h2 id="计算相似度："><a href="#计算相似度：" class="headerlink" title="计算相似度："></a>计算相似度：</h2><p>首先是RNG：</p>
-<ul>
-<li>rng 0.9893965721130371</li>
-<li>加油 0.9829007983207703</li>
-<li>必胜 0.9790929555892944</li>
-<li>Rng 0.9743078947067261</li>
-<li>恭喜 0.9733642339706421</li>
-<li>中国队 0.9397183656692505</li>
-<li>关 0.9283092021942139</li>
-<li>&lt; 0.9278833866119385</li>
-<li>燕尾港 0.9222617149353027</li>
-<li>B 0.9143030643463135</li>
-</ul>
-<p><strong>RNG加油</strong></p>
-<p>看看SKT：</p>
-<ul>
-<li>skt 0.9911665320396423</li>
-<li>皇族 0.972029983997345</li>
-<li>＾ 0.970970094203949</li>
-<li>稳住 0.9653508067131042</li>
-<li>干死 0.9643667340278625</li>
-<li>牛比 0.9629441499710083</li>
-<li>一起 0.9625348448753357</li>
-<li>@ 0.9619969725608826</li>
-<li>鸟巢 0.9608791470527649</li>
-<li>冠军 0.9608250856399536</li>
-</ul>
-<p><strong>稳住，干死SKT？</strong></p>
-<p>贺电：</p>
-<ul>
-<li>学院 0.9811943769454956</li>
-<li>大学 0.980491042137146</li>
-<li>技术 0.9766334295272827</li>
-<li>职业 0.9691535234451294</li>
-<li>电子科技 0.9668481349945068</li>
-<li>发来 0.9619022607803345</li>
-<li>科技 0.9594647884368896</li>
-<li>山东 0.9568137526512146</li>
-<li>重庆 0.9440888166427612</li>
-<li>哈尔滨 0.939836859703064</li>
-</ul>
-<p><strong>山东XX学院发来贺电</strong></p>
-<p>加油：</p>
-<ul>
-<li>必胜 0.9876022934913635</li>
-<li>RNG 0.9829007983207703</li>
-<li>rng 0.960281252861023</li>
-<li>Rng 0.9591789841651917</li>
-<li>恭喜 0.9551880359649658</li>
-<li>中国队 0.9436988830566406</li>
-<li>关 0.94183349609375</li>
-<li>！ 0.921385645866394</li>
-<li>~ 0.9148629903793335</li>
-<li>@ 0.9062787294387817</li>
-</ul>
-<p><strong>RNG加油，RNG必胜</strong></p>
-<p>小狗：</p>
-<ul>
-<li>吹 0.9970275163650513</li>
-<li>无敌 0.996719241142273</li>
-<li>神超 0.996111273765564</li>
-<li>后期 0.9959050416946411</li>
-<li>厉害 0.9957337975502014</li>
-<li>凶 0.9957261681556702</li>
-<li>强 0.9955072402954102</li>
-<li>一个 0.9954395890235901</li>
-<li>干 0.99541175365448</li>
-<li>起来 0.9952359199523926</li>
-</ul>
-<p><strong>狗吹？</strong></p>
-<p>李哥：</p>
-<ul>
-<li>还是 0.9825356602668762</li>
-<li>电话 0.9700809717178345</li>
-<li>承 0.9697628617286682</li>
-<li>心脏 0.9686012864112854</li>
-<li>陈文泽在 0.9681863188743591</li>
-<li>麻痹 0.9680625200271606</li>
-<li>响 0.9674116373062134</li>
-<li>以为 0.9664229154586792</li>
-<li>狗哥 0.9592204689979553</li>
-<li>不 0.9589840769767761</li>
-</ul>
-<p><strong>你李哥还是你李哥</strong></p>
-<p>MLXG：</p>
-<ul>
-<li>宣告 0.9958090782165527</li>
-<li>mlxg 0.9953181147575378</li>
-<li>死亡 0.995277464389801</li>
-<li>b 0.9949076771736145</li>
-<li>6666 0.9947425723075867</li>
-<li>丑 0.9943945407867432</li>
-<li>10 0.9943088293075562</li>
-<li>辣鸡 0.9940722584724426</li>
-<li>干死 0.9940391778945923</li>
-<li>锤 0.9939616918563843</li>
-</ul>
-<p><strong>香锅和死亡宣告有啥关系</strong></p>
-<p>小虎：</p>
-<ul>
-<li>笑笑 0.9971799850463867</li>
-<li>看到 0.9967395663261414</li>
-<li>解说 0.9961692690849304</li>
-<li>不是 0.9959656000137329</li>
-<li>中单 0.9951503872871399</li>
-<li>假 0.9950063824653625</li>
-<li>为什么 0.9944812655448914</li>
-<li>又 0.9942663908004761</li>
-<li>么 0.9938984513282776</li>
-<li>里奥 0.9937981367111206</li>
-</ul>
-<p><strong>小虎与加里奥（：</strong></p>
-<p>letme：</p>
-<ul>
-<li>难受 0.9964221715927124</li>
-<li>笑话 0.9959778785705566</li>
-<li>哦 0.9958946108818054</li>
-<li>世界 0.9958213567733765</li>
-<li>毒奶 0.9957934021949768</li>
-<li>KPL 0.9957884550094604</li>
-<li>上单 0.9956253170967102</li>
-<li>瓜皮 0.9955945014953613</li>
-<li>快 0.9953423738479614</li>
-<li>打团 0.9953156113624573</li>
-</ul>
-<p><strong>真难受啊</strong></p>
-<h1 id="To-Do"><a href="#To-Do" class="headerlink" title="To Do"></a>To Do</h1><ol>
-<li>可以使用朴素贝叶斯做分类模型</li>
-<li>使用机器学习性能评估指标预测精确率和准确率</li>
-<li>欢迎补充</li>
-</ol>
-<h1 id="可参考资料"><a href="#可参考资料" class="headerlink" title="可参考资料"></a>可参考资料</h1><ol>
-<li><a href="http://dsqiu.iteye.com/blog/1704960" target="_blank" rel="external">中文分词基本算法介绍</a></li>
-<li><a href="https://my.oschina.net/letiantian/blog/352693" target="_blank" rel="external">ICTCLAS 汉语词性标注集</a></li>
-<li><a href="http://www.blogjava.net/zhenandaci/category/31868.html" target="_blank" rel="external">文本分类技术</a></li>
-<li><a href="http://blog.csdn.net/zhzhl202/article/details/8197109" target="_blank" rel="external">文本分类与SVM</a></li>
-<li><a href="http://blog.csdn.net/tbkken/article/details/8062358" target="_blank" rel="external">基于贝叶斯算法的文本分类算法</a></li>
-<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDg0MjgxNQ==&amp;mid=2652389734&amp;idx=1&amp;sn=585d22c0b2aea755a072f5dfefca868b&amp;scene=23&amp;srcid=0530UUkS6jjRAsVoT2icemoY#rd" target="_blank" rel="external">基于libsvm的中文文本分类原型</a></li>
-<li><a href="https://cosx.org/2013/03/lda-math-text-modeling#comments" target="_blank" rel="external">LDA-math-文本建模</a></li>
-<li><a href="http://blog.sina.com.cn/s/blog_8af1069601019flb.html" target="_blank" rel="external">情感分析资源</a></li>
-<li><a href="https://wenku.baidu.com/view/37e374355727a5e9856a61bc.html" target="_blank" rel="external">面向情感分析的特征抽取技术研究</a></li>
-<li><a href="http://52opencourse.com/235/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E7%AC%AC%E4%B8%83%E8%AF%BE-%E6%83%85%E6%84%9F%E5%88%86%E6%9E%90%EF%BC%88sentiment-analysis%EF%BC%89" target="_blank" rel="external">斯坦福大学自然语言处理第七课-情感分析</a></li>
-<li><a href="http://blog.jobbole.com/77709/0" target="_blank" rel="external">深度学习、自然语言处理和表征方法</a></li>
-<li><a href="http://licstar.net/archives/328" target="_blank" rel="external">Deep Learning in NLP （一）词向量和语言模型</a></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十一篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/xf7kEI8.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="NLP" scheme="https://zhangslob.github.io/categories/NLP/"/>
-    
-    
-      <category term="NLP" scheme="https://zhangslob.github.io/tags/NLP/"/>
-    
-      <category term="自然语言处理" scheme="https://zhangslob.github.io/tags/%E8%87%AA%E7%84%B6%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86/"/>
     
   </entry>
   
