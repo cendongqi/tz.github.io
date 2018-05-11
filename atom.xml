@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-05-08T14:33:44.442Z</updated>
+  <updated>2018-05-11T14:33:35.499Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux下安装python3.6</title>
+    <link href="https://zhangslob.github.io/2018/05/11/linux%E4%B8%8B%E5%AE%89%E8%A3%85python3-6/"/>
+    <id>https://zhangslob.github.io/2018/05/11/linux下安装python3-6/</id>
+    <published>2018-05-11T14:26:54.000Z</published>
+    <updated>2018-05-11T14:33:35.499Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十四篇原创文章
+</code></pre><p>linux操作  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/lJ8ygSI.jpg" alt=""></p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">sudo sed -i <span class="string">'s\archive.ubuntu.com\mirrors.aliyun.com\g'</span> /etc/apt/sources.list</div><div class="line">sudo apt-get update</div><div class="line"><span class="built_in">cd</span> /home/</div><div class="line">sudo apt-get install gcc  make zlib1g-dev -y</div><div class="line">sudo apt-get install  libbz2-dev libsqlite3-dev  libxml2-dev  libffi-dev libssl-dev -y</div><div class="line">sudo apt install wget -y</div><div class="line">wget http://mirrors.sohu.com/python/3.6.2/Python-3.6.2.tgz <span class="comment"># 可以换成你想要的版本</span></div><div class="line">tar -xvf Python-3.6.2.tgz</div><div class="line"><span class="built_in">cd</span> Python-3.6.2</div><div class="line">./configure --prefix=/home/usr/python36/</div><div class="line">sudo make</div><div class="line">sudo make install</div><div class="line"><span class="built_in">cd</span> ../usr/python36/bin/</div><div class="line">sudo mkdir -p ~/.pip/</div><div class="line">sudo cat &lt;&lt; EOF &gt; ~/.pip/pip.conf</div><div class="line">[global]</div><div class="line">trusted-host=mirrors.aliyun.com</div><div class="line">index-url=http://mirrors.aliyun.com/pypi/simple/</div><div class="line">EOF</div><div class="line"></div><div class="line">sudo apt-get install libmysqlclient-dev -y</div><div class="line">ln <span class="_">-s</span> /home/usr/python36/bin/pip3 /usr/bin/pip36</div><div class="line">ln <span class="_">-s</span> /home/usr/python36/bin/python3 /usr/bin/python36</div></pre></td></tr></table></figure>
+<p>以后就可以使用 <code>pip36</code>  <code>python36</code>来进行操作。</p>
+<blockquote>
+<p>如果在命令行中输入<code>scrapy</code>提示没这个命令，可以试试<code>python36 -m scrapy</code></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十四篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;linux操作  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/lJ8ygSI.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="linux" scheme="https://zhangslob.github.io/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>护眼神器了解下</title>
@@ -1173,7 +1206,7 @@ e-packages\\lxml&#39;</code></p>
 <p>为了解决这个问题，我们需要做一个重要的观察。从左到右处理符号时，最近开始符号必须与下一个关闭符号相匹配。此外，处理的第一个开始符号必须等待直到其匹配最后一个符号。结束符号以相反的顺序匹配开始符号。他们从内到外匹配。这是一个可以用栈解决问题的线索。</p>
 <p><img src="https://i.imgur.com/SLZpBJ8.png" alt=""></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pythonds.basic.stack <span class="keyword">import</span> Stack</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parChecker</span><span class="params">(symbolString)</span>:</span></div><div class="line">    s = Stack()</div><div class="line">    balanced = <span class="keyword">True</span></div><div class="line">    index = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> index &lt; len(symbolString) <span class="keyword">and</span> balanced:</div><div class="line">        symbol = symbolString[index]</div><div class="line">        <span class="keyword">if</span> symbol == <span class="string">"("</span>:</div><div class="line">            s.push(symbol)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> s.isEmpty():</div><div class="line">                balanced = <span class="keyword">False</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                s.pop()</div><div class="line"></div><div class="line">        index = index + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> balanced <span class="keyword">and</span> s.isEmpty():</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">print(parChecker(<span class="string">'((()))'</span>))</div><div class="line">print(parChecker(<span class="string">'(()'</span>))</div></pre></td></tr></table></figure>
-<p><em>output</em><br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="literal">True</span></div><div class="line"><span class="literal">False</span></div></pre></td></tr></table></figure></p>
+<p><em>output</em><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">False</span></div></pre></td></tr></table></figure></p>
 <p>一旦你认为栈是保存括号的恰当的数据结构，算法是很直接的。</p>
 <p>从空栈开始，从左到右处理括号字符串。如果一个符号是一个开始符号，将其作为一个信号，对应的结束符号稍后会出现。另一方面，如果符号是结束符号，弹出栈，只要弹出栈的开始符号可以匹配每个结束符号，则括号保持匹配状态。如果任何时候栈上没有出现符合开始符号的结束符号，则字符串不匹配。最后，当所有符号都被处理后，栈应该是空的。</p>
 <p><img src="https://i.imgur.com/M2ZtP7O.png" alt=""></p>
@@ -1575,123 +1608,6 @@ e-packages\\lxml&#39;</code></p>
       <category term="Python" scheme="https://zhangslob.github.io/tags/Python/"/>
     
       <category term="排序" scheme="https://zhangslob.github.io/tags/%E6%8E%92%E5%BA%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用logging管理爬虫</title>
-    <link href="https://zhangslob.github.io/2018/01/15/%E4%BD%BF%E7%94%A8logging%E7%AE%A1%E7%90%86%E7%88%AC%E8%99%AB/"/>
-    <id>https://zhangslob.github.io/2018/01/15/使用logging管理爬虫/</id>
-    <published>2018-01-15T13:39:35.000Z</published>
-    <updated>2018-01-15T13:43:53.655Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十四篇原创文章
-</code></pre><p>使用日志记录程序运行状态</p>
-<p><img src="https://farm5.staticflickr.com/4246/35254379756_c9fe23f843_k_d.jpg" alt=""></p>
-<a id="more"></a>
-<blockquote>
-<p><a href="http://pythonguidecn.readthedocs.io/zh/latest/writing/logging.html" target="_blank" rel="external">文档</a></p>
-</blockquote>
-<p><a href="https://docs.python.org/2/library/logging.html#module-logging" target="_blank" rel="external">日志</a> 模块自2.3版本开始便是Python标准库的一部分。它被简洁的描述在 <a href="https://www.python.org/dev/peps/pep-0282/" target="_blank" rel="external">PEP 282</a>。 众所周知，除了 <a href="https://docs.python.org/3/howto/logging.html#logging-basic-tutorial" target="_blank" rel="external">基础日志指南</a> 部分，该文档并不容易阅读。</p>
-<p>日志的两个目的：</p>
-<ul>
-<li><strong>诊断日志</strong> 记录与应用程序操作相关的日志。例如，用户遇到的报错信息， 可通过搜索诊断日志获得上下文信息。</li>
-<li><strong>审计日志</strong> 为商业分析而记录的日志。从审计日志中，可提取用户的交易信息， 并结合其他用户资料构成用户报告或者用来优化商业目标。</li>
-</ul>
-<h1 id="…-或者打印"><a href="#…-或者打印" class="headerlink" title="… 或者打印?"></a>… 或者打印?</h1><p>当需要在命令行应用中显示帮助文档时， <code>打印</code> 是一个相对于日志更好的选择。 而在其他时候，日志总能优于 <code>打印</code> ，理由如下：</p>
-<ul>
-<li>日志事件产生的 <a href="https://docs.python.org/3/library/logging.html#logrecord-attributes" target="_blank" rel="external">日志记录</a> ，包含清晰可用的诊断信息，如文件名称、路径、函数名和行号等。</li>
-<li>包含日志模块的应用，默认可通过根记录器对应用的日志流进行访问，除非您将日志过滤了。</li>
-<li>可通过 <code>logging.Logger.setLevel()</code> 方法有选择地记录日志， 或可通过设置 <code>logging.Logger.disabled</code> 属性为 <code>True</code> 来禁用。</li>
-</ul>
-<h1 id="库中的日志"><a href="#库中的日志" class="headerlink" title="库中的日志"></a>库中的日志</h1><p><a href="https://docs.python.org/3/howto/logging.html" target="_blank" rel="external">日志指南</a> 中含 <a href="https://docs.python.org/3/howto/logging.html#configuring-logging-for-a-library" target="_blank" rel="external">库日志配置</a> 的说明。由于是 <em>用户</em> ，而非库来指明如何响应日志事件， 因此这里有一个值得反复说明的忠告：</p>
-<blockquote>
-<p>注解<br>强烈建议不要向您的库日志中加入除NullHandler外的其它处理程序。</p>
-</blockquote>
-<p>在库中，声明日志的最佳方式是通过 <code>__name__</code> 全局变量： logging 模块通过点(dot)运算符创建层级排列的日志，因此，用 <code>__name__</code> 可以避免名字冲突。</p>
-<p>以下是一个来自 <a href="https://github.com/requests/requests" target="_blank" rel="external">requests 资源</a> 的最佳实践的例子 —— 把它放置在您的 <code>__init__.py</code> 文件中<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line">logging.getLogger(__name__).addHandler(logging.NullHandler())</div></pre></td></tr></table></figure></p>
-<h1 id="应用程序中的日志"><a href="#应用程序中的日志" class="headerlink" title="应用程序中的日志"></a>应用程序中的日志</h1><p>应用程序开发的权威指南， <a href="https://12factor.net/" target="_blank" rel="external">应用的12要素</a> ，也在其中一节描述了 <a href="https://12factor.net/logs" target="_blank" rel="external">日志的作用</a> 。它特别强调将日志视为事件流， 并将其发送至由应用环境所处理的标准输出中。</p>
-<p>配置日志至少有以下三种方式：</p>
-<ul>
-<li>使用INI格式文件：<ul>
-<li>优点: 使用 logging.config.listen() 函数监听socket，可在运行过程中更新配置</li>
-<li>缺点: 通过源码控制日志配置较少（ 例如 子类化定制的过滤器或记录器）。</li>
-</ul>
-</li>
-<li>使用字典或JSON格式文件：<ul>
-<li>优点: 除了可在运行时动态更新，在Python 2.6之后，还可通过 json 模块从其它文件中导入配置。</li>
-<li>缺点: 很难通过源码控制日志配置。</li>
-</ul>
-</li>
-<li>使用源码：<ul>
-<li>优点: 对配置绝对的控制。</li>
-<li>缺点: 对配置的更改需要对源码进行修改。</li>
-</ul>
-</li>
-</ul>
-<h1 id="通过INI文件进行配置的例子"><a href="#通过INI文件进行配置的例子" class="headerlink" title="通过INI文件进行配置的例子"></a>通过INI文件进行配置的例子</h1><p>我们假设文件名为 <code>logging_config.ini</code> 。关于文件格式的更多细节，请参见 <a href="https://docs.python.org/3/howto/logging.html" target="_blank" rel="external">日志指南</a> 中的 <a href="https://docs.python.org/3/howto/logging.html#configuring-logging" target="_blank" rel="external">日志配置</a> 部分。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">[loggers]</div><div class="line">keys=root</div><div class="line"></div><div class="line">[handlers]</div><div class="line">keys=stream_handler</div><div class="line"></div><div class="line">[formatters]</div><div class="line">keys=formatter</div><div class="line"></div><div class="line">[logger_root]</div><div class="line">level=DEBUG</div><div class="line">handlers=stream_handler</div><div class="line"></div><div class="line">[handler_stream_handler]</div><div class="line">class=StreamHandler</div><div class="line">level=DEBUG</div><div class="line">formatter=formatter</div><div class="line">args=(sys.stderr,)</div><div class="line"></div><div class="line">[formatter_formatter]</div><div class="line">format=%(asctime)s %(name)-12s %(levelname)-8s %(message)s</div></pre></td></tr></table></figure>
-<p>然后在源码中调用 <code>logging.config.fileConfig()</code> 方法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line"><span class="keyword">from</span> logging.config <span class="keyword">import</span> fileConfig</div><div class="line"></div><div class="line">fileConfig(<span class="string">'logging_config.ini'</span>)</div><div class="line">logger = logging.getLogger()</div><div class="line">logger.debug(<span class="string">'often makes a very good meal of %s'</span>, <span class="string">'visiting tourists'</span>)</div></pre></td></tr></table></figure></p>
-<h1 id="通过字典进行配置的例子"><a href="#通过字典进行配置的例子" class="headerlink" title="通过字典进行配置的例子"></a>通过字典进行配置的例子</h1><p>Python 2.7中，您可以使用字典实现详细配置。<a href="https://www.python.org/dev/peps/pep-0391/" target="_blank" rel="external">PEP 391</a> 包含了一系列字典配置的强制和 非强制的元素。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line"><span class="keyword">from</span> logging.config <span class="keyword">import</span> dictConfig</div><div class="line"></div><div class="line">logging_config = dict(</div><div class="line">    version = <span class="number">1</span>,</div><div class="line">    formatters = &#123;</div><div class="line">        <span class="string">'f'</span>: &#123;<span class="string">'format'</span>:</div><div class="line">              <span class="string">'%(asctime)s %(name)-12s %(levelname)-8s %(message)s'</span>&#125;</div><div class="line">        &#125;,</div><div class="line">    handlers = &#123;</div><div class="line">        <span class="string">'h'</span>: &#123;<span class="string">'class'</span>: <span class="string">'logging.StreamHandler'</span>,</div><div class="line">              <span class="string">'formatter'</span>: <span class="string">'f'</span>,</div><div class="line">              <span class="string">'level'</span>: logging.DEBUG&#125;</div><div class="line">        &#125;,</div><div class="line">    root = &#123;</div><div class="line">        <span class="string">'handlers'</span>: [<span class="string">'h'</span>],</div><div class="line">        <span class="string">'level'</span>: logging.DEBUG,</div><div class="line">        &#125;,</div><div class="line">)</div><div class="line"></div><div class="line">dictConfig(logging_config)</div><div class="line"></div><div class="line">logger = logging.getLogger()</div><div class="line">logger.debug(<span class="string">'often makes a very good meal of %s'</span>, <span class="string">'visiting tourists'</span>)</div></pre></td></tr></table></figure></p>
-<p>通过源码直接配置的例子</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line"></div><div class="line">logger = logging.getLogger()</div><div class="line">handler = logging.StreamHandler()</div><div class="line">formatter = logging.Formatter(</div><div class="line">        <span class="string">'%(asctime)s %(name)-12s %(levelname)-8s %(message)s'</span>)</div><div class="line">handler.setFormatter(formatter)</div><div class="line">logger.addHandler(handler)</div><div class="line">logger.setLevel(logging.DEBUG)</div><div class="line"></div><div class="line">logger.debug(<span class="string">'often makes a very good meal of %s'</span>, <span class="string">'visiting tourists'</span>)</div></pre></td></tr></table></figure>
-<p>官方文档说完了，来看看具体的应用。</p>
-<p>默认的日志级别设置为 <code>WARNING</code> （日志级别等级 <code>CRITICAL</code> &gt; <code>ERROR</code> &gt; <code>WARNING</code> &gt; <code>INFO</code> &gt; <code>DEBUG</code> &gt; <code>NOTSET</code>）, 小于 <code>WARNING</code> 级别的日志都不输出, 大于等于 <code>WARNING</code> 级别的日志都会输出。</p>
-<h1 id="简单的将日志打印到屏幕"><a href="#简单的将日志打印到屏幕" class="headerlink" title="简单的将日志打印到屏幕"></a>简单的将日志打印到屏幕</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> logging</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    logging.basicConfig(level=logging.DEBUG,</div><div class="line">    format=<span class="string">'%(asctime)s %(filename)s [line:%(lineno)d] %(levelname)s %(message)s'</span>,</div><div class="line">            datefmt=<span class="string">'%a, %d %b %Y %H:%M:%S'</span>,</div><div class="line">            filename=<span class="string">'test.log'</span>,</div><div class="line">            filemode=<span class="string">'w'</span>)</div><div class="line">    console = logging.StreamHandler()</div><div class="line">    console.setLevel(logging.WARNING)</div><div class="line">    formatter=logging.Formatter(<span class="string">'%(name)-12s: %(levelname)-8s %(message)s'</span>)</div><div class="line">    console.setFormatter(formatter)</div><div class="line">    logging.getLogger(<span class="string">''</span>).addHandler(console)</div><div class="line">    logging.debug(<span class="string">'This is DEBUG'</span>)</div><div class="line">    logging.info(<span class="string">'This is INFO'</span>)</div><div class="line">    logging.warning(<span class="string">'This is WARNING'</span>)</div></pre></td></tr></table></figure>
-<p>输出:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root        : WARNING  This is WARNING</div></pre></td></tr></table></figure></p>
-<p><code>test.log</code>文件中包含：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Mon, 15 Jan 2018 20:19:45 sfda.py [line:90] DEBUG This is DEBUG</div><div class="line">Mon, 15 Jan 2018 20:19:45 sfda.py [line:91] INFO This is INFO</div><div class="line">Mon, 15 Jan 2018 20:19:45 sfda.py [line:92] WARNING This is WARNING</div></pre></td></tr></table></figure></p>
-<p>注意：由于日志写入模式设置为 <code>w</code> ，因此重复运行时会将之前的日志清空。</p>
-<p>logging.basicConfig 函数各参数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">filename: 指定日志文件名</div><div class="line">filemode: 和file函数意义相同，指定日志文件的打开模式，’w’或’a’</div><div class="line">format: 指定输出的格式和内容，format可以输出很多有用信息，如上例所示:</div><div class="line">%(levelno)s: 打印日志级别的数值</div><div class="line">%(levelname)s: 打印日志级别名称</div><div class="line">%(pathname)s: 打印当前执行程序的路径，其实就是sys.argv[0]</div><div class="line">%(filename)s: 打印当前执行程序名</div><div class="line">%(funcName)s: 打印日志的当前函数</div><div class="line">%(lineno)d: 打印日志的当前行号</div><div class="line">%(asctime)s: 打印日志的时间</div><div class="line">%(thread)d: 打印线程ID</div><div class="line">%(threadName)s: 打印线程名称</div><div class="line">%(process)d: 打印进程ID</div><div class="line">%(message)s: 打印日志信息</div><div class="line">datefmt: 指定时间格式，同time.strftime()</div><div class="line">level: 设置日志级别，默认为logging.WARNING</div><div class="line">stream: 指定将日志的输出流，可以指定输出到sys.stderr,</div><div class="line">sys.stdout或者文件，默认输出到sys.stderr，当stream和filename同时指定时，stream被忽略</div></pre></td></tr></table></figure>
-<h1 id="logging-三大模块：-Logger-Handler-，-Format"><a href="#logging-三大模块：-Logger-Handler-，-Format" class="headerlink" title="logging 三大模块： Logger ,  Handler ， Format"></a>logging 三大模块： <code>Logger</code> ,  <code>Handler</code> ， <code>Format</code></h1><h2 id="logger"><a href="#logger" class="headerlink" title="logger"></a>logger</h2><p> <code>logger</code> 通过 <code>getLogger</code> 函数得到， 可以在不同的模块中使用不同的 <code>logger</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line">logger = logging.getLogger(__name__)</div><div class="line">logger.debug(<span class="string">'some infomation'</span>)</div></pre></td></tr></table></figure></p>
-<h2 id="Handler"><a href="#Handler" class="headerlink" title="Handler"></a>Handler</h2><p> <code>handler</code> 有多种， 可以记录到 <code>console</code>， 或者到文件， 文件也可以自动 <code>rotate</code>， 常用的几个 <code>handler</code></p>
-<ul>
-<li>StreamHandler 打印到终端</li>
-<li>FileHandler 保存到文件</li>
-<li>RotatingFileHandler 保存到文件， 达到一定大小之后备份文件。</li>
-<li>TimedRotatingFileHandler 定时备份</li>
-</ul>
-<h2 id="Format"><a href="#Format" class="headerlink" title="Format"></a>Format</h2><p> <code>Formatter</code> 对象设置日志信息最后的规则、结构和内容，默认的时间格式为 <code>%Y-%m-%d %H:%M:%S</code></p>
-<h1 id="Scrapy-与-Logging"><a href="#Scrapy-与-Logging" class="headerlink" title="Scrapy 与 Logging"></a>Scrapy 与 Logging</h1><blockquote>
-<p><a href="https://doc.scrapy.org/en/latest/topics/logging.html" target="_blank" rel="external">文档</a></p>
-</blockquote>
-<p>Scrapy uses Python’s builtin logging system for event logging. We’ll provide some simple examples to get you started, but for more advanced use-cases it’s strongly suggested to read thoroughly its documentation.</p>
-<blockquote>
-<p>Scrapy使用Python的内置日志记录系统进行事件日志记录。 我们将提供一些简单的示例来帮助您开始，但对于更高级的用例，强烈建议您仔细阅读其文档。</p>
-</blockquote>
-<h2 id="Log-levels"><a href="#Log-levels" class="headerlink" title="Log levels"></a>Log levels</h2><ol>
-<li>logging.CRITICAL - for critical errors (highest severity)</li>
-<li>logging.ERROR - for regular errors</li>
-<li>logging.WARNING - for warning messages</li>
-<li>logging.INFO - for informational messages</li>
-<li>logging.DEBUG - for debugging messages (lowest severity)</li>
-</ol>
-<h2 id="How-to-log-messages"><a href="#How-to-log-messages" class="headerlink" title="How to log messages"></a>How to log messages</h2><p> quick example</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line">logger = logging.getLogger()</div><div class="line">logger.warning(<span class="string">"This is a warning"</span>)</div></pre></td></tr></table></figure>
-<h2 id="Logging-from-Spiders"><a href="#Logging-from-Spiders" class="headerlink" title="Logging from Spiders"></a>Logging from Spiders</h2><p>该记录器是使用Spider的名称创建的，但是您可以使用任何您想要的自定义Python记录器。 例如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line">logger = logging.getLogger(<span class="string">'mycustomlogger'</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line"></div><div class="line">    name = <span class="string">'myspider'</span></div><div class="line">    start_urls = [<span class="string">'https://scrapinghub.com'</span>]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        logger.info(<span class="string">'Parse function called on %s'</span>, response.url)</div></pre></td></tr></table></figure>
-<h2 id="在middlewares中应用"><a href="#在middlewares中应用" class="headerlink" title="在middlewares中应用"></a>在middlewares中应用</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line"></div><div class="line">logger = logging.getLogger(__name__)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProxyMiddleware</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, spider)</span>:</span></div><div class="line">        request.meta[<span class="string">'proxy'</span>] = random.choice(proxy_list)</div><div class="line">        spider.logger.info(<span class="string">'get ip: &#123;&#125;'</span>.format(request.meta[<span class="string">'proxy'</span>]))</div></pre></td></tr></table></figure>
-<h2 id="使用Scrapy记录爬取日志"><a href="#使用Scrapy记录爬取日志" class="headerlink" title="使用Scrapy记录爬取日志"></a>使用Scrapy记录爬取日志</h2><p>在 <code>settings.py</code> 中修改:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LOG_STDOUT = <span class="keyword">True</span></div><div class="line">LOG_FILE = <span class="string">'scrapy_log.txt'</span></div></pre></td></tr></table></figure></p>
-<p>然后开始运行爬虫，日志不会打印，会保存到 <code>scrapy_log.txt</code> 文件中。</p>
-<h2 id="使用errbacks在请求处理中捕获异常"><a href="#使用errbacks在请求处理中捕获异常" class="headerlink" title="使用errbacks在请求处理中捕获异常"></a>使用errbacks在请求处理中捕获异常</h2><p>请求的errback是在处理异常时被调用的函数。</p>
-<p>它接收Twisted Failure实例作为第一个参数，可用于跟踪连接建立超时，DNS错误等。</p>
-<p>这里有一个爬虫日志记录所有的错误和捕捉一些特定的错误，例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.spidermiddlewares.httperror <span class="keyword">import</span> HttpError</div><div class="line"><span class="keyword">from</span> twisted.internet.error <span class="keyword">import</span> DNSLookupError</div><div class="line"><span class="keyword">from</span> twisted.internet.error <span class="keyword">import</span> TimeoutError, TCPTimedOutError</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ErrbackSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">"errback_example"</span></div><div class="line">    start_urls = [</div><div class="line">        <span class="string">"http://www.httpbin.org/"</span>,              <span class="comment"># HTTP 200 expected</span></div><div class="line">        <span class="string">"http://www.httpbin.org/status/404"</span>,    <span class="comment"># Not found error</span></div><div class="line">        <span class="string">"http://www.httpbin.org/status/500"</span>,    <span class="comment"># server issue</span></div><div class="line">        <span class="string">"http://www.httpbin.org:12345/"</span>,        <span class="comment"># non-responding host, timeout expected</span></div><div class="line">        <span class="string">"http://www.httphttpbinbin.org/"</span>,       <span class="comment"># DNS error expected</span></div><div class="line">    ]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_requests</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">for</span> u <span class="keyword">in</span> self.start_urls:</div><div class="line">            <span class="keyword">yield</span> scrapy.Request(u, callback=self.parse_httpbin,</div><div class="line">                                    errback=self.errback_httpbin,</div><div class="line">                                    dont_filter=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_httpbin</span><span class="params">(self, response)</span>:</span></div><div class="line">        self.logger.info(<span class="string">'Got successful response from &#123;&#125;'</span>.format(response.url))</div><div class="line">        <span class="comment"># do something useful here...</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">errback_httpbin</span><span class="params">(self, failure)</span>:</span></div><div class="line">        <span class="comment"># log all failures</span></div><div class="line">        self.logger.error(repr(failure))</div><div class="line"></div><div class="line">        <span class="comment"># in case you want to do something special for some errors,</span></div><div class="line">        <span class="comment"># you may need the failure's type:</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> failure.check(HttpError):</div><div class="line">            <span class="comment"># these exceptions come from HttpError spider middleware</span></div><div class="line">            <span class="comment"># you can get the non-200 response</span></div><div class="line">            response = failure.value.response</div><div class="line">            self.logger.error(<span class="string">'HttpError on %s'</span>, response.url)</div><div class="line"></div><div class="line">        <span class="keyword">elif</span> failure.check(DNSLookupError):</div><div class="line">            <span class="comment"># this is the original request</span></div><div class="line">            request = failure.request</div><div class="line">            self.logger.error(<span class="string">'DNSLookupError on %s'</span>, request.url)</div><div class="line"></div><div class="line">        <span class="keyword">elif</span> failure.check(TimeoutError, TCPTimedOutError):</div><div class="line">            request = failure.request</div><div class="line">            self.logger.error(<span class="string">'TimeoutError on %s'</span>, request.url)</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十四篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;使用日志记录程序运行状态&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://farm5.staticflickr.com/4246/35254379756_c9fe23f843_k_d.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Python" scheme="https://zhangslob.github.io/categories/Python/"/>
-    
-    
-      <category term="2017" scheme="https://zhangslob.github.io/tags/2017/"/>
-    
-      <category term="logging" scheme="https://zhangslob.github.io/tags/logging/"/>
     
   </entry>
   

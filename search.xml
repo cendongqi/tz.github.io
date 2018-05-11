@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[linux下安装python3.6]]></title>
+    <url>%2F2018%2F05%2F11%2Flinux%E4%B8%8B%E5%AE%89%E8%A3%85python3-6%2F</url>
+    <content type="text"><![CDATA[这是崔斯特的第四十四篇原创文章 linux操作 (๑• . •๑) 1234567891011121314151617181920212223sudo sed -i 's\archive.ubuntu.com\mirrors.aliyun.com\g' /etc/apt/sources.listsudo apt-get updatecd /home/sudo apt-get install gcc make zlib1g-dev -ysudo apt-get install libbz2-dev libsqlite3-dev libxml2-dev libffi-dev libssl-dev -ysudo apt install wget -ywget http://mirrors.sohu.com/python/3.6.2/Python-3.6.2.tgz # 可以换成你想要的版本tar -xvf Python-3.6.2.tgzcd Python-3.6.2./configure --prefix=/home/usr/python36/sudo makesudo make installcd ../usr/python36/bin/sudo mkdir -p ~/.pip/sudo cat &lt;&lt; EOF &gt; ~/.pip/pip.conf[global]trusted-host=mirrors.aliyun.comindex-url=http://mirrors.aliyun.com/pypi/simple/EOFsudo apt-get install libmysqlclient-dev -yln -s /home/usr/python36/bin/pip3 /usr/bin/pip36ln -s /home/usr/python36/bin/python3 /usr/bin/python36 以后就可以使用 pip36 python36来进行操作。 如果在命令行中输入scrapy提示没这个命令，可以试试python36 -m scrapy]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[护眼神器了解下]]></title>
     <url>%2F2018%2F05%2F08%2F%E6%8A%A4%E7%9C%BC%E7%A5%9E%E5%99%A8%E4%BA%86%E8%A7%A3%E4%B8%8B%2F</url>
     <content type="text"><![CDATA[这是崔斯特的第四十三篇原创文章 保护眼睛 (๑• . •๑) 整天面对屏幕，护眼是必须的，下面推荐几款小歪使用过的软件。 flux官网：https://justgetflux.com/ 使用起来非常简单，是我之前非常喜欢的一款产品，会随着一天之内光线强弱改变屏幕的颜色。但是在linux上似乎不起作用，安装之后，屏幕颜色没有发生任何变化，于是我放弃了，选择另一款软件 == redshift网站：https://github.com/jonls/redshift Ubuntu下sudo apt-get install redshift就可以安装，打开方式是在命令行输入redshift -v -t 4500:2500，然后颜色就会变得非常舒服。 如果在你的电脑上 redshift 有时不工作，检查是否开启了多个 redshift。 Safe Eyes网站：http://slgobinath.github.io/SafeEyes/ 这款应用会自动关闭屏幕，间隔一段时间会有休息，这个是否好好放松下自己的眼睛。 这个好像只能安装在linux上 大家还有什么推荐的呢？欢迎评论指出]]></content>
