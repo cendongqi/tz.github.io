@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[告别win10，拥抱linux]]></title>
+    <url>%2F2018%2F05%2F12%2F%E5%91%8A%E5%88%ABwin10%EF%BC%8C%E6%8B%A5%E6%8A%B1linux%2F</url>
+    <content type="text"><![CDATA[这是崔斯特的第四十五篇原创文章 安装linux操作系统 (๑• . •๑) win10 升级先问你一个问题，你讨厌win10升级系统吗？ 我的回答：是，明明已经把自动更新关闭了，可是还是会有“易升”，win10易升一直卸载不掉。所以就想试试别的系统。 linux是最好的选择。黑苹果暂时不考虑。 喜欢linux的理由 深度桌面 深度终端（配合zsh超赞的） 除了颜值外，程序兼容性会更好，安装各种东西会很方便。作为一名程序员，熟悉linux下基本操作也是必要的。 我自己试过，爬虫会跑的更快。 手动滑稽 选择linux哪个版本目前我使用过deepin和ubuntu18，对于完全的小白来说，我推荐deepin也就是深度操作系统，深度商店收入的应用可以基本满足，ubuntu很多应用安装起来比较麻烦，如果你喜欢折腾，那就上手ubuntu吧。 如果你和我一样 喜欢xxx，那就试试deepin和ubuntu18共存。 我现在的开机界面（渣渣像素） 如何安装linux安装deepin使用U盘安装 先去下载： ISO文件 深度启动盘制作工具 然后安装启动盘制作工具，然后选择刚才下载的ISO文件，下一步选择你的U盘，然后就开始安装了。 下一步，重启电脑，一般情况下电脑默认是从硬盘启动，因此，在使用U盘安装系统之前，您需要先进入电脑的BIOS界面将U盘设置为第一启动项。 台式机一般为 Delete 键、笔记本一般为 F2 或 F10 或 F12 键，即可进入 BIOS 设置界面。 将深度操作系统光盘插入电脑光驱中。 启动电脑，将光盘设置为第一启动项。 进入安装界面，选择需要安装的语言。 如果还不会，这里有官方录制的视频哦 深度安装器+深度探索频道第七期+深度操作系统官方出品 还有一种更加简单的方式就是下载 深度系统安装器 然后就是傻瓜操作了，记得关闭下 安全启动 小歪并不推荐使用第二种方式安装，在笔记本上怎么都没有效果，在台式上一次成功。所以大家有U盘的尽量使用U盘吧 安装ubuntu需要用到上面提到过的深度启动盘制作工具，然后去下载 ISO文件，然后就是和上面安装方法一样的，进行操作即可。 有没有很简单。 我的ubuntu界面，用得少，所以没美化 感受我使用deepin有一个月了，写代码用deepin，家里的台式还是win7，因为deepin虽然有steam，但是吃鸡不支持在linux下运行。 deepin完全可以满足我的办公需求，Pycharm、sublime、typora、chrome、网易云音乐等等都有，用起来很舒服，至少现在是这样感觉。但是有时候deepin也会卡死。 强烈建议上手linux，可以学到很多命令行操作，安装deepin就好，到时候你的电脑会Windows与deepin共存，根据场景选择系统。 有时间写一篇deepin美化与安装应用相关的东西，看到这一定要点赞哦。]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[linux下安装python3.6]]></title>
     <url>%2F2018%2F05%2F11%2Flinux%E4%B8%8B%E5%AE%89%E8%A3%85python3-6%2F</url>
     <content type="text"><![CDATA[这是崔斯特的第四十四篇原创文章 linux操作 (๑• . •๑) 1234567891011121314151617181920212223sudo sed -i 's\archive.ubuntu.com\mirrors.aliyun.com\g' /etc/apt/sources.listsudo apt-get updatecd /home/sudo apt-get install gcc make zlib1g-dev -ysudo apt-get install libbz2-dev libsqlite3-dev libxml2-dev libffi-dev libssl-dev -ysudo apt install wget -ywget http://mirrors.sohu.com/python/3.6.2/Python-3.6.2.tgz # 可以换成你想要的版本tar -xvf Python-3.6.2.tgzcd Python-3.6.2./configure --prefix=/home/usr/python36/sudo makesudo make installcd ../usr/python36/bin/sudo mkdir -p ~/.pip/sudo cat &lt;&lt; EOF &gt; ~/.pip/pip.conf[global]trusted-host=mirrors.aliyun.comindex-url=http://mirrors.aliyun.com/pypi/simple/EOFsudo apt-get install libmysqlclient-dev -yln -s /home/usr/python36/bin/pip3 /usr/bin/pip36ln -s /home/usr/python36/bin/python3 /usr/bin/python36 以后就可以使用 pip36 python36来进行操作。 如果在命令行中输入scrapy提示没这个命令，可以试试python36 -m scrapy]]></content>

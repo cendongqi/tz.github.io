@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-05-11T14:33:35.499Z</updated>
+  <updated>2018-05-12T06:39:43.144Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,11 +16,94 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>告别win10，拥抱linux</title>
+    <link href="https://zhangslob.github.io/2018/05/12/%E5%91%8A%E5%88%ABwin10%EF%BC%8C%E6%8B%A5%E6%8A%B1linux/"/>
+    <id>https://zhangslob.github.io/2018/05/12/告别win10，拥抱linux/</id>
+    <published>2018-05-12T05:49:33.000Z</published>
+    <updated>2018-05-12T06:39:43.144Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十五篇原创文章
+</code></pre><p>安装linux操作系统  (๑• . •๑)</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_Desktop_20180512132633.png" alt=""></p>
+<a id="more"></a>
+<h1 id="win10-升级"><a href="#win10-升级" class="headerlink" title="win10 升级"></a>win10 升级</h1><p>先问你一个问题，你讨厌win10升级系统吗？</p>
+<p>我的回答：是，明明已经把自动更新关闭了，可是还是会有“易升”，win10易升一直卸载不掉。所以就想试试别的系统。</p>
+<p>linux是最好的选择。黑苹果暂时不考虑。</p>
+<p><img src="http://img.mp.itc.cn/upload/20170408/35c850c176b9447da3fbb3d303172f2a_th.jpg" alt=""></p>
+<h1 id="喜欢linux的理由"><a href="#喜欢linux的理由" class="headerlink" title="喜欢linux的理由"></a>喜欢linux的理由</h1><p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_Desktop_20180512132633.png" alt=""></p>
+<blockquote>
+<p>深度桌面</p>
+</blockquote>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_deepin-terminal_20180512133029.png" alt=""></p>
+<blockquote>
+<p>深度终端（配合zsh超赞的）</p>
+</blockquote>
+<p>除了颜值外，程序兼容性会更好，安装各种东西会很方便。作为一名程序员，熟悉linux下基本操作也是必要的。</p>
+<blockquote>
+<p>我自己试过，爬虫会跑的更快。 手动滑稽</p>
+</blockquote>
+<h1 id="选择linux哪个版本"><a href="#选择linux哪个版本" class="headerlink" title="选择linux哪个版本"></a>选择linux哪个版本</h1><p>目前我使用过deepin和ubuntu18，对于完全的小白来说，我推荐deepin也就是深度操作系统，深度商店收入的应用可以基本满足，ubuntu很多应用安装起来比较麻烦，如果你喜欢折腾，那就上手ubuntu吧。</p>
+<p>如果你和我一样 喜欢xxx，那就试试deepin和ubuntu18共存。</p>
+<p>我现在的开机界面（渣渣像素）</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180512135314.jpg" alt=""></p>
+<h1 id="如何安装linux"><a href="#如何安装linux" class="headerlink" title="如何安装linux"></a>如何安装linux</h1><h2 id="安装deepin"><a href="#安装deepin" class="headerlink" title="安装deepin"></a>安装deepin</h2><p>使用U盘安装</p>
+<p>先去下载：</p>
+<ol>
+<li><a href="http://cdimage.deepin.com/releases/15.5/deepin-15.5-amd64.iso" target="_blank" rel="external">ISO文件</a></li>
+<li><a href="http://cdimage.deepin.com/applications/deepin-boot-maker/windows/deepin-boot-maker.exe" target="_blank" rel="external">深度启动盘制作工具</a></li>
+</ol>
+<p>然后安装启动盘制作工具，然后选择刚才下载的ISO文件，下一步选择你的U盘，然后就开始安装了。</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180512135903.png" alt=""></p>
+<p><img src="https://www.deepin.org/wp-content/uploads/2016/12/deepin-boot-maker-2-cn.png" alt=""><br><img src="https://www.deepin.org/wp-content/uploads/2016/12/deepin-boot-maker-3-cn.png" alt=""></p>
+<p>下一步，重启电脑，一般情况下电脑默认是从硬盘启动，因此，在使用U盘安装系统之前，您需要先进入电脑的BIOS界面将U盘设置为第一启动项。</p>
+<p>台式机一般为 Delete 键、笔记本一般为 F2  或 F10 或 F12 键，即可进入 BIOS 设置界面。</p>
+<ol>
+<li>将深度操作系统光盘插入电脑光驱中。</li>
+<li>启动电脑，将光盘设置为第一启动项。</li>
+<li>进入安装界面，选择需要安装的语言。</li>
+</ol>
+<p><img src="https://www.deepin.org/wp-content/uploads/2016/12/deepin-installer1.png" alt=""></p>
+<p>如果还不会，这里有官方录制的视频哦 <a href="https://www.bilibili.com/video/av16993752/" target="_blank" rel="external">深度安装器+深度探索频道第七期+深度操作系统官方出品</a></p>
+<p>还有一种更加简单的方式就是下载 <a href="http://cdimage.deepin.com/applications/deepin-boot-maker/windows/deepin-system-installer.exe" target="_blank" rel="external">深度系统安装器</a></p>
+<p><img src="https://i.imgur.com/mpkCwJg.png" alt=""></p>
+<p>然后就是傻瓜操作了，记得关闭下 <a href="http://www.yxswz.com/x64bug.html" target="_blank" rel="external">安全启动</a></p>
+<blockquote>
+<p>小歪并不推荐使用第二种方式安装，在笔记本上怎么都没有效果，在台式上一次成功。所以大家有U盘的尽量使用U盘吧</p>
+</blockquote>
+<h2 id="安装ubuntu"><a href="#安装ubuntu" class="headerlink" title="安装ubuntu"></a>安装ubuntu</h2><p>需要用到上面提到过的<a href="http://cdimage.deepin.com/applications/deepin-boot-maker/windows/deepin-boot-maker.exe" target="_blank" rel="external">深度启动盘制作工具</a>，然后去下载 <a href="https://www.ubuntu.com/download/desktop" target="_blank" rel="external">ISO文件</a>，然后就是和上面安装方法一样的，进行操作即可。</p>
+<p>有没有很简单。</p>
+<p><img src="https://i.imgur.com/u3gBHqc.png" alt=""></p>
+<blockquote>
+<p>我的ubuntu界面，用得少，所以没美化</p>
+</blockquote>
+<h1 id="感受"><a href="#感受" class="headerlink" title="感受"></a>感受</h1><p>我使用deepin有一个月了，写代码用deepin，家里的台式还是win7，因为deepin虽然有steam，但是吃鸡不支持在linux下运行。</p>
+<p>deepin完全可以满足我的办公需求，Pycharm、sublime、typora、chrome、网易云音乐等等都有，用起来很舒服，至少现在是这样感觉。但是有时候deepin也会卡死。</p>
+<p>强烈建议上手linux，可以学到很多命令行操作，安装deepin就好，到时候你的电脑会Windows与deepin共存，根据场景选择系统。</p>
+<p>有时间写一篇deepin美化与安装应用相关的东西，看到这一定要点赞哦。</p>
+<p><img src="https://i.imgur.com/xbmqUXs.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十五篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装linux操作系统  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_Desktop_20180512132633.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="linux" scheme="https://zhangslob.github.io/categories/linux/"/>
+    
+    
+      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>linux下安装python3.6</title>
     <link href="https://zhangslob.github.io/2018/05/11/linux%E4%B8%8B%E5%AE%89%E8%A3%85python3-6/"/>
     <id>https://zhangslob.github.io/2018/05/11/linux下安装python3-6/</id>
     <published>2018-05-11T14:26:54.000Z</published>
-    <updated>2018-05-11T14:33:35.499Z</updated>
+    <updated>2018-05-11T14:35:28.614Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十四篇原创文章
 </code></pre><p>linux操作  (๑• . •๑)</p>
@@ -1206,7 +1289,7 @@ e-packages\\lxml&#39;</code></p>
 <p>为了解决这个问题，我们需要做一个重要的观察。从左到右处理符号时，最近开始符号必须与下一个关闭符号相匹配。此外，处理的第一个开始符号必须等待直到其匹配最后一个符号。结束符号以相反的顺序匹配开始符号。他们从内到外匹配。这是一个可以用栈解决问题的线索。</p>
 <p><img src="https://i.imgur.com/SLZpBJ8.png" alt=""></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pythonds.basic.stack <span class="keyword">import</span> Stack</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parChecker</span><span class="params">(symbolString)</span>:</span></div><div class="line">    s = Stack()</div><div class="line">    balanced = <span class="keyword">True</span></div><div class="line">    index = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> index &lt; len(symbolString) <span class="keyword">and</span> balanced:</div><div class="line">        symbol = symbolString[index]</div><div class="line">        <span class="keyword">if</span> symbol == <span class="string">"("</span>:</div><div class="line">            s.push(symbol)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> s.isEmpty():</div><div class="line">                balanced = <span class="keyword">False</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                s.pop()</div><div class="line"></div><div class="line">        index = index + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> balanced <span class="keyword">and</span> s.isEmpty():</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">print(parChecker(<span class="string">'((()))'</span>))</div><div class="line">print(parChecker(<span class="string">'(()'</span>))</div></pre></td></tr></table></figure>
-<p><em>output</em><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">False</span></div></pre></td></tr></table></figure></p>
+<p><em>output</em><br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="literal">True</span></div><div class="line"><span class="literal">False</span></div></pre></td></tr></table></figure></p>
 <p>一旦你认为栈是保存括号的恰当的数据结构，算法是很直接的。</p>
 <p>从空栈开始，从左到右处理括号字符串。如果一个符号是一个开始符号，将其作为一个信号，对应的结束符号稍后会出现。另一方面，如果符号是结束符号，弹出栈，只要弹出栈的开始符号可以匹配每个结束符号，则括号保持匹配状态。如果任何时候栈上没有出现符合开始符号的结束符号，则字符串不匹配。最后，当所有符号都被处理后，栈应该是空的。</p>
 <p><img src="https://i.imgur.com/M2ZtP7O.png" alt=""></p>
@@ -1539,75 +1622,6 @@ e-packages\\lxml&#39;</code></p>
     
     
       <category term="Git" scheme="https://zhangslob.github.io/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>学点算法之字符串的乱序检查</title>
-    <link href="https://zhangslob.github.io/2018/01/27/%E5%AD%A6%E7%82%B9%E7%AE%97%E6%B3%95%E4%B9%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E4%B9%B1%E5%BA%8F%E6%A3%80%E6%9F%A5/"/>
-    <id>https://zhangslob.github.io/2018/01/27/学点算法之字符串的乱序检查/</id>
-    <published>2018-01-27T10:52:56.000Z</published>
-    <updated>2018-01-27T10:59:40.517Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十五篇原创文章
-</code></pre><p>老板，我要做算法工程师！</p>
-<p><img src="https://i.imgur.com/z10Tn6k.jpg" alt=""><br><a id="more"></a></p>
-<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>字符串的乱序检查。</p>
-<p>一个字符串是另一个字符串的乱序。如果第二个字符串只是第一个的重新排列，例如，’heart’ 和 ‘earth’ 就是乱序字符串。’python’ 和 ‘typhon’ 也是。为了简单起见，我们假设所讨论的两个字符串具有<strong>相等的长度</strong>，并且他们由 26 个小写字母集合组成。我们的目标是写一个布尔函数，它将两个字符串做参数并返回它们是不是回文。</p>
-<h1 id="解法1-检查"><a href="#解法1-检查" class="headerlink" title="解法1:检查"></a>解法1:检查</h1><p>我们对乱序问题的第一个解法是检查第一个字符串是不是出现在第二个字符串中。如果可以检验到每一个字符，那两个字符串一定是回文。可以通过用 None 替换字符来完成检查。但是，由于 Python 字符串是不可变的，所以第一步是将第二个字符串转换为列表。第一个字符串中的每个字符可以通过检查在第二个列表中检查元素是否存在，如果存在，替换成 None。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">anagramSolution1</span><span class="params">(s1,s2)</span>:</span></div><div class="line">    alist = list(s2)</div><div class="line"></div><div class="line">    pos1 = <span class="number">0</span></div><div class="line">    stillOK = <span class="keyword">True</span></div><div class="line"></div><div class="line">    <span class="keyword">while</span> pos1 &lt; len(s1) <span class="keyword">and</span> stillOK:</div><div class="line">        pos2 = <span class="number">0</span></div><div class="line">        found = <span class="keyword">False</span></div><div class="line">        <span class="keyword">while</span> pos2 &lt; len(alist) <span class="keyword">and</span> <span class="keyword">not</span> found:</div><div class="line">            <span class="keyword">if</span> s1[pos1] == alist[pos2]:</div><div class="line">                found = <span class="keyword">True</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                pos2 = pos2 + <span class="number">1</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span> found:</div><div class="line">            alist[pos2] = <span class="keyword">None</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            stillOK = <span class="keyword">False</span></div><div class="line"></div><div class="line">        pos1 = pos1 + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> stillOK</div><div class="line"></div><div class="line">print(anagramSolution1(<span class="string">'abcd'</span>,<span class="string">'dcba'</span>))</div></pre></td></tr></table></figure>
-<p>s1 的每个字符都会在 s2 中进行最多 n 个字符的迭代</p>
-<p>s2 列表中的 n 个位置将被访问一次来匹配来自 s1 的字符。访问次数可以写成 1 到 n 整数的和，可以写成</p>
-<p><img src="https://xidianwlc.gitbooks.io/python-data-structrue-and-algrothms/content/2.%E7%AE%97%E6%B3%95%E5%88%86%E6%9E%90/2.4.%E4%B8%80%E4%B8%AA%E4%B9%B1%E5%BA%8F%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A3%80%E6%9F%A5%E7%9A%84%E4%BE%8B%E5%AD%90/assets/2.4.1%20%E6%B1%82%E5%92%8C.png" alt=""></p>
-<p>当 n 变大，n^2 这项占据主导，1/2 可以忽略。所以这个算法复杂度为 O(n^2 )。</p>
-<p><img src="https://wx1.sinaimg.cn/orj360/b04b21b7ly1fnssg4x3mdj20dc0dcgno.jpg" alt=""></p>
-<h1 id="解法2-排序和比较"><a href="#解法2-排序和比较" class="headerlink" title="解法2:排序和比较"></a>解法2:排序和比较</h1><p>另一个解决方案是利用这么一个事实，即使 s1,s2 不同，它们只有由完全相同的字符组成，它们才是回文。所以，如果我们按照字母顺序排列每个字符串，从 a 到 z，如果两个字符串相同，则这两个字符串为回文。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">anagramSolution2</span><span class="params">(s1,s2)</span>:</span></div><div class="line">    alist1 = list(s1)</div><div class="line">    alist2 = list(s2)</div><div class="line"></div><div class="line">    alist1.sort()</div><div class="line">    alist2.sort()</div><div class="line"></div><div class="line">    <span class="keyword">if</span> alist1 == alist2:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">print(anagramSolution2(<span class="string">'abcde'</span>,<span class="string">'edcba'</span>))</div></pre></td></tr></table></figure>
-<p>这个算法比较简单，只用到了排序算法，那么排序算法的复杂度还是多少呢？</p>
-<p>在<a href="https://github.com/qiwsir/algorithm/blob/master/python_sort.md" target="_blank" rel="external">这里</a>找到了答案</p>
-<p>python中的sorted算法，网上有人撰文，说比较低级。其实不然，通过阅读官方文档，发现python中的sorted排序，真的是高大上，用的Timsort算法。什么是Timsort，请看 wiki的解释：<a href="http://en.wikipedia.org/wiki/Timsort" target="_blank" rel="external">http://en.wikipedia.org/wiki/Timsort</a></p>
-<p>另外，国内有一个文档，适当翻译：<a href="http://blog.csdn.net/yangzhongblog/article/details/8184707" target="_blank" rel="external">http://blog.csdn.net/yangzhongblog/article/details/8184707</a>，这里截取一个不同排序算法比较的图示，就明白sorted的威力了。</p>
-<p>从时间复杂度来看，Timsort是威武的。</p>
-<p><img src="https://github.com/qiwsir/algorithm/raw/master/pics/timsort1.png" alt=""></p>
-<p>从空间复杂度来讲，需要的开销在数量大的时候会增大。</p>
-<p><img src="https://github.com/qiwsir/algorithm/raw/master/pics/timsort2.png" alt=""></p>
-<p><img src="https://wx2.sinaimg.cn/orj360/b04b21b7ly1fnssg5nhwuj20dc0dcmz2.jpg" alt=""></p>
-<h1 id="解法3-穷举法"><a href="#解法3-穷举法" class="headerlink" title="解法3: 穷举法"></a>解法3: 穷举法</h1><p>解决这类问题的强力方法是<strong>穷举所有可能性</strong>。</p>
-<p>对于回文检测，我们可以生成 s1 的所有乱序字符串列表，然后查看是不是有 s2。这种方法有一点困难。当 s1 生成所有可能的字符串时，第一个位置有 n 种可能，第二个位置有 n-1 种，第三个位置有 n-3 种，等等。总数为 <code>n∗(n−1)∗(n−2)∗...∗3∗2∗1n∗(n−1)∗(n−2)∗...∗3∗2∗1</code>， 即 <code>n!</code> 。</p>
-<p>虽然一些字符串可能是重复的，程序也不可能提前知道这样，所以他仍然会生成 <code>n!</code> 个字符串。<br>事实证明，n! 比 n^2 增长还快，事实上，如果 s1 有 20个字符长，则将有 <code>20! = 2,432,902,008,176,640,000</code> 个字符串产生。如果我们每秒处理一种可能字符串，那么需要 <code>77,146,816,596</code> 年才能过完整个列表。</p>
-<p>所以当然不会采取这种方案了。</p>
-<p><img src="https://wx2.sinaimg.cn/orj360/b04b21b7ly1fnssg6fej0j20dc0dc40h.jpg" alt=""></p>
-<h1 id="解法4-计数和比较"><a href="#解法4-计数和比较" class="headerlink" title="解法4: 计数和比较"></a>解法4: 计数和比较</h1><p>我们最终解决回文的方法是利用两个乱序字符串具有相同的 a, b, c 等等的事实。</p>
-<p>我们首先计算的是每个字母出现的次数。由于有 26 个可能的字符，我们就用 一个长度为 26 的列表，每个可能的字符占一个位置。每次看到一个特定的字符，就增加该位置的计数器。最后如果两个列表的计数器一样，则字符串为乱序字符串。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">anagramSolution4</span><span class="params">(s1,s2)</span>:</span></div><div class="line">    c1 = [<span class="number">0</span>]*<span class="number">26</span></div><div class="line">    c2 = [<span class="number">0</span>]*<span class="number">26</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s1)):</div><div class="line">        pos = ord(s1[i])-ord(<span class="string">'a'</span>)</div><div class="line">        c1[pos] = c1[pos] + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s2)):</div><div class="line">        pos = ord(s2[i])-ord(<span class="string">'a'</span>)</div><div class="line">        c2[pos] = c2[pos] + <span class="number">1</span></div><div class="line"></div><div class="line">    j = <span class="number">0</span></div><div class="line">    stillOK = <span class="keyword">True</span></div><div class="line">    <span class="keyword">while</span> j&lt;<span class="number">26</span> <span class="keyword">and</span> stillOK:</div><div class="line">        <span class="keyword">if</span> c1[j]==c2[j]:</div><div class="line">            j = j + <span class="number">1</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            stillOK = <span class="keyword">False</span></div><div class="line"></div><div class="line">    <span class="keyword">return</span> stillOK</div><div class="line"></div><div class="line">print(anagramSolution4(<span class="string">'apple'</span>,<span class="string">'pleap'</span>))</div></pre></td></tr></table></figure>
-<p>同样，这个方案有多个迭代，但是和第一个解法不一样，它不是嵌套的。两个迭代都是 n, 第三个迭代，比较两个计数列表，需要 26 步，因为有 26 个字母。一共 T(n)=2n+26T(n)=2n+26，即 O(n)，我们找到了一个线性量级的算法解决这个问题。</p>
-<p>如果让我自己来选择，我可能会选第二种，第二种最简单，也最好理解。但是最后的结论表明 <strong>解法4</strong> 才是最优解法，排序固然简单，但是但数量很大的时候，可能远不止我们想的那么简单。</p>
-<p>在结束这个例子之前，我们来讨论下空间花费，虽然最后一个方案在线性时间执行，但它需要额外的存储来保存两个字符计数列表。换句话说，该算法牺牲了空间以获得时间。</p>
-<p>很多情况下，你需要在空间和时间之间做出权衡。这种情况下，额外空间不重要，但是如果有数百万个字符，就需要关注下。作为一个计算机科学家，当给定一个特定的算法，将由你决定如何使用计算资源。</p>
-<blockquote>
-<p>如有错误，请指出</p>
-</blockquote>
-<p><a href="https://m.weibo.cn/status/4200069676754911" target="_blank" rel="external">图片来源</a></p>
-<p>各位下期见，不聊了，又该搬砖了。。。</p>
-<p><img src="https://wx2.sinaimg.cn/orj360/b04b21b7ly1fnssg6v2b1j20dc0dcq4t.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十五篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;老板，我要做算法工程师！&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/z10Tn6k.jpg&quot; alt=&quot;&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="算法" scheme="https://zhangslob.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="https://zhangslob.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="Python" scheme="https://zhangslob.github.io/tags/Python/"/>
-    
-      <category term="排序" scheme="https://zhangslob.github.io/tags/%E6%8E%92%E5%BA%8F/"/>
     
   </entry>
   
