@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-05-15T15:58:09.668Z</updated>
+  <updated>2018-05-16T13:33:28.965Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,74 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>强大的异步爬虫 aiohttp</title>
+    <link href="https://zhangslob.github.io/2018/05/16/%E5%BC%BA%E5%A4%A7%E7%9A%84%E5%BC%82%E6%AD%A5%E7%88%AC%E8%99%AB-aiohttp/"/>
+    <id>https://zhangslob.github.io/2018/05/16/强大的异步爬虫-aiohttp/</id>
+    <published>2018-05-16T09:00:07.000Z</published>
+    <updated>2018-05-16T13:33:28.965Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十七篇原创文章
+</code></pre><p>异步了解下  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/gBlZ2Mq.jpg" alt=""></p>
+<a id="more"></a>
+<hr>
+<p>看到现在网络上大多讲的都是requests、scrapy，却没有说到爬虫中的神器：<strong>aiohttp</strong></p>
+<h1 id="aiohttp-介绍"><a href="#aiohttp-介绍" class="headerlink" title="aiohttp 介绍"></a>aiohttp 介绍</h1><p>aiohttp是什么，官网上有这样一句话介绍：<code>Async HTTP client/server for asyncio and Python</code>，翻译过来就是 <code>asyncio和Python的异步HTTP客户端/服务器</code></p>
+<p>主要特点是：</p>
+<ol>
+<li>支持客户端和HTTP服务器。 </li>
+<li>无需使用Callback Hell即可支持Server WebSockets和Client WebSockets。 </li>
+<li>Web服务器具有中间件，信号和可插拔路由。</li>
+</ol>
+<p>emmmm，好吧，还是来看代码吧</p>
+<p>Client example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> aiohttp</div><div class="line"><span class="keyword">import</span> asyncio</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">fetch</span><span class="params">(session, url)</span>:</span></div><div class="line">    <span class="keyword">async</span> <span class="keyword">with</span> session.get(url) <span class="keyword">as</span> response:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">await</span> response.text()</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</div><div class="line">        html = <span class="keyword">await</span> fetch(session, <span class="string">'http://httpbin.org/headers'</span>)</div><div class="line">        print(html)</div><div class="line"></div><div class="line">loop = asyncio.get_event_loop()</div><div class="line">loop.run_until_complete(main())</div></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">"headers"</span>:&#123;<span class="string">"Accept"</span>:<span class="string">"*/*"</span>,<span class="string">"Accept-Encoding"</span>:<span class="string">"gzip, deflate"</span>,<span class="string">"Connection"</span>:<span class="string">"close"</span>,<span class="string">"Host"</span>:<span class="string">"httpbin.org"</span>,<span class="string">"User-Agent"</span>:<span class="string">"Python/3.6 aiohttp/3.2.1"</span>&#125;&#125;</div></pre></td></tr></table></figure>
+<p>Server example:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> aiohttp <span class="keyword">import</span> web</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(request)</span>:</span></div><div class="line">    name = request.match_info.get(<span class="string">'name'</span>, <span class="string">"Anonymous"</span>)</div><div class="line">    text = <span class="string">"Hello, "</span> + name</div><div class="line">    <span class="keyword">return</span> web.Response(text=text)</div><div class="line"></div><div class="line">app = web.Application()</div><div class="line">app.add_routes([web.get(<span class="string">'/'</span>, handle),</div><div class="line">                web.get(<span class="string">'/&#123;name&#125;'</span>, handle)])</div><div class="line"></div><div class="line">web.run_app(app)</div></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">======== Running on http://0.0.0.0:8080 ========</div><div class="line">(Press CTRL+C to quit)</div></pre></td></tr></table></figure>
+<h1 id="aiohttp-与-requests"><a href="#aiohttp-与-requests" class="headerlink" title="aiohttp 与 requests"></a>aiohttp 与 requests</h1><p>去翻一下官方文档 <a href="https://aiohttp.readthedocs.io/en/stable/client_quickstart.html#" target="_blank" rel="external">Client Quickstart</a>，让我感觉非常熟悉，很多用法和requests相似。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</div><div class="line">    <span class="keyword">async</span> <span class="keyword">with</span> session.get(<span class="string">'http://httpbin.org/get'</span>) <span class="keyword">as</span> resp:</div><div class="line">        print(resp.status)</div><div class="line">        print(<span class="keyword">await</span> resp.text())</div></pre></td></tr></table></figure>
+<p>首先，官方推荐使用<a href="https://aiohttp.readthedocs.io/en/stable/client_reference.html#aiohttp.ClientSession" target="_blank" rel="external">ClientSession</a>来管理会话，这不就是<code>requests</code>中的<code>session</code>吗？用法也类似，使用<code>session.get()</code>去发送<code>get</code>请求，返回的<code>resp</code>中就有我们所需要的数据了，用法也和<code>requests</code>一样，<code>text（）</code>文本，<code>.json()</code>直接打印返回的<code>json</code>数据，<code>headers</code>什么的也一样，更多内容参考官方文档<a href="https://aiohttp.readthedocs.io/en/stable/client_reference.html#response-object" target="_blank" rel="external">Response object</a></p>
+<p>既然已经有<code>requests</code>了，那为什么还要说<code>aiohttp</code>了？重点来了，<code>aiohttp</code>是异步的。在python3.5中，加入了<code>asyncio/await</code> 关键字，使得回调的写法更加直观和人性化。而<code>aiohttp</code>是一个提供异步web服务的库，<code>asyncio</code>可以实现单线程并发IO操作。</p>
+<p><code>requests</code>写爬虫是同步的，是等待网页下载好才会执行下面的解析、入库操作，如果在下载网页时间太长会导致阻塞，使用<code>multiprocessing</code>或者 <code>threading</code>加速爬虫也是一种方法。</p>
+<p>我们现在使用的<code>aiohttp</code>是异步的，简单来说，就是不需要等待，你尽管去下载网页就好了，我不用傻傻的等待你完成才进行下一步，我还有别的活要干。这样就极大的提高了下载网页的效率。</p>
+<p>另外，<code>Scrapy</code>也是异步的，是基于Twisted事件驱动的。在任何情况下，都不要写阻塞的代码。阻塞的代码包括：</p>
+<ol>
+<li>访问文件、数据库或者Web</li>
+<li>产生新的进程并需要处理新进程的输出，如运行shell命令</li>
+<li>执行系统层次操作的代码，如等待系统队列</li>
+</ol>
+<h1 id="代码实例"><a href="#代码实例" class="headerlink" title="代码实例"></a>代码实例</h1><p>这里是使用<code>aiohttp</code>的一个爬虫实例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> asyncio</div><div class="line"></div><div class="line"><span class="keyword">import</span> aiohttp</div><div class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</div><div class="line"></div><div class="line"><span class="keyword">import</span> logging</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AsnycGrab</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, url_list, max_threads)</span>:</span></div><div class="line"></div><div class="line">        self.urls = url_list</div><div class="line">        self.results = &#123;&#125;</div><div class="line">        self.max_threads = max_threads</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__parse_results</span><span class="params">(self, url, html)</span>:</span></div><div class="line"></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            soup = BeautifulSoup(html, <span class="string">'html.parser'</span>)</div><div class="line">            title = soup.find(<span class="string">'title'</span>).get_text()</div><div class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">            <span class="keyword">raise</span> e</div><div class="line"></div><div class="line">        <span class="keyword">if</span> title:</div><div class="line">            self.results[url] = title</div><div class="line"></div><div class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">get_body</span><span class="params">(self, url)</span>:</span></div><div class="line">        <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.ClientSession() <span class="keyword">as</span> session:</div><div class="line">            <span class="keyword">async</span> <span class="keyword">with</span> session.get(url, timeout=<span class="number">30</span>) <span class="keyword">as</span> response:</div><div class="line">                <span class="keyword">assert</span> response.status == <span class="number">200</span></div><div class="line">                html = <span class="keyword">await</span> response.read()</div><div class="line">                <span class="keyword">return</span> response.url, html</div><div class="line"></div><div class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">get_results</span><span class="params">(self, url)</span>:</span></div><div class="line">        url, html = <span class="keyword">await</span> self.get_body(url)</div><div class="line">        self.__parse_results(url, html)</div><div class="line">        <span class="keyword">return</span> <span class="string">'Completed'</span></div><div class="line"></div><div class="line">    <span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">handle_tasks</span><span class="params">(self, task_id, work_queue)</span>:</span></div><div class="line">        <span class="keyword">while</span> <span class="keyword">not</span> work_queue.empty():</div><div class="line">            current_url = <span class="keyword">await</span> work_queue.get()</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                task_status = <span class="keyword">await</span> self.get_results(current_url)</div><div class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">                logging.exception(<span class="string">'Error for &#123;&#125;'</span>.format(current_url), exc_info=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">eventloop</span><span class="params">(self)</span>:</span></div><div class="line">        q = asyncio.Queue()</div><div class="line">        [q.put_nowait(url) <span class="keyword">for</span> url <span class="keyword">in</span> self.urls]</div><div class="line">        loop = asyncio.get_event_loop()</div><div class="line">        tasks = [self.handle_tasks(task_id, q, ) <span class="keyword">for</span> task_id <span class="keyword">in</span> range(self.max_threads)]</div><div class="line">        loop.run_until_complete(asyncio.wait(tasks))</div><div class="line">        loop.close()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    async_example = AsnycGrab([<span class="string">'http://edmundmartin.com'</span>,</div><div class="line">               <span class="string">'https://www.udemy.com'</span>,</div><div class="line">               <span class="string">'https://github.com/'</span>,</div><div class="line">               <span class="string">'https://zhangslob.github.io/'</span>,</div><div class="line">               <span class="string">'https://www.zhihu.com/'</span>], <span class="number">5</span>)</div><div class="line">    async_example.eventloop()</div><div class="line">    print(async_example.results)</div></pre></td></tr></table></figure>
+<p>需要注意的是，你需要时刻在你的代码中使用异步操作，你如果在代码中使用同步操作，爬虫并不会报错，但是速度可能会受影响。</p>
+<h1 id="其他异步库"><a href="#其他异步库" class="headerlink" title="其他异步库"></a>其他异步库</h1><p>因为爬虫不仅仅只有下载这块，还会有操作数据库，这里提供两个异步库：<code>aioredis</code>、<code>motor</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> asyncio</div><div class="line"><span class="keyword">import</span> aioredis</div><div class="line"></div><div class="line">loop = asyncio.get_event_loop()</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">go</span><span class="params">()</span>:</span></div><div class="line">    conn = <span class="keyword">await</span> aioredis.create_connection(</div><div class="line">        <span class="string">'redis://localhost'</span>, loop=loop)</div><div class="line">    <span class="keyword">await</span> conn.execute(<span class="string">'set'</span>, <span class="string">'my-key'</span>, <span class="string">'value'</span>)</div><div class="line">    val = <span class="keyword">await</span> conn.execute(<span class="string">'get'</span>, <span class="string">'my-key'</span>)</div><div class="line">    print(val)</div><div class="line">    conn.close()</div><div class="line">    <span class="keyword">await</span> conn.wait_closed()</div><div class="line">loop.run_until_complete(go())</div><div class="line"><span class="comment"># will print 'value'</span></div></pre></td></tr></table></figure>
+<p>文档：<a href="http://aioredis.readthedocs.io/en/v1.1.0/index.html" target="_blank" rel="external">aioredis</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> motor.motor_asyncio</div><div class="line"></div><div class="line">client = motor.motor_asyncio.AsyncIOMotorClient(<span class="string">'mongodb://localhost:27017'</span>)</div><div class="line"></div><div class="line">db = client[<span class="string">'test_database'</span>]</div><div class="line">collection = db[<span class="string">'test_collection'</span>]</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">do_insert</span><span class="params">()</span>:</span></div><div class="line">    document = &#123;<span class="string">'key'</span>: <span class="string">'value'</span>&#125;</div><div class="line">    result = <span class="keyword">await</span> db.test_collection.insert_one(document)</div><div class="line">    print(<span class="string">'result %s'</span> % repr(result.inserted_id))</div><div class="line">    </div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">do_find_one</span><span class="params">()</span>:</span></div><div class="line">    document = <span class="keyword">await</span> db.test_collection.find_one(&#123;<span class="string">'i'</span>: &#123;<span class="string">'$lt'</span>: <span class="number">1</span>&#125;&#125;)</div><div class="line">    pprint.pprint(document)</div></pre></td></tr></table></figure>
+<p>文档：<a href="https://motor.readthedocs.io/en/stable/index.html" target="_blank" rel="external">motor</a></p>
+<p><img src="https://motor.readthedocs.io/en/stable/_images/motor.png" alt=""></p>
+<p>本文仅仅介绍了<code>aiohttp</code>作为<code>Client</code>的用法， 有兴趣的朋友可以去研究下作为<code>Server</code>的用法，同样很强大。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十七篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;异步了解下  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/gBlZ2Mq.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Leetcode" scheme="https://zhangslob.github.io/categories/Leetcode/"/>
+    
+    
+      <category term="Leetcode" scheme="https://zhangslob.github.io/tags/Leetcode/"/>
+    
+  </entry>
   
   <entry>
     <title>Leetcode Solutions（一） two-sum</title>
@@ -1515,69 +1583,6 @@ e-packages\\lxml&#39;</code></p>
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="postman" scheme="https://zhangslob.github.io/tags/postman/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>有了她，谁敢阻止我学习</title>
-    <link href="https://zhangslob.github.io/2018/01/30/%E6%9C%89%E4%BA%86%E5%A5%B9%EF%BC%8C%E8%B0%81%E6%95%A2%E9%98%BB%E6%AD%A2%E6%88%91%E5%AD%A6%E4%B9%A0/"/>
-    <id>https://zhangslob.github.io/2018/01/30/有了她，谁敢阻止我学习/</id>
-    <published>2018-01-30T13:31:40.000Z</published>
-    <updated>2018-01-30T13:44:02.289Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十七篇原创文章
-</code></pre><p>我爱学习 (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/Y5AMeSm.jpg" alt=""></p>
-<a id="more"></a>
-<h1 id="公众号"><a href="#公众号" class="headerlink" title="公众号"></a>公众号</h1><p><strong>Python爱好者社区，微信号：python_shequ</strong></p>
-<p>人生苦短，我用Python。分享Python相关的技术文章、工具资源、精选课程、视频教程、热点资讯、学习资料等。每天自动更新和推送。</p>
-<p><strong>Python爬虫分享，微信号：python_shequ</strong></p>
-<p>知乎专栏“爬虫从入门到放弃”作者。目前在知乎连载爬虫从入门到放弃到精通系列文章</p>
-<p><strong>张俊红，微信号：zhangjunhong0428</strong></p>
-<p>中国统计网专栏作者，数据分析路上的学习者与实践者，与你分享我的所见、所学、所想。</p>
-<p><strong>数据小魔方，微信号：datamofang</strong></p>
-<p>专注于数据可视化及商务智能的原创技能分享平台！</p>
-<p><strong>Python爬虫与算法进阶，微信号：zhangslob</strong></p>
-<p>分享Python知识，关注爬虫与算法,让我们一起从萌新变成大牛吧!</p>
-<h1 id="在线书籍"><a href="#在线书籍" class="headerlink" title="在线书籍"></a>在线书籍</h1><ol>
-<li><a href="https://github.com/taizilongxu/interview_python" target="_blank" rel="external">关于Python的面试题</a></li>
-<li><a href="https://www.readwithu.com/" target="_blank" rel="external">草根学Python</a></li>
-<li><a href="https://xidianwlc.gitbooks.io/python-data-structrue-and-algrothms/content/" target="_blank" rel="external">python数据结构和算法</a></li>
-<li><a href="http://pythonguidecn.readthedocs.io/zh/latest/" target="_blank" rel="external">Python最佳实践指南！</a></li>
-<li><a href="http://python3-cookbook.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="external">Python Cookbook 3rd Edition Documentation</a></li>
-<li><a href="https://taizilongxu.gitbooks.io/stackoverflow-about-python/content/" target="_blank" rel="external">Stackoverflow about Python</a></li>
-<li><a href="https://eastlakeside.gitbooks.io/interpy-zh/content/" target="_blank" rel="external">Python进阶</a></li>
-</ol>
-<h1 id="免费视频"><a href="#免费视频" class="headerlink" title="免费视频"></a>免费视频</h1><ol>
-<li><a href="http://study.163.com/course/courseMain.htm?courseId=378003" target="_blank" rel="external">零基础入门学习Python</a> 话说我当时就看的小甲鱼视频入门的</li>
-<li><a href="https://www.icourse163.org/course/BIT-268001?tid=1002001005" target="_blank" rel="external">Python语言程序设计</a> 嵩天老师的一系列课程</li>
-<li><a href="https://chinagdg.org/2016/03/machine-learning-recipes-for-new-developers/" target="_blank" rel="external">Google机器学习</a> 简单入门</li>
-<li><a href="https://www.coursera.org/learn/suanfa-jichu/home/welcome" target="_blank" rel="external">算法基础</a> 北大博士的课程。。</li>
-<li><a href="http://study.163.com/course/courseMain.htm?courseId=1004570029" target="_blank" rel="external">吴恩达机器学习</a> 这个就不评价了，都知道</li>
-</ol>
-<h1 id="爬虫教程"><a href="#爬虫教程" class="headerlink" title="爬虫教程"></a>爬虫教程</h1><ol>
-<li><a href="https://piaosanlang.gitbooks.io/spiders/" target="_blank" rel="external">爬虫教程</a> 某位大佬所写，由浅入深</li>
-<li><a href="http://lawtech0902.com/categories/Scrapy/" target="_blank" rel="external">Scrapy分类</a> 质量非常高</li>
-<li><a href="https://germey.gitbooks.io/python3webspider/content/" target="_blank" rel="external">Python3网络爬虫实战</a> 崔大的书，马上会出版</li>
-<li><a href="https://liangqingyu.gitbooks.io/bigdata-crawler/content/" target="_blank" rel="external">大数据之网络爬虫</a> 主要是垂直型网络爬虫</li>
-<li><a href="https://www.biaodianfu.com/scrapy-redis.html" target="_blank" rel="external">使用Scrapy-redis实现分布式爬取</a> 分布式资料</li>
-<li><a href="http://zhxfei.com/2017/06/03/scrapy_redis/" target="_blank" rel="external">使用Docker部署scrapy-redis分布式爬虫</a> 同样是分布式资料</li>
-</ol>
-<p>最重要的一点是：不要光收藏，不去看</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十七篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我爱学习 (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/Y5AMeSm.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Git" scheme="https://zhangslob.github.io/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="https://zhangslob.github.io/tags/Git/"/>
     
   </entry>
   
