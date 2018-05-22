@@ -382,9 +382,9 @@
       <category term="scrapy" scheme="https://zhangslob.github.io/categories/scrapy/"/>
     
     
-      <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
-    
       <category term="awesome_crawl" scheme="https://zhangslob.github.io/tags/awesome-crawl/"/>
+    
+      <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
     
   </entry>
   

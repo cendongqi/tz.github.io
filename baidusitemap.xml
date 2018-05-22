@@ -131,9 +131,9 @@
         <title>awesome_crawl(一)：腾讯新闻</title>
         <pubTime>2018-05-01T13:52:11.000Z</pubTime>
         
-        <tag>scrapy</tag>
-         
         <tag>awesome_crawl</tag>
+         
+        <tag>scrapy</tag>
          
          
            
@@ -520,9 +520,9 @@
         <title>使用logging管理爬虫</title>
         <pubTime>2018-01-15T13:39:35.000Z</pubTime>
         
-        <tag>2017</tag>
-         
         <tag>logging</tag>
+         
+        <tag>2017</tag>
          
          
            
@@ -542,9 +542,9 @@
         <title>2017 梦醒时分</title>
         <pubTime>2017-12-31T08:09:41.000Z</pubTime>
         
-        <tag>年度总结</tag>
-         
         <tag>2017</tag>
+         
+        <tag>年度总结</tag>
          
          
            

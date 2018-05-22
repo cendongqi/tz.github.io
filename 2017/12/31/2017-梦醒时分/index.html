@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="年度总结,2017," />
+  <meta name="keywords" content="2017,年度总结," />
 
 
 
@@ -596,9 +596,9 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
         <div class="post-tags">
           
-            <a href="/tags/年度总结/" rel="tag"> <i class="fa fa-tag"></i>年度总结</a>
-          
             <a href="/tags/2017/" rel="tag"> <i class="fa fa-tag"></i>2017</a>
+          
+            <a href="/tags/年度总结/" rel="tag"> <i class="fa fa-tag"></i>年度总结</a>
           
         </div>
       
@@ -680,6 +680,7 @@ var jiathis_config={
   <div class="comments" id="comments">
     
       <div id="gitalk-container"></div>
+	  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
     
   </div>
 
@@ -1037,20 +1038,25 @@ var jiathis_config={
 
 
 
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-   <script type="text/javascript">
-        var gitalk = new Gitalk({
-          clientID: '',
-          clientSecret: '',
-          repo: '',
-          owner: '',
-          admin: [''],
-          id: md5(location.pathname),
-          distractionFreeMode: 'true'
+  
+    
+      <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+      <script type="text/javascript">
+        const gitalk = new Gitalk({
+          clientID: 'ffe477c440c4f8ec6287',
+          clientSecret: '9700ce4cec9d9ffe3ae1a579a865c64b7c1a2641',
+          repo: 'blog_comment',
+          owner: 'zhangslob',
+          admin: 'zhangslob'.split(','),
+          id: location.pathname, 
+          pagerDirection: 'first',
+          // facebook-like distraction free mode
+          distractionFreeMode: false
         })
-        gitalk.render('gitalk-container')           
-       </script>
+        gitalk.render('gitalk-container')
+      </script>
+    
+  
 
 
   
