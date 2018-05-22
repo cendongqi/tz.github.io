@@ -698,7 +698,9 @@ var jiathis_config={
           
   <div class="comments" id="comments">
     
-      <div id="gitalk-container"></div>
+	    <div class="comments" id="comments">
+			<div id="gitalk-container"></div>
+		</div>
       <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
     
   </div>
@@ -751,7 +753,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">48</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -762,7 +764,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -773,7 +775,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">53</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -906,7 +908,7 @@ var jiathis_config={
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">嗨，全站共60.8k字</span>
+  <span class="post-count">嗨，全站共61.6k字</span>
 </div>
 
 
@@ -1057,24 +1059,31 @@ var jiathis_config={
 
 
 
+
+<!-- LOCAL: You can save these files to your site and update links -->
   
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+<!-- END LOCAL -->
     
-      <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
       <script type="text/javascript">
-        const gitalk = new Gitalk({
-          clientID: '',
-          clientSecret: '',
-          repo: '',
-          owner: '',
-          admin: ''.split(','),
-          pagerDirection: 'first',
-          // facebook-like distraction free mode
-          distractionFreeMode: false
-        })
-        gitalk.render('gitalk-container')
+      function renderGitalk(){
+        var gitalk = new Gitalk({
+            owner: 'zhangslob',
+            repo: 'blog_comment',
+            clientID: 'ffe477c440c4f8ec6287',
+            clientSecret: '9700ce4cec9d9ffe3ae1a579a865c64b7c1a2641',
+            admin: 'zhangslob',
+            
+              distractionFreeMode: 'true'
+            
+            });
+        gitalk.render('gitalk-container');
+      }
+      renderGitalk();
       </script>
     
-  
+
 
 
   
