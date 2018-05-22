@@ -715,9 +715,7 @@ var jiathis_config={
           
   <div class="comments" id="comments">
     
-	    <div class="comments" id="comments">
-			<div id="gitalk-container"></div>
-		</div>
+      <div id="gitalk-container"></div>
       <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
     
   </div>
@@ -1076,33 +1074,21 @@ var jiathis_config={
 
 
 
-
-<!-- LOCAL: You can save these files to your site and update links -->
-  
   <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  
   <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-<!-- END LOCAL -->
-    
-      <script type="text/javascript">
-      function renderGitalk(){
-        var gitalk = new Gitalk({
-            owner: 'zhangslob',
-            repo: 'blog_comment',
-            clientID: 'ffe477c440c4f8ec6287',
-            clientSecret: '9700ce4cec9d9ffe3ae1a579a865c64b7c1a2641',
-            admin: 'zhangslob',
-            id: '<%= page.date %>',
-            
-              distractionFreeMode: 'true'
-            
-            });
-            
-        gitalk.render('gitalk-container');
-      }
-      renderGitalk();
-      </script>
-    
-
+   <script type="text/javascript">
+		var gitalk = new Gitalk({
+		  clientID: '',
+		  clientSecret: '',
+		  repo: '',
+		  owner: '',
+		  admin: [''], 
+		  id: location.pathname,
+		  distractionFreeMode: 'true'
+		})
+		gitalk.render('gitalk-container')           
+       </script>
 
 
   
