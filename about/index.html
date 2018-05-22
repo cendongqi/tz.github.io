@@ -736,7 +736,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
           repo: '',
           owner: '',
           admin: [''],
-          id: location.pathname,
+          id: md5(location.pathname),
           distractionFreeMode: 'true'
         })
         gitalk.render('gitalk-container')           

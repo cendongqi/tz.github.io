@@ -1154,7 +1154,7 @@ var jiathis_config={
           repo: '',
           owner: '',
           admin: [''],
-          id: location.pathname,
+          id: md5(location.pathname),
           distractionFreeMode: 'true'
         })
         gitalk.render('gitalk-container')           

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="awesome_crawl,scrapy," />
+  <meta name="keywords" content="scrapy,awesome_crawl," />
 
 
 
@@ -588,9 +588,9 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
         <div class="post-tags">
           
-            <a href="/tags/awesome-crawl/" rel="tag"> <i class="fa fa-tag"></i>awesome_crawl</a>
-          
             <a href="/tags/scrapy/" rel="tag"> <i class="fa fa-tag"></i>scrapy</a>
+          
+            <a href="/tags/awesome-crawl/" rel="tag"> <i class="fa fa-tag"></i>awesome_crawl</a>
           
         </div>
       
@@ -1038,7 +1038,7 @@ var jiathis_config={
           repo: '',
           owner: '',
           admin: [''],
-          id: location.pathname,
+          id: md5(location.pathname),
           distractionFreeMode: 'true'
         })
         gitalk.render('gitalk-container')           
