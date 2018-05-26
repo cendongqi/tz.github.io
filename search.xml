@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[git大法好，push需谨慎]]></title>
+    <url>%2F2018%2F05%2F26%2Fgit%E5%A4%A7%E6%B3%95%E5%A5%BD%EF%BC%8Cpush%E9%9C%80%E8%B0%A8%E6%85%8E%2F</url>
+    <content type="text"><![CDATA[这是崔斯特的第四十九篇原创文章 注意自己的账号安全 (๑• . •๑) 在每次git push前，请检查你的提交文件 故事是这样来的。（我又开始讲故事了） 前几天在 Github上找一些资料，碰巧看到一个合适的，就把他 clone 下来，准备在本地跑着试试看效果，但是在运行的时候却发现提示错误，根绝错误提示原因我发现是缺少了一个名为config.py的文件。 经验告诉我，这应该是一个写有相关配置的文件。现在缺少了这个文件，整个程序就没法运行，自己写的话又不知道格式什么的。 那我该怎么办？ 最后我还是找到了，在Github上。我去该项目上看到作者提交了很多次的commit，从历史的提交中我找到了相关信息。这是一个包含有作者相关数据库的文件，我已经通知作者，让他去删除此项目。 看下图，每个开源项目都会显示所有的commits，每次提交都会把git工作目录下所有文件提交（当然你可以指定具体的文件，我习惯git add .）。即使你下今天把密码删除了，但是你昨天提交的密码还是会保存到commits中，别人还是可以找到。 例如你现在看到的项目 Leetcode-Solutions ，你可以从commit中进入，查看到历史contributors的每一次提交的完整文件， 如：很久之前的提交 所以看到这里，你就有必要想想自己有没有把任何个人隐私数据提交到 Github 上，如果有，建议还是删除项目吧。 当然，这有一个前提，就是你的项目是公开的（Public），如果是私有的（Private），就不用考虑了。 创建私有项目是收费的，一般适合公司和组织。 最后首尾呼应： git大法好，push需谨慎]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Python最假的库：Faker]]></title>
     <url>%2F2018%2F05%2F22%2FPython%E6%9C%80%E5%81%87%E7%9A%84%E5%BA%93%EF%BC%9AFaker%2F</url>
     <content type="text"><![CDATA[这是崔斯特的第四十八篇原创文章 好假啊 (๑• . •๑) 先申明下，这里说的Faker和LOL的大魔王没有任何关系，只是恰好重名而已。 故事由来最近做一个项目时需要随机生成人的名字，百度之后，我是这样写的 123456789101112131415def random_first_name(): """百家姓中选择一个""" name = ['赵', '钱', '孙', '李', '周', '吴', '郑', '王', '冯', '陈', '褚', '卫', '蒋', '沈', '韩', '杨', '朱', '秦', '尤', '许', '何', '吕', '施', '张', '孔', '曹', '严', '华', '金', '魏', '陶', '姜', '戚', '谢', '邹', '喻', '柏', '水', '窦', '章', '云', '苏', '潘', '葛', '奚', '范', '彭', '郎', '鲁', '韦', '昌', '马', '苗', '凤', '花', '方', '俞', '任', '袁', '柳'] return random.choice(name)def random_last_name(): """生成随机汉语""" head = random.randint(0xb0, 0xf7) body = random.randint(0xa1, 0xf9) # 在head区号为55的那一块最后5个汉字是乱码,为了方便缩减下范围 val = f'&#123;head:x&#125;&#123;body:x&#125;' str_ = bytes.fromhex(val).decode('gb2312') return str_name = random_first_name() + random_last_name() 前辈在review的时候说怎么这么复杂，Python中有一个专门生成各类假数据的库：Faker，你去了解下。 Faker项目地址：faker 安装：pip install Faker 中文生成假数据：Language zh_CN 那么Faker能生成那些假数据了？ 1234from faker import Fakerfake = Faker(locale='zh_CN')# 初始化 地址1234567891011121314fake.street_name()# '广州街fake.city_suffix()# '县'fake.street_address()# '香港路B座'fake.longitude()# -98.702031fake.district()# '璧山' 汽车12fake.license_plate()# HZL 767 银行12345678fake.bban()# 'KLUX5928618542924'fake.bank_country()# 'GB'fake.iban()# 'GB04BPNH0448315286040' 条形码12345678fake.ean(length=13)# '0994331656275'fake.ean8()# '51309350'fake.ean13()# '8336323543385' 公司1234567891011fake.company_prefix()# '鸿睿思博'fake.bs()# 'embrace strategic schemas'fake.company_suffix()# '科技有限公司'fake.company()# '昂歌信息网络有限公司' 信用卡1234567891011121314fake.credit_card_security_code(card_type=None)# '360'fake.credit_card_full(card_type=None)# 'Diners Club / Carte Blanche\n林 莘\n30311852484679 10/19\nCVC: 388\n'fake.credit_card_number(card_type=None)# '30240280288941'fake.credit_card_expire(start="now", end="+10y", date_format="%m/%y")# '11/26'fake.credit_card_provider(card_type=None)# 'Maestro' 互联网1234567891011121314151617181920212223242526fake.domain_word(*args, **kwargs)# 'jin'fake.company_email(*args, **kwargs)# 'zoulei@hou.com'fake.free_email(*args, **kwargs)# 'vxu@yahoo.com'fake.ipv4_private(network=False, address_class=None)# '10.202.214.57'fake.ascii_safe_email(*args, **kwargs)# 'baiyan@example.net'fake.email(*args, **kwargs)# 'minggao@gmail.com'fake.image_url(width=None, height=None)# 'https://www.lorempixel.com/817/102'fake.uri_page()# 'category'fake.ipv4_network_class()# 'c' 姓名1234567891011121314151617181920212223242526272829303132333435363738394041fake.first_name_female()# '秀华'fake.name_male()# '郏杰'fake.suffix_female()# ''fake.first_name()# '东'fake.prefix_female()# ''fake.last_name_male()# '扶'fake.last_name()# '荣'fake.name_female()# '曹红'fake.suffix_male()# ''fake.last_name_female()# '辛'fake.last_romanized_name()# 'Zhang'fake.first_romanized_name()# 'Min'fake.romanized_name()# 'Xiuying Qiao'fake.name()# '钟想' 电话12345678fake.phone_number()# '18874465626'fake.msisdn()# '8086764507444'fake.phonenumber_prefix()# 155 user_agent这个大家应该很熟悉，常用的就是 fake-useragent这个库12345678910111213141516171819202122232425262728293031323334353637fake.mac_platform_token()# 'Macintosh; Intel Mac OS X 10_12_1'fake.firefox()# ('Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_9_4; rv:1.9.4.20) '# 'Gecko/2012-05-03 04:16:34 Firefox/3.6.10')fake.windows_platform_token()# 'Windows 95'fake.safari()# ('Mozilla/5.0 (iPod; U; CPU iPhone OS 3_1 like Mac OS X; sat-IN) '# 'AppleWebKit/533.2.4 (KHTML, like Gecko) Version/3.0.5 Mobile/8B113 '# 'Safari/6533.2.4')fake.chrome(version_from=13, version_to=63, build_from=800, build_to=899)# ('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/5331 (KHTML, like Gecko) '# 'Chrome/52.0.838.0 Safari/5331')fake.opera()# 'Opera/8.83.(X11; Linux i686; ce-RU) Presto/2.9.169 Version/10.00'fake.mac_processor()# 'Intel'fake.user_agent()# ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_9 rv:3.0; pa-IN) '# 'AppleWebKit/532.47.6 (KHTML, like Gecko) Version/4.0.1 Safari/532.47.6')fake.linux_platform_token()# 'X11; Linux x86_64'fake.linux_processor()# 'i686'fake.internet_explorer()# 'Mozilla/5.0 (compatible; MSIE 5.0; Windows NT 5.01; Trident/3.1)' 这里举例的都是中文的，当然也有其他语言的，小伙伴可以去官网看看。 最近在和小伙伴刷题，欢迎加入 Leetcode Solutions By All Language]]></content>
@@ -285,8 +296,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>logging</tag>
         <tag>2017</tag>
+        <tag>logging</tag>
       </tags>
   </entry>
   <entry>
@@ -297,8 +308,8 @@
         <category>总结</category>
       </categories>
       <tags>
-        <tag>2017</tag>
         <tag>年度总结</tag>
+        <tag>2017</tag>
       </tags>
   </entry>
   <entry>

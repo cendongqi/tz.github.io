@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-05-22T13:57:47.151Z</updated>
+  <updated>2018-05-26T08:13:38.658Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,52 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>git大法好，push需谨慎</title>
+    <link href="https://zhangslob.github.io/2018/05/26/git%E5%A4%A7%E6%B3%95%E5%A5%BD%EF%BC%8Cpush%E9%9C%80%E8%B0%A8%E6%85%8E/"/>
+    <id>https://zhangslob.github.io/2018/05/26/git大法好，push需谨慎/</id>
+    <published>2018-05-26T07:38:28.000Z</published>
+    <updated>2018-05-26T08:13:38.658Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十九篇原创文章
+</code></pre><p>注意自己的账号安全  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/lptSYQU.jpg" alt=""></p>
+<a id="more"></a>
+<blockquote>
+<p>在每次<code>git push</code>前，请检查你的提交文件</p>
+</blockquote>
+<p>故事是这样来的。（我又开始讲故事了）</p>
+<p>前几天在 Github上找一些资料，碰巧看到一个合适的，就把他 clone 下来，准备在本地跑着试试看效果，但是在运行的时候却发现提示错误，根绝错误提示原因我发现是缺少了一个名为<code>config.py</code>的文件。</p>
+<p>经验告诉我，这应该是一个写有相关配置的文件。现在缺少了这个文件，整个程序就没法运行，自己写的话又不知道格式什么的。</p>
+<p>那我该怎么办？</p>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527331404813&amp;di=84868955d0e2240e0afc9c5053259864&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.ishuo.cn%2Fdoc%2F1703%2F861-1F31G64602-51.jpg" alt=""></p>
+<p>最后我还是找到了，在Github上。我去该项目上看到作者提交了很多次的<code>commit</code>，从历史的提交中我找到了相关信息。这是一个包含有作者相关数据库的文件，我已经通知作者，让他去删除此项目。</p>
+<p>看下图，每个开源项目都会显示所有的<code>commits</code>，每次提交都会把git工作目录下所有文件提交（当然你可以指定具体的文件，我习惯<code>git add .</code>）。即使你下今天把密码删除了，但是你昨天提交的密码还是会保存到<code>commits</code>中，别人还是可以找到。</p>
+<p>例如你现在看到的项目 <a href="https://github.com/zhangslob/Leetcode-Solutions" target="_blank" rel="external">Leetcode-Solutions</a> ，你可以从<code>commit</code>中进入，查看到历史<code>contributors</code>的每一次提交的完整文件， 如：<a href="https://github.com/zhangslob/Leetcode-Solutions/tree/f237fe70338eeb1e9e7c950423b254b7495ab3c7" target="_blank" rel="external">很久之前的提交</a></p>
+<p><img src="https://i.imgur.com/NRDG7XU.png" alt=""></p>
+<p><img src="https://i.imgur.com/8ErZTIZ.png" alt=""></p>
+<p>所以看到这里，你就有必要想想自己有没有把任何个人隐私数据提交到 Github 上，如果有，建议还是删除项目吧。</p>
+<p>当然，这有一个前提，就是你的项目是公开的（Public），如果是私有的（Private），就不用考虑了。</p>
+<p><img src="https://i.imgur.com/DHFLCfn.png" alt=""></p>
+<p>创建私有项目是收费的，一般适合公司和组织。</p>
+<p>最后首尾呼应： git大法好，push需谨慎</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十九篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;注意自己的账号安全  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/lptSYQU.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Git" scheme="https://zhangslob.github.io/categories/Git/"/>
+    
+    
+      <category term="Git" scheme="https://zhangslob.github.io/tags/Git/"/>
+    
+  </entry>
   
   <entry>
     <title>Python最假的库：Faker</title>
@@ -1488,91 +1534,6 @@ e-packages\\lxml&#39;</code></p>
       <category term="算法" scheme="https://zhangslob.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="栈" scheme="https://zhangslob.github.io/tags/%E6%A0%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>为什么不推荐Selenium写爬虫</title>
-    <link href="https://zhangslob.github.io/2018/02/02/%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%8E%A8%E8%8D%90Selenium%E5%86%99%E7%88%AC%E8%99%AB/"/>
-    <id>https://zhangslob.github.io/2018/02/02/为什么不推荐Selenium写爬虫/</id>
-    <published>2018-02-02T12:35:02.000Z</published>
-    <updated>2018-02-02T12:41:05.500Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第二十九篇原创文章
-</code></pre><p>如果可以使用 <code>Requests</code> 完成的，别用 <code>Selenium</code> (๑• . •๑)</p>
-<p><img src="https://raw.githubusercontent.com/requests/requests/master/docs/_static/requests-logo-small.png" alt=""></p>
-<a id="more"></a>
-<p>最近在群里经常会看到有些朋友说，使用Selenium去采集网站，我看到其实内心是很难受的，哎！为什么要用Selenium呢？</p>
-<p>我想说下自己的看法，欢迎各位大佬批评。</p>
-<h1 id="观点"><a href="#观点" class="headerlink" title="观点"></a>观点</h1><p>如果可以使用 <code>Requests</code> 完成的，别用 <code>Selenium</code></p>
-<h1 id="数据采集的顺序"><a href="#数据采集的顺序" class="headerlink" title="数据采集的顺序"></a>数据采集的顺序</h1><p>接到一个项目或者有一个采集需求时，第一步就是明确自己的需求。经常会遇到半路改需求的事情，真的很难受。</p>
-<p>第二步就是去分析这个网站，这个在之前有提到过 <a href="https://zhangslob.github.io/2017/12/23/%E9%87%87%E9%9B%86%E6%96%B9%E6%A1%88%E7%AD%96%E7%95%A5%E4%B9%8BApp%E6%8A%93%E5%8C%85/">采集方案策略之App抓包</a>  :</p>
-<blockquote>
-<p>首先大的地方，我们想抓取某个数据源，我们要知道大概有哪些路径可以获取到数据源，基本上无外乎三种：<br>PC端网站<br>针对移动设备响应式设计的网站（也就是很多人说的H5, 虽然不一定是H5）；<br>移动App<br>原则是能抓移动App的，最好抓移动App，如果有针对移动设备优化的网站，就抓针对移动设备优化的网站，最后考虑PC网站。因为移动App基本都是API很简单，而移动设备访问优化的网站一般来讲都是结构简单清晰的HTML，而PC网站自然是最复杂的了；针对PC端网站和移动网站的做法一样，分析思路可以一起讲，移动App单独分析。</p>
-</blockquote>
-<p>这个时候可以借用 <code>postman</code> 来分析请求，参考 <a href="https://zhangslob.github.io/2018/01/31/%E6%88%96%E8%AE%B8%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%AD%A6%E5%AD%A6-postman/">或许你应该学学 postman</a></p>
-<p>然后下一步可能就是工程开始，各种配置，以及选择哪种采集方式，一般来说 Scrapy 是最好用、也是最常见的框架。当然你也可以使用 <code>requests + xpath</code> 或者 <code>Selenium</code> 。下面就我自己的看法来说说这三种采集方式。</p>
-<h1 id="三种采集差异"><a href="#三种采集差异" class="headerlink" title="三种采集差异"></a>三种采集差异</h1><h2 id="Scrapy"><a href="#Scrapy" class="headerlink" title="Scrapy"></a>Scrapy</h2><p>在 <a href="https://scrapy.org/" target="_blank" rel="external">Scrapy 官网 </a> 上是这样写的：</p>
-<blockquote>
-<p>Scrapy | A Fast and Powerful Scraping and Web Crawling Framework</p>
-</blockquote>
-<p>关键词是 <code>Fast</code> 和 <code>Powerful</code>，使用过确实感觉如此。我感觉 <code>Scrapy</code> 就是一个全家桶，它把爬虫所需要的大部分东西（为什么不是全部，下面会说到）都集成到这个框架中，如：下载器、中间件、调度器、Spider、调试、数据流等等所有功能全部都在这一个框架中，你所需要做的只是在命令行中输入：<code>scrapy startproject yourproject</code></p>
-<p>Scrapy 的缺点也是显而易见的：不支持分布式。scrapy中scheduler是运行在队列中的，而队列是在单机内存中的，服务器上爬虫是无法利用内存的队列做任何处理。但是也有解决办法，参见<a href="https://github.com/rmax/scrapy-redis" target="_blank" rel="external">rmax/scrapy-redis</a></p>
-<h2 id="Requests"><a href="#Requests" class="headerlink" title="Requests"></a>Requests</h2><p>来看看 <a href="http://docs.python-requests.org/zh_CN/latest/" target="_blank" rel="external">Requests的文档</a></p>
-<blockquote>
-<p>Requests 唯一的一个非转基因的 Python HTTP 库，人类可以安全享用。</p>
-<p>警告：非专业使用其他 HTTP 库会导致危险的副作用，包括：安全缺陷症、冗余代码症、重新发明轮子症、啃文档症、抑郁、头疼、甚至死亡。</p>
-</blockquote>
-<p>作者真幽默</p>
-<p><a href="https://gist.github.com/kennethreitz/973705" target="_blank" rel="external">urllib2 VS requests</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> urllib2</div><div class="line"></div><div class="line">gh_url = <span class="string">'https://api.github.com'</span></div><div class="line"></div><div class="line">req = urllib2.Request(gh_url)</div><div class="line"></div><div class="line">password_manager = urllib2.HTTPPasswordMgrWithDefaultRealm()</div><div class="line">password_manager.add_password(<span class="keyword">None</span>, gh_url, <span class="string">'user'</span>, <span class="string">'pass'</span>)</div><div class="line"></div><div class="line">auth_manager = urllib2.HTTPBasicAuthHandler(password_manager)</div><div class="line">opener = urllib2.build_opener(auth_manager)</div><div class="line"></div><div class="line">urllib2.install_opener(opener)</div><div class="line"></div><div class="line">handler = urllib2.urlopen(req)</div><div class="line"></div><div class="line"><span class="keyword">print</span> handler.getcode()</div><div class="line"><span class="keyword">print</span> handler.headers.getheader(<span class="string">'content-type'</span>)</div><div class="line"></div><div class="line"><span class="comment"># ------</span></div><div class="line"><span class="comment"># 200</span></div><div class="line"><span class="comment"># 'application/json'</span></div></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">r = requests.get(<span class="string">'https://api.github.com'</span>, auth=(<span class="string">'user'</span>, <span class="string">'pass'</span>))</div><div class="line"></div><div class="line"><span class="keyword">print</span> r.status_code</div><div class="line"><span class="keyword">print</span> r.headers[<span class="string">'content-type'</span>]</div><div class="line"></div><div class="line"><span class="comment"># ------</span></div><div class="line"><span class="comment"># 200</span></div><div class="line"><span class="comment"># 'application/json'</span></div></pre></td></tr></table></figure>
-<p>简单对比发现 <code>requests</code> 的好用之处了，刚开始学习爬虫的时候也是从 <code>urllib</code> 开始，当看到 <code>requests</code> 果断抛弃，就像看到 <code>xpath</code> 抛弃 <code>bs4</code> 一样</p>
-<p><img src="https://i.imgur.com/QwKXgfH.jpg" alt=""></p>
-<p>所以如果你是初学者，那么请毫不犹豫的选择 <code>requests</code> </p>
-<h2 id="Selenium"><a href="#Selenium" class="headerlink" title="Selenium"></a>Selenium</h2><p>最后来到今天的主角 <a href="http://www.seleniumhq.org/" target="_blank" rel="external">Selenium</a>， 首先看看官方怎么说</p>
-<blockquote>
-<p>What is Selenium?<br>Selenium automates browsers. That’s it! What you do with that power is entirely up to you. Primarily, it is for automating web applications for testing purposes, but is certainly not limited to just that. Boring web-based administration tasks can (and should!) be automated as well.</p>
-<p>Selenium has the support of some of the largest browser vendors who have taken (or are taking) steps to make Selenium a native part of their browser. It is also the core technology in countless other browser automation tools, APIs and frameworks.</p>
-</blockquote>
-<p>重点是：<code>it is for automating web applications for testing purposes, but is certainly not limited to just that</code>，翻译过来就是：<strong>它是用于自动化Web应用程序的测试目的，但肯定不仅限于此</strong>，简单来说，Selenium 是web自动化测试工具集，如果你去Google上搜索 Selenium ，大多结果都是 <code>利用Selenium 自动化web 测试</code>相关内容，比较出名的有<a href="http://www.cnblogs.com/fnng/category/349036.html" target="_blank" rel="external">博客园的虫师</a>，写的两本书也都是关于自动化测试方面的</p>
-<p><img src="https://i.imgur.com/6D1Plgm.png" alt=""></p>
-<p>至于为啥爬虫要用selenium，我在某些博客上找到有人这样说，我也不知道怎么说</p>
-<blockquote>
-<p>　对于一般网站来说scrapy、requests、beautifulsoup等都可以爬取，但是有些信息需要执行js才能显现，而且你肉眼所能看到的基本都能爬取下来，在学习中遇到了，就记录下来方便以后查看。</p>
-<p>webdrive是selenium中一个函数：</p>
-<p>from selenium import webdriver<br>driver = webdriver.Chrome()<br>driver.get(‘网址’)</p>
-<p>其中PhantomJS同时可以换成Chrome、Firefox、Ie等等，但是PhantomJS是一个无头的浏览器，运行是不会跳出相应的浏览器，运行相对效率较高。在调试中可以先换成Chrome，方便调试，最后再换成PhantomJS即可。</p>
-</blockquote>
-<p>下面是吐槽时间，说一说 <code>Selenium</code> 的缺点：</p>
-<ol>
-<li><strong>速度慢</strong>。每次运行爬虫都打开一个浏览器，如果没有设置，还会加载图片、JS等等一大堆东西；</li>
-<li><strong>占用资源太多</strong>。有人说，把<code>Chrome</code>换成无头浏览器<code>PhantomJS</code>，原理都是一样的，都是打开浏览器，而且很多网站会验证参数，如果对方看到你是以<code>PhantomJS</code>去访问，会BAN掉你的请求，然后你又要考虑更换请求头的事情，事情复杂程度不知道多了多少，为啥学Python？因为Python简单啊，如果有更快、更简单的库可以实现同样的功能，为什么不去使用呢？</li>
-<li><strong>对网络的要求会更高</strong>。 <code>Selenium</code> 加载了很多可能对您没有价值的补充文件（如css，js和图像文件）。 与仅仅请求您真正需要的资源（使用单独的HTTP请求）相比，这可能会产生更多的流量。</li>
-<li><strong>爬取规模不能太大</strong>。你有看到哪家公司用<code>Selenium</code>作为生产环境吗？</li>
-<li><strong>难</strong>。学习<code>Selenium</code>的成本太高，只有我一个人觉得<code>Selenium</code>比<code>Requests</code>难一百倍吗？</li>
-</ol>
-<p>我能想到的就这么多了，欢迎各位大佬补充。所以，如果可以使用 <code>Requests</code> 完成的，别用 <code>Selenium</code>，OK，洗脑完成。</p>
-<p>之前面试爬虫工程师有一题就是：如何处理网站的登录系统？ A.浏览器模拟   B.HTTP请求</p>
-<p>如果你想做测试工程师，那肯定需要学会 <code>Selenium</code>，公司一个妹子就是测试，现在学了 <code>Selenium</code>，工作轻松了好多。</p>
-<p>最后，无耻的来个广告，本公司招聘爬虫工程师，希望和你成为队友!</p>
-<p><img src="https://i.imgur.com/LyndQTt.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第二十九篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;如果可以使用 &lt;code&gt;Requests&lt;/code&gt; 完成的，别用 &lt;code&gt;Selenium&lt;/code&gt; (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/requests/requests/master/docs/_static/requests-logo-small.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="Selenium" scheme="https://zhangslob.github.io/tags/Selenium/"/>
     
   </entry>
   
