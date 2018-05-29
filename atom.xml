@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-05-28T15:57:13.814Z</updated>
+  <updated>2018-05-29T16:03:32.090Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,13 +16,94 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>爬虫学到什么程度可以去找工作</title>
+    <link href="https://zhangslob.github.io/2018/05/29/%E7%88%AC%E8%99%AB%E5%AD%A6%E5%88%B0%E4%BB%80%E4%B9%88%E7%A8%8B%E5%BA%A6%E5%8F%AF%E4%BB%A5%E5%8E%BB%E6%89%BE%E5%B7%A5%E4%BD%9C/"/>
+    <id>https://zhangslob.github.io/2018/05/29/爬虫学到什么程度可以去找工作/</id>
+    <published>2018-05-29T14:52:52.000Z</published>
+    <updated>2018-05-29T16:03:32.090Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十一篇原创文章
+</code></pre><p>分享下我的经验与教训  (๑• . •๑)</p>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527615838846&amp;di=6927100e3cb49201774aa07736031e9b&amp;imgtype=0&amp;src=http%3A%2F%2Fwww.btestingsky.com%2Ffiles%2Fcourse%2F2015%2F04-14%2F16211177d887256747.gif%3F4.2.0" alt=""></p>
+<a id="more"></a>
+<p>最近很多朋友问我，我在自学爬虫，学到什么程度可以去找工作呢？</p>
+<p>这篇文章会说说我自己的心得体验，关于爬虫、关于工作，仅供参考。</p>
+<h1 id="学到哪种程度"><a href="#学到哪种程度" class="headerlink" title="学到哪种程度"></a>学到哪种程度</h1><p>暂且把目标定位初级爬虫工程师，简单列一下吧：</p>
+<p>（必要部分）</p>
+<ol>
+<li>语言选择：一般是了解Python、Java、Golang之一</li>
+<li>熟悉多线程编程、网络编程、HTTP协议相关</li>
+<li>开发过完整爬虫项目（最好有全站爬虫经验，这个下面会说到）</li>
+<li>反爬相关，cookie、ip池、验证码等等</li>
+<li>熟练使用分布式</li>
+</ol>
+<p>（非必要，建议）</p>
+<ol>
+<li>了解消息队列，如RabbitMQ、Kafka、Redis等</li>
+<li>具有数据挖掘、自然语言处理、信息检索、机器学习经验</li>
+<li>熟悉APP数据采集、中间人代理</li>
+<li>大数据处理（Hive/MR/Spark/Storm）</li>
+<li>数据库Mysql，redis，mongdb</li>
+<li>熟悉Git操作、linux环境开发</li>
+<li>读懂js代码，这个真的很重要</li>
+</ol>
+<h1 id="如何提升"><a href="#如何提升" class="headerlink" title="如何提升"></a>如何提升</h1><p>随便看看知乎上的教程就可以入门了，就Python而言，会requests当然是不够的，还需要了解scrapy和pyspider这两个框架，scrapy_redis也是需要理解原理的。</p>
+<p>分布式如何搭建、如何解决其中遇到内存、速度问题。</p>
+<p>参考 <a href="https://mp.weixin.qq.com/s?__biz=MzIwNjUxMTQyMA==&amp;mid=2247484093&amp;idx=1&amp;sn=f6d3d91af46830816c1ad30221504630&amp;chksm=9721ceeea05647f86376f66d75cff028f5c03c9930dbb1ca14bb3d290437be2509a4420d0f7a#rd" target="_blank" rel="external">scrapy-redis 和 scrapy 有什么区别？</a></p>
+<p><img src="https://i.imgur.com/1uic8Qk.jpg" alt=""></p>
+<h1 id="什么叫全站爬取"><a href="#什么叫全站爬取" class="headerlink" title="什么叫全站爬取"></a>什么叫全站爬取</h1><p>最简单的拿拉钩来举例，搜索关键词，有30页，不要以为把这30页爬完就是全站爬取了，你应该想方法把所有数据全部爬下来。</p>
+<p>什么办法，通过筛选缩小范围，慢慢来就OK了。</p>
+<p>同时，每个职位还会有推荐职位，再写一个采集推荐的爬虫。</p>
+<p><img src="https://i.imgur.com/MuvjEAt.png" alt=""></p>
+<p>这个过程需要注意的是如何去重，Mongo可以、redis也可以 </p>
+<p>参考 <a href="https://mp.weixin.qq.com/s?__biz=MzIwNjUxMTQyMA==&amp;mid=2247484074&amp;idx=1&amp;sn=c5d2e89ca4f30024ed213f07cd148cb2&amp;chksm=9721cef9a05647ef3c3ba3c5344de607af087d3688dbf089dd2a45519894469fe10bbc06a277#rd" target="_blank" rel="external">Scrapy中如何提高数据的插入速度</a></p>
+<h1 id="实际项目经验"><a href="#实际项目经验" class="headerlink" title="实际项目经验"></a>实际项目经验</h1><p>这个面试中肯定会被人问道，如：</p>
+<ol>
+<li>你爬过哪些网站</li>
+<li>日均最大采集量是多少</li>
+<li>你遇到哪些棘手问题，如何解决</li>
+<li>等等</li>
+</ol>
+<p>那么怎么找项目呢？比如我要爬微博数据，去Github中搜索下，项目还算少吗？</p>
+<p><img src="https://i.imgur.com/MlMcavz.png" alt=""></p>
+<h1 id="语言选择"><a href="#语言选择" class="headerlink" title="语言选择"></a>语言选择</h1><p>我自己建议是Python、Java、Golang最好都了解，Java爬虫的也很多，但是网上教程几乎都是Python的，悲哀。</p>
+<p>最后说下Golang，Golang真的很牛逼，说个数字，Golang可以每分钟下载网页数量 2W ，Python可以吗~~</p>
+<p><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3503054989,264376367&amp;fm=11&amp;gp=0.jpg" alt=""></p>
+<p>宣传下自己的刷题项目 <a href="https://github.com/zhangslob/Leetcode-Solutions" target="_blank" rel="external">Leetcode Solutions By All Language</a></p>
+<h1 id="关于反爬"><a href="#关于反爬" class="headerlink" title="关于反爬"></a>关于反爬</h1><p>常见的 UA、Refer等需要了解是什么东西，有些验证的ID如何产生的，是否必要；关于IP池这块我不了解，不多说，需要注意的是如何设计拉黑机制；模拟登陆也是必要的，<a href="https://github.com/xchaoinfo/fuck-login" target="_blank" rel="external">fuck-login</a> 可以研究下代码，或者提PR。</p>
+<p><img src="https://i.imgur.com/vhXq9Lw.png" alt=""></p>
+<h1 id="如何判断能力足够"><a href="#如何判断能力足够" class="headerlink" title="如何判断能力足够"></a>如何判断能力足够</h1><p>很简单，给个任务，爬取知乎上所有问题。</p>
+<p>你会如何思考并设计这个项目？</p>
+<p>欢迎留言指出</p>
+<hr>
+<blockquote>
+<p>以上仅为个人看法，若有不足之处请指出</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十一篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;分享下我的经验与教训  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1527615838846&amp;amp;di=6927100e3cb49201774aa07736031e9b&amp;amp;imgtype=0&amp;amp;src=http%3A%2F%2Fwww.btestingsky.com%2Ffiles%2Fcourse%2F2015%2F04-14%2F16211177d887256747.gif%3F4.2.0&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
+  
+  <entry>
     <title>你写过哪些让你睡不好觉的BUG</title>
     <link href="https://zhangslob.github.io/2018/05/28/%E4%BD%A0%E5%86%99%E8%BF%87%E5%93%AA%E4%BA%9B%E8%AE%A9%E4%BD%A0%E7%9D%A1%E4%B8%8D%E5%A5%BD%E8%A7%89%E7%9A%84BUG/"/>
     <id>https://zhangslob.github.io/2018/05/28/你写过哪些让你睡不好觉的BUG/</id>
     <published>2018-05-28T15:38:35.000Z</published>
-    <updated>2018-05-28T15:57:13.814Z</updated>
+    <updated>2018-05-29T14:54:00.475Z</updated>
     
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四五十篇原创文章
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十篇原创文章
 </code></pre><p>你写过什么有趣的BUG？  (๑• . •๑)</p>
 <p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527532149198&amp;di=dcd173ae2aab83b73a2e6bfd043a8ca9&amp;imgtype=0&amp;src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171024%2F8d81ef9e1a014084af9aa0a4e068f75b.jpeg" alt=""></p>
 <a id="more"></a>
@@ -42,7 +123,7 @@
     
     <summary type="html">
     
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四五十篇原创文章
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十篇原创文章
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;你写过什么有趣的BUG？  (๑• . •๑)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1527532149198&amp;amp;di=dcd173ae2aab83b73a2e6bfd043a8ca9&amp;amp;imgtype=0&amp;amp;src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171024%2F8d81ef9e1a014084af9aa0a4e068f75b.jpeg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
@@ -1333,170 +1414,6 @@ e-packages\\lxml&#39;</code></p>
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PEP8规则及Pycharm应用</title>
-    <link href="https://zhangslob.github.io/2018/02/08/PEP8%E8%A7%84%E5%88%99%E5%8F%8APycharm%E5%BA%94%E7%94%A8/"/>
-    <id>https://zhangslob.github.io/2018/02/08/PEP8规则及Pycharm应用/</id>
-    <published>2018-02-08T13:06:23.000Z</published>
-    <updated>2018-02-08T13:13:47.006Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十一篇原创文章
-</code></pre><p>学习下 Python增强建议书  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/8HyHkph.png" alt=""></p>
-<a id="more"></a>
-<h1 id="PEP8"><a href="#PEP8" class="headerlink" title="PEP8"></a>PEP8</h1><blockquote>
-<p>PEP是 Python Enhancement Proposal 的缩写，翻译过来就是 Python增强建议书 </p>
-</blockquote>
-<p>PEP8 是什么呢，简单说就是一种编码规范，是为了让代码“更好看”，更容易被阅读。</p>
-<p>具体有这些规范，参考 <a href="https://www.python.org/dev/peps/pep-0008/" target="_blank" rel="external">PEP 8 – Style Guide for Python Code</a></p>
-<p>For example</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">Yes: <span class="keyword">import</span> os</div><div class="line">     <span class="keyword">import</span> sys</div><div class="line"></div><div class="line">No:  <span class="keyword">import</span> sys, os</div><div class="line"></div><div class="line"></div><div class="line">Yes:</div><div class="line">i = i + <span class="number">1</span></div><div class="line">submitted += <span class="number">1</span></div><div class="line">x = x*<span class="number">2</span> - <span class="number">1</span></div><div class="line">hypot2 = x*x + y*y</div><div class="line">c = (a+b) * (a-b)</div><div class="line"></div><div class="line"></div><div class="line">No:</div><div class="line">i=i+<span class="number">1</span></div><div class="line">submitted +=<span class="number">1</span></div><div class="line">x = x * <span class="number">2</span> - <span class="number">1</span></div><div class="line">hypot2 = x * x + y * y</div><div class="line">c = (a + b) * (a - b)</div></pre></td></tr></table></figure>
-<p>对于初学者（例如我）来说，这些标准太多，在实际coding中可能很难记住所有的。之前招聘爬虫工程师，会PEP8也会加分，所以学习下PEP8还是有帮助的。</p>
-<h1 id="Pycharm-设置"><a href="#Pycharm-设置" class="headerlink" title="Pycharm 设置"></a>Pycharm 设置</h1><p>PyCharm 配置 PEP 8 代码提示<br> 直接在右下角调整 Highlighting Level 为 Inspections 就能自动 PEP 8提示 (一般默认就是这个)</p>
-<p><img src="https://i.imgur.com/OrCItzF.png" alt=""></p>
-<p>For example</p>
-<p><img src="https://i.imgur.com/qK1iZVM.png" alt=""></p>
-<p>鼠标移到上方会提示： <code>PEP 8: expected 2 blank lines, found 1</code>，我们再增加一个空格就好了，你的代码中有任何不符合 PEP8 规范的地方都会有“<del>~</del>”提示</p>
-<p><img src="https://i.imgur.com/kq4POwe.png" alt=""></p>
-<p>这是一个困扰了我很久的问题，我一直不知道是哪里出了错，看英文也不懂，最后去Google才知道，创建字典的写法不规范，应该这样写：</p>
-<p><code>item = dict()</code></p>
-<h1 id="其他工具"><a href="#其他工具" class="headerlink" title="其他工具"></a>其他工具</h1><p>除了Pycharm，还有其他工具可以提示</p>
-<ol>
-<li>Google 开源的 Python 文件格式化工具：<a href="https://github.com/google/yapf" target="_blank" rel="external">github.com/google/yapf</a></li>
-<li>pyflakes, pylint 等工具及各种编辑器的插件</li>
-</ol>
-<h1 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h1><p>好吧，这里才是正文，正确的规范如下：</p>
-<h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><ul>
-<li>不要使用 tab 缩进</li>
-<li>使用任何编辑器写 Python，请把一个 tab 展开为 4 个空格</li>
-<li>绝对不要混用 tab 和空格，否则容易出现 <code>IndentationError</code></li>
-</ul>
-<h2 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h2><ul>
-<li>在 list, dict, tuple, set, 参数列表的 , 后面加一个空格</li>
-<li>在 dict 的 : 后面加一个空格</li>
-<li>在注释符号 # 后面加一个空格，但是 <code>#!/usr/bin/python</code> 的 <code>#</code> 后不能有空格</li>
-<li>操作符两端加一个空格，如 +, -, *, /, |, &amp;, =</li>
-<li>接上一条，在参数列表里的 = 两端不需要空格</li>
-<li>括号（(), {}, []）内的两端不需要空格</li>
-</ul>
-<h2 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h2><ul>
-<li>function 和 class 顶上两个空行</li>
-<li>class 的 method 之间一个空行</li>
-<li>函数内逻辑无关的段落之间空一行，不要过度使用空行</li>
-<li>不要把多个语句写在一行，然后用 ; 隔开</li>
-<li><code>if/for/while</code> 语句中，即使执行语句只有一句，也要另起一行</li>
-</ul>
-<h2 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h2><ul>
-<li>每一行代码控制在 80 字符以内</li>
-<li>使用 \ 或 () 控制换行，举例：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(first, second, third, fourth, fifth,</span></span></div><div class="line">        sixth, and_some_other_very_long_param):</div><div class="line">    user = User.objects.filter_by(first=first, second=second, third=third) \</div><div class="line">        .skip(<span class="number">100</span>).limit(<span class="number">100</span>) \</div><div class="line">        .all()</div><div class="line"></div><div class="line">text = (<span class="string">'Long strings can be made up '</span></div><div class="line">        <span class="string">'of several shorter strings.'</span>)</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><ul>
-<li>使用有意义的，英文单词或词组，绝对不要使用汉语拼音</li>
-<li>package/module 名中不要出现 -</li>
-<li>各种类型的命名规范：</li>
-</ul>
-<p><img src="https://i.imgur.com/0sVNGR9.png" alt=""></p>
-<h2 id="import"><a href="#import" class="headerlink" title="import"></a>import</h2><ul>
-<li>所有 import 尽量放在文件开头，在 docstring 下面，其他变量定义的上面</li>
-<li>不要使用 from foo imort *</li>
-<li>import 需要分组，每组之间一个空行，每个分组内的顺序尽量采用字典序，分组顺序是：<ol>
-<li>标准库</li>
-<li>第三方库</li>
-<li>本项目的 package 和 module</li>
-</ol>
-</li>
-<li>不要使用隐式的相对导入（implicit relative imports），可是使用显示的相对导入（explicit relative imports），如 <code>from ..utils import parse</code>，最好使用全路径导入（absolute imports）</li>
-<li>对于不同的 package，一个 import 单独一行，同一个 package/module 下的内容可以写一起：</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># bad</span></div><div class="line"><span class="keyword">import</span> sys, os, time</div><div class="line"></div><div class="line"><span class="comment"># good</span></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> time</div><div class="line"></div><div class="line"><span class="comment"># ok</span></div><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template, jsonify</div></pre></td></tr></table></figure>
-<ul>
-<li>为了避免可能出现的命名冲突，可以使用 as 或导入上一级命名空间</li>
-<li>不要出现循环导入(cyclic import)</li>
-</ul>
-<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><ul>
-<li>文档字符串 docstring, 是 package, module, class, method, function 级别的注释，可以通过 <strong>doc</strong> 成员访问到，注释内容在一对 “”” 符号之间</li>
-<li>function, method 的文档字符串应当描述其功能、输入参数、返回值，如果有复杂的算法和实现，也需要写清楚</li>
-<li>不要写错误的注释，不要无谓的注释</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># bad 无谓的注释</span></div><div class="line">x = x + <span class="number">1</span>       <span class="comment"># increase x by 1</span></div><div class="line"></div><div class="line"><span class="comment"># bad 错误的注释</span></div><div class="line">x = x - <span class="number">1</span>       <span class="comment"># increase x by 1</span></div></pre></td></tr></table></figure>
-<ul>
-<li>优先使用英文写注释，英文不好全部写中文，否则更加看不懂</li>
-</ul>
-<h2 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h2><ul>
-<li>不要轻易使用 try/except</li>
-<li>except 后面需要指定捕捉的异常，裸露的 except 会捕捉所有异常，意味着会隐藏潜在的问题</li>
-<li>可以有多个 except 语句，捕捉多种异常，分别做异常处理</li>
-<li>使用 finally 子句来处理一些收尾操作</li>
-<li><p>try/except 里的内容不要太多，只在可能抛出异常的地方使用，如：</p>
-  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># bad</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    user = User()</div><div class="line">    user.name = <span class="string">"leon"</span></div><div class="line">    user.age = int(age) <span class="comment"># 可能抛出异常</span></div><div class="line">    user.created_at = datetime.datetime.utcnow()</div><div class="line"></div><div class="line">    db.session.add(user)</div><div class="line">    db.session.commit() <span class="comment"># 可能抛出异常</span></div><div class="line"><span class="keyword">except</span>:</div><div class="line">    db.session.rollback()</div><div class="line"></div><div class="line"><span class="comment"># better</span></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    age = int(age)</div><div class="line"><span class="keyword">except</span> (TypeError, ValueError):</div><div class="line">    <span class="keyword">return</span> <span class="comment"># 或别的操作</span></div><div class="line"></div><div class="line">user = User()</div><div class="line">user.name = <span class="string">"leon"</span></div><div class="line">user.age = age</div><div class="line">user.created_at = datetime.datetime.utcnow()</div><div class="line">db.session.add(user)</div><div class="line"></div><div class="line"><span class="keyword">try</span>:</div><div class="line">    db.session.commit()</div><div class="line"><span class="keyword">except</span> sqlalchemy.exc.SQLAlchemyError: <span class="comment"># 或者更具体的异常</span></div><div class="line">    db.session.rollback()</div><div class="line"><span class="keyword">finally</span>:</div><div class="line">    db.session.close()</div></pre></td></tr></table></figure>
-</li>
-<li><p>从 <code>Exception</code> 而不是 <code>BaseException</code> 继承自定义的异常类</p>
-</li>
-</ul>
-<h2 id="Class（类）"><a href="#Class（类）" class="headerlink" title="Class（类）"></a>Class（类）</h2><ul>
-<li>显示的写明父类，如果不是继承自别的类，就继承自 object 类</li>
-<li>使用 super 调用父类的方法</li>
-<li>支持多继承，即同时有多个父类，建议使用 Mixin</li>
-</ul>
-<h2 id="编码建议"><a href="#编码建议" class="headerlink" title="编码建议"></a>编码建议</h2><hr>
-<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><ul>
-<li>使用字符串的 <code>join</code> 方法拼接字符串</li>
-<li>使用字符串类型的方法，而不是 <code>string</code> 模块的方法</li>
-<li>使用 <code>startswith</code> 和 <code>endswith</code> 方法比较前缀和后缀</li>
-<li>使用 <code>format</code> 方法格式化字符串</li>
-</ul>
-<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><ul>
-<li>空的 list, str, tuple, set, dict 和 0, 0.0, None 都是 False</li>
-<li>使用 if some_list 而不是 if len(some_list) 判断某个 list 是否为空，其他类型同理</li>
-<li>使用 is 和 is not 与单例（如 None）进行比较，而不是用 == 和 !=</li>
-<li>使用 if a is not None 而不是 if not a is None</li>
-<li>用 isinstance 而不是 type 判断类型</li>
-<li>不要用 == 和 != 与 True 和 False 比较（除非有特殊情况，如在 sqlalchemy 中可能用到）</li>
-<li><p>使用 in 操作：</p>
-<ol>
-<li><p>用 key in dict 而不是 dict.has_key()</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># bad</span></div><div class="line"><span class="keyword">if</span> d.has_key(k):</div><div class="line">    do_something()</div><div class="line"></div><div class="line"><span class="comment"># good</span></div><div class="line"><span class="keyword">if</span> k <span class="keyword">in</span> d:</div><div class="line">    do_something()</div></pre></td></tr></table></figure>
-<p>2.用 set 加速 “存在性” 检查，list 的查找是线性的，复杂度 O(n)，set 底层是 hash table, 复杂度 O(1)，但用 set 需要比 list 更多内存空间</p>
-</li>
-</ol>
-</li>
-</ul>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li>使用列表表达式（<a href="https://www.python.org/dev/peps/pep-0202/" target="_blank" rel="external">list comprehension</a>），字典表达式(<a href="https://www.python.org/dev/peps/pep-0274/" target="_blank" rel="external">dict comprehension</a>, Python 2.7+) 和生成器(generator)</li>
-<li>dict 的 get 方法可以指定默认值，但有些时候应该用 [] 操作，使得可以抛出 KeyError</li>
-<li>使用 for item in list 迭代 list, for index, item in enumerate(list) 迭代 list 并获取下标</li>
-<li>使用内建函数 sorted 和 list.sort 进行排序</li>
-<li>适量使用 map, reduce, filter 和 lambda，使用内建的 all, any 处理多个条件的判断</li>
-<li>使用 defaultdict (Python 2.5+), Counter(Python 2.7+) 等 “冷门” 但好用的标准库算法和数据结构</li>
-<li>使用装饰器(decorator)</li>
-<li>使用 with 语句处理上下文</li>
-<li>有些时候不要对类型做太过严格的限制，利用 Python 的鸭子类型（Duck Type）特性</li>
-<li>使用 logging 记录日志，配置好格式和级别</li>
-<li>了解 Python 的 Magic Method：<a href="https://github.com/RafeKettler/magicmethods" target="_blank" rel="external">A Guide to Python’s Magic Methods</a>, <a href="http://pycoders-weekly-chinese.readthedocs.io/en/latest/issue6/a-guide-to-pythons-magic-methods.html" target="_blank" rel="external">Python 魔术方法指南</a></li>
-<li>阅读优秀的开源代码，如 <a href="https://github.com/pallets/flask" target="_blank" rel="external">Flask</a> 框架, <a href="https://github.com/requests/requests" target="_blank" rel="external">Requests for Humans</a></li>
-<li>不要重复造轮子，查看标准库、PyPi、Github、Google 等使用现有的优秀的解决方案</li>
-</ul>
-<h1 id="反思"><a href="#反思" class="headerlink" title="反思"></a>反思</h1><p>写程序的好习惯在于理解、坚持，然后就是运用自如！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十一篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;学习下 Python增强建议书  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/8HyHkph.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Python" scheme="https://zhangslob.github.io/categories/Python/"/>
-    
-    
-      <category term="PEP8" scheme="https://zhangslob.github.io/tags/PEP8/"/>
-    
-      <category term="Pycharm" scheme="https://zhangslob.github.io/tags/Pycharm/"/>
     
   </entry>
   
