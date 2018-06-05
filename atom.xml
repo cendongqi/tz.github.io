@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-05-29T16:03:32.090Z</updated>
+  <updated>2018-06-05T14:35:15.769Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,11 +16,72 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>zsh(+fish)=完美终端</title>
+    <link href="https://zhangslob.github.io/2018/06/05/zsh-fish-%E5%AE%8C%E7%BE%8E%E7%BB%88%E7%AB%AF/"/>
+    <id>https://zhangslob.github.io/2018/06/05/zsh-fish-完美终端/</id>
+    <published>2018-06-05T14:27:23.000Z</published>
+    <updated>2018-06-05T14:35:15.769Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十二篇原创文章
+</code></pre><p>好看、好用  (๑• . •๑)</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180605191928.png" alt=""></p>
+<a id="more"></a>
+<p>自从用了深度，有一个非常明显的变化就是终端的改变，实在是比windows的好用一百倍，尤其是使用一些工具。下面说说我现在的配置。</p>
+<p>如下图，是我目前正在使用的终端，集成了zsh和fish的功能，目前用着最顺手的。</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180605190132.png" alt=""></p>
+<p><a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">https://github.com/robbyrussell/oh-my-zsh</a></p>
+<h1 id="安装zsh"><a href="#安装zsh" class="headerlink" title="安装zsh"></a>安装zsh</h1><p>一般来说，直接运行<code>sudo apt-get install zsh</code>即可，当然也可以下载源<a href="http://zsh.sourceforge.net/Arc/source.html" target="_blank" rel="external">Download zsh source</a>，使用curl安装<code>curl -L &lt;https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh&gt; | sh</code></p>
+<p>把<code>zsh</code>设置为默认终端<code>chsh -s $(which zsh)</code></p>
+<p>更多细节参考<a href="https://github.com/robbyrussell/oh-my-zsh/wiki/Installing-ZSH" target="_blank" rel="external">Installing ZSH</a></p>
+<p>先欣赏下<code>zsh</code>的效果。来自官网</p>
+<p><img src="https://i.imgur.com/hLnYQUr.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/DHJp9Zy.jpg" alt=""></p>
+<p><img src="https://i.imgur.com/EA7m7Ln.jpg" alt=""></p>
+<h1 id="修改zsh主题"><a href="#修改zsh主题" class="headerlink" title="修改zsh主题"></a>修改zsh主题</h1><p><code>vi ~/.zshrc</code>，然后找到<code>ZSH_THEME</code>，默认的是<code>ZSH_THEME=robbyrussell</code>，就像我这样，因为我这里用的是深度终端，而且也修改了终端主题</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180605191149.png" alt=""></p>
+<p>当然，你可以来这里看看，选一个自己喜欢的主题 <a href="https://github.com/robbyrussell/oh-my-zsh/wiki/themes" target="_blank" rel="external">Themes</a></p>
+<p><img src="https://cloud.githubusercontent.com/assets/2618447/6316862/70f58fb6-ba03-11e4-82c9-c083bf9a6574.png" alt=""></p>
+<p><code>agnoster</code>也很好看。</p>
+<p>据说大神都用<code>random</code>，是真的吗？</p>
+<h1 id="安装-fish"><a href="#安装-fish" class="headerlink" title="安装 fish"></a>安装 fish</h1><p>有句话这样说</p>
+<blockquote>
+<p>二逼青年用 bash，普通青年用 zsh，文艺青年用 <a href="http://fishshell.com/" target="_blank" rel="external">fish</a></p>
+</blockquote>
+<p>我最喜欢 <code>fish</code>的一点就是 <strong>根据历史输入自动补全</strong>，来看图，只要是历史有输入的，都会有记录有提示，对于一些很长的命令，简直超级爽，再也不用手动复制粘贴了。</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180605191928.png" alt=""></p>
+<p>但是<code>fish</code>和<code>zsh</code>好像不能同时使用，但是有一个插件可以在<code>zsh</code>上达到和<code>fish</code>同样的效果。</p>
+<p>地址在这里 <a href="https://github.com/zsh-users/zsh-autosuggestions" target="_blank" rel="external"><strong>zsh-autosuggestions</strong></a></p>
+<p>首先下载下来</p>
+<p><code>git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions</code></p>
+<p>然后<code>vi ~/.zshrc</code>，添加<code>zsh-autosuggestions</code>到plugins中，<code>git</code>是默认就有的。然后新打开一个终端，就可以达到<code>fish</code>有的你是提示功能了。</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180605193558.png" alt=""></p>
+<p>还可以安装语法高亮插件 <a href="https://github.com/zsh-users/zsh-syntax-highlighting" target="_blank" rel="external">zsh-syntax-highlighting</a>，安装方法和上面的一样，在plugins中添加<code>zsh-syntax-highlighting</code>即可。</p>
+<p>这些是我目前发现的比较好用的插件和工具，大家有什么推荐的吗？</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十二篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;好看、好用  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180605191928.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="终端" scheme="https://zhangslob.github.io/categories/%E7%BB%88%E7%AB%AF/"/>
+    
+    
+      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
+    
+      <category term="zsh" scheme="https://zhangslob.github.io/tags/zsh/"/>
+    
+  </entry>
+  
+  <entry>
     <title>爬虫学到什么程度可以去找工作</title>
     <link href="https://zhangslob.github.io/2018/05/29/%E7%88%AC%E8%99%AB%E5%AD%A6%E5%88%B0%E4%BB%80%E4%B9%88%E7%A8%8B%E5%BA%A6%E5%8F%AF%E4%BB%A5%E5%8E%BB%E6%89%BE%E5%B7%A5%E4%BD%9C/"/>
     <id>https://zhangslob.github.io/2018/05/29/爬虫学到什么程度可以去找工作/</id>
     <published>2018-05-29T14:52:52.000Z</published>
-    <updated>2018-05-29T16:03:32.090Z</updated>
+    <updated>2018-05-29T16:09:07.909Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十一篇原创文章
 </code></pre><p>分享下我的经验与教训  (๑• . •๑)</p>
@@ -72,12 +133,15 @@
 <p>宣传下自己的刷题项目 <a href="https://github.com/zhangslob/Leetcode-Solutions" target="_blank" rel="external">Leetcode Solutions By All Language</a></p>
 <h1 id="关于反爬"><a href="#关于反爬" class="headerlink" title="关于反爬"></a>关于反爬</h1><p>常见的 UA、Refer等需要了解是什么东西，有些验证的ID如何产生的，是否必要；关于IP池这块我不了解，不多说，需要注意的是如何设计拉黑机制；模拟登陆也是必要的，<a href="https://github.com/xchaoinfo/fuck-login" target="_blank" rel="external">fuck-login</a> 可以研究下代码，或者提PR。</p>
 <p><img src="https://i.imgur.com/vhXq9Lw.png" alt=""></p>
+<blockquote>
+<p>模拟登陆其实就是一步步的请求，保存cookie会话</p>
+</blockquote>
 <h1 id="如何判断能力足够"><a href="#如何判断能力足够" class="headerlink" title="如何判断能力足够"></a>如何判断能力足够</h1><p>很简单，给个任务，爬取知乎上所有问题。</p>
 <p>你会如何思考并设计这个项目？</p>
 <p>欢迎留言指出</p>
 <hr>
 <blockquote>
-<p>以上仅为个人看法，若有不足之处请指出</p>
+<p>以上仅为个人看法，若有不足之处请指出。希望可以帮助你</p>
 </blockquote>
 ]]></content>
     
@@ -1299,110 +1363,6 @@ e-packages\\lxml&#39;</code></p>
     <summary type="html">
     
       &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十三篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;开始学习&lt;code&gt;Scrapy&lt;/code&gt;源码  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/5wP0fKB.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Scrapy" scheme="https://zhangslob.github.io/categories/Scrapy/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Scrapy源码（1）——爬虫流程概览</title>
-    <link href="https://zhangslob.github.io/2018/02/24/Scrapy%E6%BA%90%E7%A0%81%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B%E6%A6%82%E8%A7%88/"/>
-    <id>https://zhangslob.github.io/2018/02/24/Scrapy源码（1）——爬虫流程概览/</id>
-    <published>2018-02-24T13:16:23.000Z</published>
-    <updated>2018-02-26T15:15:04.711Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十二篇原创文章
-</code></pre><p>开始学习<code>Scrapy</code>源码  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/5wP0fKB.png" alt=""></p>
-<a id="more"></a>
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>使用 <code>Scrapy</code> 已经有一段时间了，觉得自己有必要对源码好好的学习下了，所以写下记录，希望能加深自己的理解。</p>
-<blockquote>
-<p>Scrapy | A Fast and Powerful Scraping and Web Crawling Framework</p>
-</blockquote>
-<p>接下来说到的是最新版本： Scrapy 1.5，暂且把 <code>Spider</code> 称为 <strong>蜘蛛</strong>，而不是爬虫。</p>
-<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Scrapy是一个开源爬虫框架，用于抓取网站并提取有用的结构化数据，如数据挖掘，信息处理或历史档案。</p>
-<p>尽管Scrapy最初是为<a href="https://en.wikipedia.org/wiki/Web_scraping" target="_blank" rel="external">网页抓取</a>设计的，但它也可以用于使用API（如<a href="https://affiliate-program.amazon.com/gp/advertising/api/detail/main.html" target="_blank" rel="external">Amazon Associates Web Services</a>）或作为通用网络抓取工具提取数据。</p>
-<p>一个最简单的例子，相信大家都写过</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">QuotesSpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    name = <span class="string">"quotes"</span></div><div class="line">    start_urls = [</div><div class="line">        <span class="string">'http://quotes.toscrape.com/tag/humor/'</span>,</div><div class="line">    ]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="keyword">for</span> quote <span class="keyword">in</span> response.css(<span class="string">'div.quote'</span>):</div><div class="line">            <span class="keyword">yield</span> &#123;</div><div class="line">                <span class="string">'text'</span>: quote.css(<span class="string">'span.text::text'</span>).extract_first(),</div><div class="line">                <span class="string">'author'</span>: quote.xpath(<span class="string">'span/small/text()'</span>).extract_first(),</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        next_page = response.css(<span class="string">'li.next a::attr("href")'</span>).extract_first()</div><div class="line">        <span class="keyword">if</span> next_page <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">            <span class="keyword">yield</span> response.follow(next_page, self.parse)</div></pre></td></tr></table></figure>
-<p>一般来说，创建一个Scrapy项目需要如下流程：</p>
-<ol>
-<li>使用<code>scrapy startproject spider</code>创建爬虫模板</li>
-<li>爬虫类继承<code>scrapy.Spider</code>，重写<code>parse</code>方法和逻辑</li>
-<li><code>parse</code>方法中<code>yield</code>或<code>return</code>字典、<code>Request</code>、<code>Item</code></li>
-<li>自定义<code>Item</code>、<code>Middlewares</code>、<code>Pipelines</code>等</li>
-<li>使用<code>scrapy crawl &lt;spider_name&gt;</code>或新建文件<code>cmdline.execute(&quot;scrapy crawl spider_name&quot;.split())</code>运行（便于调试）</li>
-<li>其它</li>
-</ol>
-<h1 id="架构概述"><a href="#架构概述" class="headerlink" title="架构概述"></a>架构概述</h1><p><img src="https://doc.scrapy.org/en/latest/_images/scrapy_architecture_02.png" alt=""></p>
-<p>这是一张非常经典的图，基本上说到Scrapy都会用到它，来源于<a href="https://doc.scrapy.org/en/latest/topics/architecture.html#data-flow" target="_blank" rel="external">Architecture overview</a></p>
-<h2 id="核心组件（Components）"><a href="#核心组件（Components）" class="headerlink" title="核心组件（Components）"></a>核心组件（Components）</h2><ul>
-<li><code>Scrapy Engine</code>：<strong>引擎</strong>，负责控制系统所有组件之间的数据流，并在发生某些操作时触发事件；</li>
-<li><code>Scheduler</code>：<strong>调度器</strong>，接收来自引擎的请求，并将它们排入队列，以便在引擎请求它们时将它们提供给它们（也提供给引擎）；</li>
-<li><code>Downloader</code>：<strong>下载器</strong>，负责从网络上获取网页并将它们返回到引擎，然后引擎将它们返回给蜘蛛/spiders；</li>
-<li><code>Spiders</code>：<strong>蜘蛛</strong>，是用户编写的自定义类，用于解析响应并从中提取项目（也称为抓取的项目）或追加其他请求；</li>
-<li><code>Item Pipeline</code>：<strong>管道</strong>，负责输出结构化数据，可自定义输出位置，典型的任务包括清理，验证和持久性；</li>
-<li><code>Downloader middlewares</code>：<strong>下载中间件</strong>，位于引擎和下载器之间的特定钩子/hooks，当它们从引擎传递到下载器时处理请求，以及从下载器传递到引擎的响应，常用于如下情况：<ul>
-<li>在将请求发送到下载器之前处理请求（即在Scrapy将请求发送到网站之前）;</li>
-<li>在将其传递给蜘蛛之前改变接收到的响应;</li>
-<li>发送新的请求，而不是将接收到的响应传递给蜘蛛;</li>
-<li>向蜘蛛传递响应而不需要获取网页;</li>
-<li>默默地放下一些请求。</li>
-</ul>
-</li>
-<li><code>Spider middlewares</code>：<strong>Spider中间件</strong>，特定的钩子，位于引擎和蜘蛛之间，能够处理蜘蛛输入（响应）和输出（项目和请求），常用于如下情况：<ul>
-<li>spider回调的后处理输出 更改/添加/删除请求或items;</li>
-<li>后处理start_requests;</li>
-<li>处理蜘蛛异常;</li>
-<li>根据响应内容为一些请求调用errback而不是callback。</li>
-</ul>
-</li>
-<li><code>Event-driven networking</code>：<strong>事件驱动的网络</strong>，Scrapy是用Twisted编写的，这是一个流行的事件驱动的Python网络框架。 因此，它使用非阻塞（又称异步）代码来实现并发。</li>
-</ul>
-<blockquote>
-<p>Twisted is an event-driven networking engine written in Python and licensed under the open source ​MIT license. </p>
-</blockquote>
-<h2 id="数据流（Data-flow）"><a href="#数据流（Data-flow）" class="headerlink" title="数据流（Data flow）"></a>数据流（Data flow）</h2><p>Scrapy中的数据流由执行引擎控制，如下所示：</p>
-<ol>
-<li>引擎获取最初的请求从蜘蛛抓取（<code>start_urls</code>）。</li>
-<li>引擎在调度程序中调度请求，并要求下一个请求进行采集。</li>
-<li>调度器将下一个请求返回给引擎。</li>
-<li>引擎将请求发送到下载器，通过下载器中间件。</li>
-<li>一旦页面完成下载，<code>Downloader</code>会生成一个响应（包含该页面）并将其发送到引擎，并通过<code>Downloader Middlewares</code>。</li>
-<li>引擎从<code>Downloader</code>收到响应并将其发送给<code>Spider</code>进行处理，并通过<code>Spider Middleware</code>传递。</li>
-<li><code>Spider</code>处理响应，并通过<code>Spider</code>中间件将抓取的项目和新的请求（后续）返回给引擎。</li>
-<li>引擎将处理后的项目发送到项目管道，然后将处理后的请求发送到调度程序，并要求可能的下一个请求进行采集。</li>
-<li>该过程重复（从第1步开始），直到调度器没有更多请求。</li>
-</ol>
-<p>找到一张图，便于理解：</p>
-<p><img src="https://i.imgur.com/taeQOrA.png" alt=""></p>
-<p>第一期差不多就到这了，没有说很多代码，主要是宏观上来观察 <code>Scrapy</code> 的架构，是如何运行。之后会更多的查看Scrapy的源代码，就近是如何采集数据的。</p>
-<p>（内心有点小恐慌，不知道会写成什么样子。）</p>
-<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><p>关于如何阅读项目源代码，找到一篇不错的文章，共享：<a href="https://zhijianshusheng.github.io/2017/06/07/2017/6/%E5%A6%82%E4%BD%95%E9%98%85%E8%AF%BB%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" target="_blank" rel="external">如何阅读开源项目</a></p>
-<p>主要是这几部分：</p>
-<ol>
-<li>看：静态对代码进行分析，看相关资料，代码逻辑。</li>
-<li>跑：将项目在IDE里面跑起来，通过IDE调试参数，加Log等。</li>
-<li>查：阅读过程中肯定会遇到不懂的，这时候需要通过搜索引擎来解决你的疑惑。</li>
-</ol>
-<p>回顾：</p>
-<ol>
-<li>Scrapy源码（1）——爬虫流程概览</li>
-<li>Scrapy源码（2）——爬虫开始的地方</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十二篇原创文章
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;开始学习&lt;code&gt;Scrapy&lt;/code&gt;源码  (๑• . •๑)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/5wP0fKB.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
