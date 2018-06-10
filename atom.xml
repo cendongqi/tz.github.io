@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-06-05T14:35:15.769Z</updated>
+  <updated>2018-06-10T08:04:50.609Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,162 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为了知道胡歌粉丝的男女比率，爬了三百万微博数据</title>
+    <link href="https://zhangslob.github.io/2018/06/07/%E8%83%A1%E6%AD%8C%E7%94%B7%E7%B2%89%E5%A4%9A%E8%BF%98%E6%98%AF%E5%A5%B3%E7%B2%89%E5%A4%9A-%E7%88%AC%E7%88%AC%E5%BE%AE%E5%8D%9A/"/>
+    <id>https://zhangslob.github.io/2018/06/07/胡歌男粉多还是女粉多-爬爬微博/</id>
+    <published>2018-06-07T13:59:53.000Z</published>
+    <updated>2018-06-10T08:04:50.609Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十三篇原创文章
+</code></pre><p>老胡好帅  (๑• . •๑)</p>
+<p><img src="http://wx1.sinaimg.cn/large/48e837eely1fmhxeqwby0j22ds1sg157.jpg" alt=""></p>
+<a id="more"></a>
+<p>最近偶然间看到一条新闻，标题是：“胡歌作为一个男性明星，男粉丝比女粉丝还多，这不科学！”</p>
+<p><img src="https://i.imgur.com/959B59J.png" alt=""></p>
+<p>文中这样说道“胡歌在微博上的粉丝就已经达到了5748.9398万人，并且通过查看粉丝可以发现许多都是男性粉丝，这不得不说这是独一无二了”</p>
+<p>当时我就震惊了，“通过查看粉丝”？？？这是什么操作，现在的UC小编越来越多了吗？</p>
+<p>我作为一名老胡的粉丝，简直是不能忍，这完全是在瞎写啊。</p>
+<p>所以我有个想法，把胡歌微博上六千万粉丝数据爬取下来，看看到底男粉丝多还是女粉丝多。</p>
+<blockquote>
+<p>大家可以在自己心中猜测一个答案，到底男粉多还是女粉多呢～～。我的答案是男性比较多。</p>
+</blockquote>
+<h1 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h1><p><img src="https://i.imgur.com/h1TyXZ7.png" alt=""></p>
+<p>这里可以看到胡歌微博粉丝总数约6千万，本次我的目标就是尽力去找到胡歌<strong>活跃粉丝</strong>的男女比例。</p>
+<p>但是我们知道微博是有限制的，微博不会把所有数据都展示出来，如图</p>
+<p><img src="https://i.imgur.com/UxASfy6.png" alt=""></p>
+<p>那么问题来了，我要怎样才能尽可能多的抓到粉丝数据？</p>
+<p>这里我就想要尽可能多的抓取到老胡的活跃粉丝， 所谓活跃粉丝，指的是除去“不转发、不评论、不点赞”这些“三不”用户，是活跃的、有参与的用户。这些用户才是真正有价值的，正好去除了僵尸粉。</p>
+<h1 id="两种思路"><a href="#两种思路" class="headerlink" title="两种思路"></a>两种思路</h1><p>采集微博粉丝，目前我有两种方法来解决这个问题，：</p>
+<ol>
+<li>全量采集。采集微博所有用户数据，包括关注、粉丝等。通过粉丝的粉丝、关注的关注、用户分类、推荐等等各种方法拿到微博全量用户数据。</li>
+<li>采样。采集胡歌的所有微博下有评论、点赞、转发的用户，凡是有参与过的亲密值加一，当这个值超过一定限度时（比如说5或者10），我们就认为该用户是胡歌的粉丝。</li>
+</ol>
+<p>想了想，第一种方法短时间内是不现实的，方法2倒是可以尝试一波。</p>
+<h1 id="爬虫逻辑"><a href="#爬虫逻辑" class="headerlink" title="爬虫逻辑"></a>爬虫逻辑</h1><p>爬虫分为三步：</p>
+<ol>
+<li>采集胡歌所有微博</li>
+<li>采集每条微博的三类数据（转发、评论、点赞）</li>
+<li>数据清洗</li>
+</ol>
+<p>好了，现在已经非常清晰了，下面就开始去寻找爬取方法。</p>
+<h1 id="微博接口"><a href="#微博接口" class="headerlink" title="微博接口"></a>微博接口</h1><p>根据以往的经验，weibo.cn 和 m.weibo.cn 是最简单爬取的，weibo.com 是最难的。这次我们从 m.weibo.cn 入手，分析可以得到胡歌微博的接口，而且是无需登录的！！！很重要。其他入口都需要解决登录难题！</p>
+<p><code>https://m.weibo.cn/api/container/getIndex?containerid=1076031223178222&amp;page={}</code></p>
+<p>返回数据：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function">cardlistInfo: &#123;</span></div><div class="line"><span class="title">containerid</span>: "1076031223178222",</div><div class="line"><span class="title">v_p</span>: 42,</div><div class="line"><span class="title">show_style</span>: 1,</div><div class="line"><span class="title">total</span>: 3643,</div><div class="line"><span class="title">page</span>: 2</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>这里告诉我们总共有3643条数据，每页10条，那么翻页就很清晰了。</p>
+<h2 id="其他接口"><a href="#其他接口" class="headerlink" title="其他接口"></a>其他接口</h2><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">转发：https://m.weibo.cn/api/statuses/repostTimeline?id=<span class="number">4238119278366780</span>&amp;page=&#123;&#125;</div><div class="line"></div><div class="line">评论：https://m.weibo.cn/api/comments/show?id=<span class="number">4238119278366780</span>&amp;page=&#123;&#125;</div><div class="line"></div><div class="line">点赞：https://m.weibo.cn/api/attitudes/show?id=<span class="number">4238119278366780</span>&amp;page=&#123;&#125;</div></pre></td></tr></table></figure>
+<p>（想要爬其他人，替换这里的id即可）</p>
+<p>暂时不清楚总共有多少页，虽然返回的数据中有 <code>total_number</code> ，但是此数字并不准确，还需要更多测试。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">total_number: 19526897,</span></div><div class="line"><span class="title">hot_total_number</span>: 0,</div><div class="line"><span class="title">max</span>: 1952690</div></pre></td></tr></table></figure>
+<p>（简单测后发现总页数为<code>total_number//55</code>）</p>
+<h2 id="采集用户信息接口"><a href="#采集用户信息接口" class="headerlink" title="采集用户信息接口"></a>采集用户信息接口</h2><p><code>https://m.weibo.cn/api/container/getIndex?type=uid&amp;value=6114792181</code></p>
+<p>其实不需要这一次请求，因为在转发接口中已经有我们想要的数据了，如下：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function">user: &#123;</span></div><div class="line"><span class="title">id</span>: 6431898981,</div><div class="line"><span class="title">screen_name</span>: "豪气<span class="title">superiority</span>",</div><div class="line"><span class="title">profile_image_url</span>: "<span class="title">https</span>://<span class="title">tvax2.sinaimg.cn</span>/<span class="title">crop</span>.9.0.220.220.180/0071<span class="title">hAK9ly8fmdxpea2vxj306n064glj.jpg</span>",</div><div class="line"><span class="title">profile_url</span>: "<span class="title">https</span>://<span class="title">m.weibo.cn</span>/<span class="title">u</span>/6431898981?<span class="title">uid</span>=6431898981&amp;<span class="title">featurecode</span>=20000320",</div><div class="line"><span class="title">statuses_count</span>: 7255,</div><div class="line"><span class="title">verified</span>: <span class="title">false</span>,</div><div class="line"><span class="title">verified_type</span>: -1,</div><div class="line"><span class="title">close_blue_v</span>: <span class="title">false</span>,</div><div class="line"><span class="title">description</span>: "",</div><div class="line"><span class="title">gender</span>: "<span class="title">m</span>",</div><div class="line"><span class="title">mbtype</span>: 0,</div><div class="line"><span class="title">urank</span>: 4,</div><div class="line"><span class="title">mbrank</span>: 0,</div><div class="line"><span class="title">follow_me</span>: <span class="title">false</span>,</div><div class="line"><span class="title">following</span>: <span class="title">false</span>,</div><div class="line"><span class="title">followers_count</span>: 2,</div><div class="line"><span class="title">follow_count</span>: 62,</div><div class="line"><span class="title">cover_image_phone</span>: "<span class="title">https</span>://<span class="title">tva1.sinaimg.cn</span>/<span class="title">crop</span>.0.0.640.640.640/549<span class="title">d0121tw1egm1kjly3jj20hs0hsq4f.jpg</span>",</div><div class="line"><span class="title">avatar_hd</span>: "<span class="title">https</span>://<span class="title">wx2.sinaimg.cn</span>/<span class="title">orj480</span>/0071<span class="title">hAK9ly8fmdxpea2vxj306n064glj.jpg</span>",</div><div class="line"><span class="title">like</span>: <span class="title">false</span>,</div><div class="line"><span class="title">like_me</span>: <span class="title">false</span>,</div><div class="line"><span class="title">badge</span>: &#123;</div><div class="line"><span class="title">user_name_certificate</span>: 1,</div><div class="line"><span class="title">wenchuan_10th</span>: 1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>很蛋疼的是，点赞和评论接口中并没有相关数据，所以点赞和评论部分要重新爬取，如下：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="function">id: 4247512245791226,</span></div><div class="line"><span class="title">created_at</span>: "5分钟前",</div><div class="line"><span class="title">source</span>: "微博 <span class="title">weibo.com</span>",</div><div class="line"><span class="title">user</span>: &#123;</div><div class="line"><span class="title">id</span>: 6114792181,</div><div class="line"><span class="title">screen_name</span>: "<span class="title">Ming_54456</span>",</div><div class="line"><span class="title">profile_image_url</span>: "<span class="title">https</span>://<span class="title">tvax1.sinaimg.cn</span>/<span class="title">crop</span>.367.164.918.918.180/006<span class="title">FP2Mlly8fjs2mf3x6pj319x0yoqbo.jpg</span>",</div><div class="line"><span class="title">verified</span>: <span class="title">false</span>,</div><div class="line"><span class="title">verified_type</span>: -1,</div><div class="line"><span class="title">mbtype</span>: 12,</div><div class="line"><span class="title">profile_url</span>: "<span class="title">https</span>://<span class="title">m.weibo.cn</span>/<span class="title">u</span>/6114792181?<span class="title">uid</span>=6114792181&amp;<span class="title">featurecode</span>=20000320",</div><div class="line"><span class="title">remark</span>: "",</div><div class="line"><span class="title">following</span>: <span class="title">false</span>,</div><div class="line"><span class="title">follow_me</span>: <span class="title">false</span></div><div class="line">&#125;</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>微博官方API同样提供相应数据 ，建议使用前仔细阅读 <a href="http://open.weibo.com/wiki/Rate-limiting" target="_blank" rel="external">接口访问频次权限</a></p>
+<h1 id="爬虫代码"><a href="#爬虫代码" class="headerlink" title="爬虫代码"></a>爬虫代码</h1><p>爬虫完整代码可以去我的公众号（Python爬虫与算法进阶），回复“微博”获得。</p>
+<p>爬虫语言是Python3，使用Scrapy框架，数据保存在mongo，没有使用分布式，单机3天跑完。</p>
+<p>因为微博的反爬，需要大量代理支撑。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># code is far away from bugs with the god animal protecting</span></div><div class="line">    I love animals. They taste delicious.</div><div class="line">              ┏┓      ┏┓</div><div class="line">            ┏┛┻━━━┛┻┓</div><div class="line">            ┃      ☃      ┃</div><div class="line">            ┃  ┳┛  ┗┳  ┃</div><div class="line">            ┃      ┻      ┃</div><div class="line">            ┗━┓      ┏━┛</div><div class="line">                ┃      ┗━━━┓</div><div class="line">                ┃  神兽保佑    ┣┓</div><div class="line">                ┃　永无BUG！   ┏┛</div><div class="line">                ┗┓┓┏━┳┓┏┛</div><div class="line">                  ┃┫┫  ┃┫┫</div><div class="line">                  ┗┻┛  ┗┻┛</div></pre></td></tr></table></figure>
+<p>爬取的数据实例：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "_id" : ObjectId("<span class="number">5</span>b162d10e0eafb1d6e63b460"),</div><div class="line">    "id" : NumberLong(<span class="number">5372682651</span>),</div><div class="line">    "statuses_count" : <span class="number">10599</span>,</div><div class="line">    "screen_name" : "用户<span class="number">5372682651</span>",</div><div class="line">    "profile_url" : "https://m.weibo.cn/u/<span class="number">5372682651</span>?uid=<span class="number">5372682651</span>",</div><div class="line">    "description" : "暂无数据",</div><div class="line">    "gender" : "f",</div><div class="line">    "followers_count" : <span class="number">80</span>,</div><div class="line">    "follow_count" : <span class="number">1060</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="简单数据清洗"><a href="#简单数据清洗" class="headerlink" title="简单数据清洗"></a>简单数据清洗</h1><p>最终跑完一次爬到的数据有<code>3889285</code>，因为有大量页面会跳转到登录页面，对这些请求做一个重试效果会好些。</p>
+<p>数据清洗对我来说真的是个头疼的问题，找了很多相关资料，最后使用了mongo的<code>aggregate</code>方法，该方法也是我第一次使用，下面是代码：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">db.getCollection('Weibo').aggregate(</div><div class="line">    [</div><div class="line">        &#123;"$group" : &#123;_id:&#123;id:"$id",gender:"$gender"&#125;, count:&#123;$sum:<span class="number">1</span>&#125;&#125;&#125;,</div><div class="line">        &#123;$sort:&#123;"count":-<span class="number">1</span>&#125;&#125;,</div><div class="line">        &#123; $out:"result"&#125;,</div><div class="line">    ],</div><div class="line">    &#123;</div><div class="line"><span class="function">      allowDiskUse:<span class="title">true</span>,</span></div><div class="line">      <span class="title">cursor</span>:&#123;&#125;</div><div class="line">    &#125;  </div><div class="line">)</div></pre></td></tr></table></figure>
+<p>结果产生了一张新的表，对每个ID进行统计，并排序，如下：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "_id" : &#123;</div><div class="line">        "id" : NumberLong(<span class="number">5737668415</span>),</div><div class="line">        "gender" : "f"</div><div class="line">    &#125;,</div><div class="line">    "count" : <span class="number">106701</span>.<span class="number">0</span></div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line">    "_id" : &#123;</div><div class="line">        "id" : NumberLong(<span class="number">5909154992</span>),</div><div class="line">        "gender" : "m"</div><div class="line">    &#125;,</div><div class="line">    "count" : <span class="number">72298</span>.<span class="number">0</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>参与次数达到十万次，天呐，超级真爱粉，<a href="https://m.weibo.cn/u/5737668415?uid=5737668415" target="_blank" rel="external">缘来是她</a>，疯狂刷屏有没有</p>
+<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180607110639.png" alt=""></p>
+<p>好了，现在开始看看真正的数据吧。</p>
+<p>本次共采集用户数据<code>3889285</code>条，，原始数据中男性占比<code>%33.68</code>，女性占比<code>%66.32</code>，好吧，看来女性粉丝更多；去重之后数据共有<code>1129035</code>，男性占比<code>%29.58</code>，女性占比<code>%70.42</code>，怎么看着女性粉丝还是更多呢。。</p>
+<p>我们再来计算一个数据，亲密度大于10的粉丝共有<code>16486</code>位，其中男性占比<code>%24.05</code>，女性占比<code>%75.95</code>，于是有下面这张表格。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">亲密度</th>
+<th>男性占比</th>
+<th>女性占比</th>
+<th>粉丝总数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">大于0</td>
+<td>29.58%</td>
+<td>70.42%</td>
+<td>1129035</td>
+</tr>
+<tr>
+<td style="text-align:left">大于10</td>
+<td>24.05%</td>
+<td>75.95%</td>
+<td>16486</td>
+</tr>
+<tr>
+<td style="text-align:left">大于50</td>
+<td>32.77%</td>
+<td>67.23%</td>
+<td>4285</td>
+</tr>
+<tr>
+<td style="text-align:left">大于100</td>
+<td>36.77%</td>
+<td>63.23%</td>
+<td>2578</td>
+</tr>
+<tr>
+<td style="text-align:left">大于1000</td>
+<td>40.18%</td>
+<td>59.82%</td>
+<td>331</td>
+</tr>
+<tr>
+<td style="text-align:left">大于10000</td>
+<td>37.5%</td>
+<td>62.5%</td>
+<td>24</td>
+</tr>
+<tr>
+<td style="text-align:left">Top10</td>
+<td>30.00%</td>
+<td>70.00%</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<p>这个数据挺有意思的，画张表瞧瞧</p>
+<p><img src="https://i.loli.net/2018/06/10/5b1cd33ba3031.png" alt=""></p>
+<p>粉丝昵称词云</p>
+<p><img src="https://i.loli.net/2018/06/10/5b1cd793e1520.png" alt=""></p>
+<p>（感谢BDP）</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>看了这些数据，相信大家自己心中已经有了答案。</p>
+<p>胡歌作为一个玉树临风、 英俊潇洒、 风流倜傥、 一表人才、 高大威猛、 气宇不凡、 温文尔雅、 品貌非凡、 仪表不凡的男人，女粉丝比较多是很正常的。但是为啥大家都会有一种男粉丝比女粉丝多的错觉呢，我觉得是对比产生的感觉。我拿胡歌与其他小鲜肉作对比，肯定会跟欣赏胡歌。你说呢？</p>
+<p>本文并不是为了证明什么，只是作为一名普通粉丝想去看看更多东西。其实本次数据爬取有很多地方需要优化，大家不用太过当真。如果你有更好的分析数据的想法，可以联系我。</p>
+<blockquote>
+<p>老大镇楼</p>
+</blockquote>
+<p><img src="http://wx1.sinaimg.cn/large/48e837eegy1fe2dmkfsquj21tq1tqu0x.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十三篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;老胡好帅  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://wx1.sinaimg.cn/large/48e837eely1fmhxeqwby0j22ds1sg157.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="胡歌" scheme="https://zhangslob.github.io/tags/%E8%83%A1%E6%AD%8C/"/>
+    
+      <category term="微博" scheme="https://zhangslob.github.io/tags/%E5%BE%AE%E5%8D%9A/"/>
+    
+  </entry>
   
   <entry>
     <title>zsh(+fish)=完美终端</title>
@@ -1291,89 +1447,6 @@ e-packages\\lxml&#39;</code></p>
       <category term="算法" scheme="https://zhangslob.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="队列" scheme="https://zhangslob.github.io/tags/%E9%98%9F%E5%88%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Scrapy源码（2）——爬虫开始的地方</title>
-    <link href="https://zhangslob.github.io/2018/02/26/Scrapy%E6%BA%90%E7%A0%81%EF%BC%882%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E5%BC%80%E5%A7%8B%E7%9A%84%E5%9C%B0%E6%96%B9/"/>
-    <id>https://zhangslob.github.io/2018/02/26/Scrapy源码（2）——爬虫开始的地方/</id>
-    <published>2018-02-26T14:48:13.000Z</published>
-    <updated>2018-02-26T15:14:48.399Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十三篇原创文章
-</code></pre><p>开始学习<code>Scrapy</code>源码  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/5wP0fKB.png" alt=""></p>
-<a id="more"></a>
-<h1 id="Scrapy运行命令"><a href="#Scrapy运行命令" class="headerlink" title="Scrapy运行命令"></a>Scrapy运行命令</h1><p>一般来说，运行Scrapy项目的写法有，（这里不考虑从脚本运行Scrapy）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Usage examples:</div><div class="line"></div><div class="line">$ scrapy crawl myspider</div><div class="line">[ ... myspider starts crawling ... ]</div><div class="line"></div><div class="line">$ scrapy runspider myspider.py</div><div class="line">[ ... spider starts crawling ... ]</div></pre></td></tr></table></figure>
-<p>但是更好的写法是，新建一个Python文件，如下，（便于调试）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> cmdline</div><div class="line"></div><div class="line">cmdline.execute(<span class="string">"scrapy crawl myspider"</span>.split())</div></pre></td></tr></table></figure></p>
-<p>很容易就发现，Scrapy运行文件是<code>cmdline.py</code>文件里面的<code>execute()</code>函数，下面学习下这个函数在做什么。</p>
-<h1 id="分析源码"><a href="#分析源码" class="headerlink" title="分析源码"></a>分析源码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">execute</span><span class="params">(argv=None, settings=None)</span>:</span></div><div class="line">    <span class="keyword">if</span> argv <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">        argv = sys.argv</div><div class="line"></div><div class="line">    <span class="comment"># --- backwards compatibility for scrapy.conf.settings singleton ---</span></div><div class="line">    <span class="keyword">if</span> settings <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">and</span> <span class="string">'scrapy.conf'</span> <span class="keyword">in</span> sys.modules:</div><div class="line">        <span class="keyword">from</span> scrapy <span class="keyword">import</span> conf</div><div class="line">        <span class="keyword">if</span> hasattr(conf, <span class="string">'settings'</span>):</div><div class="line">            settings = conf.settings</div><div class="line">    <span class="comment"># ------------------------------------------------------------------</span></div></pre></td></tr></table></figure>
-<p>寻找 <code>scrapy.conf</code>配置文件，argv直接取sys.argv</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> settings <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">    settings = get_project_settings()</div><div class="line">    <span class="comment"># set EDITOR from environment if available</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        editor = os.environ[<span class="string">'EDITOR'</span>]</div><div class="line">    <span class="keyword">except</span> KeyError: <span class="keyword">pass</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        settings[<span class="string">'EDITOR'</span>] = editor</div><div class="line">check_deprecated_settings(settings)</div><div class="line"></div><div class="line"><span class="comment"># --- backwards compatibility for scrapy.conf.settings singleton ---</span></div><div class="line"><span class="keyword">import</span> warnings</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> ScrapyDeprecationWarning</div><div class="line"><span class="keyword">with</span> warnings.catch_warnings():</div><div class="line">    warnings.simplefilter(<span class="string">"ignore"</span>, ScrapyDeprecationWarning)</div><div class="line">    <span class="keyword">from</span> scrapy <span class="keyword">import</span> conf</div><div class="line">    conf.settings = settings</div><div class="line"><span class="comment"># ------------------------------------------------------------------</span></div></pre></td></tr></table></figure>
-<blockquote>
-<p>set EDITOR from environment if available</p>
-</blockquote>
-<p>读取<code>settings</code>设置文件，导入项目，调用<code>get_project_settings()</code>函数，此处为<code>utils</code>文件夹下的<code>project.py</code>文件：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_project_settings</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">if</span> ENVVAR <span class="keyword">not</span> <span class="keyword">in</span> os.environ:</div><div class="line">        project = os.environ.get(<span class="string">'SCRAPY_PROJECT'</span>, <span class="string">'default'</span>)</div><div class="line">        init_env(project)</div></pre></td></tr></table></figure>
-<blockquote>
-<p>project.py</p>
-</blockquote>
-<p><code>init_env()</code> 函数如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">init_env</span><span class="params">(project=<span class="string">'default'</span>, set_syspath=True)</span>:</span></div><div class="line">    <span class="string">"""Initialize environment to use command-line tool from inside a project</span></div><div class="line">    dir. This sets the Scrapy settings module and modifies the Python path to</div><div class="line">    be able to locate the project module.</div><div class="line">    """</div><div class="line">    cfg = get_config()</div><div class="line">    <span class="keyword">if</span> cfg.has_option(<span class="string">'settings'</span>, project):</div><div class="line">        os.environ[<span class="string">'SCRAPY_SETTINGS_MODULE'</span>] = cfg.get(<span class="string">'settings'</span>, project)</div><div class="line">    closest = closest_scrapy_cfg()</div><div class="line">    <span class="keyword">if</span> closest:</div><div class="line">        projdir = os.path.dirname(closest)</div><div class="line">        <span class="keyword">if</span> set_syspath <span class="keyword">and</span> projdir <span class="keyword">not</span> <span class="keyword">in</span> sys.path:</div><div class="line">            sys.path.append(projdir)</div></pre></td></tr></table></figure>
-<blockquote>
-<p>conf.py</p>
-</blockquote>
-<p>如注释所说，初始化环境,循环递归找到用户项目中的配置文件<code>settings.py</code>,并且将其设置到环境变量<code>Scrapy settings module</code>中。然后修改Python路径，确保能找到项目模块。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">settings = Settings()</div><div class="line">settings_module_path = os.environ.get(ENVVAR)</div><div class="line"><span class="keyword">if</span> settings_module_path:</div><div class="line">    settings.setmodule(settings_module_path, priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">XXX:</span> remove this hack</span></div><div class="line">pickled_settings = os.environ.get(<span class="string">"SCRAPY_PICKLED_SETTINGS_TO_OVERRIDE"</span>)</div><div class="line"><span class="keyword">if</span> pickled_settings:</div><div class="line">    settings.setdict(pickle.loads(pickled_settings), priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">XXX:</span> deprecate and remove this functionality</span></div><div class="line">env_overrides = &#123;k[<span class="number">7</span>:]: v <span class="keyword">for</span> k, v <span class="keyword">in</span> os.environ.items() <span class="keyword">if</span></div><div class="line">                 k.startswith(<span class="string">'SCRAPY_'</span>)&#125;</div><div class="line"><span class="keyword">if</span> env_overrides:</div><div class="line">    settings.setdict(env_overrides, priority=<span class="string">'project'</span>)</div><div class="line"></div><div class="line"><span class="keyword">return</span> settings</div></pre></td></tr></table></figure>
-<blockquote>
-<p>project.py</p>
-</blockquote>
-<p>至此，<code>get_project_settings()</code>该函数结束，如函数名字一样，最后返回项目配置，到此为止，接着往下看</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">inproject = inside_project()</div><div class="line">cmds = _get_commands_dict(settings, inproject)</div><div class="line">cmdname = _pop_command_name(argv)</div><div class="line">parser = optparse.OptionParser(formatter=optparse.TitledHelpFormatter(), \</div><div class="line">    conflict_handler=<span class="string">'resolve'</span>)</div><div class="line"><span class="keyword">if</span> <span class="keyword">not</span> cmdname:</div><div class="line">    _print_commands(settings, inproject)</div><div class="line">    sys.exit(<span class="number">0</span>)</div><div class="line"><span class="keyword">elif</span> cmdname <span class="keyword">not</span> <span class="keyword">in</span> cmds:</div><div class="line">    _print_unknown_command(settings, cmdname, inproject)</div><div class="line">    sys.exit(<span class="number">2</span>)</div></pre></td></tr></table></figure>
-<p>导入相应的module爬虫模块（inside_project）</p>
-<p>执行环境是否在项目中，主要检查scrapy.cfg配置文件是否存在，读取commands文件夹，把所有的命令类转换为<code>{cmd_name: cmd_instance}</code>的字典</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cmd = cmds[cmdname]</div><div class="line">parser.usage = <span class="string">"scrapy %s %s"</span> % (cmdname, cmd.syntax())</div><div class="line">parser.description = cmd.long_desc()</div><div class="line">settings.setdict(cmd.default_settings, priority=<span class="string">'command'</span>)</div><div class="line">cmd.settings = settings</div><div class="line">cmd.add_options(parser)</div><div class="line">opts, args = parser.parse_args(args=argv[<span class="number">1</span>:])</div><div class="line">_run_print_help(parser, cmd.process_options, args, opts)</div></pre></td></tr></table></figure>
-<p>根据命令名称找到对应的命令实例，设置项目配置和级别为command，添加解析规则，解析命令参数，并交由Scrapy命令实例处理。</p>
-<p>最后，看看下面这段代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmd.crawler_process = CrawlerProcess(settings)</div><div class="line">_run_print_help(parser, _run_command, cmd, args, opts)</div><div class="line">sys.exit(cmd.exitcode)</div></pre></td></tr></table></figure>
-<p>初始化<code>CrawlerProcess</code>实例，将对应的命令执行，这里是<code>crawl</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_run_command</span><span class="params">(cmd, args, opts)</span>:</span></div><div class="line">    <span class="keyword">if</span> opts.profile:</div><div class="line">        _run_command_profiled(cmd, args, opts)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        cmd.run(args, opts)</div></pre></td></tr></table></figure>
-<p>看到这，想起了文档中的介绍 <a href="https://doc.scrapy.org/en/latest/topics/practices.html#run-scrapy-from-a-script" target="_blank" rel="external">Run Scrapy from a script</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Here’s an example showing how to run a single spider with it.</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.crawler <span class="keyword">import</span> CrawlerProcess</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(scrapy.Spider)</span>:</span></div><div class="line">    <span class="comment"># Your spider definition</span></div><div class="line">    ...</div><div class="line"></div><div class="line">process = CrawlerProcess(&#123;</div><div class="line">    <span class="string">'USER_AGENT'</span>: <span class="string">'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line">process.crawl(MySpider)</div><div class="line">process.start() <span class="comment"># the script will block here until the crawling is finished</span></div></pre></td></tr></table></figure>
-<p>所以Scrapy爬虫运行都有用使用到<code>CrawlerProcess</code>，想要深入了解可以去看看源码 <a href="https://github.com/scrapy/scrapy/blob/1.5/scrapy/crawler.py#L225" target="_blank" rel="external">scrapy/scrapy/crawler.py</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">A class to run multiple scrapy crawlers in a process simultaneously.</div><div class="line"></div><div class="line">This class extends :class:`~scrapy.crawler.CrawlerRunner` by adding support</div><div class="line">for starting a Twisted `reactor`_ and handling shutdown signals, like the</div><div class="line">keyboard interrupt command Ctrl-C. It also configures top-level logging.</div><div class="line"></div><div class="line">This utility should be a better fit than</div><div class="line">:class:`~scrapy.crawler.CrawlerRunner` if you aren't running another</div><div class="line">Twisted `reactor`_ within your application.</div><div class="line"></div><div class="line">The CrawlerProcess object must be instantiated with a</div><div class="line">:class:`~scrapy.settings.Settings` object.</div><div class="line"></div><div class="line">:param install_root_handler: whether to install root logging handler</div><div class="line">    (default: True)</div><div class="line"></div><div class="line">This class shouldn't be needed (since Scrapy is responsible of using it</div><div class="line">accordingly) unless writing scripts that manually handle the crawling</div><div class="line">process. See :ref:`run-from-script` for an example.</div><div class="line">"""</div></pre></td></tr></table></figure>
-<p>最后，附上Scrapy的路径图</p>
-<p><img src="https://i.imgur.com/bG560BG.png" alt=""></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>简单来说，有这么几步：</p>
-<ol>
-<li>读取配置文件，应用到爬虫中</li>
-<li>把所有的命令类转换名称与实例字典</li>
-<li>初始化<code>CrawlerProcess</code>实例，运行爬虫</li>
-</ol>
-<p>(看的头疼，好多函数名记不住)</p>
-<p>回顾：</p>
-<ol>
-<li><a href="https://zhangslob.github.io/2018/02/24/Scrapy%E6%BA%90%E7%A0%81%EF%BC%881%EF%BC%89%E2%80%94%E2%80%94%E7%88%AC%E8%99%AB%E6%B5%81%E7%A8%8B%E6%A6%82%E8%A7%88/">Scrapy源码（1）——爬虫流程概览</a></li>
-<li>Scrapy源码（2）——爬虫开始的地方</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十三篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;开始学习&lt;code&gt;Scrapy&lt;/code&gt;源码  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/5wP0fKB.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Scrapy" scheme="https://zhangslob.github.io/categories/Scrapy/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
     
   </entry>
   
