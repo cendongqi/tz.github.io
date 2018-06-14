@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-06-10T08:04:50.609Z</updated>
+  <updated>2018-06-14T14:33:09.507Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>从cookie池搭建说起</title>
+    <link href="https://zhangslob.github.io/2018/06/14/%E4%BB%8Ecookie%E6%B1%A0%E6%90%AD%E5%BB%BA%E8%AF%B4%E8%B5%B7/"/>
+    <id>https://zhangslob.github.io/2018/06/14/从cookie池搭建说起/</id>
+    <published>2018-06-14T13:25:46.000Z</published>
+    <updated>2018-06-14T14:33:09.507Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十四篇原创文章
+</code></pre><p>我快绝望了  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/ZJMuGd5.jpg" alt=""></p>
+<a id="more"></a>
+<p>这几天接手了一个很急的项目，要在几天爬取某网站的数据。该站是我知道国内反爬比较严重的网站之一，我也做好了心理准备。</p>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1528996797209&amp;di=3836d0c6faff25ec236862e1eae20486&amp;imgtype=0&amp;src=http%3A%2F%2Fkibey-echo.b0.upaiyun.com%2Fposter%2F2014%2F09%2F24%2Fbd9ba222cb5a1e9e.gif" alt=""></p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>该网站数据需要登录才能查看，APP抓包了但是没有发现相关数据，所以选择从PC站入手。</p>
+<p>既然需要登录，那就需要验证一个新鲜的<code>cookies</code>可以访问多少链接；验证方法是：</p>
+<blockquote>
+<p>直接拷贝已经登录该网站请求的Curl，转换为Python代码，加一个循环，测试，单个账号可以跑多少页</p>
+</blockquote>
+<p>经过10多次测试，发现单个Cookies可以下载，至少50个网页。</p>
+<p>那么就很好做了，可以开始写思路了。</p>
+<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1528996828313&amp;di=58be2c7592bc5f2f35ac0df4e513234f&amp;imgtype=0&amp;src=http%3A%2F%2Fcdnq.duitang.com%2Fuploads%2Fitem%2F201507%2F10%2F20150710172216_LtFrM.thumb.700_0.jpeg" alt=""></p>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>首先我们需要多个可以登录的Cookies，然后利用这些Cookies去下载网页；一旦返回状态码不是200，就拉黑该Cookies。</p>
+<p>具体的方法看下图：</p>
+<p><img src="https://i.imgur.com/7uqitsi.png" alt=""></p>
+<p>有几点说明下：</p>
+<ol>
+<li><strong>如何模拟注册</strong>。有两种方法，<strong>模拟请求</strong>和<strong>浏览器模拟</strong>。模拟请求就是去分析注册过程中的每一步操作，这个请求是发送验证码的，那个是注册的，我优先推荐该方法，但是这种方法遇到一些携带有大量签名参数的变态网站时，难度较大，需要自己一步步断点<code>JavaScript</code>。浏览器模拟大家应该很熟悉，Python中就是<code>selenium</code>傻瓜操作，需要哪里点哪里。注意的坑是何时切换<code>iframe</code></li>
+<li><strong>Cookies的搭建</strong>。其实非常简单，这里利用了<code>redis</code>的集合，取Cookies使用<code>spop</code>即可。这里并没有做验活，因为基本上Cookies产生之后就会被使用。</li>
+</ol>
+<h1 id="我要崩溃了"><a href="#我要崩溃了" class="headerlink" title="我要崩溃了"></a>我要崩溃了</h1><p>不做不知道，一做吓一跳。</p>
+<p>但我以为该网站很简单，搭建一个简单的Cookies池就可以解决，但是我明显太年轻了。</p>
+<p>我先把采集链接推到<code>redis</code>中，使用了<code>scrapy_redis</code>。</p>
+<p>该网站的反爬：</p>
+<ol>
+<li><strong>代理问题</strong>。其实这里有一个悖论，到底该不该使用代理。首先，我不用代理，刚开始还好，但是很快我的本地代理就被拉黑了；那好上代理，但是接下来问题来了，开始出现一个个的验证码需要填了，作为一个<strong>单独的用户</strong>，我是不可能频繁的改变自己的<code>IP</code>去访问网站的，解决方法只有一个，Cookies和代理绑定，但是这种方法真的不好实现，尤其是使用<code>Scrapy</code>开发的爬虫。</li>
+<li><strong>验证码问题</strong>。既然出现了验证码，那就去解决它。验证码一般是和Cookies绑定的，那么我需要把访问该账号的<code>IP</code>、<code>User-Agent</code>、<code>Cookies</code>全部拿出来，再去发送新的请求，而且需要注意，此过程中不能再进行<code>IP</code>的变化。</li>
+</ol>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>今天了大概两天的斗智斗勇，现在基本上可以爬到数据了，希望明天可以交差，不然端午就要加班了。</p>
+<p>希望这只小猫咪可以给我带来好远。</p>
+<p><img src="https://i.imgur.com/vWSjxX9.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十四篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我快绝望了  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ZJMuGd5.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>为了知道胡歌粉丝的男女比率，爬了三百万微博数据</title>
@@ -1379,74 +1438,6 @@ e-packages\\lxml&#39;</code></p>
     
     
       <category term="编程" scheme="https://zhangslob.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>学点算法之队列的学习及应用</title>
-    <link href="https://zhangslob.github.io/2018/03/06/%E5%AD%A6%E7%82%B9%E7%AE%97%E6%B3%95%E4%B9%8B%E9%98%9F%E5%88%97%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%8F%8A%E5%BA%94%E7%94%A8/"/>
-    <id>https://zhangslob.github.io/2018/03/06/学点算法之队列的学习及应用/</id>
-    <published>2018-03-06T12:54:00.000Z</published>
-    <updated>2018-03-06T14:00:52.245Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十四篇原创文章
-</code></pre><p>从<code>约瑟夫问题</code>开始说起  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/u6F1U4g.png" alt=""></p>
-<a id="more"></a>
-<h1 id="约瑟夫问题"><a href="#约瑟夫问题" class="headerlink" title="约瑟夫问题"></a>约瑟夫问题</h1><p><strong><a href="https://zh.wikipedia.org/wiki/%E7%BA%A6%E7%91%9F%E5%A4%AB%E6%96%AF%E9%97%AE%E9%A2%98" target="_blank" rel="external">约瑟夫问题</a></strong></p>
-<p>有 n 个囚犯站成一个圆圈，准备处决。首先从一个人开始，越过k-2个人（因为第一个人已经被越过），并杀掉第k个人。接着，再越过 k-1个人，并杀掉第k个人。这个过程沿着圆圈一直进行，直到最终只剩下一个人留下，这个人就可以继续活着。</p>
-<p>问题是，给定了n和k，一开始要站在什么地方才能避免被处决？</p>
-<blockquote>
-<p>这个问题是以弗拉维奥·约瑟夫命名的，它是1世纪的一名犹太历史学家。他在自己的日记中写道，他和他的40个战友被罗马军队包围在洞中。他们讨论是自杀还是被俘，最终决定自杀，并以抽签的方式决定谁杀掉谁。约瑟夫斯和另外一个人是最后两个留下的人。约瑟夫斯说服了那个人，<em>他们将向罗马军队投降，不再自杀</em>。约瑟夫斯把他的存活归因于运气或天意，<em>他不知道是哪一个</em>。</p>
-</blockquote>
-<h1 id="队列是什么"><a href="#队列是什么" class="headerlink" title="队列是什么"></a>队列是什么</h1><p>这道题有多种解法，这里先不说别的，要引出今天的主角——队列。队列的定义很好理解：</p>
-<blockquote>
-<p>队列是项的有序结合，其中添加新项的一端称为队尾，移除项的一端称为队首。当一个元素从队尾进入队列时，一直向队首移动，直到它成为下一个需要移除的元素为止。</p>
-</blockquote>
-<p>队列抽象数据类型由以下结构和操作定义。如上所述，队列被构造为在队尾添加项的有序集合，并且从队首移除。队列保持 FIFO 排序属性。 队列操作如下。</p>
-<ul>
-<li>Queue() 创建一个空的新队列。 它不需要参数，并返回一个空队列。</li>
-<li>enqueue(item) 将新项添加到队尾。 它需要 item 作为参数，并不返回任何内容。</li>
-<li>dequeue() 从队首移除项。它不需要参数并返回 item。 队列被修改。</li>
-<li>isEmpty() 查看队列是否为空。它不需要参数，并返回布尔值。</li>
-<li>size() 返回队列中的项数。它不需要参数，并返回一个整数。</li>
-</ul>
-<p><img src="https://i.imgur.com/KkagGoc.png" alt=""></p>
-<h1 id="队列的Python算法实现"><a href="#队列的Python算法实现" class="headerlink" title="队列的Python算法实现"></a>队列的Python算法实现</h1><p>为了实现队列抽象数据类型创建一个新类</p>
-<p><a href="https://github.com/bnmnetp/pythonds/blob/master/basic/queue.py" target="_blank" rel="external">pythonds/basic/queue.py</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Queue</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        self.items = []</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isEmpty</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.items == []</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">enqueue</span><span class="params">(self, item)</span>:</span></div><div class="line">        self.items.insert(<span class="number">0</span>,item)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dequeue</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> self.items.pop()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">size</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">return</span> len(self.items)</div></pre></td></tr></table></figure>
-<p>想明白了其实就是对 list 的简单操作</p>
-<h1 id="如何活到最后"><a href="#如何活到最后" class="headerlink" title="如何活到最后"></a>如何活到最后</h1><p>那我们回到上面的问题，如果是你，你要如何选择并活到最后呢？</p>
-<p>我们的程序将输入名称列表和一个称为 <code>num</code> 常量用于报数。它将返回以 <code>num</code> 为单位重复报数后剩余的最后一个人的姓名。</p>
-<p>假设第一个人是<code>a</code>。从他开始计数，<code>a</code>将先出列再入队列，把他放在队列的最后。经过 <code>num</code> 次的出队入队后，前面的人将被永久移除队列。并且另一个周期开始，继续此过程，直到只剩下一个名字（队列的大小为 1）。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pythonds.basic.queue <span class="keyword">import</span> Queue</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hotPotato</span><span class="params">(namelist, num)</span>:</span></div><div class="line">    simqueue = Queue()</div><div class="line">    <span class="keyword">for</span> name <span class="keyword">in</span> namelist:</div><div class="line">        simqueue.enqueue(name)</div><div class="line"></div><div class="line">    <span class="keyword">while</span> simqueue.size() &gt; <span class="number">1</span>:</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(num):</div><div class="line">            simqueue.enqueue(simqueue.dequeue())</div><div class="line">        simqueue.dequeue()</div><div class="line"></div><div class="line">    <span class="keyword">return</span> simqueue.dequeue()</div><div class="line"></div><div class="line"></div><div class="line">print(hotPotato([<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>, <span class="string">'g'</span>, <span class="string">'h'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>], <span class="number">7</span>))</div><div class="line"></div><div class="line"><span class="comment"># output: f</span></div></pre></td></tr></table></figure>
-<h1 id="其他解法"><a href="#其他解法" class="headerlink" title="其他解法"></a>其他解法</h1><p>比较简单的做法是用循环单链表模拟整个过程，时间复杂度是O(n*m)。如果只是想求得最后剩下的人，则可以用数学推导的方式得出公式。先看看模拟过程的解法。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*- </span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span><span class="params">(object)</span>:</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value)</span>:</span></div><div class="line">		self.value = value </div><div class="line">		self.next = <span class="keyword">None</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_linkList</span><span class="params">(n)</span>:</span></div><div class="line">	head = Node(<span class="number">1</span>)</div><div class="line">	pre = head</div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, n+<span class="number">1</span>):</div><div class="line">		newNode = Node(i)</div><div class="line">		pre.next= newNode</div><div class="line">		pre = newNode</div><div class="line">	pre.next = head</div><div class="line">	<span class="keyword">return</span> head</div><div class="line"></div><div class="line">n = <span class="number">5</span> <span class="comment">#总的个数</span></div><div class="line">m = <span class="number">2</span> <span class="comment">#数的数目</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> m == <span class="number">1</span>: <span class="comment">#如果是1的话，特殊处理，直接输出</span></div><div class="line">	print(n)  </div><div class="line"><span class="keyword">else</span>:</div><div class="line">	head = create_linkList(n)</div><div class="line">	pre = <span class="keyword">None</span></div><div class="line">	cur = head</div><div class="line">	<span class="keyword">while</span> cur.next != cur: <span class="comment">#终止条件是节点的下一个节点指向本身</span></div><div class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(m<span class="number">-1</span>):</div><div class="line">			pre =  cur</div><div class="line">			cur = cur.next</div><div class="line">		print(cur.value)</div><div class="line">		pre.next = cur.next</div><div class="line">		cur.next = <span class="keyword">None</span></div><div class="line">		cur = pre.next</div><div class="line">	print(cur.value)</div></pre></td></tr></table></figure>
-<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>假设实验室里有一台打印机供学生共性。当学生向共享打印机发送打印任务时，任务被放置在队列中以便以先来先服务的方式被处理。如何才能通过python程序模拟的方式得到每次提交任务的平均等待时间呢？（平均等待时间不包括打印本身的时间，仅指在队列中排队的时间。）<br>我们假定：</p>
-<ul>
-<li>学生们每次打印的页数在1到20页之间。</li>
-<li>打印机平均每小时会收到20个打印请求，即平均每180秒1个请求。</li>
-<li>每秒新增任务的可能性相等，即任务的产生为独立同分布</li>
-<li>打印机的打印速度恒定。</li>
-</ul>
-<p>挖坑，要一起来填吗？</p>
-<p><img src="https://i.imgur.com/83UUU6k.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十四篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;从&lt;code&gt;约瑟夫问题&lt;/code&gt;开始说起  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/u6F1U4g.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="算法" scheme="https://zhangslob.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="https://zhangslob.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="队列" scheme="https://zhangslob.github.io/tags/%E9%98%9F%E5%88%97/"/>
     
   </entry>
   
