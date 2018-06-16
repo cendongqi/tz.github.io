@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Cookies池的后续解决方案]]></title>
+    <url>%2F2018%2F06%2F16%2FCookies%E6%B1%A0%E7%9A%84%E5%90%8E%E7%BB%AD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%2F</url>
+    <content type="text"><![CDATA[这是崔斯特的第五十五篇原创文章 终于有方法了 (๑• . •๑) 作为一名罗吹,先吹一波C罗牛皮,简直太帅了了了 瞧瞧这个眼神建议大家可以看看这场比赛，西班牙VS葡萄牙，我相信你会爱上足球的 正文开始在上一篇文章: 简单说明了自己对于该网站的想法,在经过两天的测试与研究之后,我有了更多的想法. 想法一: 为每个Cookies绑定唯一IP你作为一个普通用户,如果对方网站检测到你不停地变换IP从不同地方来发送请求,那他肯定会有识别.那么我们可以把每一个Cookies分配唯一的IP代理,也就是你这个Cookies发送请求的代理始终是唯一的. 但是这种方法的实现方式还没有想出来,不知道该使用哪些技术栈来实现这个想法 想法二: 解决验证码好,既然你弹出验证码,那我就解决它! 解决方法是: 该网站的验证码图片是base64,用python转一下,接上第三方就OK 同时该网站参数中还带有token参数,经过前端大佬的断点调试,发现是对多个字段的两次加密 保持会话session.你需要让对方网站知道是你这个用户,所以你的cookies,ip,headers相关信息必须保持一致,我当时的想法是使用requests的session来完成这一步操作,但是很难完全模拟,因为整个爬虫使用scrapy来写,处理验证码使用requests来做,session这部分不大好模拟. 附上一些为session添加信息的代码 12345def __init__(self, my_cookie, proxy, headers): self.session = requests.session() self.session.cookies.update(my_cookie) self.session.headers.update(&#123;'User-Agent': headers&#125;) self.session.update(proxy) 想法三: 不解决验证问题,无脑重试这是最蠢的办法,也是我目前在使用的方法. /(ㄒoㄒ)/~~ 思路是: 将cookies保存到mongoDB做持久化,再写一个脚本,持续的向redis中添加cookies和start_urls,然后对这些start_urls不停地重试,对,就是不停地重试,直到把所有的链接跑完.本次需要采集的链接并不多,质量要求不高,只需要我采集到数据就好. 需要注意的是: 需要为你的表增加唯一键,不然会有重复数据 每条请求添加dont_filter=True,不然去重会影响爬取 添加cookies和start_urls代码 12345678910111213# add cookies and start_urls to local_rediswhile True: if local_redis.scard('spider:cookies') &lt; 10: for i in cookies_list: local_redis.sadd('spider:cookies', i) print("cookies Done") if local_redis.scard('spider:start_urls') &lt; 10: for i in url_list: local_redis.sadd('spider:start_urls', i) print("start_urls Done") time.sleep(10) 效果我是用的是第三种方法,目前看来效果还行,数据已经爬取了大半,相信三天假过去了应该就没问题了. 如果以后要长期做这个项目的话,最好的办法应该还是第二种,从根本去解决问题. 本次做这个项目也收获颇多,对于cookies使用更加有经验;感觉最好玩的是token的加密与解密实现,对这方面感兴趣的可以了解下这个: zlib — Compression compatible with gzip]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>爬虫</tag>
+        <tag>cookie池</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[从cookie池搭建说起]]></title>
     <url>%2F2018%2F06%2F14%2F%E4%BB%8Ecookie%E6%B1%A0%E6%90%AD%E5%BB%BA%E8%AF%B4%E8%B5%B7%2F</url>
     <content type="text"><![CDATA[这是崔斯特的第五十四篇原创文章 我快绝望了 (๑• . •๑) 这几天接手了一个很急的项目，要在几天爬取某网站的数据。该站是我知道国内反爬比较严重的网站之一，我也做好了心理准备。 分析该网站数据需要登录才能查看，APP抓包了但是没有发现相关数据，所以选择从PC站入手。 既然需要登录，那就需要验证一个新鲜的cookies可以访问多少链接；验证方法是： 直接拷贝已经登录该网站请求的Curl，转换为Python代码，加一个循环，测试，单个账号可以跑多少页 经过10多次测试，发现单个Cookies可以下载，至少50个网页。 那么就很好做了，可以开始写思路了。 思路首先我们需要多个可以登录的Cookies，然后利用这些Cookies去下载网页；一旦返回状态码不是200，就拉黑该Cookies。 具体的方法看下图： 有几点说明下： 如何模拟注册。有两种方法，模拟请求和浏览器模拟。模拟请求就是去分析注册过程中的每一步操作，这个请求是发送验证码的，那个是注册的，我优先推荐该方法，但是这种方法遇到一些携带有大量签名参数的变态网站时，难度较大，需要自己一步步断点JavaScript。浏览器模拟大家应该很熟悉，Python中就是selenium傻瓜操作，需要哪里点哪里。注意的坑是何时切换iframe Cookies的搭建。其实非常简单，这里利用了redis的集合，取Cookies使用spop即可。这里并没有做验活，因为基本上Cookies产生之后就会被使用。 我要崩溃了不做不知道，一做吓一跳。 但我以为该网站很简单，搭建一个简单的Cookies池就可以解决，但是我明显太年轻了。 我先把采集链接推到redis中，使用了scrapy_redis。 该网站的反爬： 代理问题。其实这里有一个悖论，到底该不该使用代理。首先，我不用代理，刚开始还好，但是很快我的本地代理就被拉黑了；那好上代理，但是接下来问题来了，开始出现一个个的验证码需要填了，作为一个单独的用户，我是不可能频繁的改变自己的IP去访问网站的，解决方法只有一个，Cookies和代理绑定，但是这种方法真的不好实现，尤其是使用Scrapy开发的爬虫。 验证码问题。既然出现了验证码，那就去解决它。验证码一般是和Cookies绑定的，那么我需要把访问该账号的IP、User-Agent、Cookies全部拿出来，再去发送新的请求，而且需要注意，此过程中不能再进行IP的变化。 最后今天了大概两天的斗智斗勇，现在基本上可以爬到数据了，希望明天可以交差，不然端午就要加班了。 希望这只小猫咪可以给我带来好远。]]></content>

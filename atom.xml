@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-06-14T14:33:09.507Z</updated>
+  <updated>2018-06-16T07:05:36.038Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Cookies池的后续解决方案</title>
+    <link href="https://zhangslob.github.io/2018/06/16/Cookies%E6%B1%A0%E7%9A%84%E5%90%8E%E7%BB%AD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
+    <id>https://zhangslob.github.io/2018/06/16/Cookies池的后续解决方案/</id>
+    <published>2018-06-16T07:01:54.000Z</published>
+    <updated>2018-06-16T07:05:36.038Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十五篇原创文章
+</code></pre><p>终于有方法了  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/VD9q71g.jpg" alt=""></p>
+<a id="more"></a>
+<p><img src="https://i.imgur.com/VD9q71g.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/bmiddle/76a1b64dly1fschugfmkfg20a905savu.gif" alt=""></p>
+<blockquote>
+<p>作为一名罗吹,先吹一波C罗牛皮,简直太帅了了了</p>
+<p>瞧瞧这个眼神<br>建议大家可以看看这场比赛，西班牙VS葡萄牙，我相信你会爱上足球的</p>
+</blockquote>
+<h1 id="正文开始"><a href="#正文开始" class="headerlink" title="正文开始"></a>正文开始</h1><p>在上一篇文章: 简单说明了自己对于该网站的想法,在经过两天的测试与研究之后,我有了更多的想法.</p>
+<h2 id="想法一-为每个Cookies绑定唯一IP"><a href="#想法一-为每个Cookies绑定唯一IP" class="headerlink" title="想法一: 为每个Cookies绑定唯一IP"></a>想法一: 为每个Cookies绑定唯一IP</h2><p>你作为一个普通用户,如果对方网站检测到你不停地变换IP从不同地方来发送请求,那他肯定会有识别.那么我们可以把每一个Cookies分配唯一的IP代理,也就是你这个Cookies发送请求的代理始终是唯一的.</p>
+<p>但是这种方法的实现方式还没有想出来,不知道该使用哪些技术栈来实现这个想法</p>
+<h2 id="想法二-解决验证码"><a href="#想法二-解决验证码" class="headerlink" title="想法二: 解决验证码"></a>想法二: 解决验证码</h2><p>好,既然你弹出验证码,那我就解决它! 解决方法是:</p>
+<ol>
+<li>该网站的验证码图片是<code>base64</code>,用<code>python</code>转一下,接上第三方就OK</li>
+<li>同时该网站参数中还带有<code>token</code>参数,经过前端大佬的断点调试,发现是对多个字段的两次加密</li>
+<li>保持会话session.你需要让对方网站知道是你这个用户,所以你的cookies,ip,headers相关信息必须保持一致,我当时的想法是使用<code>requests</code>的<code>session</code>来完成这一步操作,但是很难完全模拟,因为整个爬虫使用<code>scrapy</code>来写,处理验证码使用<code>requests</code>来做,<code>session</code>这部分不大好模拟.</li>
+</ol>
+<p>附上一些为<code>session</code>添加信息的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, my_cookie, proxy, headers)</span>:</span></div><div class="line">    self.session = requests.session()</div><div class="line">    self.session.cookies.update(my_cookie)</div><div class="line">    self.session.headers.update(&#123;<span class="string">'User-Agent'</span>: headers&#125;)</div><div class="line">    self.session.update(proxy)</div></pre></td></tr></table></figure>
+<h2 id="想法三-不解决验证问题-无脑重试"><a href="#想法三-不解决验证问题-无脑重试" class="headerlink" title="想法三: 不解决验证问题,无脑重试"></a>想法三: 不解决验证问题,无脑重试</h2><p>这是最蠢的办法,也是我目前在使用的方法. /(ㄒoㄒ)/~~</p>
+<p>思路是: 将<code>cookies</code>保存到mongoDB做持久化,再写一个脚本,持续的向<code>redis</code>中添加<code>cookies</code>和<code>start_urls</code>,然后对这些<code>start_urls</code>不停地重试,对,就是不停地重试,直到把所有的链接跑完.本次需要采集的链接并不多,质量要求不高,只需要我采集到数据就好.</p>
+<p>需要注意的是:</p>
+<ol>
+<li>需要为你的表增加唯一键,不然会有重复数据</li>
+<li>每条请求添加<code>dont_filter=True</code>,不然去重会影响爬取</li>
+</ol>
+<p>添加<code>cookies</code>和<code>start_urls</code>代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># add cookies and start_urls to local_redis</span></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="keyword">if</span> local_redis.scard(<span class="string">'spider:cookies'</span>) &lt; <span class="number">10</span>:</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> cookies_list:</div><div class="line">            local_redis.sadd(<span class="string">'spider:cookies'</span>, i)</div><div class="line">        print(<span class="string">"cookies Done"</span>)</div><div class="line"></div><div class="line">    <span class="keyword">if</span> local_redis.scard(<span class="string">'spider:start_urls'</span>) &lt; <span class="number">10</span>:</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> url_list:</div><div class="line">            local_redis.sadd(<span class="string">'spider:start_urls'</span>, i)</div><div class="line">        print(<span class="string">"start_urls Done"</span>)</div><div class="line">        </div><div class="line">    time.sleep(<span class="number">10</span>)</div></pre></td></tr></table></figure>
+<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><p>我是用的是第三种方法,目前看来效果还行,数据已经爬取了大半,相信三天假过去了应该就没问题了.</p>
+<p>如果以后要长期做这个项目的话,最好的办法应该还是第二种,从根本去解决问题.</p>
+<p>本次做这个项目也收获颇多,对于<code>cookies</code>使用更加有经验;感觉最好玩的是<code>token</code>的加密与解密实现,对这方面感兴趣的可以了解下这个: <a href="https://docs.python.org/3/library/zlib.html" target="_blank" rel="external">zlib — Compression compatible with gzip</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十五篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;终于有方法了  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/VD9q71g.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>从cookie池搭建说起</title>
@@ -1363,81 +1422,6 @@ e-packages\\lxml&#39;</code></p>
     
     
       <category term="Git" scheme="https://zhangslob.github.io/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>大佬，我代码哪错了？</title>
-    <link href="https://zhangslob.github.io/2018/03/13/%E5%A4%A7%E4%BD%AC%EF%BC%8C%E6%88%91%E4%BB%A3%E7%A0%81%E5%93%AA%E9%94%99%E4%BA%86%EF%BC%9F/"/>
-    <id>https://zhangslob.github.io/2018/03/13/大佬，我代码哪错了？/</id>
-    <published>2018-03-13T13:30:03.000Z</published>
-    <updated>2018-03-13T14:45:50.478Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十五篇原创文章
-</code></pre><p>到底哪错了  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/pTw3VCX.jpg" alt=""></p>
-<a id="more"></a>
-<h1 id="问题无处不在"><a href="#问题无处不在" class="headerlink" title="问题无处不在"></a>问题无处不在</h1><p>我： “大佬，帮我看看这个问题错在哪了？”</p>
-<p>大佬： “你的代码呢、你的错误提示呢？”</p>
-<p>我： “好的，我发给你”</p>
-<p><img src="https://i.imgur.com/4nSLl1h.jpg" alt=""></p>
-<p>大佬： “。。。 再见”</p>
-<p>留下一脸懵逼的我</p>
-<p><img src="https://i.imgur.com/pe57y3U.jpg" alt=""></p>
-<h1 id="如何解决问题"><a href="#如何解决问题" class="headerlink" title="如何解决问题"></a>如何解决问题</h1><p>最简单的方法是根据错误提示，查看对应位置的代码，Pycharm会提示具体是哪一行代码有问题，并抛出错误。</p>
-<p>找到错误首先应自己想办法解决，自己解决又分为几种：有经验的大佬看到<code>Error</code>就知道是哪里有问题了，没经验怎么办，那就自己去搜索了。</p>
-<p>下个结论，<strong>你遇到的问题，前人一定遇到过。</strong></p>
-<p>所以你只需要把你的错误提示搜索就好了。</p>
-<p>注意下面，你懂的。（给自己一个好点的环境）</p>
-<blockquote>
-<p>Google &gt; 百度</p>
-<p>stackoverflow &gt; 知乎</p>
-<p>github &gt; CSDN</p>
-</blockquote>
-<p>Github上有一个很有用的 <a href="https://github.com/trending" target="_blank" rel="external">trending</a> ，可以显示今天或本周或本月最火的项目，例如：</p>
-<p><a href="https://github.com/techGay/91porn" target="_blank" rel="external">techGay/91porn</a></p>
-<p><img src="https://i.imgur.com/v6RqtqZ.png" alt=""></p>
-<p>Github 作为全球最大的同性交友网站，上面有很多值得我们好好学习的东西。</p>
-<h1 id="如何向别人提问"><a href="#如何向别人提问" class="headerlink" title="如何向别人提问"></a>如何向别人提问</h1><p>如果你真的像上面哪样，发一张照片，估计大佬都要吐血了。</p>
-<p>在这里推荐大家使用Github上的 <a href="https://gist.github.com/" target="_blank" rel="external">gist</a> ，很适合分享代码片段。</p>
-<blockquote>
-<p>Instantly share code, notes, and snippets.</p>
-</blockquote>
-<p>例如这样</p>
-<p><a href="https://gist.github.com/zhangslob/b10a7753fb1b404c1111e09431da1433" target="_blank" rel="external">Issue in FromRequest #3144</a></p>
-<p><img src="https://i.imgur.com/kkLvFTn.png" alt=""></p>
-<p>这样看起来是不是舒服多了</p>
-<h1 id="如何才能-永无bug"><a href="#如何才能-永无bug" class="headerlink" title="如何才能 永无bug"></a>如何才能 永无bug</h1><h2 id="1、佛祖保佑-永无bug"><a href="#1、佛祖保佑-永无bug" class="headerlink" title="1、佛祖保佑 永无bug"></a>1、佛祖保佑 永无bug</h2><figure class="highlight 1c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//                            _ooOoo_</span></div><div class="line"><span class="comment">//                           o8888888o</span></div><div class="line"><span class="comment">//                           88" . "88</span></div><div class="line"><span class="comment">//                           (| -_- |)</span></div><div class="line"><span class="comment">//                            O\ = /O</span></div><div class="line"><span class="comment">//                        ____/`---'\____</span></div><div class="line"><span class="comment">//                      .   ' \\| |// `.</span></div><div class="line"><span class="comment">//                       / \\||| : |||// \</span></div><div class="line"><span class="comment">//                     / _||||| -:- |||||- \</span></div><div class="line"><span class="comment">//                       | | \\\ - /// | |</span></div><div class="line"><span class="comment">//                     | \_| ''\---/'' | |</span></div><div class="line"><span class="comment">//                      \ .-\__ `-` ___/-. /</span></div><div class="line"><span class="comment">//                   ___`. .' /--.--\ `. . __</span></div><div class="line"><span class="comment">//                ."" '&lt; `.___\_&lt;|&gt;_/___.' &gt;'"".</span></div><div class="line"><span class="comment">//               | | : `- \`.;`\ _ /`;.`/ - ` : | |</span></div><div class="line"><span class="comment">//                 \ \ `-. \_ __\ /__ _/ .-` / /</span></div><div class="line"><span class="comment">//         ======`-.____`-.___\_____/___.-`____.-'======</span></div><div class="line"><span class="comment">//                            `=---='</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//         .............................................</span></div><div class="line"><span class="comment">//                  佛祖镇楼                  BUG辟易</span></div><div class="line"><span class="comment">//             佛曰:</span></div><div class="line"><span class="comment">//                  写字楼里写字间，写字间里程序员；</span></div><div class="line"><span class="comment">//                  程序人员写程序，又拿程序换酒钱。</span></div><div class="line"><span class="comment">//                  酒醒只在网上坐，酒醉还来网下眠；</span></div><div class="line"><span class="comment">//                  酒醉酒醒日复日，网上网下年复年。</span></div><div class="line"><span class="comment">//                  但愿老死电脑间，不愿鞠躬老板前；</span></div><div class="line"><span class="comment">//                  奔驰宝马贵者趣，公交自行程序员。</span></div><div class="line"><span class="comment">//                  别人笑我忒疯癫，我笑自己命太贱；</span></div><div class="line"><span class="comment">//                  不见满街漂亮妹，哪个归得程序员？</span></div></pre></td></tr></table></figure>
-<h2 id="2、佛系编程-永无bug"><a href="#2、佛系编程-永无bug" class="headerlink" title="2、佛系编程 永无bug"></a>2、佛系编程 永无bug</h2><h4 id="No-Code"><a href="#No-Code" class="headerlink" title="No Code"></a>No Code</h4><p>No code is the best way to write secure and reliable applications. Write nothing; deploy nowhere.</p>
-<h4 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h4><p>Start by not writing any code.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<p>This is just an example application, but imagine it doing anything you want. Adding new features is easy too:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<p>The possibilities are endless.</p>
-<h4 id="Building-the-Application"><a href="#Building-the-Application" class="headerlink" title="Building the Application"></a>Building the Application</h4><p>Now that you have not done anything it’s time to build your application:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<p>Yep. That’s it. You should see the following output:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<h4 id="Deploying"><a href="#Deploying" class="headerlink" title="Deploying"></a>Deploying</h4><p>While you still have not done anything it’s time to deploy your application. By running the following command you can deploy your application absolutely nowhere.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<p>It’s that simple. And when it comes time to scale the application, all you have to do is:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
-<p>I know right?</p>
-<h4 id="Contributing"><a href="#Contributing" class="headerlink" title="Contributing"></a>Contributing</h4><p>You don’t.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十五篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;到底哪错了  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/pTw3VCX.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="编程" scheme="https://zhangslob.github.io/categories/%E7%BC%96%E7%A8%8B/"/>
-    
-    
-      <category term="编程" scheme="https://zhangslob.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
