@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-06-16T07:05:36.038Z</updated>
+  <updated>2018-06-25T13:58:25.816Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,66 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Katalon + 傻瓜 == selenium</title>
+    <link href="https://zhangslob.github.io/2018/06/25/Katalon-selenium-%E5%82%BB%E7%93%9C/"/>
+    <id>https://zhangslob.github.io/2018/06/25/Katalon-selenium-傻瓜/</id>
+    <published>2018-06-25T13:16:57.090Z</published>
+    <updated>2018-06-25T13:58:25.816Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十六篇原创文章
+</code></pre><p>简直是神器啊  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/dIxaOYj.png" alt=""></p>
+<a id="more"></a>
+<p>今天在翻莫烦大大的博客时，看到他提到一个工具，便去看了下，第一感受是，太好用了、爱不释手。</p>
+<p>下面来说说这个工具：Katalon Recorder</p>
+<h1 id="Katalon-Recorder"><a href="#Katalon-Recorder" class="headerlink" title="Katalon Recorder"></a>Katalon Recorder</h1><p>安装地址：<a href="https://chrome.google.com/webstore/detail/katalon-recorder-selenium/ljdobmomdgdljniojadhoplhkpialdid/related" target="_blank" rel="external">Katalon Recorder</a></p>
+<p>官方介绍是：</p>
+<blockquote>
+<p>Best Selenium IDE record, play, debug app. Exports Selenium WebDriver code. Provides reports, logs, screenshots. Fast &amp; extensible. </p>
+</blockquote>
+<p>简单来说，他可以记录你在浏览器上的每一个动作，包括、点击、输入、输入字符等等，最后一键转化为编程代码，可以转化的语言有：</p>
+<ol>
+<li>C#</li>
+<li>JAVA</li>
+<li>Katalon Studio</li>
+<li>Python2</li>
+<li>Roboot Framework</li>
+<li>Ruby</li>
+<li>XML</li>
+</ol>
+<p>例如下图就是直接转化为 Python2的代码</p>
+<p><img src="https://i.imgur.com/q6t07p3.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</div><div class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> Select</div><div class="line"><span class="keyword">from</span> selenium.common.exceptions <span class="keyword">import</span> NoSuchElementException</div><div class="line"><span class="keyword">from</span> selenium.common.exceptions <span class="keyword">import</span> NoAlertPresentException</div><div class="line"><span class="keyword">import</span> unittest, time, re</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UntitledTestCase</span><span class="params">(unittest.TestCase)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(self)</span>:</span></div><div class="line">        self.driver = webdriver.Firefox()</div><div class="line">        self.driver.implicitly_wait(<span class="number">30</span>)</div><div class="line">        self.base_url = <span class="string">"https://www.katalon.com/"</span></div><div class="line">        self.verificationErrors = []</div><div class="line">        self.accept_next_alert = <span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_untitled_test_case</span><span class="params">(self)</span>:</span></div><div class="line">        driver = self.driver</div><div class="line">        driver.get(<span class="string">"https://zhangslob.github.io/"</span>)</div><div class="line">        driver.find_element_by_link_text(<span class="string">u"Cookies池的后续解决方案"</span>).click()</div><div class="line">        driver.find_element_by_xpath(<span class="string">"//main[@id='main']/div/div"</span>).click()</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_element_present</span><span class="params">(self, how, what)</span>:</span></div><div class="line">        <span class="keyword">try</span>: self.driver.find_element(by=how, value=what)</div><div class="line">        <span class="keyword">except</span> NoSuchElementException <span class="keyword">as</span> e: <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_alert_present</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">try</span>: self.driver.switch_to_alert()</div><div class="line">        <span class="keyword">except</span> NoAlertPresentException <span class="keyword">as</span> e: <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close_alert_and_get_its_text</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            alert = self.driver.switch_to_alert()</div><div class="line">            alert_text = alert.text</div><div class="line">            <span class="keyword">if</span> self.accept_next_alert:</div><div class="line">                alert.accept()</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                alert.dismiss()</div><div class="line">            <span class="keyword">return</span> alert_text</div><div class="line">        <span class="keyword">finally</span>: self.accept_next_alert = <span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tearDown</span><span class="params">(self)</span>:</span></div><div class="line">        self.driver.quit()</div><div class="line">        self.assertEqual([], self.verificationErrors)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    unittest.main()</div></pre></td></tr></table></figure>
+<p>虽然说用的是Python2，但是并不影响，简单改一下就就可以使用了，主要逻辑在<code>test_untitled_test_case</code>函数中，可以直接拿来使用。</p>
+<p>注意这里使用了<code>unittest</code>，不熟悉的可以来看看<a href="https://docs.python.org/3/library/unittest.html" target="_blank" rel="external">文档</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> unittest</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TestStringMethods</span><span class="params">(unittest.TestCase)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_upper</span><span class="params">(self)</span>:</span></div><div class="line">        self.assertEqual(<span class="string">'foo'</span>.upper(), <span class="string">'FOO'</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_isupper</span><span class="params">(self)</span>:</span></div><div class="line">        self.assertTrue(<span class="string">'FOO'</span>.isupper())</div><div class="line">        self.assertFalse(<span class="string">'Foo'</span>.isupper())</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_split</span><span class="params">(self)</span>:</span></div><div class="line">        s = <span class="string">'hello world'</span></div><div class="line">        self.assertEqual(s.split(), [<span class="string">'hello'</span>, <span class="string">'world'</span>])</div><div class="line">        <span class="comment"># check that s.split fails when the separator is not a string</span></div><div class="line">        <span class="keyword">with</span> self.assertRaises(TypeError):</div><div class="line">            s.split(<span class="number">2</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    unittest.main()</div></pre></td></tr></table></figure>
+<h1 id="安装方法"><a href="#安装方法" class="headerlink" title="安装方法"></a>安装方法</h1><p>这里建议直接在Chrome应用市场安装，地址 <a href="https://chrome.google.com/webstore/detail/katalon-recorder-selenium/ljdobmomdgdljniojadhoplhkpialdid/related" target="_blank" rel="external">Katalon Recorder</a></p>
+<p>考虑到有些同学可能那啥，所以我已经下载好了。公众号：Python爬虫与算法进阶，回复：<strong>傻瓜</strong></p>
+<p><img src="https://i.imgur.com/93kxeCD.jpg" alt=""></p>
+<h1 id="感受"><a href="#感受" class="headerlink" title="感受"></a>感受</h1><p>这个相当于按键精灵，把我们对浏览器的每一步操作都完成了，可以用来生成代码，和postman一样，所以我才会说 <code>Katalon + 傻瓜 == selenium</code>，完全是傻瓜操作。</p>
+<p>比如来做一些自动化登录、注册等板块会非常爽，但是验证码部分还是需要自行解决。</p>
+<p>但是该软件也是有一些问题的，它不能进行多页面切换，也就是不能自动切换到新打开的窗口，会有错误提示<code># ERROR: Caught exception [ERROR: Unsupported command [selectWindow | win_ser_1 | ]]</code>，这一步必须自己手动来操作，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">driver.current_window_handle 获取当前窗口handle</div><div class="line">driver.window_handles 获取所有窗口的handle，返回list列表</div><div class="line">driver.switch_to.window(handle) 切换到对应的窗口</div><div class="line">driver.close() 关闭当前窗口</div></pre></td></tr></table></figure>
+<p>测试打开多窗口的代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</div><div class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> Select</div><div class="line"><span class="keyword">from</span> selenium.common.exceptions <span class="keyword">import</span> NoSuchElementException</div><div class="line"><span class="keyword">from</span> selenium.common.exceptions <span class="keyword">import</span> NoAlertPresentException</div><div class="line"><span class="keyword">import</span> unittest, time, re</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zhihu</span><span class="params">(unittest.TestCase)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(self)</span>:</span></div><div class="line">        self.driver = webdriver.Firefox()</div><div class="line">        self.driver.implicitly_wait(<span class="number">30</span>)</div><div class="line">        self.base_url = <span class="string">"https://www.katalon.com/"</span></div><div class="line">        self.verificationErrors = []</div><div class="line">        self.accept_next_alert = <span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_zhihu</span><span class="params">(self)</span>:</span></div><div class="line">        driver = self.driver</div><div class="line">        driver.get(<span class="string">"https://www.zhihu.com/people/cuishite/activities"</span>)</div><div class="line">        driver.find_element_by_xpath(<span class="string">"//div[@id='ProfileMain']/div/ul/li[2]/a"</span>).click()</div><div class="line">        driver.find_element_by_xpath(<span class="string">"//div[@id='ProfileMain']/div/ul/li[4]/a/span"</span>).click()</div><div class="line">        driver.find_element_by_link_text(<span class="string">u"Cookies池的后续解决方案"</span>).click()</div><div class="line">        <span class="comment"># ERROR: Caught exception [ERROR: Unsupported command [selectWindow | win_ser_1 | ]]</span></div><div class="line">        driver.find_element_by_xpath(<span class="string">"//img[contains(@src,'https://pic4.zhimg.com/v2-7ff26e52e6c82c080f62d8e9291e532b_b.jpg')]"</span>).click()</div><div class="line">        driver.find_element_by_link_text(<span class="string">u"Cookies池的后续解决方案"</span>).click()</div><div class="line">        <span class="comment"># ERROR: Caught exception [ERROR: Unsupported command [selectWindow | win_ser_2 | ]]</span></div><div class="line">        driver.find_element_by_xpath(<span class="string">"//div[@id='js_article']/div[2]"</span>).click()</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_element_present</span><span class="params">(self, how, what)</span>:</span></div><div class="line">        <span class="keyword">try</span>: self.driver.find_element(by=how, value=what)</div><div class="line">        <span class="keyword">except</span> NoSuchElementException <span class="keyword">as</span> e: <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_alert_present</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">try</span>: self.driver.switch_to_alert()</div><div class="line">        <span class="keyword">except</span> NoAlertPresentException <span class="keyword">as</span> e: <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close_alert_and_get_its_text</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            alert = self.driver.switch_to_alert()</div><div class="line">            alert_text = alert.text</div><div class="line">            <span class="keyword">if</span> self.accept_next_alert:</div><div class="line">                alert.accept()</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                alert.dismiss()</div><div class="line">            <span class="keyword">return</span> alert_text</div><div class="line">        <span class="keyword">finally</span>: self.accept_next_alert = <span class="keyword">True</span></div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tearDown</span><span class="params">(self)</span>:</span></div><div class="line">        self.driver.quit()</div><div class="line">        self.assertEqual([], self.verificationErrors)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    unittest.main()</div></pre></td></tr></table></figure>
+<p>所以只需要这一点就可以完善代码，同时可以看看他们的官网 <a href="https://www.katalon.com/" target="_blank" rel="external">KATALON - Best automated testing tool for web, mobile, API</a>，他们主要是提供测试工具，感兴趣的可以了解下。</p>
+<p><img src="https://i.imgur.com/V8smLse.png" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十六篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;简直是神器啊  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/dIxaOYj.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>Cookies池的后续解决方案</title>
@@ -1313,107 +1373,6 @@ e-packages\\lxml&#39;</code></p>
     
       &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十七篇原创文章
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;继续补基础  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/nSjj0lk.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Git" scheme="https://zhangslob.github.io/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="https://zhangslob.github.io/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>学习Git（一）起步</title>
-    <link href="https://zhangslob.github.io/2018/03/14/%E5%AD%A6%E4%B9%A0Git%EF%BC%88%E4%B8%80%EF%BC%89%E8%B5%B7%E6%AD%A5/"/>
-    <id>https://zhangslob.github.io/2018/03/14/学习Git（一）起步/</id>
-    <published>2018-03-14T14:52:36.000Z</published>
-    <updated>2018-03-19T15:12:28.919Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十六篇原创文章
-</code></pre><p>开始补基础  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/nSjj0lk.png" alt=""></p>
-<a id="more"></a>
-<h1 id="什么是Git"><a href="#什么是Git" class="headerlink" title="什么是Git"></a>什么是Git</h1><p>在Git官网上找到这样一段描述</p>
-<blockquote>
-<p>Git is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency.</p>
-</blockquote>
-<p>重点是 <code>version control system</code> (VCS)，翻译过来也就是 <code>版本控制系统</code>。（Pycharm中有一个）</p>
-<h2 id="关于版本控制"><a href="#关于版本控制" class="headerlink" title="关于版本控制"></a>关于版本控制</h2><p>版本控制是一种记录一个或若干文件内容变化，以便将来查阅特定版本修订情况的系统。</p>
-<p>（我的理解就是一个东西会有不同的版本，就像吃鸡，常常更新，每更新一次就是一个新的版本，如果刚发行的版本出现毒圈不掉血，这个时候就需要版本回退。。版本控制系统就体现作用了）</p>
-<p>版本控制系统又分为：本地版本控制系统、集中化的版本控制系统、分布式版本控制系统。</p>
-<p><img src="https://git-scm.com/book/en/v2/images/local.png" alt=""></p>
-<blockquote>
-<p>本地版本控制系统</p>
-</blockquote>
-<p><img src="https://git-scm.com/book/en/v2/images/centralized.png" alt=""></p>
-<blockquote>
-<p>集中化的版本控制系统</p>
-</blockquote>
-<p><img src="https://git-scm.com/book/en/v2/images/distributed.png" alt=""></p>
-<blockquote>
-<p>分布式版本控制系统</p>
-</blockquote>
-<p>更多介绍可以来看 <a href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%85%B3%E4%BA%8E%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6" target="_blank" rel="external">1.1 起步 - 关于版本控制</a></p>
-<h1 id="谁开发了-Git"><a href="#谁开发了-Git" class="headerlink" title="谁开发了 Git"></a>谁开发了 Git</h1><p>2002 年，Linux 内核开源项目组开始启用一个专有的分布式版本控制系统 <code>BitKeeper</code> 来管理和维护代码。</p>
-<p>但是到了 2005 年，开发 <code>BitKeeper</code> 的商业公司同 <code>Linux</code> 内核开源社区的合作关系结束，他们收回了 <code>Linux</code> 内核社区免费使用 <code>BitKeeper</code> 的权力。 这就迫使 <code>Linux</code> 开源社区（特别是 <code>Linux</code> 的缔造者 <code>Linus Torvalds</code>）基于使用 <code>BitKeeper</code> 时的经验教训，开发出自己的版本系统。 他们对新的系统制订了若干目标：</p>
-<ul>
-<li>速度</li>
-<li>简单的设计</li>
-<li>对非线性开发模式的强力支持（允许成千上万个并行开发的分支）</li>
-<li>完全分布式</li>
-<li>有能力高效管理类似 Linux 内核一样的超大规模项目（速度和数据量）</li>
-</ul>
-<h1 id="Git-特点"><a href="#Git-特点" class="headerlink" title="Git 特点"></a>Git 特点</h1><h2 id="Git-工作流"><a href="#Git-工作流" class="headerlink" title="Git 工作流"></a>Git 工作流</h2><p>基本的 Git 工作流程如下：</p>
-<ol>
-<li>克隆 Git 资源作为工作目录。</li>
-<li>在克隆的资源上添加或修改文件。</li>
-<li>如果其他人修改了，你可以更新资源。</li>
-<li>在提交前查看修改。</li>
-<li>提交修改。</li>
-<li>在修改完成后，如果发现错误，可以撤回提交并再次修改并提交。</li>
-</ol>
-<h2 id="近乎所有操作都是本地执行"><a href="#近乎所有操作都是本地执行" class="headerlink" title="近乎所有操作都是本地执行"></a>近乎所有操作都是本地执行</h2><p>在 <code>Git</code> 中的绝大多数操作都只需要访问本地文件和资源，一般不需要来自网络上其它计算机的信息。</p>
-<p>举个例子，要浏览项目的历史，<code>Git</code> 不需外连到服务器去获取历史，然后再显示出来——它只需直接从本地数据库中读取。 你能立即看到项目历史。 如果你想查看当前版本与一个月前的版本之间引入的修改，<code>Git</code> 会查找到一个月前的文件做一次本地的差异计算，而不是由远程服务器处理或从远程服务器拉回旧版本文件再来本地处理。</p>
-<h2 id="Git-保证完整性"><a href="#Git-保证完整性" class="headerlink" title="Git 保证完整性"></a>Git 保证完整性</h2><p><code>Git</code> 中所有数据在存储前都计算校验和，然后以校验和来引用。 这意味着不可能在 <code>Git</code> 不知情时更改任何文件内容或目录内容。 这个功能建构在 <code>Git</code> 底层，是构成 <code>Git</code> 哲学不可或缺的部分。 若你在传送过程中丢失信息或损坏文件，<code>Git</code> 就能发现。</p>
-<p><code>Git</code> 用以计算校验和的机制叫做 <code>SHA-1</code> 散列（hash，哈希）。 这是一个由 40 个十六进制字符（0-9 和 a-f）组成字符串，基于 <code>Git</code> 中文件的内容或目录结构计算出来。 <code>SHA-1</code> 哈希看起来是这样：</p>
-<p><code>24b9da6552252987aa493b52f8696cd6d3b00373</code></p>
-<p><code>Git</code> 中使用这种哈希值的情况很多，你将经常看到这种哈希值。 实际上，<code>Git</code> 数据库中保存的信息都是以文件内容的哈希值来索引，而不是文件名。</p>
-<h2 id="Git-一般只添加数据"><a href="#Git-一般只添加数据" class="headerlink" title="Git 一般只添加数据"></a>Git 一般只添加数据</h2><p>你执行的 <code>Git</code> 操作，几乎只往 <code>Git</code> 数据库中增加数据。 很难让 <code>Git</code> 执行任何不可逆操作，或者让它以任何方式清除数据。 同别的 <code>VCS</code> 一样，未提交更新时有可能丢失或弄乱修改的内容；但是一旦你提交快照到 <code>Git</code> 中，就难以再丢失数据，特别是如果你定期的推送数据库到其它仓库的话。</p>
-<h2 id="Git-的三种状态"><a href="#Git-的三种状态" class="headerlink" title="Git 的三种状态"></a>Git 的三种状态</h2><ol>
-<li>已提交（committed）：数据已经安全的保存在本地数据库中。</li>
-<li>已修改（modified） ：修改了文件，但还没保存到数据库中。</li>
-<li>已暂存（staged）   ：对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中。</li>
-</ol>
-<p>由此引入 Git 项目的三个工作区域的概念：Git 仓库、工作目录以及暂存区域。</p>
-<p><img src="https://git-scm.com/book/en/v2/images/areas.png" alt=""></p>
-<h1 id="安装-Git"><a href="#安装-Git" class="headerlink" title="安装 Git"></a>安装 Git</h1><p>说了那么多，现在开始动手，安装Git。</p>
-<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p><code>$ sudo yum install git</code></p>
-<p>或者</p>
-<p><code>$ sudo apt-get install git</code></p>
-<h2 id="Mac"><a href="#Mac" class="headerlink" title="Mac"></a>Mac</h2><p>下载安装包 <a href="https://git-scm.com/download/mac" target="_blank" rel="external">Downloading Git</a></p>
-<p>或者</p>
-<p><code>$ brew install git</code></p>
-<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><p>直接下载文件 <a href="https://git-scm.com/download/win" target="_blank" rel="external">Downloading Git</a></p>
-<p>或者</p>
-<p>安装 <a href="https://desktop.github.com/" target="_blank" rel="external">GitHub for Windows</a></p>
-<h1 id="初次运行-Git-前的配置"><a href="#初次运行-Git-前的配置" class="headerlink" title="初次运行 Git 前的配置"></a>初次运行 Git 前的配置</h1><h2 id="用户信息"><a href="#用户信息" class="headerlink" title="用户信息"></a>用户信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git config --global user.name &quot;name&quot;</div><div class="line">$ git config --global user.email example@example.com</div></pre></td></tr></table></figure>
-<p>如果使用了 <code>--global</code> 选项，那么该命令只需要运行一次，因为之后无论你在该系统上做任何事情， <code>Git</code> 都会使用那些信息。</p>
-<h2 id="检查配置信息"><a href="#检查配置信息" class="headerlink" title="检查配置信息"></a>检查配置信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ git config --list</div><div class="line">user.name=name</div><div class="line">user.email=example@example.com</div><div class="line">color.status=auto</div><div class="line">color.branch=auto</div><div class="line">color.interactive=auto</div><div class="line">color.diff=auto</div><div class="line">...</div></pre></td></tr></table></figure>
-<h2 id="获取帮助"><a href="#获取帮助" class="headerlink" title="获取帮助"></a>获取帮助</h2><p>若你使用 <code>Git</code> 时需要获取帮助，有三种方法可以找到 <code>Git</code> 命令的使用手册：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ git help &lt;verb&gt;</div><div class="line">$ git &lt;verb&gt; --help</div><div class="line">$ man git-&lt;verb&gt;</div></pre></td></tr></table></figure></p>
-<p>例如，要想获得 <code>config</code> 命令的手册，执行</p>
-<p><code>$ git help config</code></p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>以前只是了解 <code>Git</code>常见的push、commit等命令，从没有对 <code>Git</code>进性过系统学习，抓紧时间学习。</p>
-<p><strong>目标</strong>：两周后，也就是3月28日，能熟练使用 <code>Git</code>进性开发。</p>
-<p>这一篇主要讲了些背景知识吧，下一篇就是实际的操作了。</p>
-<p>主要从<a href="https://git-scm.com/book/zh/v2" target="_blank" rel="external">Git文档</a>上截取自己认为重要的部分，有条件可以去仔细阅读。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十六篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;开始补基础  (๑• . •๑)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/nSjj0lk.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
