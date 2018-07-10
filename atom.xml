@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-07-03T15:20:52.731Z</updated>
+  <updated>2018-07-10T15:13:23.021Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,82 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>说说最近遇到的反爬</title>
+    <link href="https://zhangslob.github.io/2018/07/10/%E8%AF%B4%E8%AF%B4%E6%9C%80%E8%BF%91%E9%81%87%E5%88%B0%E7%9A%84%E5%8F%8D%E7%88%AC/"/>
+    <id>https://zhangslob.github.io/2018/07/10/说说最近遇到的反爬/</id>
+    <published>2018-07-10T15:07:44.000Z</published>
+    <updated>2018-07-10T15:13:23.021Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十八篇原创文章
+</code></pre><p>爬虫与反爬  (๑• . •๑)</p>
+<p><img src="https://i.imgur.com/qb1MMqd.jpg" alt=""></p>
+<a id="more"></a>
+<h1 id="参数加密"><a href="#参数加密" class="headerlink" title="参数加密"></a>参数加密</h1><p>参数加密指的是在请求中需要加上类似<code>token</code>、<code>uuid</code> 字段，例如在某个请求中<code>query string parameters</code>中有<code>_token</code>和<code>uuid</code>、<code>customerKey</code>等字段，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">_token:eJyN0l9L40AQAPDvsg8+hWZ2</div><div class="line">uuid:59851b5e-92b4<span class="_">-f</span>1f5-19e2<span class="_">-d</span>8148bf7e</div><div class="line">customerKey:0356982437</div></pre></td></tr></table></figure>
+<p><strong>解决方法</strong></p>
+<p>刚开始遇到这个是一脸懵逼的，验证发现有些参数不是必须的，比如<code>uuid</code>，<code>uuid</code>在维基百科上是：通用唯一识别码，估计没啥作用，python也有内置的uuid生成库 <a href="https://docs.python.org/3/library/uuid.html" target="_blank" rel="external">uuid — UUID objects according to RFC 4122</a></p>
+<p>问了前端大佬，得知需要在js中打断点，一点点调试，最后终于解决，<code>_token</code>是二次加密的。</p>
+<p>给大家看一下该网站的部分代码。看看描述：<strong>获得反爬虫的_toke</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 获得反爬虫的_token</div><div class="line"> * @param &#123;*&#125; url </div><div class="line"> * @param &#123;*&#125; queryParams </div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getRohrToken</span>(<span class="params">host, queryParams</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.Rohr_Opt &amp;&amp; <span class="built_in">window</span>.Rohr_Opt.reload) &#123;</div><div class="line">        <span class="keyword">var</span> rohr = <span class="built_in">window</span>.Rohr_Opt;</div><div class="line"></div><div class="line">        <span class="keyword">var</span> _token = <span class="string">''</span>;</div><div class="line">        <span class="keyword">var</span> params = queryParams</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> params == <span class="string">'string'</span> &amp;&amp; params.indexOf(<span class="string">'_fb_='</span>) !== <span class="number">-1</span>) &#123;</div><div class="line">            params = <span class="string">''</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">var</span> queryString = toQueryString(params);</div><div class="line"></div><div class="line">        <span class="keyword">var</span> _url = location.protocol + host + <span class="string">'?'</span> + queryString;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            _token = rohr.reload(_url) || <span class="string">''</span>;</div><div class="line">        &#125; <span class="keyword">catch</span> (e) &#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'获取token失败:'</span> + e)</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> _token;</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>关于如何调试，这里有教程，<a href="http://wiki.jikexueyuan.com/project/chrome-devtools/debugging-javascript.html" target="_blank" rel="external">调试 JavaScript 脚本</a> </p>
+<blockquote>
+<p>这里还有另一种app抓包加密情况，暂时还没接触过，听过是需要反编译apk包，然后阅读代码。</p>
+</blockquote>
+<h1 id="登录问题"><a href="#登录问题" class="headerlink" title="登录问题"></a>登录问题</h1><p>很多网站数据是登录可见，那么就必须要开发该网站的登录系统了。</p>
+<p>登录可能会遇到的一些问题：</p>
+<ol>
+<li>登录过程中遇到的验证码（下面会说）</li>
+<li>cookies持久化问题</li>
+<li>账号被封禁问题</li>
+</ol>
+<p><strong>解决方法</strong></p>
+<ul>
+<li><p>登录账号获得<code>cookies</code>后，经过一段时间，<code>cookies</code>就可能会失效，具体网站情况不同，这时候就必须有个脚本，来保证<code>cookies</code>有效</p>
+</li>
+<li><p>账号做出一些跟正常用户不同的操作就会产生异常，别人很容易就发现。所以就让你的账号像正常人一样。</p>
+</li>
+</ul>
+<p>最近看到有人再问豆瓣登录采集影评导致被封号的事情，豆瓣我以前也被封过，到现在也没有解封</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">依据用户管理细则，此帐号已被永久停用。停用时间:2017-09-29</div><div class="line">如有疑问，请发送邮件到<span class="built_in">help</span>@douban.com</div></pre></td></tr></table></figure>
+<p>我的建议是：</p>
+<ol>
+<li>有能力的多注册账号，账号被封了就再去注册呗</li>
+<li>手机app抓包，app不需要登录，而且可以持续抓最新评论</li>
+</ol>
+<h1 id="图形验证码"><a href="#图形验证码" class="headerlink" title="图形验证码"></a>图形验证码</h1><p>验证码一直是反爬虫利器，从简单的数字识别，到复杂的滑动拼图、图片点选等等。有兴趣的来试试破解 <a href="http://dun.163.com/trial/picture-click" target="_blank" rel="external">网易云易盾</a>，感觉很头疼。</p>
+<p><img src="https://image.ibb.co/ebAMMo/20180710202053.png" alt=""></p>
+<p><strong>解决方法</strong></p>
+<p>例如上图，这是我现在遇到的一种验证码情况，依次点击几个文字。</p>
+<p>如果是自己来做的话，会考虑这样：</p>
+<ol>
+<li>将验证码图片部分截图或下载回来</li>
+<li>对图片进行OCR，提取文字</li>
+<li>文字识别，获取坐标</li>
+<li>使用<code>selenium</code>根据坐标点击</li>
+</ol>
+<p>这只是初步思路，但想法很容易，做起来却没那么简单。</p>
+<p>在Github上找到大佬写的方法 <a href="https://github.com/cos120/captcha_crack" target="_blank" rel="external">captcha_crack</a>，知乎上也有 <a href="https://zhuanlan.zhihu.com/p/34186397" target="_blank" rel="external">使用深度学习破解点击验证码</a></p>
+<p>那么如果直接接入第三方打码平台来，那就会简单很多，在实际开发中为了提高准确性，更多会使用打码平台。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十八篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;爬虫与反爬  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/qb1MMqd.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="反爬" scheme="https://zhangslob.github.io/tags/%E5%8F%8D%E7%88%AC/"/>
+    
+  </entry>
   
   <entry>
     <title>快速写一个爬虫</title>
@@ -1191,83 +1267,6 @@
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hi，这里是我的爬虫笔记</title>
-    <link href="https://zhangslob.github.io/2018/03/25/Hi%EF%BC%8C%E8%BF%99%E9%87%8C%E6%98%AF%E6%88%91%E7%9A%84%E7%88%AC%E8%99%AB%E7%AC%94%E8%AE%B0/"/>
-    <id>https://zhangslob.github.io/2018/03/25/Hi，这里是我的爬虫笔记/</id>
-    <published>2018-03-25T13:37:15.000Z</published>
-    <updated>2018-03-25T14:41:17.359Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十八篇原创文章
-</code></pre><p>长期更新  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/St35Zmv.jpg" alt=""></p>
-<a id="more"></a>
-<p>平时有个习惯，会把自己的笔记写在有道云里面，现在做个整理。会长期更新，因为我是BUG制造机。</p>
-<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><h2 id="xpath提取所有节点文本"><a href="#xpath提取所有节点文本" class="headerlink" title="xpath提取所有节点文本"></a>xpath提取所有节点文本</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"test3"</span>&gt;</span>我左青龙，<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"tiger"</span>&gt;</span>右白虎，<span class="tag">&lt;<span class="name">ul</span>&gt;</span>上朱雀，<span class="tag">&lt;<span class="name">li</span>&gt;</span>下玄武。<span class="tag">&lt;/<span class="name">li</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span>老牛在当中，<span class="tag">&lt;/<span class="name">span</span>&gt;</span>龙头在胸口。<span class="tag">&lt;<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>使用xpath的string(.)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</div><div class="line"></div><div class="line">text = <span class="string">'&lt;div id="test3"&gt;我左青龙，&lt;span id="tiger"&gt;右白虎，&lt;ul&gt;上朱雀，&lt;li&gt;下玄武。&lt;/li&gt;&lt;/ul&gt;老牛在当中，&lt;/span&gt;龙头在胸口。&lt;div&gt;'</span></div><div class="line">s = Selector(text=text)</div><div class="line">data = s.xpath(<span class="string">'//div[@id="test3"]'</span>)</div><div class="line">info = data.xpath(<span class="string">'string(.)'</span>).extract()[<span class="number">0</span>]</div><div class="line">print(info)</div><div class="line"></div><div class="line"><span class="comment"># output: 我左青龙，右白虎，上朱雀，下玄武。老牛在当中，龙头在胸口。</span></div></pre></td></tr></table></figure>
-<h2 id="如何解决详情页面元素改变"><a href="#如何解决详情页面元素改变" class="headerlink" title="如何解决详情页面元素改变"></a>如何解决详情页面元素改变</h2><p>这个问题是这样产生的，在很多PC站，比如链家，这个页面有这些字段A，但是下个页面这个字段A没了，取而代之的是字段B，在xpath定位时就失效了。这个问题很常见，大体思路是这样的。</p>
-<ol>
-<li>创建一个包含所有字段的dict: <code>data = {}.fromkeys((&#39;url&#39;, &#39;price&#39;, &#39;address&#39;))</code></li>
-<li>然后根据网页中是否有字段来取值，例如，有’url’就取对应的value，没有则为空</li>
-<li>这样就可以完美解决匹配不全问题</li>
-</ol>
-<h1 id="Scrapy-相关"><a href="#Scrapy-相关" class="headerlink" title="Scrapy 相关"></a>Scrapy 相关</h1><h2 id="文件编写"><a href="#文件编写" class="headerlink" title="文件编写"></a>文件编写</h2><p>逻辑文件和解析部分分开写，匹配文件目录是<code>utils/parse/</code>，爬虫文件目录是<code>spiders/</code></p>
-<h2 id="Scrapy-中文乱码"><a href="#Scrapy-中文乱码" class="headerlink" title="Scrapy 中文乱码"></a>Scrapy 中文乱码</h2><p>在 <code>setting</code> 文件中设置：<code>FEED_EXPORT_ENCODING = &#39;utf-8&#39;</code></p>
-<h2 id="Scrapy-使用Mongo"><a href="#Scrapy-使用Mongo" class="headerlink" title="Scrapy 使用Mongo"></a>Scrapy 使用Mongo</h2><p><code>pipelines.py</code></p>
-<ol>
-<li>首先我们要从settings文件中读取数据的地址、端口、数据库名称。</li>
-<li>拿到数据库的基本信息后进行连接。</li>
-<li>将数据写入数据库（update制定唯一键）</li>
-<li>关闭数据库</li>
-</ol>
-<blockquote>
-<p>注意：只有打开和关闭是只执行一次，而写入操作会根据具体的写入次数而定。<br>Redis 无需关闭<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    1、连接数据库操作</div><div class="line">    """</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,mongourl,mongoport,mongodb)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        初始化mongodb数据的url、端口号、数据库名称</div><div class="line">        :param mongourl:</div><div class="line">        :param mongoport:</div><div class="line">        :param mongodb:</div><div class="line">        '''</div><div class="line">        self.mongourl = mongourl</div><div class="line">        self.mongoport = mongoport</div><div class="line">        self.mongodb = mongodb</div><div class="line"> </div><div class="line"><span class="meta">    @classmethod</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">from_crawler</span><span class="params">(cls,crawler)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        1、读取settings里面的mongodb数据的url、port、DB。</div><div class="line">        :param crawler:</div><div class="line">        :return:</div><div class="line">        """</div><div class="line">        <span class="keyword">return</span> cls(</div><div class="line">            mongourl = crawler.settings.get(<span class="string">"MONGO_URL"</span>),</div><div class="line">            mongoport = crawler.settings.get(<span class="string">"MONGO_PORT"</span>),</div><div class="line">            mongodb = crawler.settings.get(<span class="string">"MONGO_DB"</span>)</div><div class="line">        )</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_spider</span><span class="params">(self,spider)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        1、连接mongodb数据</div><div class="line">        :param spider:</div><div class="line">        :return:</div><div class="line">        '''</div><div class="line">        self.client = pymongo.MongoClient(self.mongourl,self.mongoport)</div><div class="line">        self.db = self.client[self.mongodb]</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self,item,spider)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        1、将数据写入数据库</div><div class="line">        :param item:</div><div class="line">        :param spider:</div><div class="line">        :return:</div><div class="line">        '''</div><div class="line">        name = item.__class__.__name__</div><div class="line">        <span class="comment"># self.db[name].insert(dict(item))</span></div><div class="line">        self.db[<span class="string">'user'</span>].update(&#123;<span class="string">'url_token'</span>:item[<span class="string">'url_token'</span>]&#125;,&#123;<span class="string">'$set'</span>:item&#125;,<span class="keyword">True</span>)</div><div class="line">        <span class="keyword">return</span> item</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close_spider</span><span class="params">(self,spider)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        1、关闭数据库连接</div><div class="line">        :param spider:</div><div class="line">        :return:</div><div class="line">        '''</div><div class="line">        self.client.close()</div></pre></td></tr></table></figure></p>
-</blockquote>
-<h2 id="scrapy图片下载"><a href="#scrapy图片下载" class="headerlink" title="scrapy图片下载"></a>scrapy图片下载</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.pipelines.images <span class="keyword">import</span> ImagesPipeline</div><div class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyImagesPipeline</span><span class="params">(ImagesPipeline)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_media_requests</span><span class="params">(self, item, info)</span>:</span></div><div class="line">        <span class="keyword">for</span> image_url <span class="keyword">in</span> item[<span class="string">'image_urls'</span>]:</div><div class="line">            <span class="keyword">yield</span> scrapy.Request(image_url)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">item_completed</span><span class="params">(self, results, item, info)</span>:</span></div><div class="line">        image_paths = [x[<span class="string">'path'</span>] <span class="keyword">for</span> ok, x <span class="keyword">in</span> results <span class="keyword">if</span> ok]</div><div class="line">        <span class="keyword">if</span> <span class="keyword">not</span> image_paths:</div><div class="line">            <span class="keyword">raise</span> DropItem(<span class="string">"Item contains no images"</span>)</div><div class="line">        item[<span class="string">'image_paths'</span>] = image_paths</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-<h2 id="scrapy-暂停爬虫"><a href="#scrapy-暂停爬虫" class="headerlink" title="scrapy 暂停爬虫"></a>scrapy 暂停爬虫</h2><p><code>scrapy crawl somespider -s JOBDIR=crawls/somespider-1</code></p>
-<h2 id="scrapy-redis-分布式"><a href="#scrapy-redis-分布式" class="headerlink" title="scrapy_redis 分布式"></a>scrapy_redis 分布式</h2><p>使用队列与去重即可完成分布式需求，需要注意的是 Redis 格式，默认采用的是 <code>list</code>， 可以在 <code>settings.py</code> 文件中设置 <code>REDIS_START_URLS_AS_SET = True</code>，使用 <code>Redis</code>的 <code>set</code>类型（去重种子链接）</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><h2 id="超时问题"><a href="#超时问题" class="headerlink" title="超时问题"></a>超时问题</h2><p>自定义超时时间</p>
-<p><code>sudo pip3 --default-timeout=100 install -U scrapy</code></p>
-<p>或者 使用其他源</p>
-<p><code>sudo pip3 install scrapy -i https://pypi.tuna.tsinghua.edu.cn/simple</code></p>
-<h2 id="权限问题"><a href="#权限问题" class="headerlink" title="权限问题"></a>权限问题</h2><p>安装某模块时，报错：<code>PermissionError: [WinError 5] 拒绝访问。: &#39;c:\\program files\\python35\\Lib\\sit
-e-packages\\lxml&#39;</code></p>
-<p>最简单方法：<code>pip install --user lxml</code></p>
-<h1 id="Pycharm-相关"><a href="#Pycharm-相关" class="headerlink" title="Pycharm 相关"></a>Pycharm 相关</h1><h2 id="gitignore-文件"><a href="#gitignore-文件" class="headerlink" title=".gitignore 文件"></a>.gitignore 文件</h2><p>安装插件： <code>Preferences &gt; Plugins &gt; Browse repositories... &gt; Search for &quot;.ignore&quot; &gt; Install Plugin</code></p>
-<p>然后就可以很方便的添加到 .gitignore </p>
-<p><img src="https://i.imgur.com/ZvPCFIV.png" alt=""></p>
-<h2 id="显示函数"><a href="#显示函数" class="headerlink" title="显示函数"></a>显示函数</h2><p><img src="https://i.imgur.com/iLhj1d9.png" alt=""></p>
-<p>点击 <code>Show Members</code>，查看目录，会显示相应的类和函数</p>
-<h2 id="激活码"><a href="#激活码" class="headerlink" title="激活码"></a>激活码</h2><ol>
-<li><a href="http://idea.liyang.io" target="_blank" rel="external">http://idea.liyang.io</a></li>
-<li><a href="http://xidea.online" target="_blank" rel="external">http://xidea.online</a></li>
-</ol>
-<h1 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h1><h2 id="Mongo导出命令"><a href="#Mongo导出命令" class="headerlink" title="Mongo导出命令"></a>Mongo导出命令</h2><p><code>λ mongoexport -d test -c set --type=csv -f name,age -o set.csv</code></p>
-<p><code>λ mongoexport -h 10.10.10.11 -d test -c test --type=csv -f url,id,title -o data.csv</code></p>
-<h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><h2 id="requirements-txt-文件"><a href="#requirements-txt-文件" class="headerlink" title="requirements.txt 文件"></a>requirements.txt 文件</h2><p>小提示：使用 <a href="https://github.com/damnever/pigar" target="_blank" rel="external">pigar</a> 可以一键生成 requirements.txt 文件</p>
-<p>Installation：<code>pip install pigar</code></p>
-<p>Usage：<code>pigar</code> </p>
-<p><img src="https://raw.githubusercontent.com/Damnever/pigar/master/short-guide.gif" alt=""></p>
-<p>好了，今天先写这点，以后再补上。</p>
-<p><img src="https://i.imgur.com/e4InMl7.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十八篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;长期更新  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/St35Zmv.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
