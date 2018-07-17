@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Leetcode," />
+  <meta name="keywords" content="爬虫,Selenium,Requests," />
 
 
 
@@ -79,21 +79,25 @@
 
 
 
-<meta name="description" content="这是崔斯特的第四十六篇原创文章
-开始刷题咯  (๑• . •๑)">
+<meta name="description" content="这是崔斯特的第五十九篇原创文章
+模拟登陆的两种方式，你喜欢哪种  (๑• . •๑)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leetcode Solutions（一） two-sum">
-<meta property="og:url" content="https://zhangslob.github.io/2018/05/15/Leetcode Solutions（一）/index.html">
+<meta property="og:title" content="使用Selenium与Requests模拟登陆">
+<meta property="og:url" content="https://zhangslob.github.io/2018/07/17/使用Selenium与Requests模拟登陆/index.html">
 <meta property="og:site_name" content="小歪的博客">
-<meta property="og:description" content="这是崔斯特的第四十六篇原创文章
-开始刷题咯  (๑• . •๑)">
-<meta property="og:image" content="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3503054989,264376367&fm=11&gp=0.jpg">
-<meta property="og:updated_time" content="2018-05-15T15:58:09.668Z">
+<meta property="og:description" content="这是崔斯特的第五十九篇原创文章
+模拟登陆的两种方式，你喜欢哪种  (๑• . •๑)">
+<meta property="og:image" content="https://preview.ibb.co/cd5VUJ/20180717173128.png">
+<meta property="og:image" content="https://preview.ibb.co/cd5VUJ/20180717173128.png">
+<meta property="og:image" content="https://preview.ibb.co/iSWqwy/20180717174236.png">
+<meta property="og:image" content="http://www.goalsinfocloud.com/wp-content/uploads/2018/02/selenium.png">
+<meta property="og:image" content="http://docs.python-requests.org/en/master/_static/requests-sidebar.png">
+<meta property="og:updated_time" content="2018-07-17T13:47:14.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leetcode Solutions（一） two-sum">
-<meta name="twitter:description" content="这是崔斯特的第四十六篇原创文章
-开始刷题咯  (๑• . •๑)">
-<meta name="twitter:image" content="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3503054989,264376367&fm=11&gp=0.jpg">
+<meta name="twitter:title" content="使用Selenium与Requests模拟登陆">
+<meta name="twitter:description" content="这是崔斯特的第五十九篇原创文章
+模拟登陆的两种方式，你喜欢哪种  (๑• . •๑)">
+<meta name="twitter:image" content="https://preview.ibb.co/cd5VUJ/20180717173128.png">
 
 
 
@@ -123,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://zhangslob.github.io/2018/05/15/Leetcode Solutions（一）/"/>
+  <link rel="canonical" href="https://zhangslob.github.io/2018/07/17/使用Selenium与Requests模拟登陆/"/>
 
 
 
 
 
-  <title>Leetcode Solutions（一） two-sum | 小歪的博客</title>
+  <title>使用Selenium与Requests模拟登陆 | 小歪的博客</title>
   
 
 
@@ -341,7 +345,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2018/05/15/Leetcode Solutions（一）/">
+    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2018/07/17/使用Selenium与Requests模拟登陆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="小歪">
@@ -358,7 +362,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
         
         
-          <h1 class="post-title" itemprop="name headline">Leetcode Solutions（一） two-sum</h1>
+          <h1 class="post-title" itemprop="name headline">使用Selenium与Requests模拟登陆</h1>
         
 
         <div class="post-meta">
@@ -370,8 +374,8 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T18:22:26+08:00">
-                2018-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T21:18:35+08:00">
+                2018-07-17
               </time>
             
 
@@ -393,8 +397,8 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
+                  <a href="/categories/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
                   </a>
                 </span>
 
@@ -410,7 +414,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
           
           
-             <span id="/2018/05/15/Leetcode Solutions（一）/" class="leancloud_visitors" data-flag-title="Leetcode Solutions（一） two-sum">
+             <span id="/2018/07/17/使用Selenium与Requests模拟登陆/" class="leancloud_visitors" data-flag-title="使用Selenium与Requests模拟登陆">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -438,7 +442,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  433
+                  942
                 </span>
               
 
@@ -454,7 +458,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  5
                 </span>
               
             </div>
@@ -475,25 +479,41 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
 
       
-        <pre><code>这是崔斯特的第四十六篇原创文章
-</code></pre><p>开始刷题咯  (๑• . •๑)</p>
-<p><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3503054989,264376367&amp;fm=11&amp;gp=0.jpg" alt=""></p>
+        <p><img src="https://preview.ibb.co/cd5VUJ/20180717173128.png" alt=""></p>
+<pre><code>这是崔斯特的第五十九篇原创文章
+</code></pre><p>模拟登陆的两种方式，你喜欢哪种  (๑• . •๑)</p>
 <a id="more"></a>
-<p><a href="https://leetcode-cn.com/problems/two-sum/description/" target="_blank" rel="external">Two Sum</a></p>
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个整数数组和一个目标值，找出数组中和为目标值的两个数。</p>
-<p>你可以假设每个输入只对应一种答案，且同样的元素不能被重复利用。</p>
-<p>示例:<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">给定 nums = [<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>], target = <span class="number">9</span></div><div class="line"></div><div class="line">因为 nums[<span class="number">0</span>] + nums[<span class="number">1</span>] = <span class="number">2</span> + <span class="number">7</span> = <span class="number">9</span></div><div class="line">所以返回 [<span class="number">0</span>, <span class="number">1</span>]</div></pre></td></tr></table></figure></p>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="Go"><a href="#Go" class="headerlink" title="Go"></a>Go</h2><p><code>a + b = target</code></p>
-<p>也可以看成是</p>
-<p><code>a = target - b</code></p>
-<p>在map[整数]整数的序号中，可以查询到a的序号。这样就不用嵌套两个for循环了。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</div><div class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(nums))</div><div class="line">	<span class="keyword">for</span> i, b := <span class="keyword">range</span> nums &#123;</div><div class="line">		<span class="keyword">if</span> j, ok := m[target-b]; ok &#123;</div><div class="line">			<span class="keyword">return</span> []<span class="keyword">int</span>&#123;j, i&#125;</div><div class="line">		&#125;</div><div class="line">		m[nums[i]] = i</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><ol>
-<li>由于要找到符合题意的数组元素的下标，所以先要将原来的数组深拷贝一份，然后排序。</li>
-<li>然后在排序后的数组中找两个数使它们相加为target。这个思路比较明显：使用两个指针，一个指向头，一个指向尾，两个指针向中间移动并检查两个指针指向的数的和是否为target。如果找到了这两个数，再将这两个数在原数组中的位置找出来就可以了。</li>
-<li>要注意的一点是：在原来数组中找下标时，需要一个从头找，一个从尾找，要不无法通过。如这个例子：numbers=[0,1,2,0]; target=0。如果都从头开始找，就会有问题。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(self, nums, target)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(nums) &lt;= <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        d = dict()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</div><div class="line">            <span class="keyword">if</span> nums[i] <span class="keyword">in</span> d:</div><div class="line">                <span class="keyword">return</span> [d[nums[i]], i]</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                d[target - nums[i]] = i</div></pre></td></tr></table></figure>
+<p>本期讲一讲模拟登录相关的东西，目标网站是<a href="https://github.com/" target="_blank" rel="external">Github</a></p>
+<p><img src="https://preview.ibb.co/cd5VUJ/20180717173128.png" alt=""></p>
+<h1 id="简单的Selnium"><a href="#简单的Selnium" class="headerlink" title="简单的Selnium"></a>简单的Selnium</h1><p>想说说简单的方法，使用浏览器登录，基本上就是傻瓜操作了。</p>
+<p>如上图所示，登录设计的很简单，没有验证码什么的，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"></div><div class="line">driver = webdriver.Chrome()</div><div class="line">driver.maximize_window()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(account, password)</span>:</span></div><div class="line">    driver.get(<span class="string">'https://github.com/login'</span>)</div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    driver.find_element_by_id(<span class="string">'login_field'</span>).send_keys(account)</div><div class="line">    driver.find_element_by_id(<span class="string">'password'</span>).send_keys(password)</div><div class="line">    driver.find_element_by_xpath(<span class="string">'//input[@class="btn btn-primary btn-block"]'</span>).click()</div><div class="line">    <span class="comment"># do whatever you want</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    account, password = <span class="string">'account'</span>, <span class="string">'password'</span></div><div class="line">    login(account, password)</div></pre></td></tr></table></figure>
+<h1 id="分析请求之Requests"><a href="#分析请求之Requests" class="headerlink" title="分析请求之Requests"></a>分析请求之Requests</h1><p>打开F12，使用错误的账号密码登录，复制curl</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="string">'https://github.com/session'</span> -H <span class="string">'Cookie: has_recent_activity=1; _octo=GH1.1.1477592343.1531820067; logged_in=no; _gh_sess=UEZzYnVCMVlhNkVOdE5rU1hWRFpDbmFlY0UyQ1Y2b3Z4TGw2NFlTMmJLUWk5VENVQ3Q4TWxiSWN5ckEyZXN0MUFkT29XVjQvbWJVbm9RV0JNQmc1TmU0UnBtK0taUXJpcElqUk5PNGZ5TjZOQ2ZPRVR4NU5WQXcrb2xWRnRBMnRPMkRWYzYvWmVGY0FrYU12Q3BVVTY3dXVSblliNG4rWjc2QXVwR2pjQ1pzZXM1MFk1MjU5OUw2WkFLTU1BMzJDWGlTeXliNzNaejlUaW43cWhFNzQ0MFFVVmJ1aEppbzdtQTZkRERmUm5mWExkRDlmWW5lNk9mdlFYb05MQUtubDZBbXFJWjV6eFhic3JiWlRtZ2QxZ2FqZUxnOGFheUgzaXJmc290b0Jma09pRTJZdHZySEVmdVdGZHVBU3ZTVTJRM0pESnE1N1VPRDM0ck9FZzNJZTN5VWljUktyZ3FZQU16THVBeFBXV3BNPS0tSDh4WVV6U2RSNjlBL3FNQ3VaRGxEUT09--71cf0886128d55b42c82cf6f7b76e007ebfdc77b; _ga=GA1.2.57857743.1531820085; _gat=1; tz=Asia%2FShanghai'</span> -H <span class="string">'Origin: https://github.com'</span> -H <span class="string">'Accept-Encoding: gzip, deflate, br'</span> -H <span class="string">'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8'</span> -H <span class="string">'Upgrade-Insecure-Requests: 1'</span> -H <span class="string">'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'</span> -H <span class="string">'Content-Type: application/x-www-form-urlencoded'</span> -H <span class="string">'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'</span> -H <span class="string">'Cache-Control: max-age=0'</span> -H <span class="string">'Referer: https://github.com/login'</span> -H <span class="string">'Connection: keep-alive'</span> --data <span class="string">'commit=Sign+in&amp;utf8=%E2%9C%93&amp;authenticity_token=%2BtgUHwMIxnoHOHNMqQFkLak9mJzrxt%2B4yfFiZaf66WiMB5ZyRaVXq%2BFpZsM%2BtxgaRRX6Fzfezu1IdRqy%2BTGHwg%3D%3D&amp;login=123456788%40gmail.com&amp;password=123456788'</span> --compressed</div></pre></td></tr></table></figure>
+<p>转为Python代码，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">cookies = &#123;</div><div class="line">    <span class="string">'has_recent_activity'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'_octo'</span>: <span class="string">'GH1.1.1477592343.1531820067'</span>,</div><div class="line">    <span class="string">'logged_in'</span>: <span class="string">'no'</span>,</div><div class="line">    <span class="string">'_gh_sess'</span>: <span class="string">'UEZzYnVCMVlhNkVOdE5rU1hWRFpDbmFlY0UyQ1Y2b3Z4TGw2NFlTMmJLUWk5VENVQ3Q4TWxiSWN5ckEyZXN0MUFkT29XVjQvbWJVbm9RV0JNQmc1TmU0UnBtK0taUXJpcElqUk5PNGZ5TjZOQ2ZPRVR4NU5WQXcrb2xWRnRBMnRPMkRWYzYvWmVGY0FrYU12Q3BVVTY3dXVSblliNG4rWjc2QXVwR2pjQ1pzZXM1MFk1MjU5OUw2WkFLTU1BMzJDWGlTeXliNzNaejlUaW43cWhFNzQ0MFFVVmJ1aEppbzdtQTZkRERmUm5mWExkRDlmWW5lNk9mdlFYb05MQUtubDZBbXFJWjV6eFhic3JiWlRtZ2QxZ2FqZUxnOGFheUgzaXJmc290b0Jma09pRTJZdHZySEVmdVdGZHVBU3ZTVTJRM0pESnE1N1VPRDM0ck9FZzNJZTN5VWljUktyZ3FZQU16THVBeFBXV3BNPS0tSDh4WVV6U2RSNjlBL3FNQ3VaRGxEUT09--71cf0886128d55b42c82cf6f7b76e007ebfdc77b'</span>,</div><div class="line">    <span class="string">'_ga'</span>: <span class="string">'GA1.2.57857743.1531820085'</span>,</div><div class="line">    <span class="string">'_gat'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'tz'</span>: <span class="string">'Asia%2FShanghai'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'Origin'</span>: <span class="string">'https://github.com'</span>,</div><div class="line">    <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate, br'</span>,</div><div class="line">    <span class="string">'Accept-Language'</span>: <span class="string">'zh-CN,zh;q=0.9,en;q=0.8'</span>,</div><div class="line">    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span>,</div><div class="line">    <span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'</span>,</div><div class="line">    <span class="string">'Cache-Control'</span>: <span class="string">'max-age=0'</span>,</div><div class="line">    <span class="string">'Referer'</span>: <span class="string">'https://github.com/login'</span>,</div><div class="line">    <span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">data = [</div><div class="line">  (<span class="string">'commit'</span>, <span class="string">'Sign in'</span>),</div><div class="line">  (<span class="string">'utf8'</span>, <span class="string">'\u2713'</span>),</div><div class="line">  (<span class="string">'authenticity_token'</span>, <span class="string">'+tgUHwMIxnoHOHNMqQFkLak9mJzrxt+4yfFiZaf66WiMB5ZyRaVXq+FpZsM+txgaRRX6Fzfezu1IdRqy+TGHwg=='</span>),</div><div class="line">  (<span class="string">'login'</span>, <span class="string">'123456788@gmail.com'</span>),</div><div class="line">  (<span class="string">'password'</span>, <span class="string">'123456788'</span>),</div><div class="line">]</div><div class="line"></div><div class="line">response = requests.post(<span class="string">'https://github.com/session'</span>, headers=headers, cookies=cookies, data=data)</div></pre></td></tr></table></figure>
+<p>注意两个地方，cookies和参数，先来看看参数，稍微特别的就是<code>authenticity_token</code>，感觉是验证。<code>Ctrl+Shift+F</code>打开搜索，最终在返回的html中找到</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- '"` --&gt;</span><span class="comment">&lt;!-- &lt;/textarea&gt;&lt;/xmp&gt; --&gt;</span><span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/session"</span> <span class="attr">accept-charset</span>=<span class="string">"UTF-8"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"utf8"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">value</span>=<span class="string">"&amp;#x2713;"</span> /&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"authenticity_token"</span> <span class="attr">value</span>=<span class="string">"CTujn/pHGMQBpEhYcJj9Mn6ChsNSkd5ul8rgNSP/6/KxdZlhS0ABKblsq1pLn6EaQvIGLMzl/IQawaDL8KFjDw=="</span> /&gt;</span>      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"auth-form-header p-0"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>authenticity_token</code>解决了，下一步想办法获取cookies</p>
+<p><img src="https://preview.ibb.co/iSWqwy/20180717174236.png" alt=""></p>
+<p>继续搜索<code>_gh_sess</code>与<code>_octo</code>关键字，看到有这样一段js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> e, t = <span class="keyword">void</span> <span class="number">0</span>, r = <span class="keyword">void</span> <span class="number">0</span>, n = <span class="keyword">this</span>._getCookie(<span class="string">"_octo"</span>), a = [];</div></pre></td></tr></table></figure>
+<p>猜测cookies不是本地生成，查看打开Github首页的请求，果然在<code>Response Cookies</code>中找到了相关数据，那么使用<code>Session</code>就可以维持会话了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'</span>,</div><div class="line">    <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate, br'</span>,</div><div class="line">    <span class="string">'Accept-Language'</span>: <span class="string">'zh-CN,zh;q=0.9,en;q=0.8'</span>,</div><div class="line">    <span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>,</div><div class="line">    <span class="string">'Host'</span>: <span class="string">'github.com'</span>,</div><div class="line">    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">s = requests.session()</div><div class="line">s.headers.update(headers)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_token</span><span class="params">()</span>:</span></div><div class="line">    url = <span class="string">'https://github.com/login'</span></div><div class="line">    response = s.get(url)</div><div class="line">    pat = <span class="string">'name=\"authenticity_token\" value=\"(.*?)\"'</span></div><div class="line">    authenticity_token = re.findall(pat, response.text)[<span class="number">0</span>]</div><div class="line">    <span class="keyword">return</span> authenticity_token</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(authenticity_token, account, password)</span>:</span></div><div class="line">    payload = &#123;</div><div class="line">        <span class="string">'commit'</span>: <span class="string">'Sign in'</span>,</div><div class="line">        <span class="string">'utf8'</span>: <span class="string">'\u2713'</span>,</div><div class="line">        <span class="string">'authenticity_token'</span>: authenticity_token,</div><div class="line">        <span class="string">'login'</span>: account,</div><div class="line">        <span class="string">'password'</span>: password,</div><div class="line">    &#125;</div><div class="line">    url = <span class="string">'https://github.com/session'</span></div><div class="line">    response = s.post(url, data=payload)</div><div class="line">    print(response)</div><div class="line">    <span class="comment"># do whatever you want</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    account, password = <span class="string">'account'</span>, <span class="string">'password'</span></div><div class="line">    authenticity_token = get_token()</div><div class="line">    login(authenticity_token, account, password)</div></pre></td></tr></table></figure>
+<h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><p>Selenium：</p>
+<ul>
+<li>优点：简单、无脑，不用分析复杂的网页请求，不用保持会话状态</li>
+<li>缺点：速度慢，速度慢，速度慢（某些情况下会出现js加载不全）</li>
+</ul>
+<p><img src="http://www.goalsinfocloud.com/wp-content/uploads/2018/02/selenium.png" alt=""></p>
+<p>Requests：</p>
+<ul>
+<li>优点：速度快，可以增加自己对cookies登陆的理解</li>
+<li>缺点：需要花时间寻找相关参数</li>
+</ul>
+<p><img src="http://docs.python-requests.org/en/master/_static/requests-sidebar.png" alt=""></p>
+<p>如果对Github感兴趣，可以直接使用 <a href="https://developer.github.com/v3/" target="_blank" rel="external">Github API</a></p>
+<p>最近在使用<code>Selenium</code>处理验证码，发现很强大，如果模拟请求，难度会非常大。</p>
 
       
     </div>
@@ -512,12 +532,12 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
   <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
   <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
   <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
-  <p><span>本文标题:</span><a href="/2018/05/15/Leetcode Solutions（一）/">Leetcode Solutions（一） two-sum</a></p>
+  <p><span>本文标题:</span><a href="/2018/07/17/使用Selenium与Requests模拟登陆/">使用Selenium与Requests模拟登陆</a></p>
   <p><span>文章作者:</span><a href="/" title="访问 小歪 的个人博客">小歪</a></p>
-  <p><span>发布时间:</span>2018年05月15日 - 18:05</p>
-  <p><span>最后更新:</span>2018年05月15日 - 23:05</p>
-  <p><span>原始链接:</span><a href="/2018/05/15/Leetcode Solutions（一）/" title="Leetcode Solutions（一） two-sum">https://zhangslob.github.io/2018/05/15/Leetcode Solutions（一）/</a>
-    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhangslob.github.io/2018/05/15/Leetcode Solutions（一）/"  aria-label="复制成功！"></i></span>
+  <p><span>发布时间:</span>2018年07月17日 - 21:07</p>
+  <p><span>最后更新:</span>2018年07月17日 - 21:07</p>
+  <p><span>原始链接:</span><a href="/2018/07/17/使用Selenium与Requests模拟登陆/" title="使用Selenium与Requests模拟登陆">https://zhangslob.github.io/2018/07/17/使用Selenium与Requests模拟登陆/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhangslob.github.io/2018/07/17/使用Selenium与Requests模拟登陆/"  aria-label="复制成功！"></i></span>
   </p>
   <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
 </div>
@@ -581,7 +601,11 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
         <div class="post-tags">
           
-            <a href="/tags/Leetcode/" rel="tag"> <i class="fa fa-tag"></i>Leetcode</a>
+            <a href="/tags/爬虫/" rel="tag"> <i class="fa fa-tag"></i>爬虫</a>
+          
+            <a href="/tags/Selenium/" rel="tag"> <i class="fa fa-tag"></i>Selenium</a>
+          
+            <a href="/tags/Requests/" rel="tag"> <i class="fa fa-tag"></i>Requests</a>
           
         </div>
       
@@ -594,8 +618,8 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/12/告别win10，拥抱linux/" rel="next" title="告别win10，拥抱linux">
-                <i class="fa fa-chevron-left"></i> 告别win10，拥抱linux
+              <a href="/2018/07/10/说说最近遇到的反爬/" rel="next" title="说说最近遇到的反爬">
+                <i class="fa fa-chevron-left"></i> 说说最近遇到的反爬
               </a>
             
           </div>
@@ -603,10 +627,6 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/16/强大的异步爬虫-aiohttp/" rel="prev" title="强大的异步爬虫 with aiohttp">
-                强大的异步爬虫 with aiohttp <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -816,7 +836,7 @@ var jiathis_config={
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Go"><span class="nav-number">2.1.</span> <span class="nav-text">Go</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python"><span class="nav-number">2.2.</span> <span class="nav-text">Python</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单的Selnium"><span class="nav-number">1.</span> <span class="nav-text">简单的Selnium</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分析请求之Requests"><span class="nav-number">2.</span> <span class="nav-text">分析请求之Requests</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对比"><span class="nav-number">3.</span> <span class="nav-text">对比</span></a></li></ol></div>
             
 
           </div>

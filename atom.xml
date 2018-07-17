@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-07-10T15:13:23.021Z</updated>
+  <updated>2018-07-17T13:47:14.505Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,11 +16,74 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用Selenium与Requests模拟登陆</title>
+    <link href="https://zhangslob.github.io/2018/07/17/%E4%BD%BF%E7%94%A8Selenium%E4%B8%8ERequests%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86/"/>
+    <id>https://zhangslob.github.io/2018/07/17/使用Selenium与Requests模拟登陆/</id>
+    <published>2018-07-17T13:18:35.000Z</published>
+    <updated>2018-07-17T13:47:14.505Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://preview.ibb.co/cd5VUJ/20180717173128.png" alt=""></p>
+<pre><code>这是崔斯特的第五十九篇原创文章
+</code></pre><p>模拟登陆的两种方式，你喜欢哪种  (๑• . •๑)</p>
+<a id="more"></a>
+<p>本期讲一讲模拟登录相关的东西，目标网站是<a href="https://github.com/" target="_blank" rel="external">Github</a></p>
+<p><img src="https://preview.ibb.co/cd5VUJ/20180717173128.png" alt=""></p>
+<h1 id="简单的Selnium"><a href="#简单的Selnium" class="headerlink" title="简单的Selnium"></a>简单的Selnium</h1><p>想说说简单的方法，使用浏览器登录，基本上就是傻瓜操作了。</p>
+<p>如上图所示，登录设计的很简单，没有验证码什么的，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"></div><div class="line">driver = webdriver.Chrome()</div><div class="line">driver.maximize_window()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(account, password)</span>:</span></div><div class="line">    driver.get(<span class="string">'https://github.com/login'</span>)</div><div class="line">    time.sleep(<span class="number">2</span>)</div><div class="line">    driver.find_element_by_id(<span class="string">'login_field'</span>).send_keys(account)</div><div class="line">    driver.find_element_by_id(<span class="string">'password'</span>).send_keys(password)</div><div class="line">    driver.find_element_by_xpath(<span class="string">'//input[@class="btn btn-primary btn-block"]'</span>).click()</div><div class="line">    <span class="comment"># do whatever you want</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    account, password = <span class="string">'account'</span>, <span class="string">'password'</span></div><div class="line">    login(account, password)</div></pre></td></tr></table></figure>
+<h1 id="分析请求之Requests"><a href="#分析请求之Requests" class="headerlink" title="分析请求之Requests"></a>分析请求之Requests</h1><p>打开F12，使用错误的账号密码登录，复制curl</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl <span class="string">'https://github.com/session'</span> -H <span class="string">'Cookie: has_recent_activity=1; _octo=GH1.1.1477592343.1531820067; logged_in=no; _gh_sess=UEZzYnVCMVlhNkVOdE5rU1hWRFpDbmFlY0UyQ1Y2b3Z4TGw2NFlTMmJLUWk5VENVQ3Q4TWxiSWN5ckEyZXN0MUFkT29XVjQvbWJVbm9RV0JNQmc1TmU0UnBtK0taUXJpcElqUk5PNGZ5TjZOQ2ZPRVR4NU5WQXcrb2xWRnRBMnRPMkRWYzYvWmVGY0FrYU12Q3BVVTY3dXVSblliNG4rWjc2QXVwR2pjQ1pzZXM1MFk1MjU5OUw2WkFLTU1BMzJDWGlTeXliNzNaejlUaW43cWhFNzQ0MFFVVmJ1aEppbzdtQTZkRERmUm5mWExkRDlmWW5lNk9mdlFYb05MQUtubDZBbXFJWjV6eFhic3JiWlRtZ2QxZ2FqZUxnOGFheUgzaXJmc290b0Jma09pRTJZdHZySEVmdVdGZHVBU3ZTVTJRM0pESnE1N1VPRDM0ck9FZzNJZTN5VWljUktyZ3FZQU16THVBeFBXV3BNPS0tSDh4WVV6U2RSNjlBL3FNQ3VaRGxEUT09--71cf0886128d55b42c82cf6f7b76e007ebfdc77b; _ga=GA1.2.57857743.1531820085; _gat=1; tz=Asia%2FShanghai'</span> -H <span class="string">'Origin: https://github.com'</span> -H <span class="string">'Accept-Encoding: gzip, deflate, br'</span> -H <span class="string">'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8'</span> -H <span class="string">'Upgrade-Insecure-Requests: 1'</span> -H <span class="string">'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'</span> -H <span class="string">'Content-Type: application/x-www-form-urlencoded'</span> -H <span class="string">'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'</span> -H <span class="string">'Cache-Control: max-age=0'</span> -H <span class="string">'Referer: https://github.com/login'</span> -H <span class="string">'Connection: keep-alive'</span> --data <span class="string">'commit=Sign+in&amp;utf8=%E2%9C%93&amp;authenticity_token=%2BtgUHwMIxnoHOHNMqQFkLak9mJzrxt%2B4yfFiZaf66WiMB5ZyRaVXq%2BFpZsM%2BtxgaRRX6Fzfezu1IdRqy%2BTGHwg%3D%3D&amp;login=123456788%40gmail.com&amp;password=123456788'</span> --compressed</div></pre></td></tr></table></figure>
+<p>转为Python代码，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">cookies = &#123;</div><div class="line">    <span class="string">'has_recent_activity'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'_octo'</span>: <span class="string">'GH1.1.1477592343.1531820067'</span>,</div><div class="line">    <span class="string">'logged_in'</span>: <span class="string">'no'</span>,</div><div class="line">    <span class="string">'_gh_sess'</span>: <span class="string">'UEZzYnVCMVlhNkVOdE5rU1hWRFpDbmFlY0UyQ1Y2b3Z4TGw2NFlTMmJLUWk5VENVQ3Q4TWxiSWN5ckEyZXN0MUFkT29XVjQvbWJVbm9RV0JNQmc1TmU0UnBtK0taUXJpcElqUk5PNGZ5TjZOQ2ZPRVR4NU5WQXcrb2xWRnRBMnRPMkRWYzYvWmVGY0FrYU12Q3BVVTY3dXVSblliNG4rWjc2QXVwR2pjQ1pzZXM1MFk1MjU5OUw2WkFLTU1BMzJDWGlTeXliNzNaejlUaW43cWhFNzQ0MFFVVmJ1aEppbzdtQTZkRERmUm5mWExkRDlmWW5lNk9mdlFYb05MQUtubDZBbXFJWjV6eFhic3JiWlRtZ2QxZ2FqZUxnOGFheUgzaXJmc290b0Jma09pRTJZdHZySEVmdVdGZHVBU3ZTVTJRM0pESnE1N1VPRDM0ck9FZzNJZTN5VWljUktyZ3FZQU16THVBeFBXV3BNPS0tSDh4WVV6U2RSNjlBL3FNQ3VaRGxEUT09--71cf0886128d55b42c82cf6f7b76e007ebfdc77b'</span>,</div><div class="line">    <span class="string">'_ga'</span>: <span class="string">'GA1.2.57857743.1531820085'</span>,</div><div class="line">    <span class="string">'_gat'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'tz'</span>: <span class="string">'Asia%2FShanghai'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'Origin'</span>: <span class="string">'https://github.com'</span>,</div><div class="line">    <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate, br'</span>,</div><div class="line">    <span class="string">'Accept-Language'</span>: <span class="string">'zh-CN,zh;q=0.9,en;q=0.8'</span>,</div><div class="line">    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'</span>,</div><div class="line">    <span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span>,</div><div class="line">    <span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'</span>,</div><div class="line">    <span class="string">'Cache-Control'</span>: <span class="string">'max-age=0'</span>,</div><div class="line">    <span class="string">'Referer'</span>: <span class="string">'https://github.com/login'</span>,</div><div class="line">    <span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">data = [</div><div class="line">  (<span class="string">'commit'</span>, <span class="string">'Sign in'</span>),</div><div class="line">  (<span class="string">'utf8'</span>, <span class="string">'\u2713'</span>),</div><div class="line">  (<span class="string">'authenticity_token'</span>, <span class="string">'+tgUHwMIxnoHOHNMqQFkLak9mJzrxt+4yfFiZaf66WiMB5ZyRaVXq+FpZsM+txgaRRX6Fzfezu1IdRqy+TGHwg=='</span>),</div><div class="line">  (<span class="string">'login'</span>, <span class="string">'123456788@gmail.com'</span>),</div><div class="line">  (<span class="string">'password'</span>, <span class="string">'123456788'</span>),</div><div class="line">]</div><div class="line"></div><div class="line">response = requests.post(<span class="string">'https://github.com/session'</span>, headers=headers, cookies=cookies, data=data)</div></pre></td></tr></table></figure>
+<p>注意两个地方，cookies和参数，先来看看参数，稍微特别的就是<code>authenticity_token</code>，感觉是验证。<code>Ctrl+Shift+F</code>打开搜索，最终在返回的html中找到</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!-- '"` --&gt;</span><span class="comment">&lt;!-- &lt;/textarea&gt;&lt;/xmp&gt; --&gt;</span><span class="tag">&lt;/<span class="name">option</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/session"</span> <span class="attr">accept-charset</span>=<span class="string">"UTF-8"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"utf8"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">value</span>=<span class="string">"&amp;#x2713;"</span> /&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"authenticity_token"</span> <span class="attr">value</span>=<span class="string">"CTujn/pHGMQBpEhYcJj9Mn6ChsNSkd5ul8rgNSP/6/KxdZlhS0ABKblsq1pLn6EaQvIGLMzl/IQawaDL8KFjDw=="</span> /&gt;</span>      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"auth-form-header p-0"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p><code>authenticity_token</code>解决了，下一步想办法获取cookies</p>
+<p><img src="https://preview.ibb.co/iSWqwy/20180717174236.png" alt=""></p>
+<p>继续搜索<code>_gh_sess</code>与<code>_octo</code>关键字，看到有这样一段js</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> e, t = <span class="keyword">void</span> <span class="number">0</span>, r = <span class="keyword">void</span> <span class="number">0</span>, n = <span class="keyword">this</span>._getCookie(<span class="string">"_octo"</span>), a = [];</div></pre></td></tr></table></figure>
+<p>猜测cookies不是本地生成，查看打开Github首页的请求，果然在<code>Response Cookies</code>中找到了相关数据，那么使用<code>Session</code>就可以维持会话了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> re</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'</span>,</div><div class="line">    <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate, br'</span>,</div><div class="line">    <span class="string">'Accept-Language'</span>: <span class="string">'zh-CN,zh;q=0.9,en;q=0.8'</span>,</div><div class="line">    <span class="string">'Connection'</span>: <span class="string">'keep-alive'</span>,</div><div class="line">    <span class="string">'Host'</span>: <span class="string">'github.com'</span>,</div><div class="line">    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36'</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">s = requests.session()</div><div class="line">s.headers.update(headers)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_token</span><span class="params">()</span>:</span></div><div class="line">    url = <span class="string">'https://github.com/login'</span></div><div class="line">    response = s.get(url)</div><div class="line">    pat = <span class="string">'name=\"authenticity_token\" value=\"(.*?)\"'</span></div><div class="line">    authenticity_token = re.findall(pat, response.text)[<span class="number">0</span>]</div><div class="line">    <span class="keyword">return</span> authenticity_token</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(authenticity_token, account, password)</span>:</span></div><div class="line">    payload = &#123;</div><div class="line">        <span class="string">'commit'</span>: <span class="string">'Sign in'</span>,</div><div class="line">        <span class="string">'utf8'</span>: <span class="string">'\u2713'</span>,</div><div class="line">        <span class="string">'authenticity_token'</span>: authenticity_token,</div><div class="line">        <span class="string">'login'</span>: account,</div><div class="line">        <span class="string">'password'</span>: password,</div><div class="line">    &#125;</div><div class="line">    url = <span class="string">'https://github.com/session'</span></div><div class="line">    response = s.post(url, data=payload)</div><div class="line">    print(response)</div><div class="line">    <span class="comment"># do whatever you want</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    account, password = <span class="string">'account'</span>, <span class="string">'password'</span></div><div class="line">    authenticity_token = get_token()</div><div class="line">    login(authenticity_token, account, password)</div></pre></td></tr></table></figure>
+<h1 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h1><p>Selenium：</p>
+<ul>
+<li>优点：简单、无脑，不用分析复杂的网页请求，不用保持会话状态</li>
+<li>缺点：速度慢，速度慢，速度慢（某些情况下会出现js加载不全）</li>
+</ul>
+<p><img src="http://www.goalsinfocloud.com/wp-content/uploads/2018/02/selenium.png" alt=""></p>
+<p>Requests：</p>
+<ul>
+<li>优点：速度快，可以增加自己对cookies登陆的理解</li>
+<li>缺点：需要花时间寻找相关参数</li>
+</ul>
+<p><img src="http://docs.python-requests.org/en/master/_static/requests-sidebar.png" alt=""></p>
+<p>如果对Github感兴趣，可以直接使用 <a href="https://developer.github.com/v3/" target="_blank" rel="external">Github API</a></p>
+<p>最近在使用<code>Selenium</code>处理验证码，发现很强大，如果模拟请求，难度会非常大。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://preview.ibb.co/cd5VUJ/20180717173128.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;这是崔斯特的第五十九篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;模拟登陆的两种方式，你喜欢哪种  (๑• . •๑)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="Selenium" scheme="https://zhangslob.github.io/tags/Selenium/"/>
+    
+      <category term="Requests" scheme="https://zhangslob.github.io/tags/Requests/"/>
+    
+  </entry>
+  
+  <entry>
     <title>说说最近遇到的反爬</title>
     <link href="https://zhangslob.github.io/2018/07/10/%E8%AF%B4%E8%AF%B4%E6%9C%80%E8%BF%91%E9%81%87%E5%88%B0%E7%9A%84%E5%8F%8D%E7%88%AC/"/>
     <id>https://zhangslob.github.io/2018/07/10/说说最近遇到的反爬/</id>
     <published>2018-07-10T15:07:44.000Z</published>
-    <updated>2018-07-10T15:13:23.021Z</updated>
+    <updated>2018-07-10T15:13:23.022Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十八篇原创文章
 </code></pre><p>爬虫与反爬  (๑• . •๑)</p>
@@ -95,8 +158,8 @@
     <title>快速写一个爬虫</title>
     <link href="https://zhangslob.github.io/2018/07/03/%E5%BF%AB%E9%80%9F%E5%86%99%E4%B8%80%E4%B8%AA%E7%88%AC%E8%99%AB/"/>
     <id>https://zhangslob.github.io/2018/07/03/快速写一个爬虫/</id>
-    <published>2018-07-03T14:55:51.717Z</published>
-    <updated>2018-07-03T15:20:52.731Z</updated>
+    <published>2018-07-03T14:55:51.718Z</published>
+    <updated>2018-07-03T15:20:52.732Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十七篇原创文章
 </code></pre><p>快、更快  (๑• . •๑)</p>
@@ -194,7 +257,7 @@
     <link href="https://zhangslob.github.io/2018/06/16/Cookies%E6%B1%A0%E7%9A%84%E5%90%8E%E7%BB%AD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
     <id>https://zhangslob.github.io/2018/06/16/Cookies池的后续解决方案/</id>
     <published>2018-06-16T07:01:54.000Z</published>
-    <updated>2018-06-16T07:05:36.038Z</updated>
+    <updated>2018-06-16T07:05:36.039Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十五篇原创文章
 </code></pre><p>终于有方法了  (๑• . •๑)</p>
@@ -312,7 +375,7 @@
     <link href="https://zhangslob.github.io/2018/06/07/%E8%83%A1%E6%AD%8C%E7%94%B7%E7%B2%89%E5%A4%9A%E8%BF%98%E6%98%AF%E5%A5%B3%E7%B2%89%E5%A4%9A-%E7%88%AC%E7%88%AC%E5%BE%AE%E5%8D%9A/"/>
     <id>https://zhangslob.github.io/2018/06/07/胡歌男粉多还是女粉多-爬爬微博/</id>
     <published>2018-06-07T13:59:53.000Z</published>
-    <updated>2018-06-10T08:04:50.609Z</updated>
+    <updated>2018-06-10T08:04:50.610Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十三篇原创文章
 </code></pre><p>老胡好帅  (๑• . •๑)</p>
@@ -468,7 +531,7 @@
     <link href="https://zhangslob.github.io/2018/06/05/zsh-fish-%E5%AE%8C%E7%BE%8E%E7%BB%88%E7%AB%AF/"/>
     <id>https://zhangslob.github.io/2018/06/05/zsh-fish-完美终端/</id>
     <published>2018-06-05T14:27:23.000Z</published>
-    <updated>2018-06-05T14:35:15.769Z</updated>
+    <updated>2018-06-05T14:35:15.770Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十二篇原创文章
 </code></pre><p>好看、好用  (๑• . •๑)</p>
@@ -518,9 +581,9 @@
       <category term="终端" scheme="https://zhangslob.github.io/categories/%E7%BB%88%E7%AB%AF/"/>
     
     
-      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
-    
       <category term="zsh" scheme="https://zhangslob.github.io/tags/zsh/"/>
+    
+      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
     
   </entry>
   
@@ -653,7 +716,7 @@
     <link href="https://zhangslob.github.io/2018/05/26/git%E5%A4%A7%E6%B3%95%E5%A5%BD%EF%BC%8Cpush%E9%9C%80%E8%B0%A8%E6%85%8E/"/>
     <id>https://zhangslob.github.io/2018/05/26/git大法好，push需谨慎/</id>
     <published>2018-05-26T07:38:28.000Z</published>
-    <updated>2018-05-26T08:13:38.658Z</updated>
+    <updated>2018-05-26T08:13:38.659Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十九篇原创文章
 </code></pre><p>注意自己的账号安全  (๑• . •๑)</p>
@@ -861,7 +924,7 @@
     <link href="https://zhangslob.github.io/2018/05/12/%E5%91%8A%E5%88%ABwin10%EF%BC%8C%E6%8B%A5%E6%8A%B1linux/"/>
     <id>https://zhangslob.github.io/2018/05/12/告别win10，拥抱linux/</id>
     <published>2018-05-12T05:49:33.000Z</published>
-    <updated>2018-05-12T06:39:43.144Z</updated>
+    <updated>2018-05-12T06:39:43.145Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十五篇原创文章
 </code></pre><p>安装linux操作系统  (๑• . •๑)</p>
@@ -1072,7 +1135,7 @@
     <link href="https://zhangslob.github.io/2018/04/21/%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/"/>
     <id>https://zhangslob.github.io/2018/04/21/有什么区别？/</id>
     <published>2018-04-21T10:03:14.000Z</published>
-    <updated>2018-04-21T10:09:16.779Z</updated>
+    <updated>2018-04-21T10:09:16.780Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十一篇原创文章
 </code></pre><p>分布式爬虫  (๑• . •๑)</p>
@@ -1141,7 +1204,7 @@
     <link href="https://zhangslob.github.io/2018/04/12/%E6%9D%A5codewars%E4%B8%8E%E6%88%91%E4%B8%80%E8%B5%B7%E7%8E%A9%E8%80%8D%E5%90%A7/"/>
     <id>https://zhangslob.github.io/2018/04/12/来codewars与我一起玩耍吧/</id>
     <published>2018-04-12T13:25:13.000Z</published>
-    <updated>2018-04-12T14:08:23.122Z</updated>
+    <updated>2018-04-12T14:08:23.123Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十篇原创文章
 </code></pre><p>并肩作战  (๑• . •๑)</p>
@@ -1188,85 +1251,6 @@
       <category term="算法" scheme="https://zhangslob.github.io/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="codewars" scheme="https://zhangslob.github.io/tags/codewars/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Scrapy中如何提高数据的插入速度</title>
-    <link href="https://zhangslob.github.io/2018/03/28/Scrapy%E4%B8%AD%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%95%B0%E6%8D%AE%E7%9A%84%E6%8F%92%E5%85%A5%E9%80%9F%E5%BA%A6/"/>
-    <id>https://zhangslob.github.io/2018/03/28/Scrapy中如何提高数据的插入速度/</id>
-    <published>2018-03-28T13:18:32.000Z</published>
-    <updated>2018-03-28T13:34:51.830Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第三十九篇原创文章
-</code></pre><p>长期更新  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/ThJm8v5.jpg" alt=""></p>
-<a id="more"></a>
-<h1 id="速度问题"><a href="#速度问题" class="headerlink" title="速度问题"></a>速度问题</h1><p>最近工作中遇到这么一个问题，全站抓取时采用分布式：爬虫A与爬虫B，爬虫A给爬虫B<code>喂饼</code>，爬虫B由于各种原因<code>运行</code>的比较慢，达不到预期效果，所以必须对爬虫B进行优化。</p>
-<p>提升Scrapy运行速度有很多方法，国外有大佬说过</p>
-<p><a href="https://stackoverflow.com/questions/17029752/speed-up-web-scraper" target="_blank" rel="external">Speed up web scraper
-</a></p>
-<p>Here’s a collection of things to try:</p>
-<ol>
-<li>use latest scrapy version (if not using already)</li>
-<li>check if non-standard middlewares are used</li>
-<li>try to increase CONCURRENT_REQUESTS_PER_DOMAIN, CONCURRENT_REQUESTS settings (docs)<br>turn off logging LOG_ENABLED = False (docs)</li>
-<li>try yielding an item in a loop instead of collecting items into the items list and returning them<br>use local cache DNS (see this thread)</li>
-<li>check if this site is using download threshold and limits your download speed (see this thread)<br>log cpu and memory usage during the spider run - see if there are any problems there</li>
-<li>try run the same spider under scrapyd service</li>
-<li>see if grequests + lxml will perform better (ask if you need any help with implementing this solution)</li>
-<li>try running Scrapy on pypy, see Running Scrapy on PyPy</li>
-</ol>
-<p>大致看了下，确实可以提高爬虫运行速度，但是对于海量数据（这里说的是百万级）还需要考虑一点的就是数据插入问题，这里我们使用的是 Mongo。</p>
-<h1 id="官方示例"><a href="#官方示例" class="headerlink" title="官方示例"></a>官方示例</h1><p>让我们先从官方文档开始 <a href="http://scrapy.readthedocs.io/en/latest/topics/item-pipeline.html#write-items-to-mongodb" target="_blank" rel="external">Write items to MongoDB</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> pymongo</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoPipeline</span><span class="params">(object)</span>:</span></div><div class="line"></div><div class="line">    collection_name = <span class="string">'scrapy_items'</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, mongo_uri, mongo_db)</span>:</span></div><div class="line">        self.mongo_uri = mongo_uri</div><div class="line">        self.mongo_db = mongo_db</div><div class="line"></div><div class="line"><span class="meta">    @classmethod</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">from_crawler</span><span class="params">(cls, crawler)</span>:</span></div><div class="line">        <span class="keyword">return</span> cls(</div><div class="line">            mongo_uri=crawler.settings.get(<span class="string">'MONGO_URI'</span>),</div><div class="line">            mongo_db=crawler.settings.get(<span class="string">'MONGO_DATABASE'</span>, <span class="string">'items'</span>)</div><div class="line">        )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client = pymongo.MongoClient(self.mongo_uri)</div><div class="line">        self.db = self.client[self.mongo_db]</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client.close()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        self.db[self.collection_name].insert_one(dict(item))</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-<p>比较简单，这里插入使用的方法是 <code>insert_one</code>，继续文档：</p>
-<p><code>insert_one(document, bypass_document_validation=False, session=None)</code></p>
-<p>Insert a single document.<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; db.test.count(&#123;'x': <span class="number">1</span>&#125;)</div><div class="line"><span class="number">0</span></div><div class="line">&gt;&gt;&gt; result = db.test.insert_one(&#123;'x': <span class="number">1</span>&#125;)</div><div class="line">&gt;&gt;&gt; result.inserted_id</div><div class="line">ObjectId('<span class="number">54</span>f112defba522406c9cc208')</div><div class="line">&gt;&gt;&gt; db.test.find_one(&#123;'x': <span class="number">1</span>&#125;)</div><div class="line">&#123;u'x': <span class="number">1</span>, u'_id': ObjectId('<span class="number">54</span>f112defba522406c9cc208')&#125;</div></pre></td></tr></table></figure></p>
-<p>以前经常使用的 <code>insert</code> 方法，已经不被赞同</p>
-<p><code>insert(doc_or_docs, manipulate=True, check_keys=True, continue_on_error=False, **kwargs)</code></p>
-<p>Insert a document(s) into this collection.<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">DEPRECATED - Use insert_one() or insert_many() instead.</div><div class="line"></div><div class="line">Changed <span class="keyword">in</span> version <span class="number">3</span>.<span class="number">0</span>: Removed the safe parameter. Pass w=<span class="number">0</span> <span class="keyword">for</span> unacknowledged write operations.</div></pre></td></tr></table></figure></p>
-<p><code>insert</code> 简单理解就是插入，把我们采集到的 <code>item</code> 插入到数据库，这样存在一个很严重的问题，就是<strong>去重</strong></p>
-<h1 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h1><p>晚上有一种很流行的写法，使用 <code>update</code>命令，如：</p>
-<p><code>self.db[self.collection_name].update({&#39;id&#39;: item[&#39;id&#39;]}, {&#39;$set&#39;: dict(item)}, True)</code></p>
-<p>解释为：</p>
-<blockquote>
-<p>比较重要的一点就在于process_item，在这里使用了update方法，第一个参数传入查询条件，这里使用的是id，第二个参数传入字典类型的对象，就是我们的item，第三个参数传入True，这样就可以保证，如果查询数据存在的话就更新，不存在的话就插入。这样就可以保证去重了。</p>
-</blockquote>
-<p>这确实是一种很简单的方法，其实原理很简单，就是在每次插入数据前，对数据库中查询，是否有该 ID，如果没有就插入，如果有就放弃。</p>
-<p>对于数据量比较少的项目，这确实是一种很简单的方法，很简单就完成了目标。</p>
-<p>但是，我们现在说的是百万级数据，如果每一条数据在插入前，都需要去查询该数据是否在数据库，那会多么耗时，效率会大大较低，那么还有什么好办法呢？</p>
-<h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h3 id="MongoDB-索引"><a href="#MongoDB-索引" class="headerlink" title="MongoDB 索引"></a>MongoDB 索引</h3><p>索引能够实现高效地查询。没有索引，MongoDB 就必须扫描集合中的所有文档，才能找到匹配查询语句的文档。这种扫描毫无效率可言，需要处理大量的数据。</p>
-<p>索引是一种特殊的数据结构，将一小块数据集保存为容易遍历的形式。索引能够存储某种特殊字段或字段集的值，并按照索引指定的方式将字段值进行排序。</p>
-<p>我们可以借助索引，使用 <code>insert_one</code>方法提高效率。代码实现：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">open_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client = mongodb_client</div><div class="line">        self.db = self.client.get_database()</div><div class="line">        self.collection = self.db[<span class="string">'test'</span>]</div><div class="line">        <span class="comment"># 添加唯一索引</span></div><div class="line">        self.collection.create_index(<span class="string">'id'</span>, unique=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close_spider</span><span class="params">(self, spider)</span>:</span></div><div class="line">        self.client.close()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            self.collection.insert_one(dict(item))</div><div class="line">            <span class="keyword">return</span> item</div><div class="line">        <span class="keyword">except</span> DuplicateKeyError:</div><div class="line">            spider.logger.debug(<span class="string">' duplicate key error collection'</span>)</div><div class="line">            <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
-<p>其实很简单，就是在 <code>open_spider</code>先创建唯一索引，然后再插入数据。注意需要在<code>process_item</code>中使用异常处理，因为很有可能插入重复数据，到时候就会输出日志。</p>
-<h3 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h3><p>mongo 除了 <code>insert_one</code>方法还有一种，<code>insert_many</code></p>
-<p><code>insert_many(documents, ordered=True, bypass_document_validation=False, session=None)</code></p>
-<p>Insert an iterable of documents.<br><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; db.test.count()</div><div class="line"><span class="number">0</span></div><div class="line">&gt;&gt;&gt; result = db.test.insert_many([&#123;'x': i&#125; <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>)])</div><div class="line">&gt;&gt;&gt; result.inserted_ids</div><div class="line">[ObjectId('<span class="number">54</span>f113fffba522406c9cc20e'), ObjectId('<span class="number">54</span>f113fffba522406c9cc20f')]</div><div class="line">&gt;&gt;&gt; db.test.count()</div><div class="line"><span class="number">2</span></div></pre></td></tr></table></figure></p>
-<p>这样插入的数据不再是一条，而是很多，</p>
-<p><a href="https://stackoverflow.com/questions/36792649/whats-the-difference-between-insert-insertone-and-insertmany-method" target="_blank" rel="external">What’s the difference between insert(), insertOne() and insertMany() methods on MongoDB</a></p>
-<p>大佬有写到，可以去看看。</p>
-<p>同时插入多条数据，减轻数据库压力。但是这个“多”到底还是多少，目前不得而知。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>除了更多机器和更多节点，还有很多方法可以提升 <code>Scrapy</code>运行速度。</p>
-<p>今天说到的是管道阻塞问题，还有其他地方也可以优化，还需要努力。</p>
-<p><img src="https://i.imgur.com/SQrGHds.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第三十九篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;长期更新  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ThJm8v5.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Scrapy" scheme="https://zhangslob.github.io/categories/Scrapy/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="Scrapy" scheme="https://zhangslob.github.io/tags/Scrapy/"/>
     
   </entry>
   
