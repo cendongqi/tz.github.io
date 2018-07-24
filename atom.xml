@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-07-17T13:47:14.505Z</updated>
+  <updated>2018-07-24T15:27:21.274Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,63 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为什么Selenium点不到元素</title>
+    <link href="https://zhangslob.github.io/2018/07/24/%E4%B8%BA%E4%BB%80%E4%B9%88Selenium%E7%82%B9%E4%B8%8D%E5%88%B0%E5%85%83%E7%B4%A0/"/>
+    <id>https://zhangslob.github.io/2018/07/24/为什么Selenium点不到元素/</id>
+    <published>2018-07-24T14:35:10.000Z</published>
+    <updated>2018-07-24T15:27:21.274Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://i.imgur.com/VfFKTnl.jpg" alt=""></p>
+<pre><code>这是崔斯特的第六十篇原创文章
+</code></pre><p>明明可以显示，为什么就是点不到呢  (๑• . •๑)</p>
+<a id="more"></a>
+<p>最近做了许多登陆项目，我会优先选择使用requests来模拟请求，但是有些参数实在是很难获取，这个时候我会使用Selenium，也还是遇到了各种坑，也算是见识到了很多的验证措施。</p>
+<p>今天说说如何解决selenium点选不到数据的问题。</p>
+<h1 id="等待"><a href="#等待" class="headerlink" title="等待"></a>等待</h1><p>这还是最常见的一种情况，推荐最多的是使用显示等待：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</div><div class="line"></div><div class="line">driver = webdriver.Firefox()</div><div class="line">driver.get(<span class="string">"http://somedomain/url_that_delay_loading"</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    element = WebDriverWait(driver,<span class="number">10</span>).until(</div><div class="line">        EC.presence_of_element_located((By.ID,<span class="string">"myDynamicElement"</span>))</div><div class="line">    )</div><div class="line"><span class="keyword">finally</span>:</div><div class="line">    driver.quit()</div></pre></td></tr></table></figure>
+<p>这段代码会等待10秒，如果10秒内找到元素则立即返回，否则会抛出TimeoutException异常。</p>
+<p>但是我比较懒，因为<code>time.sleep()</code>可以达到同样效果。</p>
+<h1 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h1><p>官方把它叫做“行为链”。ActionChains可以完成简单的交互行为，例如鼠标移动，鼠标点击事件，键盘输入，以及内容菜单交互。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">click(on_element=None) ——单击鼠标左键</div><div class="line"></div><div class="line">click_and_hold(on_element=None) ——点击鼠标左键，不松开</div><div class="line"></div><div class="line">context_click(on_element=None) ——点击鼠标右键</div><div class="line"></div><div class="line">double_click(on_element=None) ——双击鼠标左键</div><div class="line"></div><div class="line">drag_and_drop(<span class="built_in">source</span>, target) ——拖拽到某个元素然后松开</div><div class="line"></div><div class="line">drag_and_drop_by_offset(<span class="built_in">source</span>, xoffset, yoffset) ——拖拽到某个坐标然后松开</div><div class="line"></div><div class="line">key_down(value, element=None) ——按下某个键盘上的键</div><div class="line"></div><div class="line">key_up(value, element=None) ——松开某个键</div><div class="line"></div><div class="line">move_by_offset(xoffset, yoffset) ——鼠标从当前位置移动到某个坐标</div><div class="line"></div><div class="line">move_to_element(to_element) ——鼠标移动到某个元素</div><div class="line"></div><div class="line">move_to_element_with_offset(to_element, xoffset, yoffset) ——移动到距某个元素（左上角坐标）多少距离的位置</div><div class="line"></div><div class="line">perform() ——执行链中的所有动作</div><div class="line"></div><div class="line">release(on_element=None) ——在某个元素位置松开鼠标左键</div><div class="line"></div><div class="line">send_keys(*keys_to_send) ——发送某个键到当前焦点的元素</div><div class="line"></div><div class="line">send_keys_to_element(element, *keys_to_send) ——发送某个键到指定元素</div></pre></td></tr></table></figure>
+<p>深入了解可以参考 <a href="https://blog.csdn.net/huilan_same/article/details/52305176" target="_blank" rel="external">https://blog.csdn.net/huilan_same/article/details/52305176</a></p>
+<p><code>move_to_element_with_offset</code>和<code>click_and_hold</code>会经常用到破解验证码中。</p>
+<h1 id="触摸操作-TouchAction"><a href="#触摸操作-TouchAction" class="headerlink" title="触摸操作 (TouchAction)"></a>触摸操作 (TouchAction)</h1><p><strong>该事件仅仅针对移动端、触屏版</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">flick_element(on_element, xoffset, yoffset, speed) <span class="comment"># 以元素为起点以一定速度向下滑动</span></div><div class="line">scroll_from_element(on_element xoffset yoffset) <span class="comment">#以元素为起点向下滑动</span></div><div class="line">double_tap(on_element)                                     <span class="comment">#双击   </span></div><div class="line">flick_element(on_element, xoffset, yoffset, speed)         <span class="comment">#从元素开始以指定的速度移动</span></div><div class="line">long_press(on_element)　　                                          <span class="comment">#长按不释放</span></div><div class="line">move(xcoord, ycoord)　　                                              <span class="comment">#移动到指定的位置</span></div><div class="line">perform()　　                                                                  <span class="comment">#执行链中的所有动作</span></div><div class="line">release(xcoord, ycoord)　　                                           <span class="comment">#在某个位置松开操作</span></div><div class="line">scroll(xoffset, yoffset)                                                      <span class="comment">#滚动到某个位置</span></div><div class="line">scroll_from_element(on_element, xoffset, yoffset)         <span class="comment">#从某元素开始滚动到某个位置</span></div><div class="line">tap(on_element)                                                             <span class="comment">#单击</span></div><div class="line">tap_and_hold(xcoord, ycoord)                                        <span class="comment">#某点按住</span></div></pre></td></tr></table></figure>
+<p>为什么要说到移动端，在做登陆时，移动端往往会更加简单，但是触屏版的点击和PC端时完全不同的，点击与按住时不同的。</p>
+<p>在某个项目我换成<code>TouchAction</code>后，神奇的发现，注册不再需要处理验证码了，真是太棒了。</p>
+<h1 id="使用js"><a href="#使用js" class="headerlink" title="使用js"></a>使用js</h1><p>当你使用浏览器已经找到该元素，使用<code>click()</code>方法但是不起作用时，这个时候建议尝试js，例如在我的主页 <a href="https://www.zhihu.com/people/cuishite/activities，点击" target="_blank" rel="external">https://www.zhihu.com/people/cuishite/activities，点击</a> “查看详细资料”</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">js = <span class="string">'document.getElementsByClassName("Button ProfileHeader-expandButton Button--plain")[0].click();'</span></div><div class="line">driver.execute_script(js)</div></pre></td></tr></table></figure>
+<p>你可以先在控制台调试</p>
+<p><img src="https://i.imgur.com/kyz089A.png" alt=""></p>
+<p>js通常可以解决绝大多是问题，如果还是解决不了，那你可能和我遇到了同样的问题，比如说，我在处理某移动端网站登陆，处理如下验证码时，我会使用到<code>move_to_element_with_offset</code>，该方法是“移动到距某个元素（左上角坐标）多少距离的位置”。</p>
+<p>计算出坐标后，会调用该方法，如<code>action.move_to_element_with_offset(element, width, height).click().perform()</code>，然而实际上问题并没有这么简单，多次点击失效。具体的有时间再说。</p>
+<p><img src="https://i.imgur.com/5KXib4o.png" alt=""></p>
+<h1 id="实用方法"><a href="#实用方法" class="headerlink" title="实用方法"></a>实用方法</h1><p><strong>提取selenium的cookies</strong></p>
+<p>介绍把selenium的cookies船体给requests使用的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cookies = driver.get_cookies()</div><div class="line"></div><div class="line">s = requests.Session()</div><div class="line"><span class="keyword">for</span> cookie <span class="keyword">in</span> cookies:</div><div class="line">    s.cookies.set(cookie[<span class="string">'name'</span>], cookie[<span class="string">'value'</span>])</div></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/29563335/how-do-i-load-session-and-cookies-from-selenium-browser-to-requests-library-in-p" target="_blank" rel="external">How do I load session and cookies from Selenium browser to requests library in Python?</a></p>
+<p><strong>元素截图方法</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line"></div><div class="line">fox = webdriver.Firefox()</div><div class="line">fox.get(<span class="string">'https://stackoverflow.com/'</span>)</div><div class="line"></div><div class="line"><span class="comment"># now that we have the preliminary stuff out of the way time to get that image :D</span></div><div class="line">element = fox.find_element_by_id(<span class="string">'hlogo'</span>) <span class="comment"># find part of the page you want image of</span></div><div class="line">location = element.location</div><div class="line">size = element.size</div><div class="line">fox.save_screenshot(<span class="string">'screenshot.png'</span>) <span class="comment"># saves screenshot of entire page</span></div><div class="line">fox.quit()</div><div class="line"></div><div class="line">im = Image.open(<span class="string">'screenshot.png'</span>) <span class="comment"># uses PIL library to open image in memory</span></div><div class="line"></div><div class="line">left = location[<span class="string">'x'</span>]</div><div class="line">top = location[<span class="string">'y'</span>]</div><div class="line">right = location[<span class="string">'x'</span>] + size[<span class="string">'width'</span>]</div><div class="line">bottom = location[<span class="string">'y'</span>] + size[<span class="string">'height'</span>]</div><div class="line"></div><div class="line"></div><div class="line">im = im.crop((left, top, right, bottom)) <span class="comment"># defines crop points</span></div><div class="line">im.save(<span class="string">'screenshot.png'</span>) <span class="comment"># saves new cropped image</span></div></pre></td></tr></table></figure>
+<p><a href="https://stackoverflow.com/questions/37564932/selenium-cannot-screenshot-a-web-element" target="_blank" rel="external">selenium cannot screenshot a web element</a></p>
+<p>最后推荐一个神器 <a href="https://github.com/appium/python-client" target="_blank" rel="external">appium/python-client</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/VfFKTnl.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;这是崔斯特的第六十篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;明明可以显示，为什么就是点不到呢  (๑• . •๑)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Selenium" scheme="https://zhangslob.github.io/categories/Selenium/"/>
+    
+    
+      <category term="Selenium" scheme="https://zhangslob.github.io/tags/Selenium/"/>
+    
+  </entry>
   
   <entry>
     <title>使用Selenium与Requests模拟登陆</title>
@@ -1196,61 +1253,6 @@
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>来codewars与我一起玩耍吧</title>
-    <link href="https://zhangslob.github.io/2018/04/12/%E6%9D%A5codewars%E4%B8%8E%E6%88%91%E4%B8%80%E8%B5%B7%E7%8E%A9%E8%80%8D%E5%90%A7/"/>
-    <id>https://zhangslob.github.io/2018/04/12/来codewars与我一起玩耍吧/</id>
-    <published>2018-04-12T13:25:13.000Z</published>
-    <updated>2018-04-12T14:08:23.123Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十篇原创文章
-</code></pre><p>并肩作战  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/tyYtQ02.jpg" alt=""></p>
-<a id="more"></a>
-<h1 id="先看一道题目"><a href="#先看一道题目" class="headerlink" title="先看一道题目"></a>先看一道题目</h1><p>如何使用代码表示“石头、剪刀、布”之间的关系。</p>
-<blockquote>
-<p>即：石头 &gt; 剪刀，剪刀 &gt; 布， 剪刀 &gt; 布</p>
-</blockquote>
-<p>当时我想了很多，构造一个字典，和数字对应，但是应该如何表示“大小”关系呢？想破脑袋都想不出来，最后看了答案，形如</p>
-<p><code>dict = {&#39;a&#39;: &#39;b&#39;, &#39;b&#39;: &#39;c&#39;, &#39;c&#39;: &#39;a&#39;}</code></p>
-<p>简直是妙啊！！！</p>
-<p>原题在这里，<a href="https://www.codewars.com/kata/5672a98bdbdd995fad00000f" target="_blank" rel="external">Rock Paper Scissors!</a>，可以自己试试看。</p>
-<p>我觉得很妙的解法</p>
-<h1 id="CodeWars"><a href="#CodeWars" class="headerlink" title="CodeWars"></a>CodeWars</h1><p>这是CodeWars上的一题，我觉得挺有意思的。CodeWars其实和leetcode差不多，但是我更喜欢有这几点。</p>
-<h2 id="界面"><a href="#界面" class="headerlink" title="界面"></a>界面</h2><p><img src="https://i.imgur.com/iJDJEyh.png" alt=""></p>
-<p>看着挺舒服的，同时提供了测试代码。</p>
-<h2 id="够简单"><a href="#够简单" class="headerlink" title="够简单"></a>够简单</h2><p>真的，CodeWars上有些题目真的很简单，适合我这种新手，哈哈，比如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Complete the solution so that it reverses the string value passed into it.</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment"># solution('world') # returns 'dlrow'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(string)</span>:</span></div><div class="line">    <span class="keyword">return</span> string[::<span class="number">-1</span>]</div></pre></td></tr></table></figure>
-<p><img src="https://i.imgur.com/76PQr2I.png" alt=""></p>
-<p>还可以选择问题类型。</p>
-<h2 id="可以自己出题，还可以邀请队友"><a href="#可以自己出题，还可以邀请队友" class="headerlink" title="可以自己出题，还可以邀请队友"></a>可以自己出题，还可以邀请队友</h2><p><a href="www.codewars.com/r/UsAiUQ">www.codewars.com/r/UsAiUQ</a><br><a href="www.codewars.com/r/UsAiUQ">codewars</a> 点一下，就可以成为我的盟友。</p>
-<p><img src="https://i.imgur.com/MGFfIiV.jpg" alt=""></p>
-<p>点一下，玩一年，装逼不花一分钱！</p>
-<h2 id="可以上榜"><a href="#可以上榜" class="headerlink" title="可以上榜"></a>可以上榜</h2><p><a href="https://www.codewars.com/users/leaderboard" target="_blank" rel="external">leaderboard</a></p>
-<p><img src="https://i.imgur.com/BsP8kJP.png" alt=""></p>
-<p>第二名竟然是国人唉，不知是哪位大佬。希望有更多中国人可以出现在上面。</p>
-<h1 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h1><p>目前我也还是一个萌新，希望大佬能带带我。</p>
-<p>我在Github上开了一个仓库，<a href="https://github.com/zhangslob/codewars_python" target="_blank" rel="external">codewars_python</a> 里面都是用 python的解题方法，但是现在还只有几题而已，希望大家可以一起来参与，多提pr。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># ATM machines allow 4 or 6 digit PIN codes and PIN codes cannot contain anything but exactly 4 digits or exactly 6 digits.</span></div><div class="line"></div><div class="line"><span class="comment"># If the function is passed a valid PIN string, return true, else return false.</span></div><div class="line"></div><div class="line"><span class="comment"># eg:</span></div><div class="line"></div><div class="line"><span class="comment"># validate_pin("1234") == True</span></div><div class="line"><span class="comment"># validate_pin("12345") == False</span></div><div class="line"><span class="comment"># validate_pin("a234") == False</span></div><div class="line"></div><div class="line"><span class="comment"># My Solutiuon</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">validate_pin</span><span class="params">(pin)</span>:</span></div><div class="line">    <span class="comment">#return true or false</span></div><div class="line">    <span class="keyword">return</span> pin.isdigit() <span class="keyword">if</span> len(pin) == <span class="number">4</span> <span class="keyword">or</span> len(pin) == <span class="number">6</span> <span class="keyword">else</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"> <span class="comment"># Wonderful Solutiuon</span></div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">def</span> <span class="title">validate_pin</span><span class="params">(pin)</span>:</span></div><div class="line">    <span class="keyword">return</span> len(pin) <span class="keyword">in</span> (<span class="number">4</span>, <span class="number">6</span>) <span class="keyword">and</span> pin.isdigit()</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;并肩作战  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/tyYtQ02.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="算法" scheme="https://zhangslob.github.io/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="算法" scheme="https://zhangslob.github.io/tags/%E7%AE%97%E6%B3%95/"/>
-    
-      <category term="codewars" scheme="https://zhangslob.github.io/tags/codewars/"/>
     
   </entry>
   

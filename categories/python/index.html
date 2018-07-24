@@ -82,7 +82,7 @@
 <meta name="description" content="网络爬虫、数据分析、人生感悟!">
 <meta property="og:type" content="website">
 <meta property="og:title" content="小歪的博客">
-<meta property="og:url" content="https://zhangslob.github.io/categories/Python/index.html">
+<meta property="og:url" content="https://zhangslob.github.io/categories/python/index.html">
 <meta property="og:site_name" content="小歪的博客">
 <meta property="og:description" content="网络爬虫、数据分析、人生感悟!">
 <meta name="twitter:card" content="summary">
@@ -117,13 +117,13 @@
 
 
 
-  <link rel="canonical" href="https://zhangslob.github.io/categories/Python/"/>
+  <link rel="canonical" href="https://zhangslob.github.io/categories/python/"/>
 
 
 
 
 
-  <title>分类: Python | 小歪的博客</title>
+  <title>分类: python | 小歪的博客</title>
   
 
 
@@ -328,7 +328,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>Python<small>分类</small>
+        <h1>python<small>分类</small>
         </h1>
       </div>
 
@@ -340,37 +340,9 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2018/02/08/PEP8规则及Pycharm应用/" itemprop="url">
+            <a class="post-title-link" href="/2018/05/22/Python最假的库：Faker/" itemprop="url">
               
-                <span itemprop="name">PEP8规则及Pycharm应用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-02-08T21:06:23+08:00"
-              content="2018-02-08" >
-          02-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/01/15/使用logging管理爬虫/" itemprop="url">
-              
-                <span itemprop="name">使用logging管理爬虫</span>
+                <span itemprop="name">Python最假的库：Faker</span>
               
             </a>
         
@@ -378,9 +350,9 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-15T21:39:35+08:00"
-              content="2018-01-15" >
-          01-15
+              datetime="2018-05-22T21:14:35+08:00"
+              content="2018-05-22" >
+          05-22
         </time>
       </div>
 
@@ -444,7 +416,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">60</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -455,7 +427,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -583,7 +555,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">嗨，全站共71.1k字</span>
+  <span class="post-count">嗨，全站共72.2k字</span>
 </div>
 
 
@@ -1142,6 +1114,48 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                 $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
               },
               error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  <!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</body>
+</html>
+
+   error: function(newcounter, error) {
                 console.log('Failed to create');
               }
             });
