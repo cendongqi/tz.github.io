@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-07-24T15:27:21.274Z</updated>
+  <updated>2018-07-28T08:13:29.170Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,11 +16,75 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Python多线程（一）</title>
+    <link href="https://zhangslob.github.io/2018/07/28/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>https://zhangslob.github.io/2018/07/28/Python多线程（一）/</id>
+    <published>2018-07-28T07:01:34.000Z</published>
+    <updated>2018-07-28T08:13:29.170Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://www.cn314.com/d/file/xinpin/452214b5930752f61039756c8dc70d67.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十一篇原创文章</div></pre></td></tr></table></figure>
+<p>记录自己对多线程的理解  (๑• . •๑)</p>
+<a id="more"></a>
+<h1 id="线程与影分身"><a href="#线程与影分身" class="headerlink" title="线程与影分身"></a>线程与影分身</h1><p>多线程就是鸣人的<code>影分身之术</code>，可能不大恰当，但是非常容易理解。</p>
+<p><img src="https://cf-darren0322.zi.org.tw/wp-content/uploads/2017/09/1504614882-afaa0c0f0d32fd75d061c2aeff07b38f.jpg" alt=""></p>
+<p>平时一个鸣人会一个人，但是遇到强敌时，他会使用<code>影分身之术</code>，召唤自己的兄弟来帮助他一起来战斗。这样，他就从一个人战斗变成多个人战斗。</p>
+<p>多线程也是这样，平时一个线程去做某件事，当使用多线程后，就会有很多个线程按照命令去做事，就像影分身一样。</p>
+<h1 id="Python使用"><a href="#Python使用" class="headerlink" title="Python使用"></a>Python使用</h1><p>鸣人和使用需要先结印</p>
+<p><img src="http://i0.qhmsg.com/t01ccd9cfd17482901d.jpg" alt=""></p>
+<p>Python 中需要先调用，让我们看一个简单的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">shadow</span><span class="params">(num)</span>:</span></div><div class="line">    print(<span class="string">'产生了第&#123;&#125;个分身...'</span>.format(num))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>):</div><div class="line">    t = threading.Thread(target=shadow, args=(i,))</div><div class="line">    t.start()</div><div class="line">    t.join()</div></pre></td></tr></table></figure>
+<p>Output</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">产生了第1个分身...</div><div class="line">产生了第2个分身...</div><div class="line">产生了第3个分身...</div><div class="line">产生了第4个分身...</div><div class="line">产生了第5个分身...</div></pre></td></tr></table></figure>
+<p>可以看出用法非常简单，只需要先导入<code>threading</code>模块，然后实例化一个线程对象，注意<code>args是</code>元祖</p>
+<p><code>t = threading.Thread(target=shadow, args=(i,))</code></p>
+<p>线程被创建之后并不会马上运行，需要手动调用 <code>start()</code> ， <code>join()</code> 让调用它的线程一直等待直到执行结束： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">t.start()</div><div class="line">t.join()</div></pre></td></tr></table></figure>
+<h1 id="查看线程名字"><a href="#查看线程名字" class="headerlink" title="查看线程名字"></a>查看线程名字</h1><p>上述例子中，我们只知道产生了多个线程，但还是并不知道具体是哪个线程，如果某个线程出错了，我们没法去追踪，所以我们可以给线程加上名字。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">shadow</span><span class="params">(num)</span>:</span></div><div class="line">    print(<span class="string">'&#123;&#125;产生了第&#123;&#125;个分身...'</span>.format(threading.currentThread().getName(), num))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>):</div><div class="line">    t = threading.Thread(target=shadow, args=(i,), name=<span class="string">'第&#123;&#125;个鸣人'</span>.format(i))</div><div class="line">    t.start()</div><div class="line">    t.join()</div></pre></td></tr></table></figure>
+<p>Out:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">第1个鸣人产生了第1个分身...</div><div class="line">第2个鸣人产生了第2个分身...</div><div class="line">第3个鸣人产生了第3个分身...</div><div class="line">第4个鸣人产生了第4个分身...</div><div class="line">第5个鸣人产生了第5个分身...</div></pre></td></tr></table></figure>
+<p>当然，你可以这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">shadow</span><span class="params">(num)</span>:</span></div><div class="line">    print(<span class="string">'&#123;&#125;产生了第&#123;&#125;个分身...'</span>.format(threading.currentThread().getName(), num))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>):</div><div class="line">    t = threading.Thread(target=shadow, args=(i,))</div><div class="line">    t.start()</div><div class="line">    t.join()</div><div class="line"></div><div class="line">print(threading.currentThread().getName())</div></pre></td></tr></table></figure>
+<p>Out</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Thread-1产生了第1个分身...</div><div class="line">Thread-2产生了第2个分身...</div><div class="line">Thread-3产生了第3个分身...</div><div class="line">Thread-4产生了第4个分身...</div><div class="line">Thread-5产生了第5个分身...</div><div class="line">MainThread</div></pre></td></tr></table></figure>
+<p>你可以看到在所有创建的线程结束后，我们打印当前线程名字，就是主线程<code>MainThread</code></p>
+<h1 id="什么时候使用join"><a href="#什么时候使用join" class="headerlink" title="什么时候使用join"></a>什么时候使用join</h1><p>刚开始学多线程时，有个问题困扰了我很久，就是什么时候使用<code>join()</code></p>
+<p>缕一缕步骤：</p>
+<ol>
+<li>主线程中创建子线程t</li>
+<li>开始线程<code>t.star()</code></li>
+<li>调用<code>t.join()</code></li>
+<li>阻塞：等待子线程t结束后，再执行接下来的任务</li>
+</ol>
+<p>也就是说使用了<code>join()</code>后会阻塞当前的线程，只有这个线程执行完毕后才会接着走。要是一直不结束呢？你可以加上超时时间，如<code>t.join(timeout=10)</code></p>
+<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>鸣人使用影分身后，产生了A、B、C三个小鸣人，鸣人可以使用<code>join()</code>方法，让B在A耗尽查克拉之后再进行攻击，如果没有使用<code>join()</code>，那么就会是这样的场景，大家一起上</p>
+<p><img src="https://image.ibb.co/b2AhW8/u_2086124472_3070676486_fm_173_s_C0983_F9_F4_C024_EDA8415_FC6803003079_w_500_h_314_img.jpg" alt=""></p>
+<p>这个时候如果鸣人命令A、B同时去写家庭作业，那么可能会产生什么情况呢？A先写还是B先写，大家可以想想。</p>
+<p>下一期会说说 <strong>锁 </strong></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://www.cn314.com/d/file/xinpin/452214b5930752f61039756c8dc70d67.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十一篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;记录自己对多线程的理解  (๑• . •๑)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="多线程" scheme="https://zhangslob.github.io/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+    
+      <category term="多线程" scheme="https://zhangslob.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    
+  </entry>
+  
+  <entry>
     <title>为什么Selenium点不到元素</title>
     <link href="https://zhangslob.github.io/2018/07/24/%E4%B8%BA%E4%BB%80%E4%B9%88Selenium%E7%82%B9%E4%B8%8D%E5%88%B0%E5%85%83%E7%B4%A0/"/>
     <id>https://zhangslob.github.io/2018/07/24/为什么Selenium点不到元素/</id>
     <published>2018-07-24T14:35:10.000Z</published>
-    <updated>2018-07-24T15:27:21.274Z</updated>
+    <updated>2018-07-24T15:28:58.537Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://i.imgur.com/VfFKTnl.jpg" alt=""></p>
 <pre><code>这是崔斯特的第六十篇原创文章
@@ -55,6 +119,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line"></div><div class="line">fox = webdriver.Firefox()</div><div class="line">fox.get(<span class="string">'https://stackoverflow.com/'</span>)</div><div class="line"></div><div class="line"><span class="comment"># now that we have the preliminary stuff out of the way time to get that image :D</span></div><div class="line">element = fox.find_element_by_id(<span class="string">'hlogo'</span>) <span class="comment"># find part of the page you want image of</span></div><div class="line">location = element.location</div><div class="line">size = element.size</div><div class="line">fox.save_screenshot(<span class="string">'screenshot.png'</span>) <span class="comment"># saves screenshot of entire page</span></div><div class="line">fox.quit()</div><div class="line"></div><div class="line">im = Image.open(<span class="string">'screenshot.png'</span>) <span class="comment"># uses PIL library to open image in memory</span></div><div class="line"></div><div class="line">left = location[<span class="string">'x'</span>]</div><div class="line">top = location[<span class="string">'y'</span>]</div><div class="line">right = location[<span class="string">'x'</span>] + size[<span class="string">'width'</span>]</div><div class="line">bottom = location[<span class="string">'y'</span>] + size[<span class="string">'height'</span>]</div><div class="line"></div><div class="line"></div><div class="line">im = im.crop((left, top, right, bottom)) <span class="comment"># defines crop points</span></div><div class="line">im.save(<span class="string">'screenshot.png'</span>) <span class="comment"># saves new cropped image</span></div></pre></td></tr></table></figure>
 <p><a href="https://stackoverflow.com/questions/37564932/selenium-cannot-screenshot-a-web-element" target="_blank" rel="external">selenium cannot screenshot a web element</a></p>
 <p>最后推荐一个神器 <a href="https://github.com/appium/python-client" target="_blank" rel="external">appium/python-client</a></p>
+<p>至于验证码部分，现在主要还是靠第三方工具，并没有自己尝试机器学习等方法处理。</p>
 ]]></content>
     
     <summary type="html">
@@ -638,9 +703,9 @@
       <category term="终端" scheme="https://zhangslob.github.io/categories/%E7%BB%88%E7%AB%AF/"/>
     
     
-      <category term="zsh" scheme="https://zhangslob.github.io/tags/zsh/"/>
-    
       <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
+    
+      <category term="zsh" scheme="https://zhangslob.github.io/tags/zsh/"/>
     
   </entry>
   
@@ -1182,75 +1247,6 @@
     
     
       <category term="awesome_crawl" scheme="https://zhangslob.github.io/tags/awesome-crawl/"/>
-    
-      <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>scrapy-redis 和 scrapy 有什么区别？</title>
-    <link href="https://zhangslob.github.io/2018/04/21/%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F/"/>
-    <id>https://zhangslob.github.io/2018/04/21/有什么区别？/</id>
-    <published>2018-04-21T10:03:14.000Z</published>
-    <updated>2018-04-21T10:09:16.780Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十一篇原创文章
-</code></pre><p>分布式爬虫  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/1uic8Qk.jpg" alt=""></p>
-<a id="more"></a>
-<p>最近在工作中一直使用 <code>redis</code> 来管理分发爬虫任务，让我对 <code>scrapy-redis</code> 有很深刻的理解，下面让我慢慢说来。</p>
-<blockquote>
-<p>在所有的问题开始之前，要先有一个前提：你使用 <code>Scrapy</code> 框架做开发</p>
-</blockquote>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p><code>scrapy-redis</code> 与 <code>Scrapy</code>的关系就像电脑与固态硬盘一样，是电脑中的一个插件，能让电脑更快的运行。</p>
-<p><code>Scrapy</code> 是一个爬虫框架，<code>scrapy-redis</code> 则是这个框架上可以选择的插件，它可以让爬虫跑的更快。</p>
-<h1 id="为什么使用-scrapy-redis"><a href="#为什么使用-scrapy-redis" class="headerlink" title="为什么使用 scrapy-redis"></a>为什么使用 <code>scrapy-redis</code></h1><p>首先，在实际开发中，我们总会对爬虫速度表示不满，为啥这么慢，能不能跑快点。除了爬虫本身的优化，我们就要引入<code>分布式爬虫</code>的概念。</p>
-<p>我自己对<code>分布式爬虫</code>的理解就是：<strong>多个爬虫执行同一个任务</strong></p>
-<blockquote>
-<p>这里说下，<code>Scrapy</code>本身是不支持分布式的，因为它的任务管理和去重全部是在机器内存中实现的。</p>
-</blockquote>
-<p>在 <code>Scrapy</code> 中最出名的分布式插件就是<code>scrapy-redis</code>了，<code>scrapy-redis</code>的作用就是让你的爬虫快、更快、超级快。</p>
-<h1 id="scrapy-redis-如何工作"><a href="#scrapy-redis-如何工作" class="headerlink" title="scrapy-redis 如何工作"></a><code>scrapy-redis</code> 如何工作</h1><p>最简单的方式是使用<code>redis</code>替换机器内存，那么具体如何操作呢？非常简单，你只需要在 <code>settings.py</code> 中加上三代码，就能让你的爬虫变为分布式。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">SCHEDULER = <span class="string">"scrapy_redis.scheduler.Scheduler"</span></div><div class="line"></div><div class="line">DUPEFILTER_CLASS = <span class="string">"scrapy_redis.dupefilter.RFPDupeFilter"</span></div><div class="line"></div><div class="line">REDIS_START_URLS_AS_SET = <span class="keyword">True</span></div></pre></td></tr></table></figure>
-<p><code>SCHEDULER</code> 是任务分发与调度，把所有的爬虫开始的请求都放在redis里面，所有爬虫都去redis里面读取请求。<br><code>DUPEFILTER_CLASS</code> 是去重队列，负责所有请求的去重，<code>REDIS_START_URLS_AS_SET</code>指的是使用redis里面的set类型（简单完成去重），如果你没有设置，默认会选用list。</p>
-<p>如果你现在运行你的爬虫，你可以在redis中看到出现了这两个key:</p>
-<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="symbol">spider_name:</span>dupefilter</div><div class="line"><span class="symbol">spider_name:</span>requests</div></pre></td></tr></table></figure>
-<p>格式是set，即不会有重复数据。前者就是redis的去重队列，对应<code>DUPEFILTER_CLASS</code>，后者是redis的请求调度，把里面的请求分发给爬虫，对应<code>SCHEDULER</code>。（里面的数据不会自动删除，如果你第二次跑，需要提前清空里面的数据）</p>
-<h1 id="scrapy-redis-优点"><a href="#scrapy-redis-优点" class="headerlink" title="scrapy-redis 优点"></a><code>scrapy-redis</code> 优点</h1><h3 id="速度快"><a href="#速度快" class="headerlink" title="速度快"></a>速度快</h3><p><code>scrapy-redis</code> 使用redis这个速度非常快的非关系型（NoSQL）内存键值数据库，<strong>速度快</strong>是最重要原因（但是也会产生负面想过，下面会说到）。</p>
-<p>为什么是<code>scrapy-redis</code>而不是<code>scrapy-mongo</code>呢，大家可以仔细想想。</p>
-<h3 id="用法简单"><a href="#用法简单" class="headerlink" title="用法简单"></a>用法简单</h3><p>前人已经造好轮子了，<a href="https://github.com/rmax/scrapy-redis" target="_blank" rel="external">scrapy-redis</a>。<br>我们直接拿来用就好，而用法也像上面提到的在 <code>settings.py</code> 文件中配置。在文档中还有另一种用法，即<code>Feeding a Spider from Redis</code></p>
-<ol>
-<li>run the spider:<br><code>scrapy runspider myspider.py</code></li>
-<li>push urls to redis:<br><code>redis-cli lpush myspider:start_urls http://google.com</code>（建议把<code>lpush</code>换为<code>zset</code>）</li>
-</ol>
-<p>其实这种用法就是先打开一个爬虫，他会一直在redis里面寻找key为 <code>myspider:start_urls</code>，如果存在，就提取里面的url。当然你也可以在爬虫中指定<code>redis_key</code>，默认的是爬虫的名字加上<code>:start_urls</code></p>
-<h3 id="去重简单"><a href="#去重简单" class="headerlink" title="去重简单"></a>去重简单</h3><p>爬虫中去重是一件大事，使用了<code>scrapy-redis</code>后就很简单了。上面提到过使用redis的set类型就可以很容易达到这个目标了，即<code>REDIS_START_URLS_AS_SET = True</code>。</p>
-<h1 id="scrapy-redis-缺点"><a href="#scrapy-redis-缺点" class="headerlink" title="scrapy-redis 缺点"></a><code>scrapy-redis</code> 缺点</h1><h3 id="内存问题"><a href="#内存问题" class="headerlink" title="内存问题"></a>内存问题</h3><p>为什么使用分布式爬虫，当然是因为会有很多链接需要跑，或者说会存放很多个<code>myspider:start_urls</code>到redis中，Redis是key-value数据库，面对key的内存搜索，优势明显，但是Redis吃的是纯内存，<code>myspider:start_urls</code>是一个有一个像<code>https://www.zhihu.com/people/cuishite</code>的链接，会占用大量的内存空间。之前就因为这个原因redis崩溃过无数次，那么如何优化？</p>
-<p>网络上有的方法是 <a href="https://blog.csdn.net/bone_ace/article/details/53099042" target="_blank" rel="external"> scrapy_redis去重优化（已有7亿条数据），附Demo福利</a>，可以参考下。如果你有好的解决方法，欢迎私信告诉我。（保密原因就不介绍我们的处理方法了）</p>
-<h3 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h3><p>这个其实不算做问题，只是官方文档上我觉得的小BUG，在这里 <a href="https://github.com/rmax/scrapy-redis#usage" target="_blank" rel="external">Usage</a></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Store scraped item in redis for post-processing.</span></div><div class="line">ITEM_PIPELINES = &#123;</div><div class="line">    <span class="string">'scrapy_redis.pipelines.RedisPipeline'</span>: <span class="number">300</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Pipeline是这样写的<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_process_item</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">    key = self.item_key(item, spider)</div><div class="line">    data = self.serialize(item)</div><div class="line">    self.server.rpush(key, data)</div><div class="line">    <span class="keyword">return</span> item</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">item_key</span><span class="params">(self, item, spider)</span>:</span></div><div class="line">    <span class="string">"""Returns redis key based on given spider.</span></div><div class="line"></div><div class="line">    Override this function to use a different key depending on the item</div><div class="line">    and/or spider.</div><div class="line"></div><div class="line">    """</div><div class="line">    <span class="keyword">return</span> self.key % &#123;<span class="string">'spider'</span>: spider.name&#125;</div></pre></td></tr></table></figure></p>
-<p>看不懂为什么要把数据储存在redis里面，这不又加大redis储存负担吗？对于新手来说真的不友好，或许可以考虑提一个pr。</p>
-<h1 id="redis可视化工具"><a href="#redis可视化工具" class="headerlink" title="redis可视化工具"></a>redis可视化工具</h1><p>最后介绍两个redis可视化工具</p>
-<ol>
-<li><a href="https://github.com/uglide/RedisDesktopManager" target="_blank" rel="external">RedisDesktopManager</a> 比较出名的工具，但是经常会崩溃</li>
-<li><a href="https://github.com/uniorder/kedis" target="_blank" rel="external">kedis</a> 国人开发的免费工具，这个界面还是可以的</li>
-</ol>
-<p><img src="https://camo.githubusercontent.com/de76115b295d30222fa0d6a1b79ffc9b31fb04e5/687474703a2f2f7777772e6b656861772e636f6d2f696d616765732f73637265656e73686f742e706e67" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十一篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;分布式爬虫  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/1uic8Qk.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="scrapy" scheme="https://zhangslob.github.io/categories/scrapy/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
       <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
     

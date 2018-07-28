@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://i.imgur.com/VfFKTnl.jpg">
 <meta property="og:image" content="https://i.imgur.com/kyz089A.png">
 <meta property="og:image" content="https://i.imgur.com/5KXib4o.png">
-<meta property="og:updated_time" content="2018-07-24T15:27:21.274Z">
+<meta property="og:updated_time" content="2018-07-24T15:28:58.537Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么Selenium点不到元素">
 <meta name="twitter:description" content="这是崔斯特的第六十篇原创文章
@@ -440,7 +440,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,144
+                  1,179
                 </span>
               
 
@@ -510,6 +510,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line"></div><div class="line">fox = webdriver.Firefox()</div><div class="line">fox.get(<span class="string">'https://stackoverflow.com/'</span>)</div><div class="line"></div><div class="line"><span class="comment"># now that we have the preliminary stuff out of the way time to get that image :D</span></div><div class="line">element = fox.find_element_by_id(<span class="string">'hlogo'</span>) <span class="comment"># find part of the page you want image of</span></div><div class="line">location = element.location</div><div class="line">size = element.size</div><div class="line">fox.save_screenshot(<span class="string">'screenshot.png'</span>) <span class="comment"># saves screenshot of entire page</span></div><div class="line">fox.quit()</div><div class="line"></div><div class="line">im = Image.open(<span class="string">'screenshot.png'</span>) <span class="comment"># uses PIL library to open image in memory</span></div><div class="line"></div><div class="line">left = location[<span class="string">'x'</span>]</div><div class="line">top = location[<span class="string">'y'</span>]</div><div class="line">right = location[<span class="string">'x'</span>] + size[<span class="string">'width'</span>]</div><div class="line">bottom = location[<span class="string">'y'</span>] + size[<span class="string">'height'</span>]</div><div class="line"></div><div class="line"></div><div class="line">im = im.crop((left, top, right, bottom)) <span class="comment"># defines crop points</span></div><div class="line">im.save(<span class="string">'screenshot.png'</span>) <span class="comment"># saves new cropped image</span></div></pre></td></tr></table></figure>
 <p><a href="https://stackoverflow.com/questions/37564932/selenium-cannot-screenshot-a-web-element" target="_blank" rel="external">selenium cannot screenshot a web element</a></p>
 <p>最后推荐一个神器 <a href="https://github.com/appium/python-client" target="_blank" rel="external">appium/python-client</a></p>
+<p>至于验证码部分，现在主要还是靠第三方工具，并没有自己尝试机器学习等方法处理。</p>
 
       
     </div>
@@ -620,6 +621,10 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/07/28/Python多线程（一）/" rel="prev" title="Python多线程（一）">
+                Python多线程（一） <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -727,7 +732,7 @@ var jiathis_config={
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -738,7 +743,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -749,7 +754,7 @@ var jiathis_config={
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">62</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -882,7 +887,7 @@ var jiathis_config={
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">嗨，全站共72.2k字</span>
+  <span class="post-count">嗨，全站共73.1k字</span>
 </div>
 
 
