@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-07-28T08:13:29.170Z</updated>
+  <updated>2018-09-03T14:07:13.658Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,222 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spark教程（二）Spark连接MongoDB</title>
+    <link href="https://zhangslob.github.io/2018/09/03/Spark%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89Spark%E8%BF%9E%E6%8E%A5MongoDB/"/>
+    <id>https://zhangslob.github.io/2018/09/03/Spark教程（二）Spark连接MongoDB/</id>
+    <published>2018-09-03T14:00:59.000Z</published>
+    <updated>2018-09-03T14:07:13.658Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://pic4.zhimg.com/v2-4d4095947c89bd7dc59b691aec7fb0ed_1200x500.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十五篇原创文章</div></pre></td></tr></table></figure>
+<p>学习Spark  (๑• . •๑)</p>
+<a id="more"></a>
+<h1 id="如何导入数据"><a href="#如何导入数据" class="headerlink" title="如何导入数据"></a>如何导入数据</h1><p>数据可能有各种格式，虽然常见的是<code>HDFS</code>，但是因为在Python爬虫中数据库用的比较多的是<code>MongoDB</code>，所以这里会重点说说如何用spark导入<code>MongoDB</code>中的数据。</p>
+<p>当然，首先你需要在自己电脑上安装spark环境，简单说下，在这里<a href="http://spark.apache.org/downloads.html" target="_blank" rel="external">下载spark</a>，同时需要配置好<code>JAVA</code>，<code>Scala</code>环境。</p>
+<p>这里建议使用<code>Jupyter notebook</code>，会比较方便，在环境变量中这样设置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">PYSPARK_DRIVER_PYTHON=jupyter </div><div class="line">PYSPARK_DRIVER_PYTHON_OPTS=notebook ./bin/pyspark</div></pre></td></tr></table></figure>
+<p>如果你的环境中有多个Python版本，同样可以制定你想要使用的解释器，我这里是<code>python36</code>，根据需求修改。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PYSPARK_PYTHON=/usr/bin/python36</div></pre></td></tr></table></figure>
+<h1 id="启动命令"><a href="#启动命令" class="headerlink" title="启动命令"></a>启动命令</h1><p>进入spark根目录，<code>./bin/pyspark</code>这是最简单的启动命令，默认会打开Python的交互式解释器，但是由于我们上面有设置过，会打开<code>Jupyter notebook</code>，接下来变成会方便很多。</p>
+<p>先来看看最简单的例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; textFile = spark.read.text(<span class="string">"README.md"</span>)</div><div class="line"></div><div class="line">&gt;&gt;&gt; textFile.count()  <span class="comment"># Number of rows in this DataFrame</span></div><div class="line">126</div><div class="line"></div><div class="line">&gt;&gt;&gt; textFile.first()  <span class="comment"># First row in this DataFrame</span></div><div class="line">Row(value=u<span class="string">'# Apache Spark'</span>)</div><div class="line"></div><div class="line">&gt;&gt;&gt; linesWithSpark = textFile.filter(textFile.value.contains(<span class="string">"Spark"</span>))</div><div class="line"></div><div class="line"></div><div class="line">&gt;&gt;&gt; textFile.filter(textFile.value.contains(<span class="string">"Spark"</span>)).count()  <span class="comment"># How many lines contain "Spark"?</span></div><div class="line">15</div></pre></td></tr></table></figure>
+<p>这里有我之前写过的例子，可以照着写一遍 <a href="https://github.com/zhangslob/learning-spark/blob/master/code/Python/basic_exercise.ipynb" target="_blank" rel="external">basic_exercise</a></p>
+<p>我们的启动方式是<code>./bin/pyspark</code>，我们可以家后面加很多参数，比如说如若我们要连接MongoDB，就需要这样</p>
+<p>完整的可以参考<a href="https://docs.mongodb.com/spark-connector/master/python-api/" target="_blank" rel="external">Spark Connector Python Guide</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">./bin/pyspark --conf <span class="string">"spark.mongodb.input.uri=mongodb://127.0.0.1/test.myCollection?readPreference=primaryPreferred"</span> \</div><div class="line">              --conf <span class="string">"spark.mongodb.output.uri=mongodb://127.0.0.1/test.myCollection"</span> \</div><div class="line">              --packages org.mongodb.spark:mongo-spark-connector_2.11:2.3.0</div></pre></td></tr></table></figure>
+<p>这里有两个<code>uri</code>，分别是<code>input</code>和<code>output</code>，对应读取的数据库和写入的数据库，最后面的<code>packages</code>相当于引入的包的名字，我一般喜欢在代码中定义。</p>
+<h1 id="读取-保存数据"><a href="#读取-保存数据" class="headerlink" title="读取/保存数据"></a>读取/保存数据</h1><p>这里我们可以增加参数<code>option</code>，在这里设置想要读取的数据库地址，注意格式。</p>
+<p>读取数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">df = spark.read.format(<span class="string">"com.mongodb.spark.sql.DefaultSource"</span>).option(<span class="string">"uri"</span>,</div><div class="line"><span class="string">"mongodb://127.0.0.1/people.contacts"</span>).load()</div></pre></td></tr></table></figure>
+<p>保存数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">people.write.format(<span class="string">"com.mongodb.spark.sql.DefaultSource"</span>).mode(<span class="string">"append"</span>).option(<span class="string">"uri"</span>,</div><div class="line"><span class="string">"mongodb://127.0.0.1/people.contacts"</span>).option(<span class="string">"database"</span>,</div><div class="line"><span class="string">"people"</span>).option(<span class="string">"collection"</span>, <span class="string">"contacts"</span>).save()</div></pre></td></tr></table></figure>
+<p>简单对比下，<code>option</code>还可以定义<code>database</code>和<code>collection</code>，这样就不需要在启动Spark时定义。</p>
+<p>以上是官网推荐的连接方式，这里需要说的是另一种，如果我没有从命令行中启动，而是直接新建一个py文件，该如何操作？</p>
+<p>搜索相关资料后，发现是这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line">__author__ = <span class="string">'zhangslob'</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</div><div class="line"></div><div class="line"><span class="comment"># set PYSPARK_PYTHON to python36</span></div><div class="line">os.environ[<span class="string">'PYSPARK_PYTHON'</span>] = <span class="string">'/usr/bin/python36'</span></div><div class="line"></div><div class="line"><span class="comment"># load mongo data</span></div><div class="line">input_uri = <span class="string">"mongodb://127.0.0.1:spark.spark_test"</span></div><div class="line">output_uri = <span class="string">"mongodb://127.0.0.1:spark.spark_test"</span></div><div class="line"></div><div class="line">my_spark = SparkSession\</div><div class="line">    .builder\</div><div class="line">    .appName(<span class="string">"MyApp"</span>)\</div><div class="line">    .config(<span class="string">"spark.mongodb.input.uri"</span>, input_uri)\</div><div class="line">    .config(<span class="string">"spark.mongodb.output.uri"</span>, output_uri)\</div><div class="line">    .config(<span class="string">'spark.jars.packages'</span>,<span class="string">'org.mongodb.spark:mongo-spark-connector_2.11:2.2.0'</span>)\</div><div class="line">    .getOrCreate()</div><div class="line"></div><div class="line">df = my_spark.read.format(<span class="string">'com.mongodb.spark.sql.DefaultSource'</span>).load()</div></pre></td></tr></table></figure>
+<p>必须要增加默认设置<code>(&#39;spark.jars.packages&#39;,&#39;org.mongodb.spark:mongo-spark-connector_2.11:2.2.0&#39;)</code>，否则会报错。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://pic4.zhimg.com/v2-4d4095947c89bd7dc59b691aec7fb0ed_1200x500.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十五篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;学习Spark  (๑• . •๑)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="spark" scheme="https://zhangslob.github.io/categories/spark/"/>
+    
+    
+      <category term="spark" scheme="https://zhangslob.github.io/tags/spark/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spark教程（一）为什么要学spark</title>
+    <link href="https://zhangslob.github.io/2018/09/01/Spark%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6spark/"/>
+    <id>https://zhangslob.github.io/2018/09/01/Spark教程（一）为什么要学spark/</id>
+    <published>2018-09-01T14:00:50.000Z</published>
+    <updated>2018-09-03T14:05:47.548Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://pic4.zhimg.com/v2-4d4095947c89bd7dc59b691aec7fb0ed_1200x500.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十四篇原创文章</div></pre></td></tr></table></figure>
+<p>学习Spark  (๑• . •๑)</p>
+<a id="more"></a>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>Apache Spark是一个开源集群运算框架，最初是由加州大学柏克莱分校AMPLab所开发。相对于Hadoop的MapReduce会在运行完工作后将中介数据存放到磁盘中，Spark使用了存储器内运算技术，能在数据尚未写入硬盘时即在存储器内分析运算。</p>
+<p>Spark在存储器内运行程序的运算速度能做到比Hadoop MapReduce的运算速度快上100倍，即便是运行程序于硬盘时，Spark也能快上10倍速度。Spark允许用户将数据加载至集群存储器，并多次对其进行查询，非常适合用于机器学习算法</p>
+<p>Spark也支持伪分布式（pseudo-distributed）本地模式，不过通常只用于开发或测试时以本机文件系统取代分布式存储系统。在这样的情况下，Spark仅在一台机器上使用每个CPU核心运行程序。</p>
+<blockquote>
+<p>Apache Spark™ is a unified analytics engine for large-scale data processing.</p>
+</blockquote>
+<h1 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h1><ol>
+<li>首先，Spark为我们提供了一个全面、统一的框架用于管理各种有着不同性质（文本数据、图表数据等）的数据集和数据源（批量数据或实时的流数据）的大数据处理的需求。</li>
+<li>Spark可以将Hadoop集群中的应用在内存中的运行速度提升100倍，甚至能够将应用在磁盘上的运行速度提升10倍。</li>
+<li>Spark让开发者可以快速的用Java、Scala或Python编写程序。它本身自带了一个超过80个高阶操作符集合。而且还可以用它在shell中以交互式地查询数据。</li>
+<li>除了Map和Reduce操作之外，它还支持SQL查询，流数据，机器学习和图表数据处理。开发者可以在一个数据管道用例中单独使用某一能力或者将这些能力结合在一起使用。</li>
+</ol>
+<p><img src="https://pic4.zhimg.com/80/v2-9fad838af226986154c0053b0b59d337_hd.jpg" alt=""></p>
+<h1 id="亲身体会"><a href="#亲身体会" class="headerlink" title="亲身体会"></a>亲身体会</h1><p>经过这两周的折腾，总算是在本地环境下完成了第一个spark项目，完成十万级文本分词和去重，速度还是挺快的，从读取数据、处理数据、再到保存数据，大概花了十分钟左右。这里操作的数据库都是MongoDB，因为爬虫爬取的数据都是直接保存到Mongo。</p>
+<p>之后再增加数据量，达到四千多万，读取数据花了8分钟，下图是正在处理和保存数据的Spark UI。</p>
+<p><img src="https://pic1.zhimg.com/v2-297ea8af7b3cce137f8e49aeec10295d_r.jpg" alt=""></p>
+<p>以前处理数据会使用pandas，数据会保存在内存中，数据量过大就会崩了，这也是为什么要使用分布式计算的原因。没有做过横向对比，暂时还不知道有多大差别。</p>
+<p>最后花了1.3h，本地处理完了四千多万数据，CPU和内存都要炸了，看来以后计算部分还是要搭集群。</p>
+<p><img src="https://pic1.zhimg.com/v2-da6f75baee44298362382c4fdfda51fa_r.jpg" alt=""></p>
+<h1 id="学习计划"><a href="#学习计划" class="headerlink" title="学习计划"></a>学习计划</h1><p>我在Github上开了一个仓库，记录所学，地址在这：<a href="https://github.com/zhangslob/learning-spark" target="_blank" rel="external">learning-spark</a></p>
+<p>刚开始使用的语言还是Python，目标是学Scala，看了些基础语法，和Python挺类似的，以后多写写，维持这个项目，记录各种坑。</p>
+<p>ok，BB了这么多，下一篇就要开始真正的代码实战了。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-7b58d87198c657329a93350c480cc75e_hd.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://pic4.zhimg.com/v2-4d4095947c89bd7dc59b691aec7fb0ed_1200x500.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十四篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;学习Spark  (๑• . •๑)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="spark" scheme="https://zhangslob.github.io/categories/spark/"/>
+    
+    
+      <category term="spark" scheme="https://zhangslob.github.io/tags/spark/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用scrapy发送post请求的坑</title>
+    <link href="https://zhangslob.github.io/2018/08/24/%E4%BD%BF%E7%94%A8scrapy%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82%E7%9A%84%E5%9D%91/"/>
+    <id>https://zhangslob.github.io/2018/08/24/使用scrapy发送post请求的坑/</id>
+    <published>2018-08-24T13:54:28.000Z</published>
+    <updated>2018-09-03T13:59:38.696Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://pic1.zhimg.com/v2-4a7e42516aa3fc2ad8c5532d885e3c44_1200x500.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十三篇原创文章</div></pre></td></tr></table></figure>
+<p>使用scrapy发送post请求的坑</p>
+<a id="more"></a>
+<h1 id="使用requests发送post请求"><a href="#使用requests发送post请求" class="headerlink" title="使用requests发送post请求"></a>使用requests发送post请求</h1><p>先来看看使用requests来发送post请求是多少好用，发送请求</p>
+<p>Requests 简便的 API 意味着所有 HTTP 请求类型都是显而易见的。例如，你可以这样发送一个 HTTP POST 请求：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;)</div></pre></td></tr></table></figure>
+<p>使用data可以传递字典作为参数，同时也可以传递元祖</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>payload = ((<span class="string">'key1'</span>, <span class="string">'value1'</span>), (<span class="string">'key1'</span>, <span class="string">'value2'</span>))</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data=payload)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>print(r.text)</div><div class="line">&#123;</div><div class="line">  ...</div><div class="line">  <span class="string">"form"</span>: &#123;</div><div class="line">    <span class="string">"key1"</span>: [</div><div class="line">      <span class="string">"value1"</span>,</div><div class="line">      <span class="string">"value2"</span></div><div class="line">    ]</div><div class="line">  &#125;,</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>传递json是这样</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> json</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'https://api.github.com/some/endpoint'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>payload = &#123;<span class="string">'some'</span>: <span class="string">'data'</span>&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(url, data=json.dumps(payload))</div></pre></td></tr></table></figure>
+<p>2.4.2 版的新加功能：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>url = <span class="string">'https://api.github.com/some/endpoint'</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>payload = &#123;<span class="string">'some'</span>: <span class="string">'data'</span>&#125;</div><div class="line"></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>r = requests.post(url, json=payload)</div></pre></td></tr></table></figure>
+<p>也就是说，你不需要对参数做什么变化，只需要关注使用data=还是json=，其余的requests都已经帮你做好了。</p>
+<h1 id="使用scrapy发送post请求"><a href="#使用scrapy发送post请求" class="headerlink" title="使用scrapy发送post请求"></a>使用scrapy发送post请求</h1><p>官方推荐的 Using FormRequest to send data via HTTP POST</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> [FormRequest(url=<span class="string">"http://www.example.com/post/action"</span>,</div><div class="line">                    formdata=&#123;<span class="string">'name'</span>: <span class="string">'John Doe'</span>, <span class="string">'age'</span>: <span class="string">'27'</span>&#125;,</div><div class="line">                    callback=self.after_post)]</div></pre></td></tr></table></figure>
+<p>这里使用的是FormRequest，并使用formdata传递参数，看到这里也是一个字典。</p>
+<p>但是，超级坑的一点来了，今天折腾了一下午，使用这种方法发送请求，怎么发都会出问题，返回的数据一直都不是我想要的</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> scrapy.FormRequest(url, formdata=(payload))</div></pre></td></tr></table></figure>
+<p>在网上找了很久，最终找到一种方法，使用scrapy.Request发送请求，就可以正常的获取数据。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> scrapy.Request(url, body=json.dumps(payload), method=<span class="string">'POST'</span>, headers=&#123;<span class="string">'Content-Type'</span>: <span class="string">'application/json'</span>&#125;,)</div></pre></td></tr></table></figure>
+<p>参考：Send Post Request in Scrapy</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">my_data = &#123;<span class="string">'field1'</span>: <span class="string">'value1'</span>, <span class="string">'field2'</span>: <span class="string">'value2'</span>&#125;</div><div class="line">request = scrapy.Request( url, method=<span class="string">'POST'</span>, </div><div class="line">                          body=json.dumps(my_data), </div><div class="line">                          headers=&#123;<span class="string">'Content-Type'</span>:<span class="string">'application/json'</span>&#125; )</div></pre></td></tr></table></figure>
+<h1 id="FormRequest-与-Request-区别"><a href="#FormRequest-与-Request-区别" class="headerlink" title="FormRequest 与 Request 区别"></a>FormRequest 与 Request 区别</h1><p>在文档中，几乎看不到差别，</p>
+<blockquote>
+<p>The FormRequest class adds a new argument to the constructor. The remaining arguments are the same as for the Request class and are not documented here.</p>
+<p>Parameters:    formdata (dict or iterable of tuples) – is a dictionary (or iterable of (key, value) tuples) containing HTML Form data which will be url-encoded and assigned to the body of the request.</p>
+</blockquote>
+<p>说FormRequest新增加了一个参数formdata，接受包含表单数据的字典或者可迭代的元组，并将其转化为请求的body。并且FormRequest是继承Request的</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FormRequest</span><span class="params">(Request)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></div><div class="line">        formdata = kwargs.pop(<span class="string">'formdata'</span>, <span class="keyword">None</span>)</div><div class="line">        <span class="keyword">if</span> formdata <span class="keyword">and</span> kwargs.get(<span class="string">'method'</span>) <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">            kwargs[<span class="string">'method'</span>] = <span class="string">'POST'</span></div><div class="line"></div><div class="line">        super(FormRequest, self).__init__(*args, **kwargs)</div><div class="line"></div><div class="line">        <span class="keyword">if</span> formdata:</div><div class="line">            items = formdata.items() <span class="keyword">if</span> isinstance(formdata, dict) <span class="keyword">else</span> formdata</div><div class="line">            querystr = _urlencode(items, self.encoding)</div><div class="line">            <span class="keyword">if</span> self.method == <span class="string">'POST'</span>:</div><div class="line">                self.headers.setdefault(<span class="string">b'Content-Type'</span>, <span class="string">b'application/x-www-form-urlencoded'</span>)</div><div class="line">                self._set_body(querystr)</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                self._set_url(self.url + (<span class="string">'&amp;'</span> <span class="keyword">if</span> <span class="string">'?'</span> <span class="keyword">in</span> self.url <span class="keyword">else</span> <span class="string">'?'</span>) + querystr)</div><div class="line">            <span class="comment">###</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_urlencode</span><span class="params">(seq, enc)</span>:</span></div><div class="line">    values = [(to_bytes(k, enc), to_bytes(v, enc))</div><div class="line">              <span class="keyword">for</span> k, vs <span class="keyword">in</span> seq</div><div class="line">              <span class="keyword">for</span> v <span class="keyword">in</span> (vs <span class="keyword">if</span> is_listlike(vs) <span class="keyword">else</span> [vs])]</div><div class="line">    <span class="keyword">return</span> urlencode(values, doseq=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p>最终我们传递的{‘key’: ‘value’, ‘k’: ‘v’}会被转化为’key=value&amp;k=v’ 并且默认的method是POST，再来看看Request</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Request</span><span class="params">(object_ref)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, url, callback=None, method=<span class="string">'GET'</span>, headers=None, body=None,</span></span></div><div class="line">                 cookies=None, meta=None, encoding=<span class="string">'utf-8'</span>, priority=<span class="number">0</span>,</div><div class="line">                 dont_filter=False, errback=None, flags=None):</div><div class="line"></div><div class="line">        self._encoding = encoding  <span class="comment"># this one has to be set first</span></div><div class="line">        self.method = str(method).upper()</div></pre></td></tr></table></figure>
+<p>默认的方法是GET，其实并不影响。仍然可以发送post请求。这让我想起来requests中的request用法，这是定义请求的基础方法。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">request</span><span class="params">(method, url, **kwargs)</span>:</span></div><div class="line">    <span class="string">"""Constructs and sends a :class:`Request &lt;Request&gt;`.</span></div><div class="line"></div><div class="line">    :param method: method for the new :class:`Request` object.</div><div class="line">    :param url: URL for the new :class:`Request` object.</div><div class="line">    :param params: (optional) Dictionary or bytes to be sent in the query string for the :class:`Request`.</div><div class="line">    :param data: (optional) Dictionary or list of tuples ``[(key, value)]`` (will be form-encoded), bytes, or file-like object to send in the body of the :class:`Request`.</div><div class="line">    :param json: (optional) json data to send in the body of the :class:`Request`.</div><div class="line">    :param headers: (optional) Dictionary of HTTP Headers to send with the :class:`Request`.</div><div class="line">    :param cookies: (optional) Dict or CookieJar object to send with the :class:`Request`.</div><div class="line">    :param files: (optional) Dictionary of ``'name': file-like-objects`` (or ``&#123;'name': file-tuple&#125;``) for multipart encoding upload.</div><div class="line">        ``file-tuple`` can be a 2-tuple ``('filename', fileobj)``, 3-tuple ``('filename', fileobj, 'content_type')``</div><div class="line">        or a 4-tuple ``('filename', fileobj, 'content_type', custom_headers)``, where ``'content-type'`` is a string</div><div class="line">        defining the content type of the given file and ``custom_headers`` a dict-like object containing additional headers</div><div class="line">        to add for the file.</div><div class="line">    :param auth: (optional) Auth tuple to enable Basic/Digest/Custom HTTP Auth.</div><div class="line">    :param timeout: (optional) How many seconds to wait for the server to send data</div><div class="line">        before giving up, as a float, or a :ref:`(connect timeout, read</div><div class="line">        timeout) &lt;timeouts&gt;` tuple.</div><div class="line">    :type timeout: float or tuple</div><div class="line">    :param allow_redirects: (optional) Boolean. Enable/disable GET/OPTIONS/POST/PUT/PATCH/DELETE/HEAD redirection. Defaults to ``True``.</div><div class="line">    :type allow_redirects: bool</div><div class="line">    :param proxies: (optional) Dictionary mapping protocol to the URL of the proxy.</div><div class="line">    :param verify: (optional) Either a boolean, in which case it controls whether we verify</div><div class="line">            the server's TLS certificate, or a string, in which case it must be a path</div><div class="line">            to a CA bundle to use. Defaults to ``True``.</div><div class="line">    :param stream: (optional) if ``False``, the response content will be immediately downloaded.</div><div class="line">    :param cert: (optional) if String, path to ssl client cert file (.pem). If Tuple, ('cert', 'key') pair.</div><div class="line">    :return: :class:`Response &lt;Response&gt;` object</div><div class="line">    :rtype: requests.Response</div><div class="line"></div><div class="line">    Usage::</div><div class="line"></div><div class="line">      &gt;&gt;&gt; import requests</div><div class="line">      &gt;&gt;&gt; req = requests.request('GET', 'http://httpbin.org/get')</div><div class="line">      &lt;Response [200]&gt;</div><div class="line">    """</div><div class="line"></div><div class="line">    <span class="comment"># By using the 'with' statement we are sure the session is closed, thus we</span></div><div class="line">    <span class="comment"># avoid leaving sockets open which can trigger a ResourceWarning in some</span></div><div class="line">    <span class="comment"># cases, and look like a memory leak in others.</span></div><div class="line">    <span class="keyword">with</span> sessions.Session() <span class="keyword">as</span> session:</div><div class="line">        <span class="keyword">return</span> session.request(method=method, url=url, **kwargs)</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://pic1.zhimg.com/v2-4a7e42516aa3fc2ad8c5532d885e3c44_1200x500.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十三篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;使用scrapy发送post请求的坑&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
+    
+      <category term="post" scheme="https://zhangslob.github.io/tags/post/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>淘宝sign加密算法</title>
+    <link href="https://zhangslob.github.io/2018/08/14/%E6%B7%98%E5%AE%9Dsign%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
+    <id>https://zhangslob.github.io/2018/08/14/淘宝sign加密算法/</id>
+    <published>2018-08-14T13:50:33.000Z</published>
+    <updated>2018-09-03T13:56:28.816Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://pic4.zhimg.com/v2-1b87ba90b26d4a65d78146dcee21a40e_1200x500.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十二篇原创文章</div></pre></td></tr></table></figure>
+<p>淘宝sign加密算法</p>
+<a id="more"></a>
+<h1 id="淘宝sign加密算法"><a href="#淘宝sign加密算法" class="headerlink" title="淘宝sign加密算法"></a>淘宝sign加密算法</h1><p>淘宝对于h5的访问采用了和客户端不同的方式，由于在h5的js代码中保存appsercret具有较高的风险，mtop采用了随机分配令牌的方式，为每个访问端分配一个token，保存在用户的cookie中，通过cookie带回服务端分配的token, 客户端利用分配的token对请求的URL参数生成摘要值sign,</p>
+<p>MTOP利用这个摘用值和cookie中的token来防止URL篡改。</p>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ol>
+<li>当本地cookie中的token为空时（通常是第一次访问），mtop会收到”FAIL_SYS_TOKEN_EXOIRED:: 令牌过期“这个错误应答，同时mtop会生成token写入cookie中（response.cookies）。</li>
+<li>第二次请求时，js通过读取cookie中的token值，按照约定的算法生成sign, sign在mtop的请求中带上，mtop通过cookie中和token用同样的方式计算出sign,与请求的sign进行比较，检查通过将返回api的应答，失败提示“FAIL_SYS_ILLEGAL_ACCESS:: 非法请求”</li>
+<li>cookie中的token是有时效性的，遇到token失效时，将收到应答”FAIL_SYS_TOKEN_EXOIRED:: 令牌过期”, 同时会写入新的token,js利用新的token重新计算sign并重发请求。</li>
+</ol>
+<p>关于cookie中的token的自我检查，由于token在cookie中是明文的，可能会被仿冒，在输出的cookie中包含一个用非对称密钥的公钥加密后的token, MTOP在每次请求时会先检查cookie中的token是否是由服务端分配出去的（利用加密后的token和私钥还原token，与回传的明文token比较）</p>
+<h1 id="sign-生成"><a href="#sign-生成" class="headerlink" title="sign 生成"></a>sign 生成</h1><p>关于sign的生成公式：</p>
+<p><code>md5Hex(token&amp;t&amp;appKey&amp;data)</code></p>
+<p>如：md5Hex(“645d1f414d4914297dfaab40f3f76016 &amp;1234&amp;4272&amp;{“itemNumId”:”1500011132496”}”)</p>
+<p>sign=d2b2f818a03496b296b899a230c03abd</p>
+<h1 id="token"><a href="#token" class="headerlink" title="token"></a>token</h1><p>关于cookie的有效时长，cookie的有效时长为7天，但是token的有效时长目前为60分钟<br>_m_h5_tk: 格式为 明文token_expireTime, 从response.cookies处获取，如： <code>2fcd2baa62fc60f73c0487a9f8a0a9d1_1362559577301</code></p>
+<p>token就是2fcd2baa62fc60f73c0487a9f8a0a9d1</p>
+<p>t<br>很简单，即时间戳 int(time.time()*1000)</p>
+<p>appKey<br>一般是固定数值</p>
+<p>data<br>一般是提交的参数</p>
+<p>example<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'accept-encoding'</span>: <span class="string">'gzip, deflate, br'</span>,</div><div class="line">    <span class="string">'accept-language'</span>: <span class="string">'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7'</span>,</div><div class="line">    <span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1'</span>,</div><div class="line">    <span class="string">'accept'</span>: <span class="string">'*/*'</span>,</div><div class="line">    <span class="string">'referer'</span>: <span class="string">'https://h5.m.taobao.com/?sprefer=sypc00'</span>,</div><div class="line">    <span class="string">'authority'</span>: <span class="string">'h5api.m.taobao.com'</span>,</div><div class="line">    <span class="string">'cookie'</span>: <span class="string">'t=cff5759b3198bafb639030a7296d6bff; cna=OOz3EwDBHU8CAS9eVNkZGaaY; thw=cn; _m_h5_tk=4dab06478749cf71bcb31296c169e46f_1534260967070; _m_h5_tk_enc=eb5abdfc8a3e52d0f7982d2ab34eb471; isg=BH9_A4W7GMQHLxzbVJKP32QcDlqleywDp44sWxFMGy51IJ-iGTRjVv02ZvbeeKt-'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">params = (</div><div class="line">    (<span class="string">'jsv'</span>, <span class="string">'2.4.11'</span>),</div><div class="line">    (<span class="string">'appKey'</span>, <span class="string">'12574478'</span>),</div><div class="line">    (<span class="string">'t'</span>, <span class="string">'1534253767277'</span>),</div><div class="line">    (<span class="string">'sign'</span>, <span class="string">'12c6fac6a03cf98c8f912413feeaeaaf'</span>),</div><div class="line">    (<span class="string">'api'</span>, <span class="string">'mtop.taobao.wireless.home.load'</span>),</div><div class="line">    (<span class="string">'v'</span>, <span class="string">'1.0'</span>),</div><div class="line">    (<span class="string">'type'</span>, <span class="string">'jsonp'</span>),</div><div class="line">    (<span class="string">'dataType'</span>, <span class="string">'jsonp'</span>),</div><div class="line">    (<span class="string">'callback'</span>, <span class="string">'mtopjsonp2'</span>),</div><div class="line">    (<span class="string">'data'</span>, <span class="string">'&#123;"containerId":"main","ext":"&#123;\\"h5_platform\\":\\"h5\\",\\"h5_ttid\\":\\"60000@taobao_h5_1.0.0\\"&#125;"&#125;'</span>),</div><div class="line">)</div><div class="line"></div><div class="line">response = requests.get(<span class="string">'https://h5api.m.taobao.com/h5/mtop.taobao.wireless.home.load/1.0/'</span>, headers=headers, params=params)</div></pre></td></tr></table></figure></p>
+<h1 id="如何寻找"><a href="#如何寻找" class="headerlink" title="如何寻找"></a>如何寻找</h1><p>看下面这段js</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># https://g.alicdn.com/hollywood/hollywood-lib/2.0.2/mtop.js</div><div class="line"></div><div class="line">if (d.H5Request === !0) &#123;</div><div class="line">    var f = "//" + (d.prefix ? d.prefix + "." : "") + (d.subDomain ? d.subDomain + "." : "") + d.mainDomain + "/h5/" + c.api.toLowerCase() + "/" + c.v.toLowerCase() + "/"</div><div class="line">      , g = c.appKey || ("waptest" === d.subDomain ? "4272" : "12574478")</div><div class="line">      , i = (new Date).getTime()</div><div class="line">      , j = h(d.token + "&amp;" + i + "&amp;" + g + "&amp;" + c.data)</div><div class="line">      , k = &#123;</div><div class="line">        jsv: w,</div><div class="line">        appKey: g,</div><div class="line">        t: i,</div><div class="line">        sign: j</div><div class="line">    &#125;</div><div class="line">      , l = &#123;</div><div class="line">        data: c.data,</div><div class="line">        ua: c.ua</div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
+<p>你可能会问，如何寻找，答案是js断点，一步步调试。</p>
+<p>有兴趣的可以持续关注，以后会深入。</p>
+<p>好久都没法东西了，主要是最近太忙，加班比较多；自己也变懒了，也在学一些新东西，就不知道写什么好，以后还是勤快点吧。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://pic4.zhimg.com/v2-1b87ba90b26d4a65d78146dcee21a40e_1200x500.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十二篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;淘宝sign加密算法&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="加密算法" scheme="https://zhangslob.github.io/categories/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="淘宝" scheme="https://zhangslob.github.io/tags/%E6%B7%98%E5%AE%9D/"/>
+    
+      <category term="加密" scheme="https://zhangslob.github.io/tags/%E5%8A%A0%E5%AF%86/"/>
+    
+  </entry>
   
   <entry>
     <title>Python多线程（一）</title>
@@ -703,9 +919,9 @@
       <category term="终端" scheme="https://zhangslob.github.io/categories/%E7%BB%88%E7%AB%AF/"/>
     
     
-      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
-    
       <category term="zsh" scheme="https://zhangslob.github.io/tags/zsh/"/>
+    
+      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
     
   </entry>
   
@@ -1038,217 +1254,6 @@
     
     
       <category term="Leetcode" scheme="https://zhangslob.github.io/tags/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>告别win10，拥抱linux</title>
-    <link href="https://zhangslob.github.io/2018/05/12/%E5%91%8A%E5%88%ABwin10%EF%BC%8C%E6%8B%A5%E6%8A%B1linux/"/>
-    <id>https://zhangslob.github.io/2018/05/12/告别win10，拥抱linux/</id>
-    <published>2018-05-12T05:49:33.000Z</published>
-    <updated>2018-05-12T06:39:43.145Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十五篇原创文章
-</code></pre><p>安装linux操作系统  (๑• . •๑)</p>
-<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_Desktop_20180512132633.png" alt=""></p>
-<a id="more"></a>
-<h1 id="win10-升级"><a href="#win10-升级" class="headerlink" title="win10 升级"></a>win10 升级</h1><p>先问你一个问题，你讨厌win10升级系统吗？</p>
-<p>我的回答：是，明明已经把自动更新关闭了，可是还是会有“易升”，win10易升一直卸载不掉。所以就想试试别的系统。</p>
-<p>linux是最好的选择。黑苹果暂时不考虑。</p>
-<p><img src="http://img.mp.itc.cn/upload/20170408/35c850c176b9447da3fbb3d303172f2a_th.jpg" alt=""></p>
-<h1 id="喜欢linux的理由"><a href="#喜欢linux的理由" class="headerlink" title="喜欢linux的理由"></a>喜欢linux的理由</h1><p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_Desktop_20180512132633.png" alt=""></p>
-<blockquote>
-<p>深度桌面</p>
-</blockquote>
-<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_deepin-terminal_20180512133029.png" alt=""></p>
-<blockquote>
-<p>深度终端（配合zsh超赞的）</p>
-</blockquote>
-<p>除了颜值外，程序兼容性会更好，安装各种东西会很方便。作为一名程序员，熟悉linux下基本操作也是必要的。</p>
-<blockquote>
-<p>我自己试过，爬虫会跑的更快。 手动滑稽</p>
-</blockquote>
-<h1 id="选择linux哪个版本"><a href="#选择linux哪个版本" class="headerlink" title="选择linux哪个版本"></a>选择linux哪个版本</h1><p>目前我使用过deepin和ubuntu18，对于完全的小白来说，我推荐deepin也就是深度操作系统，深度商店收入的应用可以基本满足，ubuntu很多应用安装起来比较麻烦，如果你喜欢折腾，那就上手ubuntu吧。</p>
-<p>如果你和我一样 喜欢xxx，那就试试deepin和ubuntu18共存。</p>
-<p>我现在的开机界面（渣渣像素）</p>
-<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20180512135314.jpg" alt=""></p>
-<h1 id="如何安装linux"><a href="#如何安装linux" class="headerlink" title="如何安装linux"></a>如何安装linux</h1><h2 id="安装deepin"><a href="#安装deepin" class="headerlink" title="安装deepin"></a>安装deepin</h2><p>使用U盘安装</p>
-<p>先去下载：</p>
-<ol>
-<li><a href="http://cdimage.deepin.com/releases/15.5/deepin-15.5-amd64.iso" target="_blank" rel="external">ISO文件</a></li>
-<li><a href="http://cdimage.deepin.com/applications/deepin-boot-maker/windows/deepin-boot-maker.exe" target="_blank" rel="external">深度启动盘制作工具</a></li>
-</ol>
-<p>然后安装启动盘制作工具，然后选择刚才下载的ISO文件，下一步选择你的U盘，然后就开始安装了。</p>
-<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180512135903.png" alt=""></p>
-<p><img src="https://www.deepin.org/wp-content/uploads/2016/12/deepin-boot-maker-2-cn.png" alt=""><br><img src="https://www.deepin.org/wp-content/uploads/2016/12/deepin-boot-maker-3-cn.png" alt=""></p>
-<p>下一步，重启电脑，一般情况下电脑默认是从硬盘启动，因此，在使用U盘安装系统之前，您需要先进入电脑的BIOS界面将U盘设置为第一启动项。</p>
-<p>台式机一般为 Delete 键、笔记本一般为 F2  或 F10 或 F12 键，即可进入 BIOS 设置界面。</p>
-<ol>
-<li>将深度操作系统光盘插入电脑光驱中。</li>
-<li>启动电脑，将光盘设置为第一启动项。</li>
-<li>进入安装界面，选择需要安装的语言。</li>
-</ol>
-<p><img src="https://www.deepin.org/wp-content/uploads/2016/12/deepin-installer1.png" alt=""></p>
-<p>如果还不会，这里有官方录制的视频哦 <a href="https://www.bilibili.com/video/av16993752/" target="_blank" rel="external">深度安装器+深度探索频道第七期+深度操作系统官方出品</a></p>
-<p>还有一种更加简单的方式就是下载 <a href="http://cdimage.deepin.com/applications/deepin-boot-maker/windows/deepin-system-installer.exe" target="_blank" rel="external">深度系统安装器</a></p>
-<p><img src="https://i.imgur.com/mpkCwJg.png" alt=""></p>
-<p>然后就是傻瓜操作了，记得关闭下 <a href="http://www.yxswz.com/x64bug.html" target="_blank" rel="external">安全启动</a></p>
-<blockquote>
-<p>小歪并不推荐使用第二种方式安装，在笔记本上怎么都没有效果，在台式上一次成功。所以大家有U盘的尽量使用U盘吧</p>
-</blockquote>
-<h2 id="安装ubuntu"><a href="#安装ubuntu" class="headerlink" title="安装ubuntu"></a>安装ubuntu</h2><p>需要用到上面提到过的<a href="http://cdimage.deepin.com/applications/deepin-boot-maker/windows/deepin-boot-maker.exe" target="_blank" rel="external">深度启动盘制作工具</a>，然后去下载 <a href="https://www.ubuntu.com/download/desktop" target="_blank" rel="external">ISO文件</a>，然后就是和上面安装方法一样的，进行操作即可。</p>
-<p>有没有很简单。</p>
-<p><img src="https://i.imgur.com/u3gBHqc.png" alt=""></p>
-<blockquote>
-<p>我的ubuntu界面，用得少，所以没美化</p>
-</blockquote>
-<h1 id="感受"><a href="#感受" class="headerlink" title="感受"></a>感受</h1><p>我使用deepin有一个月了，写代码用deepin，家里的台式还是win7，因为deepin虽然有steam，但是吃鸡不支持在linux下运行。</p>
-<p>deepin完全可以满足我的办公需求，Pycharm、sublime、typora、chrome、网易云音乐等等都有，用起来很舒服，至少现在是这样感觉。但是有时候deepin也会卡死。</p>
-<p>强烈建议上手linux，可以学到很多命令行操作，安装deepin就好，到时候你的电脑会Windows与deepin共存，根据场景选择系统。</p>
-<p>有时间写一篇deepin美化与安装应用相关的东西，看到这一定要点赞哦。</p>
-<p><img src="https://i.imgur.com/xbmqUXs.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十五篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;安装linux操作系统  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_Desktop_20180512132633.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="linux" scheme="https://zhangslob.github.io/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>linux下安装python3.6</title>
-    <link href="https://zhangslob.github.io/2018/05/11/linux%E4%B8%8B%E5%AE%89%E8%A3%85python3-6/"/>
-    <id>https://zhangslob.github.io/2018/05/11/linux下安装python3-6/</id>
-    <published>2018-05-11T14:26:54.000Z</published>
-    <updated>2018-05-11T14:35:28.614Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十四篇原创文章
-</code></pre><p>linux操作  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/lJ8ygSI.jpg" alt=""></p>
-<a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">sudo sed -i <span class="string">'s\archive.ubuntu.com\mirrors.aliyun.com\g'</span> /etc/apt/sources.list</div><div class="line">sudo apt-get update</div><div class="line"><span class="built_in">cd</span> /home/</div><div class="line">sudo apt-get install gcc  make zlib1g-dev -y</div><div class="line">sudo apt-get install  libbz2-dev libsqlite3-dev  libxml2-dev  libffi-dev libssl-dev -y</div><div class="line">sudo apt install wget -y</div><div class="line">wget http://mirrors.sohu.com/python/3.6.2/Python-3.6.2.tgz <span class="comment"># 可以换成你想要的版本</span></div><div class="line">tar -xvf Python-3.6.2.tgz</div><div class="line"><span class="built_in">cd</span> Python-3.6.2</div><div class="line">./configure --prefix=/home/usr/python36/</div><div class="line">sudo make</div><div class="line">sudo make install</div><div class="line"><span class="built_in">cd</span> ../usr/python36/bin/</div><div class="line">sudo mkdir -p ~/.pip/</div><div class="line">sudo cat &lt;&lt; EOF &gt; ~/.pip/pip.conf</div><div class="line">[global]</div><div class="line">trusted-host=mirrors.aliyun.com</div><div class="line">index-url=http://mirrors.aliyun.com/pypi/simple/</div><div class="line">EOF</div><div class="line"></div><div class="line">sudo apt-get install libmysqlclient-dev -y</div><div class="line">ln <span class="_">-s</span> /home/usr/python36/bin/pip3 /usr/bin/pip36</div><div class="line">ln <span class="_">-s</span> /home/usr/python36/bin/python3 /usr/bin/python36</div></pre></td></tr></table></figure>
-<p>以后就可以使用 <code>pip36</code>  <code>python36</code>来进行操作。</p>
-<blockquote>
-<p>如果在命令行中输入<code>scrapy</code>提示没这个命令，可以试试<code>python36 -m scrapy</code></p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十四篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;linux操作  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/lJ8ygSI.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="linux" scheme="https://zhangslob.github.io/categories/linux/"/>
-    
-    
-      <category term="linux" scheme="https://zhangslob.github.io/tags/linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>护眼神器了解下</title>
-    <link href="https://zhangslob.github.io/2018/05/08/%E6%8A%A4%E7%9C%BC%E7%A5%9E%E5%99%A8%E4%BA%86%E8%A7%A3%E4%B8%8B/"/>
-    <id>https://zhangslob.github.io/2018/05/08/护眼神器了解下/</id>
-    <published>2018-05-08T14:05:24.000Z</published>
-    <updated>2018-05-08T14:33:44.442Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十三篇原创文章
-</code></pre><p>保护眼睛  (๑• . •๑)</p>
-<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180508221045.png" alt=""></p>
-<a id="more"></a>
-<p>整天面对屏幕，护眼是必须的，下面推荐几款小歪使用过的软件。</p>
-<h1 id="flux"><a href="#flux" class="headerlink" title="flux"></a>flux</h1><p>官网：<a href="https://justgetflux.com/" target="_blank" rel="external">https://justgetflux.com/</a></p>
-<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180508221449.png" alt=""></p>
-<p>使用起来非常简单，是我之前非常喜欢的一款产品，会随着一天之内光线强弱改变屏幕的颜色。但是在linux上似乎不起作用，安装之后，屏幕颜色没有发生任何变化，于是我放弃了，选择另一款软件 ==</p>
-<h1 id="redshift"><a href="#redshift" class="headerlink" title="redshift"></a>redshift</h1><p>网站：<a href="https://github.com/jonls/redshift" target="_blank" rel="external">https://github.com/jonls/redshift</a></p>
-<p><img src="https://camo.githubusercontent.com/eb9522ffd5105488dcda49404e4c3107ffd88a1b/687474703a2f2f6a6f6e6c732e646b2f6173736574732f72656473686966742d69636f6e2d3235362e706e67" alt=""></p>
-<p>Ubuntu下<code>sudo apt-get install redshift</code>就可以安装，打开方式是在命令行输入<code>redshift -v -t 4500:2500</code>，然后颜色就会变得非常舒服。</p>
-<blockquote>
-<p>如果在你的电脑上 redshift 有时不工作，检查是否开启了多个 redshift。</p>
-</blockquote>
-<h1 id="Safe-Eyes"><a href="#Safe-Eyes" class="headerlink" title="Safe Eyes"></a>Safe Eyes</h1><p>网站：<a href="http://slgobinath.github.io/SafeEyes/" target="_blank" rel="external">http://slgobinath.github.io/SafeEyes/</a></p>
-<p><img src="https://slgobinath.github.io/SafeEyes/assets/screenshots/safeeyes_1.png" alt=""></p>
-<p>这款应用会自动关闭屏幕，间隔一段时间会有休息，这个是否好好放松下自己的眼睛。</p>
-<blockquote>
-<p>这个好像只能安装在linux上</p>
-</blockquote>
-<p>大家还有什么推荐的呢？欢迎评论指出</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十三篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;保护眼睛  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://p8eyj0cpn.bkt.clouddn.com/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20180508221045.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="其他" scheme="https://zhangslob.github.io/categories/%E5%85%B6%E4%BB%96/"/>
-    
-    
-      <category term="护眼" scheme="https://zhangslob.github.io/tags/%E6%8A%A4%E7%9C%BC/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>awesome_crawl(一)：腾讯新闻</title>
-    <link href="https://zhangslob.github.io/2018/05/01/awesome-crawl-%E4%B8%80-%EF%BC%9A%E8%85%BE%E8%AE%AF%E6%96%B0%E9%97%BB/"/>
-    <id>https://zhangslob.github.io/2018/05/01/awesome-crawl-一-：腾讯新闻/</id>
-    <published>2018-05-01T13:52:11.000Z</published>
-    <updated>2018-05-01T14:04:08.818Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十二篇原创文章
-</code></pre><p>awesome  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/oDTELIM.png" alt=""></p>
-<a id="more"></a>
-<p>项目地址：<a href="https://github.com/zhangslob/awesome_crawl" target="_blank" rel="external">https://github.com/zhangslob/awesome_crawl</a></p>
-<h1 id="awesome-crawl（优美的爬虫）"><a href="#awesome-crawl（优美的爬虫）" class="headerlink" title="awesome_crawl（优美的爬虫）"></a>awesome_crawl（优美的爬虫）</h1><h3 id="1、腾讯新闻的全站爬虫"><a href="#1、腾讯新闻的全站爬虫" class="headerlink" title="1、腾讯新闻的全站爬虫"></a><a href="https://github.com/zhangslob/awesome_crawl/tree/master/qq_news/qq_news" target="_blank" rel="external">1、腾讯新闻的全站爬虫</a></h3><p><strong>采集策略</strong></p>
-<p>从<a href="http://www.qq.com/map/" target="_blank" rel="external">网站地图</a>出发，找出所有子分类，从每个子分类中再寻找详情页面的链接。</p>
-<p>首先寻找每条新闻的ID，然后移动端采集具体内容。</p>
-<p>再去找一些推荐新闻的接口，做一个“泛爬虫”。</p>
-<p><strong>说明</strong></p>
-<p>整套系统中分为两部分，一套是生产者，专门去采集qq新闻的链接，然后存放到redis中，一套是消费者，从redis中读取这些链接，解析详情数据。<br>所有配置文件都是爬虫中的<code>custom_settings</code>中，可以自定义。</p>
-<p>如果需要设置代理，请在<code>middlewares.ProxyMiddleware</code>中设置。</p>
-<p><strong>qq_list</strong>: 这个爬虫是生产者。运行之后，在你的redis服务器中会出现<code>qq_detail:start_urls</code>，即种子链接</p>
-<p><strong>qq_detail</strong>: 这个爬虫是生消费者，运行之后会消费redis里面的数据，如下图：</p>
-<p><img src="https://i.imgur.com/j81d8AP.png" alt=""></p>
-<p>你可以自行添加更多爬虫去采集种子链接，如从<a href="http://www.qq.com/" target="_blank" rel="external">首页</a>进入匹配，从推荐入口：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">url = <span class="string">"https://pacaio.match.qq.com/xw/recommend"</span></div><div class="line"></div><div class="line">querystring = &#123;<span class="string">"num"</span>:<span class="string">"10^"</span>,<span class="string">"callback"</span>:<span class="string">"__jp0"</span>&#125;</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'accept-encoding'</span>: <span class="string">"gzip, deflate, br"</span>,</div><div class="line">    <span class="string">'accept-language'</span>: <span class="string">"zh-CN,zh;q=0.9,en;q=0.8"</span>,</div><div class="line">    <span class="string">'user-agent'</span>: <span class="string">"Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1"</span>,</div><div class="line">    <span class="string">'accept'</span>: <span class="string">"*/*"</span>,</div><div class="line">    <span class="string">'referer'</span>: <span class="string">"https://xw.qq.com/m/recommend/"</span>,</div><div class="line">    <span class="string">'authority'</span>: <span class="string">"pacaio.match.qq.com"</span>,</div><div class="line">    <span class="string">'cache-control'</span>: <span class="string">"no-cache"</span>,</div><div class="line">    &#125;</div><div class="line"></div><div class="line">response = requests.request(<span class="string">"GET"</span>, url, headers=headers, params=querystring)</div><div class="line"></div><div class="line">print(response.text)</div></pre></td></tr></table></figure>
-<p>等等，你所需要做的仅仅是把这些抓到的种子链接塞到redis里面，也就是启用<code>qq_news.pipelines.RedisStartUrlsPipeline</code>这个中间件。</p>
-<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ol>
-<li>增加更多新闻链接的匹配，从推荐接口处获得更多种子链接</li>
-<li>增加“泛爬虫”，采集种子链接</li>
-<li>数据库字段检验</li>
-<li>redis中数据为空爬虫自动关闭（目前redis数据被消费完之后爬虫并不会自动关闭，如下图）<br><img src="https://i.imgur.com/Sk4GDMA.png" alt=""></li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十二篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;awesome  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/oDTELIM.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="scrapy" scheme="https://zhangslob.github.io/categories/scrapy/"/>
-    
-    
-      <category term="awesome_crawl" scheme="https://zhangslob.github.io/tags/awesome-crawl/"/>
-    
-      <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
     
   </entry>
   

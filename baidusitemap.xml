@@ -4,6 +4,90 @@
 
     
   <url>
+    <loc>https://zhangslob.github.io/2018/09/03/Spark%E6%95%99%E7%A8%8B%EF%BC%88%E4%BA%8C%EF%BC%89Spark%E8%BF%9E%E6%8E%A5MongoDB/</loc>
+    <lastmod>2018-09-03T14:07:13.658Z</lastmod>
+    <data>
+        <display>
+        <title>Spark教程（二）Spark连接MongoDB</title>
+        <pubTime>2018-09-03T14:00:59.000Z</pubTime>
+        
+        <tag>spark</tag>
+         
+         
+           
+             
+              <breadCrumb title="spark" url="https://zhangslob.github.io/categories/spark/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://zhangslob.github.io/2018/09/01/Spark%E6%95%99%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6spark/</loc>
+    <lastmod>2018-09-03T14:05:47.548Z</lastmod>
+    <data>
+        <display>
+        <title>Spark教程（一）为什么要学spark</title>
+        <pubTime>2018-09-01T14:00:50.000Z</pubTime>
+        
+        <tag>spark</tag>
+         
+         
+           
+             
+              <breadCrumb title="spark" url="https://zhangslob.github.io/categories/spark/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://zhangslob.github.io/2018/08/24/%E4%BD%BF%E7%94%A8scrapy%E5%8F%91%E9%80%81post%E8%AF%B7%E6%B1%82%E7%9A%84%E5%9D%91/</loc>
+    <lastmod>2018-09-03T13:59:38.696Z</lastmod>
+    <data>
+        <display>
+        <title>使用scrapy发送post请求的坑</title>
+        <pubTime>2018-08-24T13:54:28.000Z</pubTime>
+        
+        <tag>scrapy</tag>
+         
+        <tag>post</tag>
+         
+         
+           
+             
+              <breadCrumb title="爬虫" url="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://zhangslob.github.io/2018/08/14/%E6%B7%98%E5%AE%9Dsign%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2018-09-03T13:56:28.816Z</lastmod>
+    <data>
+        <display>
+        <title>淘宝sign加密算法</title>
+        <pubTime>2018-08-14T13:50:33.000Z</pubTime>
+        
+        <tag>淘宝</tag>
+         
+        <tag>加密</tag>
+         
+         
+           
+             
+              <breadCrumb title="加密算法" url="https://zhangslob.github.io/categories/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://zhangslob.github.io/2018/07/28/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
     <lastmod>2018-07-28T08:13:29.170Z</lastmod>
     <data>
@@ -199,9 +283,9 @@
         <title>zsh(+fish)=完美终端</title>
         <pubTime>2018-06-05T14:27:23.000Z</pubTime>
         
-        <tag>linux</tag>
-         
         <tag>zsh</tag>
+         
+        <tag>linux</tag>
          
          
            
