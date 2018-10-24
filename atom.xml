@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-09-03T14:07:13.658Z</updated>
+  <updated>2018-10-24T09:13:17.261Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,82 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>spark实战（一）：对数据处理的理解</title>
+    <link href="https://zhangslob.github.io/2018/10/24/spark%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E7%9A%84%E7%90%86%E8%A7%A3/"/>
+    <id>https://zhangslob.github.io/2018/10/24/spark实战一：对数据处理的理解/</id>
+    <published>2018-10-24T03:05:16.000Z</published>
+    <updated>2018-10-24T09:13:17.261Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwj6agtwwoj30ag05k3zb.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十六篇原创文章</div></pre></td></tr></table></figure>
+<hr>
+<a id="more"></a>
+<h1 id="大数据的学习经历"><a href="#大数据的学习经历" class="headerlink" title="大数据的学习经历"></a>大数据的学习经历</h1><p>大数据是什么，我觉得应该有这么几步：</p>
+<ol>
+<li>数据采集（Python&amp;&amp;Scrapy）</li>
+<li>数据清洗（Scala&amp;&amp;Spark）</li>
+<li>指标计算（Scala&amp;&amp;Spark）</li>
+<li>数据展示（Postgre）</li>
+</ol>
+<p>做了一段时间的爬虫，或者说叫数据采集，但是从来没有接触到大数据的下一步。最近和慢慢聊了下，对数据处理也很感兴趣，便想去接触、尝试。</p>
+<p>在慢慢、登登等人的帮助下，开始学习了一段时间的Spark。刚开始学习SQL语句，现在就记得简单的那些了。然后去看Spark文档，自己动手开始写。</p>
+<p>因为团队主要用Scala开发，所以中途又花了一些时间来学习Scala语言，感觉和Python有许多类似的地方，并不是太难，但是Scala有一些特性，不是太明白，主要是自己写太少了。爬虫什么的还是用Python。</p>
+<p>然后再去看具体的Spark 项目，模仿（抄袭）别人的代码，大概也看懂了一些，由于始终没有自己实践来操作，所以缺乏实际操作能力。最好的办法就是自己去写，所以计划自己去单独做一个项目试试看，手头上还有好多已开发但是还没开始计算的项目，我自己可以先试试看。</p>
+<h1 id="大数据处理步骤"><a href="#大数据处理步骤" class="headerlink" title="大数据处理步骤"></a>大数据处理步骤</h1><p>在上面所说的基础上再说细一些。</p>
+<ul>
+<li>数据采集就别说了，就是采集我们所需要的（产品经理要求的）数据</li>
+<li>数据清洗这里，是和数据采集有很大关系的。分为这么两步：<ul>
+<li>提取指定数据。因为我们在做数据采集的时候，为了保证数据的完整性，是尽可能多的保存原始数据，也就是别人给多少，我就取多少，但是这些数据并非都是有用的数据，所以第一步是需要去提取原始数据表中我们所需要的指定数据。这里方法有很多，用SQL，或者在道路数据的时候直接选取那些字段即可。最后我们把这些提取的数据重新保存在新的表中，这样后面计算会方便很多。（其实这一步在数据采集就可以完成，但是谁也说不清到底以后会不会需要更多的数据）</li>
+<li>清洗数据。比如时间维度、为空字段等等，这些现在遇到的还不多，以后再补上。</li>
+</ul>
+</li>
+<li>指标计算。这一步就需要根据具体的需求来计算各种维度，并把计算好的数据保存新表。</li>
+<li>数据展示。这部分好像是后端做的，待了解。</li>
+</ul>
+<h1 id="需要了解的知识"><a href="#需要了解的知识" class="headerlink" title="需要了解的知识"></a>需要了解的知识</h1><ol>
+<li><p>开发工具和环境 </p>
+<ol>
+<li>MongoDB </li>
+<li>Postgre </li>
+<li>SQL，JOIN </li>
+<li>Docker </li>
+<li>IDEA、SBT </li>
+<li>Scala（2.10+） </li>
+</ol>
+</li>
+<li><p>Spark </p>
+<ol>
+<li>官方文档 </li>
+<li>UDF </li>
+</ol>
+</li>
+</ol>
+<p>目前感觉以上部分都有一知半解，必须要实际去做才能知道到底那部分掌握，那部分还不懂。</p>
+<h1 id="我的计划"><a href="#我的计划" class="headerlink" title="我的计划"></a>我的计划</h1><ol>
+<li>找PM要DM文档，理解具体业务需求</li>
+<li>根据需求来选择数据库中的数据维度</li>
+<li>在本地尝试数据清洗并计算指标</li>
+<li>有问题请教慢慢＆登登</li>
+</ol>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwjf538h8bj30f50awgm6.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://ws3.sinaimg.cn/large/006tNbRwly1fwj6agtwwoj30ag05k3zb.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十六篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;hr&gt;
+    
+    </summary>
+    
+      <category term="spark" scheme="https://zhangslob.github.io/categories/spark/"/>
+    
+    
+      <category term="spark" scheme="https://zhangslob.github.io/tags/spark/"/>
+    
+  </entry>
   
   <entry>
     <title>Spark教程（二）Spark连接MongoDB</title>
@@ -1204,49 +1280,6 @@
       &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十七篇原创文章
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;异步了解下  (๑• . •๑)&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/gBlZ2Mq.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Leetcode" scheme="https://zhangslob.github.io/categories/Leetcode/"/>
-    
-    
-      <category term="Leetcode" scheme="https://zhangslob.github.io/tags/Leetcode/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Leetcode Solutions（一） two-sum</title>
-    <link href="https://zhangslob.github.io/2018/05/15/Leetcode%20Solutions%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>https://zhangslob.github.io/2018/05/15/Leetcode Solutions（一）/</id>
-    <published>2018-05-15T10:22:26.000Z</published>
-    <updated>2018-05-15T15:58:09.668Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十六篇原创文章
-</code></pre><p>开始刷题咯  (๑• . •๑)</p>
-<p><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3503054989,264376367&amp;fm=11&amp;gp=0.jpg" alt=""></p>
-<a id="more"></a>
-<p><a href="https://leetcode-cn.com/problems/two-sum/description/" target="_blank" rel="external">Two Sum</a></p>
-<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>给定一个整数数组和一个目标值，找出数组中和为目标值的两个数。</p>
-<p>你可以假设每个输入只对应一种答案，且同样的元素不能被重复利用。</p>
-<p>示例:<br><figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">给定 nums = [<span class="number">2</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">15</span>], target = <span class="number">9</span></div><div class="line"></div><div class="line">因为 nums[<span class="number">0</span>] + nums[<span class="number">1</span>] = <span class="number">2</span> + <span class="number">7</span> = <span class="number">9</span></div><div class="line">所以返回 [<span class="number">0</span>, <span class="number">1</span>]</div></pre></td></tr></table></figure></p>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="Go"><a href="#Go" class="headerlink" title="Go"></a>Go</h2><p><code>a + b = target</code></p>
-<p>也可以看成是</p>
-<p><code>a = target - b</code></p>
-<p>在map[整数]整数的序号中，可以查询到a的序号。这样就不用嵌套两个for循环了。</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">twoSum</span><span class="params">(nums []<span class="keyword">int</span>, target <span class="keyword">int</span>)</span> []<span class="title">int</span></span> &#123;</div><div class="line">	m := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">int</span>, <span class="built_in">len</span>(nums))</div><div class="line">	<span class="keyword">for</span> i, b := <span class="keyword">range</span> nums &#123;</div><div class="line">		<span class="keyword">if</span> j, ok := m[target-b]; ok &#123;</div><div class="line">			<span class="keyword">return</span> []<span class="keyword">int</span>&#123;j, i&#125;</div><div class="line">		&#125;</div><div class="line">		m[nums[i]] = i</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><ol>
-<li>由于要找到符合题意的数组元素的下标，所以先要将原来的数组深拷贝一份，然后排序。</li>
-<li>然后在排序后的数组中找两个数使它们相加为target。这个思路比较明显：使用两个指针，一个指向头，一个指向尾，两个指针向中间移动并检查两个指针指向的数的和是否为target。如果找到了这两个数，再将这两个数在原数组中的位置找出来就可以了。</li>
-<li>要注意的一点是：在原来数组中找下标时，需要一个从头找，一个从尾找，要不无法通过。如这个例子：numbers=[0,1,2,0]; target=0。如果都从头开始找，就会有问题。</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">twoSum</span><span class="params">(self, nums, target)</span>:</span></div><div class="line">        <span class="keyword">if</span> len(nums) &lt;= <span class="number">1</span>:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        d = dict()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(nums)):</div><div class="line">            <span class="keyword">if</span> nums[i] <span class="keyword">in</span> d:</div><div class="line">                <span class="keyword">return</span> [d[nums[i]], i]</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                d[target - nums[i]] = i</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十六篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;开始刷题咯  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3503054989,264376367&amp;amp;fm=11&amp;amp;gp=0.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
