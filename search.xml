@@ -42,8 +42,8 @@
         <category>加密算法</category>
       </categories>
       <tags>
-        <tag>淘宝</tag>
         <tag>加密</tag>
+        <tag>淘宝</tag>
       </tags>
   </entry>
   <entry>
@@ -153,8 +153,8 @@
         <category>终端</category>
       </categories>
       <tags>
-        <tag>zsh</tag>
         <tag>linux</tag>
+        <tag>zsh</tag>
       </tags>
   </entry>
   <entry>
@@ -475,8 +475,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>logging</tag>
         <tag>2017</tag>
+        <tag>logging</tag>
       </tags>
   </entry>
   <entry>
@@ -487,8 +487,8 @@
         <category>总结</category>
       </categories>
       <tags>
-        <tag>2017</tag>
         <tag>年度总结</tag>
+        <tag>2017</tag>
       </tags>
   </entry>
   <entry>
@@ -525,8 +525,8 @@
       <tags>
         <tag>爬虫</tag>
         <tag>Scrapy</tag>
-        <tag>Flask</tag>
         <tag>淘宝</tag>
+        <tag>Flask</tag>
       </tags>
   </entry>
   <entry>
