@@ -1045,24 +1045,23 @@ var jiathis_config={
 
 
 
-  
-    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-    <script type="text/javascript">
-      const gitalk = new Gitalk({
-        clientID: 'ffe477c440c4f8ec6287',
-        clientSecret: '9700ce4cec9d9ffe3ae1a579a865c64b7c1a2641',
-        repo: 'blog_comment',
-        owner: 'zhangslob',
-        admin: 'zhangslob'.split(','),
-        id: location.pathname,
-        // facebook-like distraction free mode
-        distractionFreeMode: 'true',
-        createIssueManually: ''
-      })
-      gitalk.render('gitalk-container')
-    </script>
-  
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  <script src="/js/src/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '',
+      clientSecret: '',
+      repo: 'zhangslob.github.io',
+      owner: 'zhangslob',
+      admin: ['zhangslob'],
+      id: md5(location.pathname),
+      distractionFreeMode: 'true'
+    })
+    gitalk.render('gitalk-container')
+  </script>
 
 
   
