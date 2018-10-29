@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="spark," />
 
 
 
@@ -79,15 +79,18 @@
 
 
 
-<meta name="description" content="网络爬虫、数据分析、大数据!">
-<meta property="og:type" content="website">
-<meta property="og:title" content="小歪的博客">
-<meta property="og:url" content="https://zhangslob.github.io/archives/2018/05/index.html">
+<meta name="description" content="1这是崔斯特的第六十七篇原创文章">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark实战（二）学习UDF">
+<meta property="og:url" content="https://zhangslob.github.io/2018/10/29/Spark实战（二）学习UDF/index.html">
 <meta property="og:site_name" content="小歪的博客">
-<meta property="og:description" content="网络爬虫、数据分析、大数据!">
+<meta property="og:description" content="1这是崔斯特的第六十七篇原创文章">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fwj6agtwwoj30ag05k3zb.jpg">
+<meta property="og:updated_time" content="2018-10-29T06:22:57.947Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="小歪的博客">
-<meta name="twitter:description" content="网络爬虫、数据分析、大数据!">
+<meta name="twitter:title" content="Spark实战（二）学习UDF">
+<meta name="twitter:description" content="1这是崔斯特的第六十七篇原创文章">
+<meta name="twitter:image" content="https://ws3.sinaimg.cn/large/006tNbRwly1fwj6agtwwoj30ag05k3zb.jpg">
 
 
 
@@ -117,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://zhangslob.github.io/archives/2018/05/"/>
+  <link rel="canonical" href="https://zhangslob.github.io/2018/10/29/Spark实战（二）学习UDF/"/>
 
 
 
 
 
-  <title>归档 | 小歪的博客</title>
+  <title>Spark实战（二）学习UDF | 小歪的博客</title>
   
 
 
@@ -183,7 +186,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
   
 
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 		<a href="https://github.com/zhangslob"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -321,406 +324,288 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangslob.github.io/2018/10/29/Spark实战（二）学习UDF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="小歪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1488291259&di=9b54b1ab9a4a02ec51e4344e960692d6&src=http://ni.ppsrc.com/aR24MryiGC7HFCEJTB-wgQ@640w_640h_75Q.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="小歪的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h1 class="post-title" itemprop="name headline">Spark实战（二）学习UDF</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T11:15:55+08:00">
+                2018-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        好! 目前共计 67 篇日志。 继续努力。
-      </span>
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spark/" itemprop="url" rel="index">
+                    <span itemprop="name">spark</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2018/10/29/Spark实战（二）学习UDF/" class="leancloud_visitors" data-flag-title="Spark实战（二）学习UDF">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                 <span>℃</span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/29/爬虫学到什么程度可以去找工作/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">爬虫学到什么程度可以去找工作</span>
+                
+                  <span class="post-meta-divider">|</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  901
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-29T22:52:52+08:00"
-              content="2018-05-29" >
-          05-29
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/28/你写过哪些让你睡不好觉的BUG/" itemprop="url">
-              
-                <span itemprop="name">你写过哪些让你睡不好觉的BUG</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-28T23:38:35+08:00"
-              content="2018-05-28" >
-          05-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/26/git大法好，push需谨慎/" itemprop="url">
-              
-                <span itemprop="name">git大法好，push需谨慎</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-26T15:38:28+08:00"
-              content="2018-05-26" >
-          05-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fwj6agtwwoj30ag05k3zb.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十七篇原创文章</div></pre></td></tr></table></figure>
+<hr>
+<a id="more"></a>
+<p>在开始正式数据处理之前，我觉得有必要去学习理解下UDF。</p>
+<h1 id="UDF"><a href="#UDF" class="headerlink" title="UDF"></a>UDF</h1><p>UDF全称<code>User-Defined Functions</code>，用户自定义函数，是Spark SQL的一项功能，用于定义新的基于列的函数，这些函数扩展了Spark SQL的DSL用于转换数据集的词汇表。</p>
+<p>我在databricks上找到一个比较简单理解的入门栗子：</p>
+<h2 id="Register-the-function-as-a-UDF"><a href="#Register-the-function-as-a-UDF" class="headerlink" title="Register the function as a UDF"></a>Register the function as a UDF</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> squared = (s: <span class="type">Int</span>) =&gt; &#123;</div><div class="line">  s * s</div><div class="line">&#125;</div><div class="line">spark.udf.register(<span class="string">"square"</span>, squared)</div></pre></td></tr></table></figure>
+<h2 id="Call-the-UDF-in-Spark-SQL"><a href="#Call-the-UDF-in-Spark-SQL" class="headerlink" title="Call the UDF in Spark SQL"></a>Call the UDF in Spark SQL</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">spark.range(<span class="number">1</span>, <span class="number">20</span>).registerTempTable(<span class="string">"test"</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%sql select id, square(id) as id_squared from test</div></pre></td></tr></table></figure>
+<p>我理解就是先定义一个函数<code>squared</code>，返回输入数字的平方，然后register，并绑定<code>square</code>方法名为<code>square</code>，然后就在Spark SQL中直接使用<code>square</code>方法。</p>
+<h1 id="实例一：温度转化"><a href="#实例一：温度转化" class="headerlink" title="实例一：温度转化"></a>实例一：温度转化</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.spark.sql.<span class="type">SparkSession</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.<span class="type">SparkConf</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">ScalaUDFExample</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</div><div class="line">    <span class="keyword">val</span> conf       = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Scala UDF Example"</span>)</div><div class="line">    <span class="keyword">val</span> spark      = <span class="type">SparkSession</span>.builder().enableHiveSupport().config(conf).getOrCreate() </div><div class="line"></div><div class="line">    <span class="keyword">val</span> ds = spark.read.json(<span class="string">"temperatures.json"</span>)</div><div class="line">    ds.createOrReplaceTempView(<span class="string">"citytemps"</span>)</div><div class="line"></div><div class="line">    <span class="comment">// Register the UDF with our SparkSession </span></div><div class="line">    spark.udf.register(<span class="string">"CTOF"</span>, (degreesCelcius: <span class="type">Double</span>) =&gt; ((degreesCelcius * <span class="number">9.0</span> / <span class="number">5.0</span>) + <span class="number">32.0</span>))</div><div class="line"></div><div class="line">    spark.sql(<span class="string">"SELECT city, CTOF(avgLow) AS avgLowF, CTOF(avgHigh) AS avgHighF FROM citytemps"</span>).show()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们将定义一个 UDF 来将以下 JSON 数据中的温度从摄氏度（degrees Celsius）转换为华氏度（degrees Fahrenheit）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&#123;<span class="string">"city"</span>:<span class="string">"St. John's"</span>,<span class="string">"avgHigh"</span>:8.7,<span class="string">"avgLow"</span>:0.6&#125;</div><div class="line">&#123;<span class="string">"city"</span>:<span class="string">"Charlottetown"</span>,<span class="string">"avgHigh"</span>:9.7,<span class="string">"avgLow"</span>:0.9&#125;</div><div class="line">&#123;<span class="string">"city"</span>:<span class="string">"Halifax"</span>,<span class="string">"avgHigh"</span>:11.0,<span class="string">"avgLow"</span>:1.6&#125;</div><div class="line">&#123;<span class="string">"city"</span>:<span class="string">"Fredericton"</span>,<span class="string">"avgHigh"</span>:11.2,<span class="string">"avgLow"</span>:-0.5&#125;</div><div class="line">&#123;<span class="string">"city"</span>:<span class="string">"Quebec"</span>,<span class="string">"avgHigh"</span>:9.0,<span class="string">"avgLow"</span>:-1.0&#125;</div><div class="line">&#123;<span class="string">"city"</span>:<span class="string">"Montreal"</span>,<span class="string">"avgHigh"</span>:11.1,<span class="string">"avgLow"</span>:1.4&#125;</div><div class="line">...</div></pre></td></tr></table></figure>
+<h1 id="实例二：时间转化"><a href="#实例二：时间转化" class="headerlink" title="实例二：时间转化"></a>实例二：时间转化</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">Purchase</span>(<span class="params">customer_id: <span class="type">Int</span>, purchase_id: <span class="type">Int</span>, date: <span class="type">String</span>, time: <span class="type">String</span>, tz: <span class="type">String</span>, amount:<span class="type">Double</span></span>)</span></div><div class="line"></div><div class="line"><span class="keyword">val</span> x = sc.parallelize(<span class="type">Array</span>(</div><div class="line">  <span class="type">Purchase</span>(<span class="number">123</span>, <span class="number">234</span>, <span class="string">"2007-12-12"</span>, <span class="string">"20:50"</span>, <span class="string">"UTC"</span>, <span class="number">500.99</span>),</div><div class="line">  <span class="type">Purchase</span>(<span class="number">123</span>, <span class="number">247</span>, <span class="string">"2007-12-12"</span>, <span class="string">"15:30"</span>, <span class="string">"PST"</span>, <span class="number">300.22</span>),</div><div class="line">  <span class="type">Purchase</span>(<span class="number">189</span>, <span class="number">254</span>, <span class="string">"2007-12-13"</span>, <span class="string">"00:50"</span>, <span class="string">"EST"</span>, <span class="number">122.19</span>),</div><div class="line">  <span class="type">Purchase</span>(<span class="number">187</span>, <span class="number">299</span>, <span class="string">"2007-12-12"</span>, <span class="string">"07:30"</span>, <span class="string">"UTC"</span>, <span class="number">524.37</span>)</div><div class="line">))</div><div class="line"></div><div class="line"><span class="keyword">val</span> df = sqlContext.createDataFrame(x)</div><div class="line">df.registerTempTable(<span class="string">"df"</span>)</div></pre></td></tr></table></figure>
+<p>自定义函数</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">makeDT</span></span>(date: <span class="type">String</span>, time: <span class="type">String</span>, tz: <span class="type">String</span>) = <span class="string">s"<span class="subst">$date</span> <span class="subst">$time</span> <span class="subst">$tz</span>"</span></div><div class="line">sqlContext.udf.register(<span class="string">"makeDt"</span>, makeDT(_:<span class="type">String</span>,_:<span class="type">String</span>,_:<span class="type">String</span>))</div><div class="line"></div><div class="line"><span class="comment">// Now we can use our function directly in SparkSQL.</span></div><div class="line">sqlContext.sql(<span class="string">"SELECT amount, makeDt(date, time, tz) from df"</span>).take(<span class="number">2</span>)</div><div class="line"><span class="comment">// but not outside</span></div><div class="line">df.select($<span class="string">"customer_id"</span>, makeDt($<span class="string">"date"</span>, $<span class="string">"time"</span>, $<span class="string">"tz"</span>), $<span class="string">"amount"</span>).take(<span class="number">2</span>) <span class="comment">// fails</span></div></pre></td></tr></table></figure>
+<p>如果想要在SQL外面使用，必须通过<code>spark.sql.function.udf</code>来创建UDF</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> org.apache.spark.sql.functions.udf</div><div class="line"><span class="keyword">val</span> makeDt = udf(makeDT(_:<span class="type">String</span>,_:<span class="type">String</span>,_:<span class="type">String</span>))</div><div class="line"><span class="comment">// now this works</span></div><div class="line">df.select($<span class="string">"customer_id"</span>, makeDt($<span class="string">"date"</span>, $<span class="string">"time"</span>, $<span class="string">"tz"</span>), $<span class="string">"amount"</span>).take(<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<h1 id="实践操作"><a href="#实践操作" class="headerlink" title="实践操作"></a>实践操作</h1><p>写一个UDF来将一些Int数字分类</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> formatDistribution = (view: <span class="type">Int</span>) =&gt; &#123;</div><div class="line">  <span class="keyword">if</span> (view &lt; <span class="number">10</span>) &#123;</div><div class="line">    <span class="string">"&lt;10"</span></div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (view &lt;= <span class="number">100</span>) &#123;</div><div class="line">    <span class="string">"10~100"</span></div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (view &lt;= <span class="number">1000</span>) &#123;</div><div class="line">    <span class="string">"100~1K"</span></div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (view &lt;= <span class="number">10000</span>) &#123;</div><div class="line">    <span class="string">"1K~10K"</span></div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (view &lt;= <span class="number">100000</span>) &#123;</div><div class="line">    <span class="string">"10K~100K"</span></div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="string">"&gt;100K"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注册：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">session.udf.register(<span class="string">"formatDistribution"</span>, <span class="type">UDF</span>.formatDistribution)</div></pre></td></tr></table></figure>
+<p>SQL：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">session.sql(<span class="string">"select user_id, formatDistribution(variance_digg_count) as variance from video"</span>)</div></pre></td></tr></table></figure>
+<p>写到这里，再回顾UDF，我感觉这就像是去为了方便做一个分类转化等操作，和Python里面的函数一样，只不过这里的UDF一般特指Spark SQL里面使用的函数。然后发现这里和SQL中的自定义函数挺像的:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> [函数所有者.]&lt;函数名称&gt; </div><div class="line">(   </div><div class="line">    <span class="comment">-- 添加函数所需的参数，可以没有参数</span></div><div class="line">    [&lt;@param1&gt; &lt;参数类型&gt;]</div><div class="line">    [,&lt;@param1&gt; &lt;参数类型&gt;]…</div><div class="line">)</div><div class="line"><span class="keyword">RETURNS</span> <span class="keyword">TABLE</span> </div><div class="line"><span class="keyword">AS</span></div><div class="line"><span class="keyword">RETURN</span> </div><div class="line">(</div><div class="line">    <span class="comment">-- 查询返回的SQL语句</span></div><div class="line">    <span class="keyword">SELECT</span>查询语句</div><div class="line">)</div></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*</span></div><div class="line">* 创建内联表值函数，查询交易总额大于1W的开户人个人信息</div><div class="line">*/</div><div class="line"><span class="keyword">create</span> <span class="keyword">function</span> getCustInfo()</div><div class="line"><span class="keyword">returns</span> @CustInfo <span class="keyword">table</span>  <span class="comment">--返回table类型</span></div><div class="line">(</div><div class="line">    <span class="comment">--账户ID</span></div><div class="line">    CustID <span class="built_in">int</span>,</div><div class="line">    <span class="comment">--帐户名称</span></div><div class="line">    CustName <span class="built_in">varchar</span>(<span class="number">20</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">    <span class="comment">--身份证号</span></div><div class="line">    IDCard <span class="built_in">varchar</span>(<span class="number">18</span>),</div><div class="line">    <span class="comment">--电话</span></div><div class="line">    TelePhone <span class="built_in">varchar</span>(<span class="number">13</span>) <span class="keyword">not</span> <span class="literal">null</span>,</div><div class="line">    <span class="comment">--地址</span></div><div class="line">    Address <span class="built_in">varchar</span>(<span class="number">50</span>) <span class="keyword">default</span>(<span class="string">'地址不详'</span>)</div><div class="line">)</div><div class="line"><span class="keyword">as</span></div><div class="line"><span class="keyword">begin</span></div><div class="line">    <span class="comment">--为table表赋值</span></div><div class="line">    <span class="keyword">insert</span> <span class="keyword">into</span> @CustInfo</div><div class="line">    <span class="keyword">select</span> CustID,CustName,IDCard,TelePhone,Address <span class="keyword">from</span> AccountInfo </div><div class="line">    <span class="keyword">where</span> CustID <span class="keyword">in</span> (<span class="keyword">select</span> CustID <span class="keyword">from</span> CardInfo </div><div class="line">    <span class="keyword">where</span> CardID <span class="keyword">in</span> (<span class="keyword">select</span> CardID <span class="keyword">from</span> TransInfo <span class="keyword">group</span> <span class="keyword">by</span> CardID,transID,TransType,TransMoney,TransDate <span class="keyword">having</span> <span class="keyword">sum</span>(TransMoney)&gt;<span class="number">10000</span>))</div><div class="line">    <span class="keyword">return</span></div><div class="line"><span class="keyword">end</span></div><div class="line"><span class="keyword">go</span></div><div class="line"><span class="comment">-- 调用内联表值函数</span></div><div class="line"><span class="keyword">select</span> * <span class="keyword">from</span> getCustInfo()</div><div class="line"><span class="keyword">go</span></div></pre></td></tr></table></figure>
+<p>好像有异曲同工之妙~</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/22/Python最假的库：Faker/" itemprop="url">
-              
-                <span itemprop="name">Python最假的库：Faker</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-22T21:14:35+08:00"
-              content="2018-05-22" >
-          05-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/16/强大的异步爬虫-aiohttp/" itemprop="url">
-              
-                <span itemprop="name">强大的异步爬虫 with aiohttp</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-16T17:00:07+08:00"
-              content="2018-05-16" >
-          05-16
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/15/Leetcode Solutions（一）/" itemprop="url">
-              
-                <span itemprop="name">Leetcode Solutions（一） two-sum</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-15T18:22:26+08:00"
-              content="2018-05-15" >
-          05-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/12/告别win10，拥抱linux/" itemprop="url">
-              
-                <span itemprop="name">告别win10，拥抱linux</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-12T13:49:33+08:00"
-              content="2018-05-12" >
-          05-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/11/linux下安装python3-6/" itemprop="url">
-              
-                <span itemprop="name">linux下安装python3.6</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-11T22:26:54+08:00"
-              content="2018-05-11" >
-          05-11
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/08/护眼神器了解下/" itemprop="url">
-              
-                <span itemprop="name">护眼神器了解下</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-08T22:05:24+08:00"
-              content="2018-05-08" >
-          05-08
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/01/awesome-crawl-一-：腾讯新闻/" itemprop="url">
-              
-                <span itemprop="name">awesome_crawl(一)：腾讯新闻</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-01T21:52:11+08:00"
-              content="2018-05-01" >
-          05-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+      <div>
+        
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script type="text/javascript" src="http://jslibs.wuxubj.cn/sweetalert_mini/jquery-1.7.1.min.js"></script>
+  <script src="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://jslibs.wuxubj.cn/sweetalert_mini/sweetalert.mini.css">
+  <p><span>本文标题:</span><a href="/2018/10/29/Spark实战（二）学习UDF/">Spark实战（二）学习UDF</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 小歪 的个人博客">小歪</a></p>
+  <p><span>发布时间:</span>2018年10月29日 - 11:10</p>
+  <p><span>最后更新:</span>2018年10月29日 - 14:10</p>
+  <p><span>原始链接:</span><a href="/2018/10/29/Spark实战（二）学习UDF/" title="Spark实战（二）学习UDF">https://zhangslob.github.io/2018/10/29/Spark实战（二）学习UDF/</a>
+    <span class="copy-path"  title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://zhangslob.github.io/2018/10/29/Spark实战（二）学习UDF/"  aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    clipboard.on('success', $(function(){
+      $(".fa-clipboard").click(function(){
+        swal({   
+          title: "",   
+          text: '复制成功',   
+          html: false,
+          timer: 500,   
+          showConfirmButton: false
+        });
+      });
+    }));  
+</script>
+
+
+
+        
+      </div>
+      <div>
+          <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="小歪 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎关注公众号</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/spark/" rel="tag"> <i class="fa fa-tag"></i>spark</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/24/spark实战一：对数据处理的理解/" rel="next" title="spark实战（一）：对数据处理的理解">
+                <i class="fa fa-chevron-left"></i> spark实战（一）：对数据处理的理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -728,6 +613,13 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="gitalk-container"></div>
+	  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    
+  </div>
+
         </div>
         
           
@@ -747,8 +639,17 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -858,6 +759,22 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UDF"><span class="nav-number">1.</span> <span class="nav-text">UDF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Register-the-function-as-a-UDF"><span class="nav-number">1.1.</span> <span class="nav-text">Register the function as a UDF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Call-the-UDF-in-Spark-SQL"><span class="nav-number">1.2.</span> <span class="nav-text">Call the UDF in Spark SQL</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例一：温度转化"><span class="nav-number">2.</span> <span class="nav-text">实例一：温度转化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例二：时间转化"><span class="nav-number">3.</span> <span class="nav-text">实例二：时间转化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实践操作"><span class="nav-number">4.</span> <span class="nav-text">实践操作</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1020,6 +937,10 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
@@ -1052,6 +973,24 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
 
 
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+  <script src="/js/src/md5.min.js"></script>
+
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '',
+      clientSecret: '',
+      repo: 'zhangslob.github.io',
+      owner: 'zhangslob',
+      admin: ['zhangslob'],
+      id: md5(location.pathname),
+      distractionFreeMode: 'true'
+    })
+    gitalk.render('gitalk-container')
+  </script>
 
 
   
