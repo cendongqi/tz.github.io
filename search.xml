@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Scala学习之相同的函数名]]></title>
+    <url>%2F2018%2F11%2F05%2FScala%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%9B%B8%E5%90%8C%E7%9A%84%E5%87%BD%E6%95%B0%E5%90%8D%2F</url>
+    <content type="text"><![CDATA[1这是崔斯特的第六十八篇原创文章 最近在慢慢的开始用Scala写Spark，刚开始也是在菜鸟教程上简单过了一遍Scala，现在还记得一些基本语法，还有各种奇怪的语法糖。想要更快的学习这门语言，还是需要自己多谢谢。 今天在看别人代码时，发现他在类中定义了两个名字一模一样的函数，但是我还以为他写错了。当我以Python的思维去看待这们语言时，当然是在作死的边缘了。 举一个简单的栗子，从MongoDB读取数据时使用的配置所定义的两个函数 12345678910def readConfig(context: SparkContext, database: String, collection: String): ReadConfig = &#123; ReadConfig(Map("database" -&gt; database, "collection" -&gt; collection), Some(ReadConfig(context)))&#125;def readConfig(session: SparkSession, database: String, collection: String): ReadConfig = &#123; ReadConfig(Map("database" -&gt; database, "collection" -&gt; collection), Some(ReadConfig(session)))&#125; 可以看到两个函数名一样的，刚开始我也很懵逼，但是仔细一看，他的参数是不一样的，一个是context: SparkContext，一个是session: SparkSession。这两个函数的功能一样，但是接受的参数不一样，所以这才需要去定义两个函数。（试想一下，在Python中如何去实现） 可能你不懂Scala，让我简单跟你讲一下。首先我们使用def关键字定义了一个名为readConfig的函数，和Python一模一样；然后就是函数接受的参数了，可以看到在每个参数后面有冒号，这个冒号就表示前面的数据类型，比如定义一个相加函数 1234567object add&#123; def addInt(a:Int, b:Int) : Int = &#123; var sum:Int = 0 sum = a + b return sum &#125;&#125; Scala会在变量后定义类型，这样就可以区别不同的函数了。 回到上面的栗子，一个类型是SparkContext，一个是SparkSession，这是Spark的数据类型；然后我们可以看到在函数末尾是冒号加ReadConfig，这里说的返回的数据类型是ReadConfig，也就是从MongoDB读取数据时使用的配置类型。（如果是Unit则不用返回任何数据，和Java类似） 是不是很好理解，在调用函数时，只要我们传递的第一个参数是不同类型，就会使用相应的函数。 都说Scala是一种函数式语言，函数是 Scala 语言的核心，看看Scala函数的特性，不说了，继续撸Scala了。]]></content>
+      <categories>
+        <category>scala</category>
+      </categories>
+      <tags>
+        <tag>scala</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Spark实战（二）学习UDF]]></title>
     <url>%2F2018%2F10%2F29%2FSpark%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89%E5%AD%A6%E4%B9%A0UDF%2F</url>
     <content type="text"><![CDATA[1这是崔斯特的第六十七篇原创文章 在开始正式数据处理之前，我觉得有必要去学习理解下UDF。 UDFUDF全称User-Defined Functions，用户自定义函数，是Spark SQL的一项功能，用于定义新的基于列的函数，这些函数扩展了Spark SQL的DSL用于转换数据集的词汇表。 我在databricks上找到一个比较简单理解的入门栗子： Register the function as a UDF1234val squared = (s: Int) =&gt; &#123; s * s&#125;spark.udf.register("square", squared) Call the UDF in Spark SQL1spark.range(1, 20).registerTempTable("test") 1%sql select id, square(id) as id_squared from test 我理解就是先定义一个函数squared，返回输入数字的平方，然后register，并绑定square方法名为square，然后就在Spark SQL中直接使用square方法。 实例一：温度转化1234567891011121314151617import org.apache.spark.sql.SparkSessionimport org.apache.spark.SparkConfobject ScalaUDFExample &#123; def main(args: Array[String]) &#123; val conf = new SparkConf().setAppName("Scala UDF Example") val spark = SparkSession.builder().enableHiveSupport().config(conf).getOrCreate() val ds = spark.read.json("temperatures.json") ds.createOrReplaceTempView("citytemps") // Register the UDF with our SparkSession spark.udf.register("CTOF", (degreesCelcius: Double) =&gt; ((degreesCelcius * 9.0 / 5.0) + 32.0)) spark.sql("SELECT city, CTOF(avgLow) AS avgLowF, CTOF(avgHigh) AS avgHighF FROM citytemps").show() &#125;&#125; 我们将定义一个 UDF 来将以下 JSON 数据中的温度从摄氏度（degrees Celsius）转换为华氏度（degrees Fahrenheit）： 1234567&#123;"city":"St. John's","avgHigh":8.7,"avgLow":0.6&#125;&#123;"city":"Charlottetown","avgHigh":9.7,"avgLow":0.9&#125;&#123;"city":"Halifax","avgHigh":11.0,"avgLow":1.6&#125;&#123;"city":"Fredericton","avgHigh":11.2,"avgLow":-0.5&#125;&#123;"city":"Quebec","avgHigh":9.0,"avgLow":-1.0&#125;&#123;"city":"Montreal","avgHigh":11.1,"avgLow":1.4&#125;... 实例二：时间转化1234567891011case class Purchase(customer_id: Int, purchase_id: Int, date: String, time: String, tz: String, amount:Double)val x = sc.parallelize(Array( Purchase(123, 234, "2007-12-12", "20:50", "UTC", 500.99), Purchase(123, 247, "2007-12-12", "15:30", "PST", 300.22), Purchase(189, 254, "2007-12-13", "00:50", "EST", 122.19), Purchase(187, 299, "2007-12-12", "07:30", "UTC", 524.37)))val df = sqlContext.createDataFrame(x)df.registerTempTable("df") 自定义函数 1234567def makeDT(date: String, time: String, tz: String) = s"$date $time $tz"sqlContext.udf.register("makeDt", makeDT(_:String,_:String,_:String))// Now we can use our function directly in SparkSQL.sqlContext.sql("SELECT amount, makeDt(date, time, tz) from df").take(2)// but not outsidedf.select($"customer_id", makeDt($"date", $"time", $"tz"), $"amount").take(2) // fails 如果想要在SQL外面使用，必须通过spark.sql.function.udf来创建UDF 1234import org.apache.spark.sql.functions.udfval makeDt = udf(makeDT(_:String,_:String,_:String))// now this worksdf.select($"customer_id", makeDt($"date", $"time", $"tz"), $"amount").take(2) 实践操作写一个UDF来将一些Int数字分类 123456789101112131415val formatDistribution = (view: Int) =&gt; &#123; if (view &lt; 10) &#123; "&lt;10" &#125; else if (view &lt;= 100) &#123; "10~100" &#125; else if (view &lt;= 1000) &#123; "100~1K" &#125; else if (view &lt;= 10000) &#123; "1K~10K" &#125; else if (view &lt;= 100000) &#123; "10K~100K" &#125; else &#123; "&gt;100K" &#125;&#125; 注册： 1session.udf.register("formatDistribution", UDF.formatDistribution) SQL： 1session.sql("select user_id, formatDistribution(variance_digg_count) as variance from video") 写到这里，再回顾UDF，我感觉这就像是去为了方便做一个分类转化等操作，和Python里面的函数一样，只不过这里的UDF一般特指Spark SQL里面使用的函数。然后发现这里和SQL中的自定义函数挺像的: 12345678910111213CREATE FUNCTION [函数所有者.]&lt;函数名称&gt; ( -- 添加函数所需的参数，可以没有参数 [&lt;@param1&gt; &lt;参数类型&gt;] [,&lt;@param1&gt; &lt;参数类型&gt;]…)RETURNS TABLE ASRETURN ( -- 查询返回的SQL语句 SELECT查询语句) 123456789101112131415161718192021222324252627282930/** 创建内联表值函数，查询交易总额大于1W的开户人个人信息*/create function getCustInfo()returns @CustInfo table --返回table类型( --账户ID CustID int, --帐户名称 CustName varchar(20) not null, --身份证号 IDCard varchar(18), --电话 TelePhone varchar(13) not null, --地址 Address varchar(50) default('地址不详'))asbegin --为table表赋值 insert into @CustInfo select CustID,CustName,IDCard,TelePhone,Address from AccountInfo where CustID in (select CustID from CardInfo where CardID in (select CardID from TransInfo group by CardID,transID,TransType,TransMoney,TransDate having sum(TransMoney)&gt;10000)) returnendgo-- 调用内联表值函数select * from getCustInfo()go 好像有异曲同工之妙~]]></content>
@@ -139,8 +150,8 @@
         <category>爬虫</category>
       </categories>
       <tags>
-        <tag>cookie池</tag>
         <tag>爬虫</tag>
+        <tag>cookie池</tag>
       </tags>
   </entry>
   <entry>
@@ -151,8 +162,8 @@
         <category>爬虫</category>
       </categories>
       <tags>
-        <tag>cookie池</tag>
         <tag>爬虫</tag>
+        <tag>cookie池</tag>
       </tags>
   </entry>
   <entry>
