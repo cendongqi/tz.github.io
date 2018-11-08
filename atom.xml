@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-11-05T15:00:16.661Z</updated>
+  <updated>2018-11-08T07:39:05.445Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,72 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>爬虫之全站爬取方法</title>
+    <link href="https://zhangslob.github.io/2018/11/07/%E7%88%AC%E8%99%AB%E4%B9%8B%E5%85%A8%E7%AB%99%E7%88%AC%E5%8F%96%E6%96%B9%E6%B3%95/"/>
+    <id>https://zhangslob.github.io/2018/11/07/爬虫之全站爬取方法/</id>
+    <published>2018-11-07T11:23:43.000Z</published>
+    <updated>2018-11-08T07:39:05.445Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fx0nl2hsyjj30sb0ihjtw.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十九篇原创文章</div></pre></td></tr></table></figure>
+<hr>
+<a id="more"></a>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>做过好几个关于网站全站的项目，这里总结一下。</p>
+<p>先把上面那张图写下来，全站爬取的两种方法：</p>
+<ol>
+<li>关系网络：<ol>
+<li>优点：简单；可以抓取“热门”数据</li>
+<li>缺点：无法抓取全量数据；速度慢；需要解决去重问题</li>
+<li>可行性：比较高</li>
+</ol>
+</li>
+<li>遍历ID<ol>
+<li>优点：可以抓取所有数据；不用数据去重</li>
+<li>缺点：资源消耗大；速度慢；可能被发现</li>
+<li>可行性：仅可用于ID自增</li>
+</ol>
+</li>
+</ol>
+<h1 id="关于关系网络"><a href="#关于关系网络" class="headerlink" title="关于关系网络"></a>关于关系网络</h1><p>其实这个很好理解。比如说知乎，一个大V有100W粉丝，从这个大V出发，抓取粉丝的粉丝，一直循环下去。（可能是个死循环）</p>
+<p>这个方法就比较简单，<code>Scrapy</code>中就是继承<code>CrawlSpider</code>，再编写匹配规则就好。</p>
+<p>Example</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> scrapy</div><div class="line"><span class="keyword">from</span> scrapy.spiders <span class="keyword">import</span> CrawlSpider, Rule</div><div class="line"><span class="keyword">from</span> scrapy.linkextractors <span class="keyword">import</span> LinkExtractor</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MySpider</span><span class="params">(CrawlSpider)</span>:</span></div><div class="line">    name = <span class="string">'example.com'</span></div><div class="line">    allowed_domains = [<span class="string">'example.com'</span>]</div><div class="line">    start_urls = [<span class="string">'http://www.example.com'</span>]</div><div class="line"></div><div class="line">    rules = (</div><div class="line">        <span class="comment"># Extract links matching 'category.php' (but not matching 'subsection.php')</span></div><div class="line">        <span class="comment"># and follow links from them (since no callback means follow=True by default).</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">'category\.php'</span>, ), deny=(<span class="string">'subsection\.php'</span>, ))),</div><div class="line"></div><div class="line">        <span class="comment"># Extract links matching 'item.php' and parse them with the spider's method parse_item</span></div><div class="line">        Rule(LinkExtractor(allow=(<span class="string">'item\.php'</span>, )), callback=<span class="string">'parse_item'</span>),</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self, response)</span>:</span></div><div class="line">        self.logger.info(<span class="string">'Hi, this is an item page! %s'</span>, response.url)</div><div class="line">        item = scrapy.Item()</div><div class="line">        item[<span class="string">'id'</span>] = response.xpath(<span class="string">'//td[@id="item_id"]/text()'</span>).re(<span class="string">r'ID: (\d+)'</span>)</div><div class="line">        item[<span class="string">'name'</span>] = response.xpath(<span class="string">'//td[@id="item_name"]/text()'</span>).extract()</div><div class="line">        item[<span class="string">'description'</span>] = response.xpath(<span class="string">'//td[@id="item_description"]/text()'</span>).extract()</div><div class="line">        <span class="keyword">return</span> item</div></pre></td></tr></table></figure>
+<p>这种方法一般是搜索引擎会做的。而且抓取的内容基本是最多人看到的，所以月排在前面，和SEO有关。</p>
+<p>但是这种方法的缺点也是很明显的，最明显的就是没法抓全数据，像那种冷门的数据就没法抓取到，速度也是比较慢的，必须保存去重队列，以防止重复抓取页面。（了解下<a href="https://github.com/kongtianyi/BloomFilterRedis" target="_blank" rel="external">布隆过滤器</a>）</p>
+<p>如果对数据完整性要求没那么高可以考虑这种方法。</p>
+<h1 id="遍历ID"><a href="#遍历ID" class="headerlink" title="遍历ID"></a>遍历ID</h1><p>找各种方法就比较无脑了，啥也不用想，从0开始遍历跑吧。</p>
+<p>毫无疑问，这种方法可以抓取网站所有的数据，因为在开始抓取前就已经完成的去重，所以这方面就不用管了。</p>
+<p>但是缺点也很明显，因为是遍历ID，所以需要很多服务器资源和代理资源，有可能某个ID已经下架或失效。所以整个工程请求量会非常大。而且可能被别人发现，一般人都去看那些热门帖子，结果你把那么重来没人看的翻了一遍，别人也会发现数据异常的（也会存在假数据的情况😭）。</p>
+<p>而且这种方法之适用于ID自增的，大多数是数字ID递增，比如说天眼查的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">https://www.tianyancha.com/company/24762997</div><div class="line">https://www.tianyancha.com/company/150041670</div><div class="line">https://www.tianyancha.com/company/1073358312</div></pre></td></tr></table></figure>
+<p>知乎也是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">https://zhuanlan.zhihu.com/p/47969297</div><div class="line">https://zhuanlan.zhihu.com/p/48652497</div><div class="line">https://zhuanlan.zhihu.com/p/47805332</div></pre></td></tr></table></figure>
+<p>应该是和数字有关系，可以先采样进行抓取，研究数据分布情况。</p>
+<p>当提供不正确ID时，也会返回数据不存在的情况</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fx0oscxi0cj30z90kfgqa.jpg" alt=""></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fx0ovjg53wj30pn0fkwf3.jpg" alt=""></p>
+<p>在这里提供一个生成ID的方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_uid</span><span class="params">(num)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    使用生成器生成ID</div><div class="line">    :param num: 起始ID</div><div class="line">    :return: 生成器</div><div class="line">    """</div><div class="line">    js = <span class="number">0</span></div><div class="line">    result = list()</div><div class="line">    <span class="keyword">while</span> js &lt; <span class="number">20000</span>:</div><div class="line">        num += <span class="number">1</span></div><div class="line">        js += <span class="number">1</span></div><div class="line">        result.append(num)</div><div class="line"></div><div class="line">    <span class="keyword">yield</span> result</div></pre></td></tr></table></figure>
+<p>最后再看看这张图。两种方法都有优缺点，根据实际需求选取，如果你还知道别的抓取方法，欢迎指出。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fx0nl2hsyjj30sb0ihjtw.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://ws4.sinaimg.cn/large/006tNbRwly1fx0nl2hsyjj30sb0ihjtw.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十九篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;hr&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+  </entry>
   
   <entry>
     <title>Scala学习之相同的函数名</title>
@@ -812,9 +878,9 @@
       <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
       <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
@@ -871,9 +937,9 @@
       <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
       <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
   </entry>
   
@@ -1215,52 +1281,6 @@
     
     
       <category term="BUG" scheme="https://zhangslob.github.io/tags/BUG/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>git大法好，push需谨慎</title>
-    <link href="https://zhangslob.github.io/2018/05/26/git%E5%A4%A7%E6%B3%95%E5%A5%BD%EF%BC%8Cpush%E9%9C%80%E8%B0%A8%E6%85%8E/"/>
-    <id>https://zhangslob.github.io/2018/05/26/git大法好，push需谨慎/</id>
-    <published>2018-05-26T07:38:28.000Z</published>
-    <updated>2018-05-26T08:13:38.659Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第四十九篇原创文章
-</code></pre><p>注意自己的账号安全  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/lptSYQU.jpg" alt=""></p>
-<a id="more"></a>
-<blockquote>
-<p>在每次<code>git push</code>前，请检查你的提交文件</p>
-</blockquote>
-<p>故事是这样来的。（我又开始讲故事了）</p>
-<p>前几天在 Github上找一些资料，碰巧看到一个合适的，就把他 clone 下来，准备在本地跑着试试看效果，但是在运行的时候却发现提示错误，根绝错误提示原因我发现是缺少了一个名为<code>config.py</code>的文件。</p>
-<p>经验告诉我，这应该是一个写有相关配置的文件。现在缺少了这个文件，整个程序就没法运行，自己写的话又不知道格式什么的。</p>
-<p>那我该怎么办？</p>
-<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527331404813&amp;di=84868955d0e2240e0afc9c5053259864&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.ishuo.cn%2Fdoc%2F1703%2F861-1F31G64602-51.jpg" alt=""></p>
-<p>最后我还是找到了，在Github上。我去该项目上看到作者提交了很多次的<code>commit</code>，从历史的提交中我找到了相关信息。这是一个包含有作者相关数据库的文件，我已经通知作者，让他去删除此项目。</p>
-<p>看下图，每个开源项目都会显示所有的<code>commits</code>，每次提交都会把git工作目录下所有文件提交（当然你可以指定具体的文件，我习惯<code>git add .</code>）。即使你下今天把密码删除了，但是你昨天提交的密码还是会保存到<code>commits</code>中，别人还是可以找到。</p>
-<p>例如你现在看到的项目 <a href="https://github.com/zhangslob/Leetcode-Solutions" target="_blank" rel="external">Leetcode-Solutions</a> ，你可以从<code>commit</code>中进入，查看到历史<code>contributors</code>的每一次提交的完整文件， 如：<a href="https://github.com/zhangslob/Leetcode-Solutions/tree/f237fe70338eeb1e9e7c950423b254b7495ab3c7" target="_blank" rel="external">很久之前的提交</a></p>
-<p><img src="https://i.imgur.com/NRDG7XU.png" alt=""></p>
-<p><img src="https://i.imgur.com/8ErZTIZ.png" alt=""></p>
-<p>所以看到这里，你就有必要想想自己有没有把任何个人隐私数据提交到 Github 上，如果有，建议还是删除项目吧。</p>
-<p>当然，这有一个前提，就是你的项目是公开的（Public），如果是私有的（Private），就不用考虑了。</p>
-<p><img src="https://i.imgur.com/DHFLCfn.png" alt=""></p>
-<p>创建私有项目是收费的，一般适合公司和组织。</p>
-<p>最后首尾呼应： git大法好，push需谨慎</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第四十九篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;注意自己的账号安全  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/lptSYQU.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Git" scheme="https://zhangslob.github.io/categories/Git/"/>
-    
-    
-      <category term="Git" scheme="https://zhangslob.github.io/tags/Git/"/>
     
   </entry>
   

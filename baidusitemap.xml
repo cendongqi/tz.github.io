@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://zhangslob.github.io/2018/11/07/%E7%88%AC%E8%99%AB%E4%B9%8B%E5%85%A8%E7%AB%99%E7%88%AC%E5%8F%96%E6%96%B9%E6%B3%95/</loc>
+    <lastmod>2018-11-08T07:39:05.445Z</lastmod>
+    <data>
+        <display>
+        <title>爬虫之全站爬取方法</title>
+        <pubTime>2018-11-07T11:23:43.000Z</pubTime>
+        
+        <tag>爬虫</tag>
+         
+         
+           
+             
+              <breadCrumb title="爬虫" url="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://zhangslob.github.io/2018/11/05/Scala%E5%AD%A6%E4%B9%A0%E4%B9%8B%E7%9B%B8%E5%90%8C%E7%9A%84%E5%87%BD%E6%95%B0%E5%90%8D/</loc>
     <lastmod>2018-11-05T15:00:16.661Z</lastmod>
     <data>
@@ -278,9 +298,9 @@
         <title>Cookies池的后续解决方案</title>
         <pubTime>2018-06-16T07:01:54.000Z</pubTime>
         
-        <tag>爬虫</tag>
-         
         <tag>cookie池</tag>
+         
+        <tag>爬虫</tag>
          
          
            
@@ -300,9 +320,9 @@
         <title>从cookie池搭建说起</title>
         <pubTime>2018-06-14T13:25:46.000Z</pubTime>
         
-        <tag>爬虫</tag>
-         
         <tag>cookie池</tag>
+         
+        <tag>爬虫</tag>
          
          
            
