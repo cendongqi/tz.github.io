@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-11-08T07:39:05.445Z</updated>
+  <updated>2018-11-13T14:25:46.472Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,69 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python实现常见的回文字符串算法</title>
+    <link href="https://zhangslob.github.io/2018/11/13/Python%E5%AE%9E%E7%8E%B0%E5%B8%B8%E8%A7%81%E7%9A%84%E5%9B%9E%E6%96%87%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/"/>
+    <id>https://zhangslob.github.io/2018/11/13/Python实现常见的回文字符串算法/</id>
+    <published>2018-11-13T14:09:41.000Z</published>
+    <updated>2018-11-13T14:25:46.472Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fx6sk819rfj31as0sakjl.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第七十篇原创文章</div></pre></td></tr></table></figure>
+<hr>
+<a id="more"></a>
+<h1 id="回文"><a href="#回文" class="headerlink" title="回文"></a>回文</h1><p>利用python 自带的翻转 函数<code>reversed()</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">`<span class="function"><span class="keyword">def</span> <span class="title">is_plalindrome</span><span class="params">(string)</span>:</span>    <span class="keyword">return</span> string == <span class="string">''</span>.join(list(reversed(string)))`</div></pre></td></tr></table></figure>
+<p>自己实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_plalindrome</span><span class="params">(string)</span>:</span></div><div class="line">    string = list(string)</div><div class="line">    length = len(string)</div><div class="line">    left = <span class="number">0</span></div><div class="line">    right = length - <span class="number">1</span></div><div class="line">    <span class="keyword">while</span> left &lt; right:</div><div class="line">        <span class="keyword">if</span> string[left] != string[right]:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        left += <span class="number">1</span></div><div class="line">        right -= <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
+<h1 id="最长的回文子串"><a href="#最长的回文子串" class="headerlink" title="最长的回文子串"></a>最长的回文子串</h1><h3 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h3><p>暴力破解，枚举所有的子串，对每个子串判断是否为回文， 时间复杂度为 O(n^3)</p>
+<h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(s)</span>:</span></div><div class="line">    s = list(s)</div><div class="line">    l = len(s)</div><div class="line">    dp = [[<span class="number">0</span>] * l <span class="keyword">for</span> i <span class="keyword">in</span> range(l)]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(l):</div><div class="line">        dp[i][i] = <span class="keyword">True</span></div><div class="line">        <span class="comment"># 当 k = 2时要用到</span></div><div class="line">        dp[i][i - <span class="number">1</span>] = <span class="keyword">True</span></div><div class="line">    resLeft = <span class="number">0</span></div><div class="line">    resRight = <span class="number">0</span></div><div class="line">    <span class="comment"># 枚举子串的长度</span></div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">2</span>, l+<span class="number">1</span>):</div><div class="line">        <span class="comment"># 子串的起始位置</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, l-k+<span class="number">1</span>):</div><div class="line">            j = i + k - <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> s[i] == s[j] <span class="keyword">and</span> dp[i + <span class="number">1</span>][j - <span class="number">1</span>]:</div><div class="line">                dp[i][j] = <span class="keyword">True</span></div><div class="line">                <span class="comment"># 保存最长的回文起点和终点</span></div><div class="line">                <span class="keyword">if</span> resRight - resLeft + <span class="number">1</span> &lt; k:</div><div class="line">                    resLeft = i</div><div class="line">                    resRight = j</div><div class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(s[resLeft:resRight+<span class="number">1</span>])</div></pre></td></tr></table></figure>
+<p>时间复杂度为 O(n^2), 空间复杂度为 O(n^2)</p>
+<h3 id="Manacher-算法"><a href="#Manacher-算法" class="headerlink" title="Manacher 算法"></a>Manacher 算法</h3><p>Manacher 算法首先对字符串做一个预处理,使得所有的串都是奇数长度, 插入的是同样的符号且符号不存在与原串中，串的回文性不受影响</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">`aba =&gt; <span class="comment">#a#b#a#abab =&gt; #a#b#a#b#`</span></div></pre></td></tr></table></figure>
+<p>我们把回文串中最右位置与其对称轴的距离称为回文半径，Manacher 算法定义了一个回文半径数组 RL，RL[i]表示以第 i 个字符为对称轴的回文半径，对于上面得到的插入分隔符的串来说，我们可以得到 RL数组</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">char:  <span class="comment"># a # b # a #</span></div><div class="line">RL:    1 2 1 4 1 2 1</div><div class="line">RL-1:  0 1 0 3 0 1 0</div><div class="line">i:     0 1 2 3 4 5 6</div><div class="line">char: <span class="comment"># a # b # a # b #</span></div><div class="line">RL:   1 2 1 4 1 4 1 2 1</div><div class="line">RL-1: 0 1 0 3 0 3 0 1 0</div><div class="line">i:    0 1 2 3 4 5 6 7 8</div></pre></td></tr></table></figure>
+<p>我们还求了 RL[i] - 1: 我们发现<strong>RL[i] -1 正好是初始字符串中以位置i 为对称轴的最长回文长度</strong></p>
+<p>所以下面就是重点如何求得 RL 数组了， 可以参考这篇<a href="https://segmentfault.com/a/1190000003914228#articleHeader5" target="_blank" rel="external">文章</a> (讲得比较清晰)</p>
+<p>下面是算法实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">manacher</span><span class="params">(preS)</span>:</span></div><div class="line">    s = <span class="string">'#'</span> + <span class="string">'#'</span>.join(preS) + <span class="string">'#'</span></div><div class="line">    l = len(s)</div><div class="line">    RL = [<span class="number">0</span>] * l</div><div class="line">    maxRight = pos = maxLen = <span class="number">0</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(l):</div><div class="line">        <span class="keyword">if</span> i &lt; maxRight:</div><div class="line">            RL[i] = min(RL[<span class="number">2</span>*pos - i], maxRight-i)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            RL[i] = <span class="number">1</span></div><div class="line">        <span class="keyword">while</span> i - RL[i] &gt;= <span class="number">0</span> <span class="keyword">and</span> i + RL[i] &lt; l <span class="keyword">and</span> s[i - RL[i]] == s[i + RL[i]]:</div><div class="line">            RL[i] += <span class="number">1</span></div><div class="line">        <span class="keyword">if</span> i + RL[i] - <span class="number">1</span> &gt; maxRight:</div><div class="line">            maxRight = i + RL[i] - <span class="number">1</span></div><div class="line">            pos = i</div><div class="line">    maxLen = max(RL)</div><div class="line">    idx = RL.index(maxLen)</div><div class="line">    sub = s[idx - maxLen + <span class="number">1</span>: idx + maxLen]</div><div class="line">    <span class="keyword">return</span> sub.replace(<span class="string">'#'</span>, <span class="string">''</span>)</div></pre></td></tr></table></figure>
+<p>空间复杂度：借助了一个辅助数组，空间复杂度为 O(n)<br>时间复杂度：尽管内层存在循环，但是内层循环只对尚未匹配的部分进行，对于每一个字符来说，只会进行一次，所以时间复杂度是 O(n)</p>
+<h1 id="最长回文前缀"><a href="#最长回文前缀" class="headerlink" title="最长回文前缀"></a>最长回文前缀</h1><p>所谓前缀，就是以第一个字符开始</p>
+<p>下面的最长回文前缀</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">abbabbc =&gt; abbc</div><div class="line">abababb =&gt; ababa</div><div class="line">sogou =&gt; s</div></pre></td></tr></table></figure>
+<p>将原串逆转，那么问题就转变为求原串的前缀和逆串后缀<strong>相等且长度最大的值</strong>, 这个问题其实就是 <a href="http://youbookee.com/2016/09/18/kmp-python/" target="_blank" rel="external">KMP 算法</a>中的 next 数组的求解了</p>
+<p>具体求解： 将原串逆转并拼接到原串中， 以’#’ 分隔原串和逆转避免内部字符串干扰。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">longest_palindrome_prefix</span><span class="params">(s)</span>:</span></div><div class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s:</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line">    s = s + <span class="string">'#'</span> + s[::<span class="number">-1</span>] + <span class="string">'$'</span></div><div class="line">    i = <span class="number">0</span></div><div class="line">    j = <span class="number">-1</span></div><div class="line">    nt = [<span class="number">0</span>] * len(s)</div><div class="line">    nt[<span class="number">0</span>] = <span class="number">-1</span></div><div class="line">    <span class="keyword">while</span> i &lt; len(s) - <span class="number">1</span>:</div><div class="line">        <span class="keyword">if</span> j == <span class="number">-1</span> <span class="keyword">or</span> s[i] == s[j]:</div><div class="line">            i += <span class="number">1</span></div><div class="line">            j += <span class="number">1</span></div><div class="line">            nt[i] = j</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            j = nt[j]</div><div class="line">    <span class="keyword">return</span> nt[len(s) - <span class="number">1</span>]</div></pre></td></tr></table></figure>
+<h1 id="添加字符生成最短回文字符串"><a href="#添加字符生成最短回文字符串" class="headerlink" title="添加字符生成最短回文字符串"></a>添加字符生成最短回文字符串</h1><p>这道题其实跟上面基本是一样的，<br>实例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">aacecaaa -&gt; aaacecaaa <span class="comment"># 添加 a</span></div><div class="line">abcd -&gt; dcbabcd <span class="comment"># 添加 dcb</span></div></pre></td></tr></table></figure>
+<p>我们先求字符串的最长回文前缀, 然后剩余的字符串逆转并拼接到字符串的头部即是问题所求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(s)</span>:</span></div><div class="line">    length = longest_palindrome_prefix(s)</div><div class="line">    <span class="keyword">return</span> s[length:][::<span class="number">-1</span>] + s</div></pre></td></tr></table></figure>
+<h1 id="最长回文子序列"><a href="#最长回文子序列" class="headerlink" title="最长回文子序列"></a>最长回文子序列</h1><h4 id="动态规划法"><a href="#动态规划法" class="headerlink" title="动态规划法"></a>动态规划法</h4><ul>
+<li>dp[i][j] 表示子序列 s[i..j] 中存在的最长回文子序列长度</li>
+<li>初始化dp[i][i] = 1</li>
+<li>当 s[i] == s[j] 为 true 时，dp[i][j] = dp[i+1][j - 1] + 2</li>
+<li>当 s[i] == s[j] 为 false 时，dp[i][j] = max(dp[i+1][j], dp[i][j - 1])</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 求得最长回文子序列的长度</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(s)</span>:</span></div><div class="line">    l = len(s)</div><div class="line">    dp = [[<span class="number">0</span>] * l <span class="keyword">for</span> i <span class="keyword">in</span> range(l)]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(l):</div><div class="line">        dp[i][i] = <span class="number">1</span></div><div class="line">    <span class="comment"># 枚举子串的长度</span></div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">2</span>, l+<span class="number">1</span>):</div><div class="line">        <span class="comment"># 枚举子串的起始位置</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, l-k+<span class="number">1</span>):</div><div class="line">            j = i + k - <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> s[i] == s[j]:</div><div class="line">                dp[i][j] = dp[i + <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">2</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                dp[i][j] = max(dp[i][j - <span class="number">1</span>], dp[i + <span class="number">1</span>][j])</div><div class="line">    <span class="keyword">return</span> dp[<span class="number">0</span>][l<span class="number">-1</span>]</div></pre></td></tr></table></figure>
+<p>时间复杂度为 O(n^2), 空间复杂度为 O(n^2)</p>
+<p>转自：<a href="http://youbookee.com/2016/09/06/plalindrome-substring/" target="_blank" rel="external">http://youbookee.com/2016/09/06/plalindrome-substring/</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://ws4.sinaimg.cn/large/006tNbRwly1fx6sk819rfj31as0sakjl.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第七十篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;hr&gt;
+    
+    </summary>
+    
+      <category term="算法" scheme="https://zhangslob.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="算法" scheme="https://zhangslob.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>爬虫之全站爬取方法</title>
@@ -1241,46 +1304,6 @@
     
     
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>你写过哪些让你睡不好觉的BUG</title>
-    <link href="https://zhangslob.github.io/2018/05/28/%E4%BD%A0%E5%86%99%E8%BF%87%E5%93%AA%E4%BA%9B%E8%AE%A9%E4%BD%A0%E7%9D%A1%E4%B8%8D%E5%A5%BD%E8%A7%89%E7%9A%84BUG/"/>
-    <id>https://zhangslob.github.io/2018/05/28/你写过哪些让你睡不好觉的BUG/</id>
-    <published>2018-05-28T15:38:35.000Z</published>
-    <updated>2018-05-29T14:54:00.475Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十篇原创文章
-</code></pre><p>你写过什么有趣的BUG？  (๑• . •๑)</p>
-<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527532149198&amp;di=dcd173ae2aab83b73a2e6bfd043a8ca9&amp;imgtype=0&amp;src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171024%2F8d81ef9e1a014084af9aa0a4e068f75b.jpeg" alt=""></p>
-<a id="more"></a>
-<p>今天，聊聊 BUG。</p>
-<p>今天下午发现程序中一个BUG，紧急修复之后重新上线，debug上测试没毛病，OK上正式环境。build完之后，程序一直有问题，没法读数据，头疼啊，自己看的眼睛都要瞎了，找不到原因。</p>
-<p>增加更多日志，给出错的地方每一条都打印出日志来，看看到底是哪里出了问题。改完，上debug，好的没毛病，上正式环境，根据日志我大概判断出是那里的问题了，改，线下测试，debug测试，都没问题，再上正式版，还是不行。</p>
-<p>这个时候已经精疲力竭了，想砸电脑！！！</p>
-<p>为什么debug环境可以，正式环境不行啊？？</p>
-<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527532671810&amp;di=9d88a0db0b7cb537c79da3df79af9c3f&amp;imgtype=0&amp;src=http%3A%2F%2Fimage.woshipm.com%2Fwp-files%2F2015%2F08%2Fbug2.png" alt=""></p>
-<p>然后程序就跑起来了，是的，就跑起来了。下班，回家。（已经快10点了）</p>
-<p>回到家，洗完澡，写完这篇文章，再去检查日志，so far so good！！开心~</p>
-<p>现在我再仔细想了想，可能是这样：线上服务器和数据库压力比较大，程序子线程没有跑起来、或者数据库没建索引、查询时间过久（明天去验证下，因为之前一直没遇到类似问题）</p>
-<p>不管了，我要睡觉了。</p>
-<p>来讨论下，你写过什么让你睡不好觉的BUG？</p>
-<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1527532888936&amp;di=02b78519760eb95f70324934244548f2&amp;imgtype=0&amp;src=http%3A%2F%2Ftop.jobbole.com%2Fwp-content%2Fuploads%2Fsites%2F8%2F2014%2F09%2F148c6b0cefed4e594acd40957dda2c54.png" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;你写过什么有趣的BUG？  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://timgsa.baidu.com/timg?image&amp;amp;quality=80&amp;amp;size=b9999_10000&amp;amp;sec=1527532149198&amp;amp;di=dcd173ae2aab83b73a2e6bfd043a8ca9&amp;amp;imgtype=0&amp;amp;src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20171024%2F8d81ef9e1a014084af9aa0a4e068f75b.jpeg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="日常" scheme="https://zhangslob.github.io/categories/%E6%97%A5%E5%B8%B8/"/>
-    
-    
-      <category term="BUG" scheme="https://zhangslob.github.io/tags/BUG/"/>
     
   </entry>
   
