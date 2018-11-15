@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="小歪的博客">
 <meta property="og:description" content="1这是崔斯特的第七十篇原创文章">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fx6sk819rfj31as0sakjl.jpg">
-<meta property="og:updated_time" content="2018-11-13T14:25:46.472Z">
+<meta property="og:updated_time" content="2018-11-13T14:28:57.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python实现常见的回文字符串算法">
 <meta name="twitter:description" content="1这是崔斯特的第七十篇原创文章">
@@ -477,14 +477,14 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <hr>
 <a id="more"></a>
 <h1 id="回文"><a href="#回文" class="headerlink" title="回文"></a>回文</h1><p>利用python 自带的翻转 函数<code>reversed()</code></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">`<span class="function"><span class="keyword">def</span> <span class="title">is_plalindrome</span><span class="params">(string)</span>:</span>    <span class="keyword">return</span> string == <span class="string">''</span>.join(list(reversed(string)))`</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_plalindrome</span><span class="params">(string)</span>:</span>    </div><div class="line">    <span class="keyword">return</span> string == <span class="string">''</span>.join(list(reversed(string)))</div></pre></td></tr></table></figure>
 <p>自己实现</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">is_plalindrome</span><span class="params">(string)</span>:</span></div><div class="line">    string = list(string)</div><div class="line">    length = len(string)</div><div class="line">    left = <span class="number">0</span></div><div class="line">    right = length - <span class="number">1</span></div><div class="line">    <span class="keyword">while</span> left &lt; right:</div><div class="line">        <span class="keyword">if</span> string[left] != string[right]:</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line">        left += <span class="number">1</span></div><div class="line">        right -= <span class="number">1</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">True</span></div></pre></td></tr></table></figure>
 <h1 id="最长的回文子串"><a href="#最长的回文子串" class="headerlink" title="最长的回文子串"></a>最长的回文子串</h1><h3 id="暴力破解"><a href="#暴力破解" class="headerlink" title="暴力破解"></a>暴力破解</h3><p>暴力破解，枚举所有的子串，对每个子串判断是否为回文， 时间复杂度为 O(n^3)</p>
 <h3 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">solution</span><span class="params">(s)</span>:</span></div><div class="line">    s = list(s)</div><div class="line">    l = len(s)</div><div class="line">    dp = [[<span class="number">0</span>] * l <span class="keyword">for</span> i <span class="keyword">in</span> range(l)]</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(l):</div><div class="line">        dp[i][i] = <span class="keyword">True</span></div><div class="line">        <span class="comment"># 当 k = 2时要用到</span></div><div class="line">        dp[i][i - <span class="number">1</span>] = <span class="keyword">True</span></div><div class="line">    resLeft = <span class="number">0</span></div><div class="line">    resRight = <span class="number">0</span></div><div class="line">    <span class="comment"># 枚举子串的长度</span></div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">2</span>, l+<span class="number">1</span>):</div><div class="line">        <span class="comment"># 子串的起始位置</span></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, l-k+<span class="number">1</span>):</div><div class="line">            j = i + k - <span class="number">1</span></div><div class="line">            <span class="keyword">if</span> s[i] == s[j] <span class="keyword">and</span> dp[i + <span class="number">1</span>][j - <span class="number">1</span>]:</div><div class="line">                dp[i][j] = <span class="keyword">True</span></div><div class="line">                <span class="comment"># 保存最长的回文起点和终点</span></div><div class="line">                <span class="keyword">if</span> resRight - resLeft + <span class="number">1</span> &lt; k:</div><div class="line">                    resLeft = i</div><div class="line">                    resRight = j</div><div class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(s[resLeft:resRight+<span class="number">1</span>])</div></pre></td></tr></table></figure>
 <p>时间复杂度为 O(n^2), 空间复杂度为 O(n^2)</p>
 <h3 id="Manacher-算法"><a href="#Manacher-算法" class="headerlink" title="Manacher 算法"></a>Manacher 算法</h3><p>Manacher 算法首先对字符串做一个预处理,使得所有的串都是奇数长度, 插入的是同样的符号且符号不存在与原串中，串的回文性不受影响</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">`aba =&gt; <span class="comment">#a#b#a#abab =&gt; #a#b#a#b#`</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">aba =&gt; <span class="comment">#a#b#a#</span></div><div class="line">abab =&gt; <span class="comment">#a#b#a#b#</span></div></pre></td></tr></table></figure>
 <p>我们把回文串中最右位置与其对称轴的距离称为回文半径，Manacher 算法定义了一个回文半径数组 RL，RL[i]表示以第 i 个字符为对称轴的回文半径，对于上面得到的插入分隔符的串来说，我们可以得到 RL数组</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">char:  <span class="comment"># a # b # a #</span></div><div class="line">RL:    1 2 1 4 1 2 1</div><div class="line">RL-1:  0 1 0 3 0 1 0</div><div class="line">i:     0 1 2 3 4 5 6</div><div class="line">char: <span class="comment"># a # b # a # b #</span></div><div class="line">RL:   1 2 1 4 1 4 1 2 1</div><div class="line">RL-1: 0 1 0 3 0 3 0 1 0</div><div class="line">i:    0 1 2 3 4 5 6 7 8</div></pre></td></tr></table></figure>
 <p>我们还求了 RL[i] - 1: 我们发现<strong>RL[i] -1 正好是初始字符串中以位置i 为对称轴的最长回文长度</strong></p>
@@ -597,6 +597,10 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/11/15/Pycharm插件推荐：Docker-integration/" rel="prev" title="Pycharm插件推荐：Docker integration">
+                Pycharm插件推荐：Docker integration <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -678,7 +682,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -689,7 +693,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -700,7 +704,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">66</span>
+                  <span class="site-state-item-count">67</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -833,7 +837,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">嗨，全站共81.2k字</span>
+  <span class="post-count">嗨，全站共81.7k字</span>
 </div>
 
 

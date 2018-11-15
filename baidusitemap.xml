@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>https://zhangslob.github.io/2018/11/15/Pycharm%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%9ADocker-integration/</loc>
+    <lastmod>2018-11-15T16:02:37.451Z</lastmod>
+    <data>
+        <display>
+        <title>Pycharm插件推荐：Docker integration</title>
+        <pubTime>2018-11-15T10:58:11.000Z</pubTime>
+        
+        <tag>Pycharm</tag>
+         
+        <tag>Docker</tag>
+         
+         
+           
+             
+              <breadCrumb title="Pycharm" url="https://zhangslob.github.io/categories/Pycharm/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://zhangslob.github.io/2018/11/13/Python%E5%AE%9E%E7%8E%B0%E5%B8%B8%E8%A7%81%E7%9A%84%E5%9B%9E%E6%96%87%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2018-11-13T14:25:46.472Z</lastmod>
+    <lastmod>2018-11-13T14:28:57.507Z</lastmod>
     <data>
         <display>
         <title>Python实现常见的回文字符串算法</title>
@@ -823,9 +845,9 @@
         <title>PEP8规则及Pycharm应用</title>
         <pubTime>2018-02-08T13:06:23.000Z</pubTime>
         
-        <tag>PEP8</tag>
-         
         <tag>Pycharm</tag>
+         
+        <tag>PEP8</tag>
          
          
            
