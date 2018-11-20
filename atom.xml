@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-11-17T06:56:46.327Z</updated>
+  <updated>2018-11-20T14:05:07.048Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,11 +16,68 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>神经网络基础及Keras入门</title>
+    <link href="https://zhangslob.github.io/2018/11/20/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%8F%8AKeras%E5%85%A5%E9%97%A8/"/>
+    <id>https://zhangslob.github.io/2018/11/20/神经网络基础及Keras入门/</id>
+    <published>2018-11-20T11:24:23.599Z</published>
+    <updated>2018-11-20T14:05:07.048Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fxeukkzw5cj30d607aq3p.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第七十三篇原创文章</div></pre></td></tr></table></figure>
+<p>深度学习  (๑• . •๑)</p>
+<a id="more"></a>
+<h1 id="神经网络定义"><a href="#神经网络定义" class="headerlink" title="神经网络定义"></a>神经网络定义</h1><p>人工神经网络，简称神经网络，在机器学习和认知科学领域，是一种模仿生物神经网络（动物的中枢神经系统，特别是大脑）的结构和功能的数学模型或计算模型，用于对函数进行估计或近似。</p>
+<p>为了描述神经网络，我们先从最简单的神经网络讲起，这个神经网络仅由一个“神经元”构成，以下即是这个“神经元”的图示：</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fxeuxewrw8j30m80ayaam.jpg" alt=""></p>
+<p>这个“神经元”是一个以 <img src="http://ufldl.stanford.edu/wiki/images/math/3/c/b/3cb2ab026a8bb3279a30485c2220a5a4.png" alt="\textstyle x_1, x_2, x_3"> 及截距 <img src="http://ufldl.stanford.edu/wiki/images/math/d/c/b/dcb8dd3d14a2c0aa9b06ec6ce4ec0d59.png" alt="\textstyle +1"> 为输入值的运算单元，其输出为 <img src="http://ufldl.stanford.edu/wiki/images/math/8/9/f/89f1f9e549b908834d9fedca36d07bd4.png" alt="\textstyle  h_{W,b}(x) = f(W^Tx) = f(\sum_{i=1}^3 W_{i}x_i +b)"> ，其中函数 <img src="http://ufldl.stanford.edu/wiki/images/math/5/d/f/5df2a707a6b2421afcb345f96051297e.png" alt="\textstyle f : \Re \mapsto \Re"> 被称为“激活函数”。在本教程中，我们选用sigmoid函数作为<strong>激活函数</strong> <img src="http://ufldl.stanford.edu/wiki/images/math/0/3/0/0303dd697c0e1b72185d7939f9870784.png" alt="\textstyle f(\cdot)"></p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fxeuyk2a5gj304v01agli.jpg" alt=""></p>
+<p>可以看出，这个单一“神经元”的输入－输出映射关系其实就是一个逻辑回归（logistic regression）。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fxeuzao2hgj30m80gogm8.jpg" alt=""></p>
+<h1 id="神经网络模型"><a href="#神经网络模型" class="headerlink" title="神经网络模型"></a>神经网络模型</h1><p>所谓神经网络就是将许多个单一“神经元”联结在一起，这样，一个“神经元”的输出就可以是另一个“神经元”的输入。例如，下图就是一个简单的神经网络：</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fxev07o4akj30m80foq4p.jpg" alt=""></p>
+<p>我们用 <img src="http://ufldl.stanford.edu/wiki/images/math/5/4/6/546158a6d0082614d47e7f8a63225b0b.png" alt="\textstyle {n}_l"> 来表示网络的层数，本例中 <img src="http://ufldl.stanford.edu/wiki/images/math/3/c/8/3c89b5db1e49221343428af57c90e44a.png" alt="\textstyle n_l=3"> ，我们将第 <img src="http://ufldl.stanford.edu/wiki/images/math/b/a/0/ba0593b3db2fa8535b077516f4b0d70b.png" alt="\textstyle l"> 层记为 <img src="http://ufldl.stanford.edu/wiki/images/math/5/5/e/55ea36127aa64b92b071c269cd1e3990.png" alt="\textstyle L_l"> ，于是 <img src="http://ufldl.stanford.edu/wiki/images/math/1/3/e/13e0887b9e716279d9a7b8bc8e6ad63b.png" alt="\textstyle L_1"> 是输入层，输出层是 <img src="http://ufldl.stanford.edu/wiki/images/math/2/2/1/221a7296664022427d488fdb9b14b19b.png" alt="\textstyle L_{n_l}"> 。本例神经网络有参数 <img src="http://ufldl.stanford.edu/wiki/images/math/a/a/3/aa3d6ed3c577d41a791324008558efbe.png" alt="\textstyle (W,b) = (W^{(1)}, b^{(1)}, W^{(2)}, b^{(2)})"> ，其中 <img src="http://ufldl.stanford.edu/wiki/images/math/d/f/e/dfe43c64e3c42ea4ff1774fc82b87805.png" alt="\textstyle W^{(l)}_{ij}"> （下面的式子中用到）是第 <img src="http://ufldl.stanford.edu/wiki/images/math/b/a/0/ba0593b3db2fa8535b077516f4b0d70b.png" alt="\textstyle l"> 层第 <img src="http://ufldl.stanford.edu/wiki/images/math/2/3/5/235c5146ab110558897640c34dad7d97.png" alt="\textstyle j"> 单元与第 <img src="http://ufldl.stanford.edu/wiki/images/math/9/0/6/9068105ec8ebb97277c937bfa61b606d.png" alt="\textstyle l+1"> 层第 <img src="http://ufldl.stanford.edu/wiki/images/math/0/b/3/0b36ee693126b34b58f77dba7ed23987.png" alt="\textstyle i"> 单元之间的联接参数（其实就是连接线上的权重，注意标号顺序）， <img src="http://ufldl.stanford.edu/wiki/images/math/4/c/7/4c786c16575b63bbb554254725b6b648.png" alt="\textstyle b^{(l)}_i"> 是第 <img src="http://ufldl.stanford.edu/wiki/images/math/9/0/6/9068105ec8ebb97277c937bfa61b606d.png" alt="\textstyle l+1"> 层第 <img src="http://ufldl.stanford.edu/wiki/images/math/0/b/3/0b36ee693126b34b58f77dba7ed23987.png" alt="\textstyle i"> 单元的偏置项。因此在本例中， <img src="http://ufldl.stanford.edu/wiki/images/math/5/c/a/5ca0efbb17e86cb00091f6a528e0ab0e.png" alt="\textstyle W^{(1)} \in \Re^{3\times 3}"> ， <img src="http://ufldl.stanford.edu/wiki/images/math/4/3/1/431cf6f298e4106efb5bff4495aa3c6d.png" alt="\textstyle W^{(2)} \in \Re^{1\times 3}"> 。注意，没有其他单元连向偏置单元(即偏置单元没有输入)，因为它们总是输出 <img src="http://ufldl.stanford.edu/wiki/images/math/d/c/b/dcb8dd3d14a2c0aa9b06ec6ce4ec0d59.png" alt="\textstyle +1">。同时，我们用 <img src="http://ufldl.stanford.edu/wiki/images/math/8/a/f/8afb62ac69ccb2911bb24795ff052a07.png" alt="\textstyle s_l"> 表示第 <img src="http://ufldl.stanford.edu/wiki/images/math/b/a/0/ba0593b3db2fa8535b077516f4b0d70b.png" alt="\textstyle l"> 层的节点数（偏置单元不计在内）。</p>
+<h1 id="Keras实战"><a href="#Keras实战" class="headerlink" title="Keras实战"></a>Keras实战</h1><p>使用keras实现如下网络结构, 并训练模型:</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fxev23s7swj30d607aq3p.jpg" alt=""></p>
+<p>使用场景:</p>
+<p>输入值<code>(x1,x2,x3)</code>代表人的身高体重和年龄, 输出值<code>(y1,y2)</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="comment"># 总人数是1000, 一半是男生</span></div><div class="line">n = <span class="number">1000</span></div><div class="line"><span class="comment"># 所有的身体指标数据都是标准化数据, 平均值0, 标准差1</span></div><div class="line">tizhong = np.random.normal(size = n) </div><div class="line">shengao = np.random.normal(size=n)</div><div class="line">nianling = np.random.normal(size=n)</div><div class="line"><span class="comment"># 性别数据, 前500名学生是男生, 用数字1表示</span></div><div class="line">gender = np.zeros(n)</div><div class="line">gender[:<span class="number">500</span>] = <span class="number">1</span></div><div class="line"><span class="comment"># 男生的体重比较重,所以让男生的体重+1</span></div><div class="line">tizhong[:<span class="number">500</span>] += <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 男生的身高比较高, 所以让男生的升高 + 1</span></div><div class="line">shengao[:<span class="number">500</span>] += <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 男生的年龄偏小, 所以让男生年龄降低 1</span></div><div class="line">nianling[:<span class="number">500</span>] -= <span class="number">1</span></div></pre></td></tr></table></figure>
+<h4 id="创建模型"><a href="#创建模型" class="headerlink" title="创建模型"></a>创建模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">model = Sequential()</div><div class="line"><span class="comment"># 只有一个神经元, 三个输入数值</span></div><div class="line">model.add(Dense(<span class="number">4</span>, input_dim=<span class="number">3</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense1"</span>))</div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'relu'</span>, name=<span class="string">"hidden"</span>))</div><div class="line"><span class="comment"># 添加输出层</span></div><div class="line">model.add(Dense(<span class="number">2</span>, input_dim=<span class="number">4</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense2"</span>))</div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'softmax'</span>, name=<span class="string">"output"</span>))</div></pre></td></tr></table></figure>
+<h4 id="编译模型"><a href="#编译模型" class="headerlink" title="编译模型"></a>编译模型</h4><p>需要指定优化器和损失函数:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>,</div><div class="line">              loss=<span class="string">'categorical_crossentropy'</span>,</div><div class="line">              metrics=[<span class="string">'accuracy'</span>])</div></pre></td></tr></table></figure>
+<h4 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 转换成one-hot格式</span></div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> utils</div><div class="line">gender_one_hot = utils.to_categorical(gender, num_classes=<span class="number">2</span>)</div><div class="line"><span class="comment"># 身体指标都放入一个矩阵data </span></div><div class="line">data = np.array([tizhong, shengao, nianling]).T</div><div class="line"><span class="comment"># 训练模型</span></div><div class="line">model.fit(data, gender_one_hot, epochs=<span class="number">10</span>, batch_size=<span class="number">8</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">输出(stream):</div><div class="line">Epoch 1/10</div><div class="line">1000/1000 [==============================] - 0s 235us/step - loss: 0.6743 - acc: 0.7180</div><div class="line">Epoch 2/10</div><div class="line">1000/1000 [==============================] - 0s 86us/step - loss: 0.6162 - acc: 0.7310</div><div class="line">Epoch 3/10</div><div class="line">1000/1000 [==============================] - 0s 88us/step - loss: 0.5592 - acc: 0.7570</div><div class="line">Epoch 4/10</div><div class="line">1000/1000 [==============================] - 0s 87us/step - loss: 0.5162 - acc: 0.7680</div><div class="line">Epoch 5/10</div><div class="line">1000/1000 [==============================] - 0s 89us/step - loss: 0.4867 - acc: 0.7770</div><div class="line">Epoch 6/10</div><div class="line">1000/1000 [==============================] - 0s 88us/step - loss: 0.4663 - acc: 0.7830</div><div class="line">Epoch 7/10</div><div class="line">1000/1000 [==============================] - 0s 87us/step - loss: 0.4539 - acc: 0.7890</div><div class="line">Epoch 8/10</div><div class="line">1000/1000 [==============================] - 0s 86us/step - loss: 0.4469 - acc: 0.7920</div><div class="line">Epoch 9/10</div><div class="line">1000/1000 [==============================] - 0s 88us/step - loss: 0.4431 - acc: 0.7940</div><div class="line">Epoch 10/10</div><div class="line">1000/1000 [==============================] - 0s 88us/step - loss: 0.4407 - acc: 0.7900</div><div class="line">输出(plain):</div></pre></td></tr></table></figure>
+<h4 id="进行预测"><a href="#进行预测" class="headerlink" title="进行预测"></a>进行预测</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">test_data = np.array([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]])</div><div class="line">probability = model.predict(test_data)</div><div class="line"><span class="keyword">if</span> probability[<span class="number">0</span>, <span class="number">0</span>]&gt;<span class="number">0.5</span>:</div><div class="line">    print(<span class="string">'女生'</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">    print(<span class="string">'男生'</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">输出(stream):</div><div class="line">女生</div></pre></td></tr></table></figure>
+<h4 id="关键词解释"><a href="#关键词解释" class="headerlink" title="关键词解释"></a>关键词解释</h4><ul>
+<li>input_dim: 输入的维度数</li>
+<li>kernel_initializer: 数值初始化方法, 通常是正太分布</li>
+<li>batch_size: 一次训练中, 样本数据被分割成多个小份, 每一小份包含的样本数叫做batch_size</li>
+<li>epochs: 如果说将所有数据训练一次叫做一轮的话。epochs决定了总共进行几轮训练。</li>
+<li>optimizer: 优化器, 可以理解为求梯度的方法</li>
+<li>loss: 损失函数, 可以理解为用于衡量估计值和观察值之间的差距, 差距越小, loss越小</li>
+<li>metrics: 类似loss, 只是metrics不参与梯度计算, 只是一个衡量算法准确性的指标, 分类模型就用accuracy</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://ws1.sinaimg.cn/large/006tNbRwly1fxeukkzw5cj30d607aq3p.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第七十三篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;深度学习  (๑• . •๑)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="深度学习" scheme="https://zhangslob.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>WebSocket爬虫之爬取龙珠弹幕</title>
     <link href="https://zhangslob.github.io/2018/11/17/WebSocket%E7%88%AC%E8%99%AB%E4%B9%8B%E7%88%AC%E5%8F%96%E9%BE%99%E7%8F%A0%E5%BC%B9%E5%B9%95/"/>
     <id>https://zhangslob.github.io/2018/11/17/WebSocket爬虫之爬取龙珠弹幕/</id>
     <published>2018-11-17T05:55:12.214Z</published>
-    <updated>2018-11-17T06:56:46.327Z</updated>
+    <updated>2018-11-17T07:04:54.320Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fxb0rz5119j30e80e80t6.jpg" alt=""></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第七十二篇原创文章</div></pre></td></tr></table></figure>
@@ -1083,9 +1140,9 @@
       <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
-    
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
     
   </entry>
   
@@ -1142,165 +1199,9 @@
       <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
     
     
-      <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
-    
       <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
     
-  </entry>
-  
-  <entry>
-    <title>为了知道胡歌粉丝的男女比率，爬了三百万微博数据</title>
-    <link href="https://zhangslob.github.io/2018/06/07/%E8%83%A1%E6%AD%8C%E7%94%B7%E7%B2%89%E5%A4%9A%E8%BF%98%E6%98%AF%E5%A5%B3%E7%B2%89%E5%A4%9A-%E7%88%AC%E7%88%AC%E5%BE%AE%E5%8D%9A/"/>
-    <id>https://zhangslob.github.io/2018/06/07/胡歌男粉多还是女粉多-爬爬微博/</id>
-    <published>2018-06-07T13:59:53.000Z</published>
-    <updated>2018-06-10T08:04:50.610Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十三篇原创文章
-</code></pre><p>老胡好帅  (๑• . •๑)</p>
-<p><img src="http://wx1.sinaimg.cn/large/48e837eely1fmhxeqwby0j22ds1sg157.jpg" alt=""></p>
-<a id="more"></a>
-<p>最近偶然间看到一条新闻，标题是：“胡歌作为一个男性明星，男粉丝比女粉丝还多，这不科学！”</p>
-<p><img src="https://i.imgur.com/959B59J.png" alt=""></p>
-<p>文中这样说道“胡歌在微博上的粉丝就已经达到了5748.9398万人，并且通过查看粉丝可以发现许多都是男性粉丝，这不得不说这是独一无二了”</p>
-<p>当时我就震惊了，“通过查看粉丝”？？？这是什么操作，现在的UC小编越来越多了吗？</p>
-<p>我作为一名老胡的粉丝，简直是不能忍，这完全是在瞎写啊。</p>
-<p>所以我有个想法，把胡歌微博上六千万粉丝数据爬取下来，看看到底男粉丝多还是女粉丝多。</p>
-<blockquote>
-<p>大家可以在自己心中猜测一个答案，到底男粉多还是女粉多呢～～。我的答案是男性比较多。</p>
-</blockquote>
-<h1 id="分析问题"><a href="#分析问题" class="headerlink" title="分析问题"></a>分析问题</h1><p><img src="https://i.imgur.com/h1TyXZ7.png" alt=""></p>
-<p>这里可以看到胡歌微博粉丝总数约6千万，本次我的目标就是尽力去找到胡歌<strong>活跃粉丝</strong>的男女比例。</p>
-<p>但是我们知道微博是有限制的，微博不会把所有数据都展示出来，如图</p>
-<p><img src="https://i.imgur.com/UxASfy6.png" alt=""></p>
-<p>那么问题来了，我要怎样才能尽可能多的抓到粉丝数据？</p>
-<p>这里我就想要尽可能多的抓取到老胡的活跃粉丝， 所谓活跃粉丝，指的是除去“不转发、不评论、不点赞”这些“三不”用户，是活跃的、有参与的用户。这些用户才是真正有价值的，正好去除了僵尸粉。</p>
-<h1 id="两种思路"><a href="#两种思路" class="headerlink" title="两种思路"></a>两种思路</h1><p>采集微博粉丝，目前我有两种方法来解决这个问题，：</p>
-<ol>
-<li>全量采集。采集微博所有用户数据，包括关注、粉丝等。通过粉丝的粉丝、关注的关注、用户分类、推荐等等各种方法拿到微博全量用户数据。</li>
-<li>采样。采集胡歌的所有微博下有评论、点赞、转发的用户，凡是有参与过的亲密值加一，当这个值超过一定限度时（比如说5或者10），我们就认为该用户是胡歌的粉丝。</li>
-</ol>
-<p>想了想，第一种方法短时间内是不现实的，方法2倒是可以尝试一波。</p>
-<h1 id="爬虫逻辑"><a href="#爬虫逻辑" class="headerlink" title="爬虫逻辑"></a>爬虫逻辑</h1><p>爬虫分为三步：</p>
-<ol>
-<li>采集胡歌所有微博</li>
-<li>采集每条微博的三类数据（转发、评论、点赞）</li>
-<li>数据清洗</li>
-</ol>
-<p>好了，现在已经非常清晰了，下面就开始去寻找爬取方法。</p>
-<h1 id="微博接口"><a href="#微博接口" class="headerlink" title="微博接口"></a>微博接口</h1><p>根据以往的经验，weibo.cn 和 m.weibo.cn 是最简单爬取的，weibo.com 是最难的。这次我们从 m.weibo.cn 入手，分析可以得到胡歌微博的接口，而且是无需登录的！！！很重要。其他入口都需要解决登录难题！</p>
-<p><code>https://m.weibo.cn/api/container/getIndex?containerid=1076031223178222&amp;page={}</code></p>
-<p>返回数据：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function">cardlistInfo: &#123;</span></div><div class="line"><span class="title">containerid</span>: "1076031223178222",</div><div class="line"><span class="title">v_p</span>: 42,</div><div class="line"><span class="title">show_style</span>: 1,</div><div class="line"><span class="title">total</span>: 3643,</div><div class="line"><span class="title">page</span>: 2</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
-<p>这里告诉我们总共有3643条数据，每页10条，那么翻页就很清晰了。</p>
-<h2 id="其他接口"><a href="#其他接口" class="headerlink" title="其他接口"></a>其他接口</h2><figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">转发：https://m.weibo.cn/api/statuses/repostTimeline?id=<span class="number">4238119278366780</span>&amp;page=&#123;&#125;</div><div class="line"></div><div class="line">评论：https://m.weibo.cn/api/comments/show?id=<span class="number">4238119278366780</span>&amp;page=&#123;&#125;</div><div class="line"></div><div class="line">点赞：https://m.weibo.cn/api/attitudes/show?id=<span class="number">4238119278366780</span>&amp;page=&#123;&#125;</div></pre></td></tr></table></figure>
-<p>（想要爬其他人，替换这里的id即可）</p>
-<p>暂时不清楚总共有多少页，虽然返回的数据中有 <code>total_number</code> ，但是此数字并不准确，还需要更多测试。</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">total_number: 19526897,</span></div><div class="line"><span class="title">hot_total_number</span>: 0,</div><div class="line"><span class="title">max</span>: 1952690</div></pre></td></tr></table></figure>
-<p>（简单测后发现总页数为<code>total_number//55</code>）</p>
-<h2 id="采集用户信息接口"><a href="#采集用户信息接口" class="headerlink" title="采集用户信息接口"></a>采集用户信息接口</h2><p><code>https://m.weibo.cn/api/container/getIndex?type=uid&amp;value=6114792181</code></p>
-<p>其实不需要这一次请求，因为在转发接口中已经有我们想要的数据了，如下：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function">user: &#123;</span></div><div class="line"><span class="title">id</span>: 6431898981,</div><div class="line"><span class="title">screen_name</span>: "豪气<span class="title">superiority</span>",</div><div class="line"><span class="title">profile_image_url</span>: "<span class="title">https</span>://<span class="title">tvax2.sinaimg.cn</span>/<span class="title">crop</span>.9.0.220.220.180/0071<span class="title">hAK9ly8fmdxpea2vxj306n064glj.jpg</span>",</div><div class="line"><span class="title">profile_url</span>: "<span class="title">https</span>://<span class="title">m.weibo.cn</span>/<span class="title">u</span>/6431898981?<span class="title">uid</span>=6431898981&amp;<span class="title">featurecode</span>=20000320",</div><div class="line"><span class="title">statuses_count</span>: 7255,</div><div class="line"><span class="title">verified</span>: <span class="title">false</span>,</div><div class="line"><span class="title">verified_type</span>: -1,</div><div class="line"><span class="title">close_blue_v</span>: <span class="title">false</span>,</div><div class="line"><span class="title">description</span>: "",</div><div class="line"><span class="title">gender</span>: "<span class="title">m</span>",</div><div class="line"><span class="title">mbtype</span>: 0,</div><div class="line"><span class="title">urank</span>: 4,</div><div class="line"><span class="title">mbrank</span>: 0,</div><div class="line"><span class="title">follow_me</span>: <span class="title">false</span>,</div><div class="line"><span class="title">following</span>: <span class="title">false</span>,</div><div class="line"><span class="title">followers_count</span>: 2,</div><div class="line"><span class="title">follow_count</span>: 62,</div><div class="line"><span class="title">cover_image_phone</span>: "<span class="title">https</span>://<span class="title">tva1.sinaimg.cn</span>/<span class="title">crop</span>.0.0.640.640.640/549<span class="title">d0121tw1egm1kjly3jj20hs0hsq4f.jpg</span>",</div><div class="line"><span class="title">avatar_hd</span>: "<span class="title">https</span>://<span class="title">wx2.sinaimg.cn</span>/<span class="title">orj480</span>/0071<span class="title">hAK9ly8fmdxpea2vxj306n064glj.jpg</span>",</div><div class="line"><span class="title">like</span>: <span class="title">false</span>,</div><div class="line"><span class="title">like_me</span>: <span class="title">false</span>,</div><div class="line"><span class="title">badge</span>: &#123;</div><div class="line"><span class="title">user_name_certificate</span>: 1,</div><div class="line"><span class="title">wenchuan_10th</span>: 1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>很蛋疼的是，点赞和评论接口中并没有相关数据，所以点赞和评论部分要重新爬取，如下：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line"><span class="function">id: 4247512245791226,</span></div><div class="line"><span class="title">created_at</span>: "5分钟前",</div><div class="line"><span class="title">source</span>: "微博 <span class="title">weibo.com</span>",</div><div class="line"><span class="title">user</span>: &#123;</div><div class="line"><span class="title">id</span>: 6114792181,</div><div class="line"><span class="title">screen_name</span>: "<span class="title">Ming_54456</span>",</div><div class="line"><span class="title">profile_image_url</span>: "<span class="title">https</span>://<span class="title">tvax1.sinaimg.cn</span>/<span class="title">crop</span>.367.164.918.918.180/006<span class="title">FP2Mlly8fjs2mf3x6pj319x0yoqbo.jpg</span>",</div><div class="line"><span class="title">verified</span>: <span class="title">false</span>,</div><div class="line"><span class="title">verified_type</span>: -1,</div><div class="line"><span class="title">mbtype</span>: 12,</div><div class="line"><span class="title">profile_url</span>: "<span class="title">https</span>://<span class="title">m.weibo.cn</span>/<span class="title">u</span>/6114792181?<span class="title">uid</span>=6114792181&amp;<span class="title">featurecode</span>=20000320",</div><div class="line"><span class="title">remark</span>: "",</div><div class="line"><span class="title">following</span>: <span class="title">false</span>,</div><div class="line"><span class="title">follow_me</span>: <span class="title">false</span></div><div class="line">&#125;</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
-<p>微博官方API同样提供相应数据 ，建议使用前仔细阅读 <a href="http://open.weibo.com/wiki/Rate-limiting" target="_blank" rel="external">接口访问频次权限</a></p>
-<h1 id="爬虫代码"><a href="#爬虫代码" class="headerlink" title="爬虫代码"></a>爬虫代码</h1><p>爬虫完整代码可以去我的公众号（Python爬虫与算法进阶），回复“微博”获得。</p>
-<p>爬虫语言是Python3，使用Scrapy框架，数据保存在mongo，没有使用分布式，单机3天跑完。</p>
-<p>因为微博的反爬，需要大量代理支撑。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># code is far away from bugs with the god animal protecting</span></div><div class="line">    I love animals. They taste delicious.</div><div class="line">              ┏┓      ┏┓</div><div class="line">            ┏┛┻━━━┛┻┓</div><div class="line">            ┃      ☃      ┃</div><div class="line">            ┃  ┳┛  ┗┳  ┃</div><div class="line">            ┃      ┻      ┃</div><div class="line">            ┗━┓      ┏━┛</div><div class="line">                ┃      ┗━━━┓</div><div class="line">                ┃  神兽保佑    ┣┓</div><div class="line">                ┃　永无BUG！   ┏┛</div><div class="line">                ┗┓┓┏━┳┓┏┛</div><div class="line">                  ┃┫┫  ┃┫┫</div><div class="line">                  ┗┻┛  ┗┻┛</div></pre></td></tr></table></figure>
-<p>爬取的数据实例：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "_id" : ObjectId("<span class="number">5</span>b162d10e0eafb1d6e63b460"),</div><div class="line">    "id" : NumberLong(<span class="number">5372682651</span>),</div><div class="line">    "statuses_count" : <span class="number">10599</span>,</div><div class="line">    "screen_name" : "用户<span class="number">5372682651</span>",</div><div class="line">    "profile_url" : "https://m.weibo.cn/u/<span class="number">5372682651</span>?uid=<span class="number">5372682651</span>",</div><div class="line">    "description" : "暂无数据",</div><div class="line">    "gender" : "f",</div><div class="line">    "followers_count" : <span class="number">80</span>,</div><div class="line">    "follow_count" : <span class="number">1060</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h1 id="简单数据清洗"><a href="#简单数据清洗" class="headerlink" title="简单数据清洗"></a>简单数据清洗</h1><p>最终跑完一次爬到的数据有<code>3889285</code>，因为有大量页面会跳转到登录页面，对这些请求做一个重试效果会好些。</p>
-<p>数据清洗对我来说真的是个头疼的问题，找了很多相关资料，最后使用了mongo的<code>aggregate</code>方法，该方法也是我第一次使用，下面是代码：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">db.getCollection('Weibo').aggregate(</div><div class="line">    [</div><div class="line">        &#123;"$group" : &#123;_id:&#123;id:"$id",gender:"$gender"&#125;, count:&#123;$sum:<span class="number">1</span>&#125;&#125;&#125;,</div><div class="line">        &#123;$sort:&#123;"count":-<span class="number">1</span>&#125;&#125;,</div><div class="line">        &#123; $out:"result"&#125;,</div><div class="line">    ],</div><div class="line">    &#123;</div><div class="line"><span class="function">      allowDiskUse:<span class="title">true</span>,</span></div><div class="line">      <span class="title">cursor</span>:&#123;&#125;</div><div class="line">    &#125;  </div><div class="line">)</div></pre></td></tr></table></figure>
-<p>结果产生了一张新的表，对每个ID进行统计，并排序，如下：</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    "_id" : &#123;</div><div class="line">        "id" : NumberLong(<span class="number">5737668415</span>),</div><div class="line">        "gender" : "f"</div><div class="line">    &#125;,</div><div class="line">    "count" : <span class="number">106701</span>.<span class="number">0</span></div><div class="line">&#125;</div><div class="line">&#123;</div><div class="line">    "_id" : &#123;</div><div class="line">        "id" : NumberLong(<span class="number">5909154992</span>),</div><div class="line">        "gender" : "m"</div><div class="line">    &#125;,</div><div class="line">    "count" : <span class="number">72298</span>.<span class="number">0</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>参与次数达到十万次，天呐，超级真爱粉，<a href="https://m.weibo.cn/u/5737668415?uid=5737668415" target="_blank" rel="external">缘来是她</a>，疯狂刷屏有没有</p>
-<p><img src="http://p8eyj0cpn.bkt.clouddn.com/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180607110639.png" alt=""></p>
-<p>好了，现在开始看看真正的数据吧。</p>
-<p>本次共采集用户数据<code>3889285</code>条，，原始数据中男性占比<code>%33.68</code>，女性占比<code>%66.32</code>，好吧，看来女性粉丝更多；去重之后数据共有<code>1129035</code>，男性占比<code>%29.58</code>，女性占比<code>%70.42</code>，怎么看着女性粉丝还是更多呢。。</p>
-<p>我们再来计算一个数据，亲密度大于10的粉丝共有<code>16486</code>位，其中男性占比<code>%24.05</code>，女性占比<code>%75.95</code>，于是有下面这张表格。</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">亲密度</th>
-<th>男性占比</th>
-<th>女性占比</th>
-<th>粉丝总数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">大于0</td>
-<td>29.58%</td>
-<td>70.42%</td>
-<td>1129035</td>
-</tr>
-<tr>
-<td style="text-align:left">大于10</td>
-<td>24.05%</td>
-<td>75.95%</td>
-<td>16486</td>
-</tr>
-<tr>
-<td style="text-align:left">大于50</td>
-<td>32.77%</td>
-<td>67.23%</td>
-<td>4285</td>
-</tr>
-<tr>
-<td style="text-align:left">大于100</td>
-<td>36.77%</td>
-<td>63.23%</td>
-<td>2578</td>
-</tr>
-<tr>
-<td style="text-align:left">大于1000</td>
-<td>40.18%</td>
-<td>59.82%</td>
-<td>331</td>
-</tr>
-<tr>
-<td style="text-align:left">大于10000</td>
-<td>37.5%</td>
-<td>62.5%</td>
-<td>24</td>
-</tr>
-<tr>
-<td style="text-align:left">Top10</td>
-<td>30.00%</td>
-<td>70.00%</td>
-<td>10</td>
-</tr>
-</tbody>
-</table>
-<p>这个数据挺有意思的，画张表瞧瞧</p>
-<p><img src="https://i.loli.net/2018/06/10/5b1cd33ba3031.png" alt=""></p>
-<p>粉丝昵称词云</p>
-<p><img src="https://i.loli.net/2018/06/10/5b1cd793e1520.png" alt=""></p>
-<p>（感谢BDP）</p>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>看了这些数据，相信大家自己心中已经有了答案。</p>
-<p>胡歌作为一个玉树临风、 英俊潇洒、 风流倜傥、 一表人才、 高大威猛、 气宇不凡、 温文尔雅、 品貌非凡、 仪表不凡的男人，女粉丝比较多是很正常的。但是为啥大家都会有一种男粉丝比女粉丝多的错觉呢，我觉得是对比产生的感觉。我拿胡歌与其他小鲜肉作对比，肯定会跟欣赏胡歌。你说呢？</p>
-<p>本文并不是为了证明什么，只是作为一名普通粉丝想去看看更多东西。其实本次数据爬取有很多地方需要优化，大家不用太过当真。如果你有更好的分析数据的想法，可以联系我。</p>
-<blockquote>
-<p>老大镇楼</p>
-</blockquote>
-<p><img src="http://wx1.sinaimg.cn/large/48e837eegy1fe2dmkfsquj21tq1tqu0x.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十三篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;老胡好帅  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://wx1.sinaimg.cn/large/48e837eely1fmhxeqwby0j22ds1sg157.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="胡歌" scheme="https://zhangslob.github.io/tags/%E8%83%A1%E6%AD%8C/"/>
-    
-      <category term="微博" scheme="https://zhangslob.github.io/tags/%E5%BE%AE%E5%8D%9A/"/>
+      <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
     
   </entry>
   
