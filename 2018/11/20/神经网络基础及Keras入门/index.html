@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://ufldl.stanford.edu/wiki/images/math/8/a/f/8afb62ac69ccb2911bb24795ff052a07.png">
 <meta property="og:image" content="http://ufldl.stanford.edu/wiki/images/math/b/a/0/ba0593b3db2fa8535b077516f4b0d70b.png">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tNbRwly1fxev23s7swj30d607aq3p.jpg">
-<meta property="og:updated_time" content="2018-11-20T14:05:07.048Z">
+<meta property="og:updated_time" content="2018-11-20T14:09:44.492Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络基础及Keras入门">
 <meta name="twitter:description" content="1这是崔斯特的第七十三篇原创文章
@@ -468,7 +468,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,121
+                  1,129
                 </span>
               
 
@@ -524,7 +524,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <p>使用场景:</p>
 <p>输入值<code>(x1,x2,x3)</code>代表人的身高体重和年龄, 输出值<code>(y1,y2)</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="comment"># 总人数是1000, 一半是男生</span></div><div class="line">n = <span class="number">1000</span></div><div class="line"><span class="comment"># 所有的身体指标数据都是标准化数据, 平均值0, 标准差1</span></div><div class="line">tizhong = np.random.normal(size = n) </div><div class="line">shengao = np.random.normal(size=n)</div><div class="line">nianling = np.random.normal(size=n)</div><div class="line"><span class="comment"># 性别数据, 前500名学生是男生, 用数字1表示</span></div><div class="line">gender = np.zeros(n)</div><div class="line">gender[:<span class="number">500</span>] = <span class="number">1</span></div><div class="line"><span class="comment"># 男生的体重比较重,所以让男生的体重+1</span></div><div class="line">tizhong[:<span class="number">500</span>] += <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 男生的身高比较高, 所以让男生的升高 + 1</span></div><div class="line">shengao[:<span class="number">500</span>] += <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 男生的年龄偏小, 所以让男生年龄降低 1</span></div><div class="line">nianling[:<span class="number">500</span>] -= <span class="number">1</span></div></pre></td></tr></table></figure>
-<h4 id="创建模型"><a href="#创建模型" class="headerlink" title="创建模型"></a>创建模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">model = Sequential()</div><div class="line"><span class="comment"># 只有一个神经元, 三个输入数值</span></div><div class="line">model.add(Dense(<span class="number">4</span>, input_dim=<span class="number">3</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense1"</span>))</div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'relu'</span>, name=<span class="string">"hidden"</span>))</div><div class="line"><span class="comment"># 添加输出层</span></div><div class="line">model.add(Dense(<span class="number">2</span>, input_dim=<span class="number">4</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense2"</span>))</div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'softmax'</span>, name=<span class="string">"output"</span>))</div></pre></td></tr></table></figure>
+<h4 id="创建模型"><a href="#创建模型" class="headerlink" title="创建模型"></a>创建模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> Sequential</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Activation</div><div class="line"></div><div class="line">model = Sequential()</div><div class="line"></div><div class="line"><span class="comment"># 只有一个神经元, 三个输入数值</span></div><div class="line">model.add(Dense(<span class="number">4</span>, input_dim=<span class="number">3</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense1"</span>))</div><div class="line"></div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'relu'</span>, name=<span class="string">"hidden"</span>))</div><div class="line"></div><div class="line"><span class="comment"># 添加输出层</span></div><div class="line">model.add(Dense(<span class="number">2</span>, input_dim=<span class="number">4</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense2"</span>))</div><div class="line"></div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'softmax'</span>, name=<span class="string">"output"</span>))</div></pre></td></tr></table></figure>
 <h4 id="编译模型"><a href="#编译模型" class="headerlink" title="编译模型"></a>编译模型</h4><p>需要指定优化器和损失函数:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>,</div><div class="line">              loss=<span class="string">'categorical_crossentropy'</span>,</div><div class="line">              metrics=[<span class="string">'accuracy'</span>])</div></pre></td></tr></table></figure>
 <h4 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 转换成one-hot格式</span></div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> utils</div><div class="line">gender_one_hot = utils.to_categorical(gender, num_classes=<span class="number">2</span>)</div><div class="line"><span class="comment"># 身体指标都放入一个矩阵data </span></div><div class="line">data = np.array([tizhong, shengao, nianling]).T</div><div class="line"><span class="comment"># 训练模型</span></div><div class="line">model.fit(data, gender_one_hot, epochs=<span class="number">10</span>, batch_size=<span class="number">8</span>)</div></pre></td></tr></table></figure>
@@ -620,6 +620,10 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/11/22/App爬虫思路/" rel="prev" title="App爬虫思路">
+                App爬虫思路 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -701,7 +705,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">73</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -856,7 +860,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">嗨，全站共84.0k字</span>
+  <span class="post-count">嗨，全站共85.2k字</span>
 </div>
 
 

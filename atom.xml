@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-11-20T14:05:07.048Z</updated>
+  <updated>2018-11-22T11:18:11.596Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,11 +16,117 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>用node来DNS抓包</title>
+    <link href="https://zhangslob.github.io/2018/11/22/%E7%94%A8node%E6%9D%A5DNS%E6%8A%93%E5%8C%85/"/>
+    <id>https://zhangslob.github.io/2018/11/22/用node来DNS抓包/</id>
+    <published>2018-11-22T11:16:39.412Z</published>
+    <updated>2018-11-22T11:18:11.596Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fxh2063t84j30m805zq38.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第七十四篇原创文章</div></pre></td></tr></table></figure>
+<p>用node来DNS抓包  (๑• . •๑)</p>
+<a id="more"></a>
+<h1 id="前提准备"><a href="#前提准备" class="headerlink" title="前提准备"></a>前提准备</h1><p>安装node，并安装依赖，去<code>server.js</code>同级目录下安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install native-dns</div><div class="line">npm install async</div></pre></td></tr></table></figure>
+<p>保存以下文件为<code>server.js</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> dns = <span class="built_in">require</span>(<span class="string">'native-dns'</span>);</div><div class="line"><span class="keyword">let</span> server = dns.createServer();</div><div class="line"></div><div class="line"><span class="keyword">let</span> authority = &#123; <span class="attr">address</span>: <span class="string">'114.114.114.114'</span>, <span class="attr">port</span>: <span class="number">53</span>, <span class="attr">type</span>: <span class="string">'udp'</span> &#125;;</div><div class="line"></div><div class="line">server.on(<span class="string">'listening'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'server listening on'</span>, server.address()));</div><div class="line">server.on(<span class="string">'close'</span>, () =&gt; <span class="built_in">console</span>.log(<span class="string">'server closed'</span>, server.address()));</div><div class="line">server.on(<span class="string">'error'</span>, (err, buff, req, res) =&gt; <span class="built_in">console</span>.error(err.stack));</div><div class="line">server.on(<span class="string">'socketError'</span>, (err, socket) =&gt; <span class="built_in">console</span>.error(err));</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params">question, response, cb</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'proxying'</span>, question.name);</div><div class="line"></div><div class="line">  <span class="keyword">var</span> request = dns.Request(&#123;</div><div class="line">    <span class="attr">question</span>: question, <span class="comment">// forwarding the question</span></div><div class="line">    server: authority,  <span class="comment">// this is the DNS server we are asking</span></div><div class="line">    timeout: <span class="number">1000</span></div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  <span class="comment">// when we get answers, append them to the response</span></div><div class="line">  request.on(<span class="string">'message'</span>, (err, msg) =&gt; &#123;</div><div class="line">    msg.answer.forEach(<span class="function"><span class="params">a</span> =&gt;</span> response.answer.push(a));</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  request.on(<span class="string">'end'</span>, cb);</div><div class="line">  request.send();</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">let</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">'async'</span>);</div><div class="line"></div><div class="line"><span class="keyword">let</span> entries = [</div><div class="line">  &#123;</div><div class="line">    <span class="attr">domain</span>: <span class="string">"^weixin.keruyun.com*"</span>,</div><div class="line">    <span class="attr">records</span>: [</div><div class="line">      &#123; <span class="attr">type</span>: <span class="string">"A"</span>, <span class="attr">address</span>: <span class="string">"10.10.10.90"</span>, <span class="attr">ttl</span>: <span class="number">1800</span> &#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleRequest</span>(<span class="params">request, response</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'request from'</span>, request.address.address, <span class="string">'for'</span>, request.question[<span class="number">0</span>].name);</div><div class="line"></div><div class="line">  <span class="keyword">let</span> f = [];</div><div class="line"></div><div class="line">  request.question.forEach(<span class="function"><span class="params">question</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">let</span> entry = entries.filter(<span class="function"><span class="params">r</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">RegExp</span>(r.domain, <span class="string">'i'</span>).exec(question.name));</div><div class="line">    <span class="keyword">if</span> (entry.length) &#123;</div><div class="line">      entry[<span class="number">0</span>].records.forEach(<span class="function"><span class="params">record</span> =&gt;</span> &#123;</div><div class="line">        record.name = question.name;</div><div class="line">        record.ttl = record.ttl || <span class="number">1800</span>;</div><div class="line">        response.answer.push(dns[record.type](record));</div><div class="line">      &#125;);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      f.push(<span class="function"><span class="params">cb</span> =&gt;</span> proxy(question, response, cb));</div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  <span class="keyword">async</span>.parallel(f, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; response.send(); &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">server.on(<span class="string">'request'</span>, handleRequest);</div><div class="line"></div><div class="line"></div><div class="line">server.serve(<span class="number">53</span>);</div></pre></td></tr></table></figure>
+<p>手机wifi设置如下：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fwcjnzgmwfj30u01hcdi1.jpg" alt=""></p>
+<p>在DNS1和DNS2，都设置为电脑端地址</p>
+<h1 id="找到域名"><a href="#找到域名" class="headerlink" title="找到域名"></a>找到域名</h1><p>使用命名<code>node server.js</code>运行js文件，手机打开飞行模式，再关闭飞行模式，关闭手机所有应用后，打开目标应用，查看输出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">request from 10.10.10.30 <span class="keyword">for</span> api.huoshan.com</div><div class="line">proxying api.huoshan.com</div><div class="line">request from 10.10.10.30 <span class="keyword">for</span> api.huoshan.com</div><div class="line">proxying api.huoshan.com</div><div class="line">request from 10.10.10.30 <span class="keyword">for</span> sf3-ttcdn-tos.pstatp.com</div><div class="line">proxying sf3-ttcdn-tos.pstatp.com</div><div class="line">request from 10.10.10.30 <span class="keyword">for</span> nbsdk-baichuan.alicdn.com</div><div class="line">proxying nbsdk-baichuan.alicdn.com</div><div class="line">request from 10.10.10.30 <span class="keyword">for</span> sf1-hscdn-tos.pstatp.com</div><div class="line">proxying sf1-hscdn-tos.pstatp.com</div><div class="line">request from 10.10.10.30 <span class="keyword">for</span> wgo.mmstat.com</div><div class="line">proxying wgo.mmstat.com</div><div class="line">request from 10.10.10.30 <span class="keyword">for</span> v7.pstatp.com</div><div class="line">proxying v7.pstatp.com</div><div class="line">request from 10.10.10.30 <span class="keyword">for</span> sf1-ttcdn-tos.pstatp.com</div><div class="line">proxying sf1-ttcdn-tos.pstatp.com</div></pre></td></tr></table></figure>
+<p>找到自己想要抓取的域名，假设现在我们想抓取的域名是<code>superapp.kiwa-tech.com</code>，修改<code>server.js</code>文件，如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> entries = [</div><div class="line">  &#123;</div><div class="line">    <span class="attr">domain</span>: <span class="string">"^superapp.kiwa-tech.com*"</span>,</div><div class="line">    <span class="attr">records</span>: [</div><div class="line">      &#123; <span class="attr">type</span>: <span class="string">"A"</span>, <span class="attr">address</span>: <span class="string">"10.10.10.90"</span>, <span class="attr">ttl</span>: <span class="number">1800</span> &#125;</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">];</div></pre></td></tr></table></figure>
+<h1 id="配置Charles"><a href="#配置Charles" class="headerlink" title="配置Charles"></a>配置Charles</h1><p>打开Charles，注意，要使用<code>sudo</code>打开，<code>sudo /Applications/Charles.app/Contents/MacOS/Charles</code></p>
+<ol>
+<li>安装证书，手机端也要安装</li>
+<li>打开ssl proxying</li>
+<li>Reverse Proxies，设置如下</li>
+</ol>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fwcjxk01hcj30ez09agm6.jpg" alt=""></p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>最后就大功告成了，此时在手机端打开该App，即可查看相关DNS抓包数据。</p>
+<p>这种方法叫做DNS抓包</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://ws1.sinaimg.cn/large/006tNbRwly1fxh2063t84j30m805zq38.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第七十四篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;用node来DNS抓包  (๑• . •๑)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>App爬虫思路</title>
+    <link href="https://zhangslob.github.io/2018/11/22/App%E7%88%AC%E8%99%AB%E6%80%9D%E8%B7%AF/"/>
+    <id>https://zhangslob.github.io/2018/11/22/App爬虫思路/</id>
+    <published>2018-11-22T10:05:51.320Z</published>
+    <updated>2018-11-22T11:14:55.795Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fxh168kfnjj30sy0gkjsx.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第七十五篇原创文章</div></pre></td></tr></table></figure>
+<p>App爬虫  (๑• . •๑)</p>
+<a id="more"></a>
+<p>看图一点点介绍</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fxh168kfnjj30sy0gkjsx.jpg" alt=""></p>
+<h1 id="评估分析"><a href="#评估分析" class="headerlink" title="评估分析"></a>评估分析</h1><p>在抓包前，建议一定要先分析。</p>
+<p>有网页端抓网页端、有移动端抓移动端、有客户端抓客户端，最后的选择才是App。</p>
+<p>举个例子。针对腾讯视频考虑顺序：</p>
+<ol>
+<li>网页端：<code>https://v.qq.com/</code></li>
+<li>移动端：<code>https://m.v.qq.com/index.html</code></li>
+<li>客户端：通过charles设置代理抓取</li>
+<li>App</li>
+</ol>
+<p>腾讯自己就有做应用加固的，旗下产品自然很难被编译</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fxh103v492j30qs0mwn16.jpg" alt=""></p>
+<blockquote>
+<p>如果你能编译腾讯旗下App，请告诉我方法</p>
+</blockquote>
+<h1 id="如何抓包"><a href="#如何抓包" class="headerlink" title="如何抓包"></a>如何抓包</h1><p>在知乎上也有这个问题 <a href="https://www.zhihu.com/question/20467503" target="_blank" rel="external">如何在 Android 手机上实现抓包？</a></p>
+<p>但是我觉得不够全，首先对于一般的HTTP和HTTPS协议，通过最基本的Fiddler和Charles就可以抓包，具体方法请Google。需要保证两点：App走代理，证书被信任。</p>
+<p>有些应用不走操作系统的 HTTP 代理，直接走 TCP 协议，无法使用 HTTP 代理抓包。虽然 Charles 支持 SOCKS 代理，但无法分析 TCP 包。这就需要祭出大杀器 <a href="http://www.tcpdump.org/" target="_blank" rel="external">tcpdump</a> 和 <a href="https://www.wireshark.org/" target="_blank" rel="external">Wireshark</a> 。</p>
+<p>说一下DNS抓包，。这个网上基本找不到资料，这也是大佬教我的，详细步骤在博客里，感兴趣自行翻阅。</p>
+<p>还有一个比较出名的是mitmproxy，没怎么用过。</p>
+<p>最后，苹果公司有做一个比较详细的抓包说明</p>
+<p><a href="https://developer.apple.com/library/archive/qa/qa1176/_index.html" target="_blank" rel="external">https://developer.apple.com/library/archive/qa/qa1176/_index.html</a></p>
+<h1 id="如何逆向"><a href="#如何逆向" class="headerlink" title="如何逆向"></a>如何逆向</h1><p>逆向一直是一个很大的话题，而且还专门有逆向工程师这个职位，可见其中水之深。</p>
+<p>对于爬虫，简单了解即可。这里需要三个逆向工具：</p>
+<ol>
+<li>Apktool：获取资源文件和smail代码</li>
+<li>dex2jar：将dex文件转换成jar文件</li>
+<li>JD-GUI：查看到反编译后的dex的代码</li>
+</ol>
+<p>最后看到的是JAVA代码，所以能看懂JAVA是必要能力。</p>
+<p>JD-GUI我用的比较多，简单演示下。</p>
+<p>主要是使用搜索功能，搜索前需要先花很多时间反编译。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fxh1q8df4ij31hc0rhjyo.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;https://ws4.sinaimg.cn/large/006tNbRwly1fxh168kfnjj30sy0gkjsx.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第七十五篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;App爬虫  (๑• . •๑)&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>神经网络基础及Keras入门</title>
     <link href="https://zhangslob.github.io/2018/11/20/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%8F%8AKeras%E5%85%A5%E9%97%A8/"/>
     <id>https://zhangslob.github.io/2018/11/20/神经网络基础及Keras入门/</id>
     <published>2018-11-20T11:24:23.599Z</published>
-    <updated>2018-11-20T14:05:07.048Z</updated>
+    <updated>2018-11-20T14:09:44.492Z</updated>
     
     <content type="html"><![CDATA[<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fxeukkzw5cj30d607aq3p.jpg" alt=""></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第七十三篇原创文章</div></pre></td></tr></table></figure>
@@ -41,7 +147,7 @@
 <p>使用场景:</p>
 <p>输入值<code>(x1,x2,x3)</code>代表人的身高体重和年龄, 输出值<code>(y1,y2)</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="comment"># 总人数是1000, 一半是男生</span></div><div class="line">n = <span class="number">1000</span></div><div class="line"><span class="comment"># 所有的身体指标数据都是标准化数据, 平均值0, 标准差1</span></div><div class="line">tizhong = np.random.normal(size = n) </div><div class="line">shengao = np.random.normal(size=n)</div><div class="line">nianling = np.random.normal(size=n)</div><div class="line"><span class="comment"># 性别数据, 前500名学生是男生, 用数字1表示</span></div><div class="line">gender = np.zeros(n)</div><div class="line">gender[:<span class="number">500</span>] = <span class="number">1</span></div><div class="line"><span class="comment"># 男生的体重比较重,所以让男生的体重+1</span></div><div class="line">tizhong[:<span class="number">500</span>] += <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 男生的身高比较高, 所以让男生的升高 + 1</span></div><div class="line">shengao[:<span class="number">500</span>] += <span class="number">1</span></div><div class="line"></div><div class="line"><span class="comment"># 男生的年龄偏小, 所以让男生年龄降低 1</span></div><div class="line">nianling[:<span class="number">500</span>] -= <span class="number">1</span></div></pre></td></tr></table></figure>
-<h4 id="创建模型"><a href="#创建模型" class="headerlink" title="创建模型"></a>创建模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">model = Sequential()</div><div class="line"><span class="comment"># 只有一个神经元, 三个输入数值</span></div><div class="line">model.add(Dense(<span class="number">4</span>, input_dim=<span class="number">3</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense1"</span>))</div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'relu'</span>, name=<span class="string">"hidden"</span>))</div><div class="line"><span class="comment"># 添加输出层</span></div><div class="line">model.add(Dense(<span class="number">2</span>, input_dim=<span class="number">4</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense2"</span>))</div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'softmax'</span>, name=<span class="string">"output"</span>))</div></pre></td></tr></table></figure>
+<h4 id="创建模型"><a href="#创建模型" class="headerlink" title="创建模型"></a>创建模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> Sequential</div><div class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Activation</div><div class="line"></div><div class="line">model = Sequential()</div><div class="line"></div><div class="line"><span class="comment"># 只有一个神经元, 三个输入数值</span></div><div class="line">model.add(Dense(<span class="number">4</span>, input_dim=<span class="number">3</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense1"</span>))</div><div class="line"></div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'relu'</span>, name=<span class="string">"hidden"</span>))</div><div class="line"></div><div class="line"><span class="comment"># 添加输出层</span></div><div class="line">model.add(Dense(<span class="number">2</span>, input_dim=<span class="number">4</span>, kernel_initializer=<span class="string">'random_normal'</span>, name=<span class="string">"Dense2"</span>))</div><div class="line"></div><div class="line"><span class="comment"># 激活函数使用softmax</span></div><div class="line">model.add(Activation(<span class="string">'softmax'</span>, name=<span class="string">"output"</span>))</div></pre></td></tr></table></figure>
 <h4 id="编译模型"><a href="#编译模型" class="headerlink" title="编译模型"></a>编译模型</h4><p>需要指定优化器和损失函数:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">model.compile(optimizer=<span class="string">'rmsprop'</span>,</div><div class="line">              loss=<span class="string">'categorical_crossentropy'</span>,</div><div class="line">              metrics=[<span class="string">'accuracy'</span>])</div></pre></td></tr></table></figure>
 <h4 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 转换成one-hot格式</span></div><div class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> utils</div><div class="line">gender_one_hot = utils.to_categorical(gender, num_classes=<span class="number">2</span>)</div><div class="line"><span class="comment"># 身体指标都放入一个矩阵data </span></div><div class="line">data = np.array([tizhong, shengao, nianling]).T</div><div class="line"><span class="comment"># 训练模型</span></div><div class="line">model.fit(data, gender_one_hot, epochs=<span class="number">10</span>, batch_size=<span class="number">8</span>)</div></pre></td></tr></table></figure>
@@ -1084,124 +1190,6 @@
     
       <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Cookies池的后续解决方案</title>
-    <link href="https://zhangslob.github.io/2018/06/16/Cookies%E6%B1%A0%E7%9A%84%E5%90%8E%E7%BB%AD%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/"/>
-    <id>https://zhangslob.github.io/2018/06/16/Cookies池的后续解决方案/</id>
-    <published>2018-06-16T07:01:54.000Z</published>
-    <updated>2018-06-16T07:05:36.039Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十五篇原创文章
-</code></pre><p>终于有方法了  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/VD9q71g.jpg" alt=""></p>
-<a id="more"></a>
-<p><img src="https://i.imgur.com/VD9q71g.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/bmiddle/76a1b64dly1fschugfmkfg20a905savu.gif" alt=""></p>
-<blockquote>
-<p>作为一名罗吹,先吹一波C罗牛皮,简直太帅了了了</p>
-<p>瞧瞧这个眼神<br>建议大家可以看看这场比赛，西班牙VS葡萄牙，我相信你会爱上足球的</p>
-</blockquote>
-<h1 id="正文开始"><a href="#正文开始" class="headerlink" title="正文开始"></a>正文开始</h1><p>在上一篇文章: 简单说明了自己对于该网站的想法,在经过两天的测试与研究之后,我有了更多的想法.</p>
-<h2 id="想法一-为每个Cookies绑定唯一IP"><a href="#想法一-为每个Cookies绑定唯一IP" class="headerlink" title="想法一: 为每个Cookies绑定唯一IP"></a>想法一: 为每个Cookies绑定唯一IP</h2><p>你作为一个普通用户,如果对方网站检测到你不停地变换IP从不同地方来发送请求,那他肯定会有识别.那么我们可以把每一个Cookies分配唯一的IP代理,也就是你这个Cookies发送请求的代理始终是唯一的.</p>
-<p>但是这种方法的实现方式还没有想出来,不知道该使用哪些技术栈来实现这个想法</p>
-<h2 id="想法二-解决验证码"><a href="#想法二-解决验证码" class="headerlink" title="想法二: 解决验证码"></a>想法二: 解决验证码</h2><p>好,既然你弹出验证码,那我就解决它! 解决方法是:</p>
-<ol>
-<li>该网站的验证码图片是<code>base64</code>,用<code>python</code>转一下,接上第三方就OK</li>
-<li>同时该网站参数中还带有<code>token</code>参数,经过前端大佬的断点调试,发现是对多个字段的两次加密</li>
-<li>保持会话session.你需要让对方网站知道是你这个用户,所以你的cookies,ip,headers相关信息必须保持一致,我当时的想法是使用<code>requests</code>的<code>session</code>来完成这一步操作,但是很难完全模拟,因为整个爬虫使用<code>scrapy</code>来写,处理验证码使用<code>requests</code>来做,<code>session</code>这部分不大好模拟.</li>
-</ol>
-<p>附上一些为<code>session</code>添加信息的代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, my_cookie, proxy, headers)</span>:</span></div><div class="line">    self.session = requests.session()</div><div class="line">    self.session.cookies.update(my_cookie)</div><div class="line">    self.session.headers.update(&#123;<span class="string">'User-Agent'</span>: headers&#125;)</div><div class="line">    self.session.update(proxy)</div></pre></td></tr></table></figure>
-<h2 id="想法三-不解决验证问题-无脑重试"><a href="#想法三-不解决验证问题-无脑重试" class="headerlink" title="想法三: 不解决验证问题,无脑重试"></a>想法三: 不解决验证问题,无脑重试</h2><p>这是最蠢的办法,也是我目前在使用的方法. /(ㄒoㄒ)/~~</p>
-<p>思路是: 将<code>cookies</code>保存到mongoDB做持久化,再写一个脚本,持续的向<code>redis</code>中添加<code>cookies</code>和<code>start_urls</code>,然后对这些<code>start_urls</code>不停地重试,对,就是不停地重试,直到把所有的链接跑完.本次需要采集的链接并不多,质量要求不高,只需要我采集到数据就好.</p>
-<p>需要注意的是:</p>
-<ol>
-<li>需要为你的表增加唯一键,不然会有重复数据</li>
-<li>每条请求添加<code>dont_filter=True</code>,不然去重会影响爬取</li>
-</ol>
-<p>添加<code>cookies</code>和<code>start_urls</code>代码</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># add cookies and start_urls to local_redis</span></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="keyword">if</span> local_redis.scard(<span class="string">'spider:cookies'</span>) &lt; <span class="number">10</span>:</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> cookies_list:</div><div class="line">            local_redis.sadd(<span class="string">'spider:cookies'</span>, i)</div><div class="line">        print(<span class="string">"cookies Done"</span>)</div><div class="line"></div><div class="line">    <span class="keyword">if</span> local_redis.scard(<span class="string">'spider:start_urls'</span>) &lt; <span class="number">10</span>:</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> url_list:</div><div class="line">            local_redis.sadd(<span class="string">'spider:start_urls'</span>, i)</div><div class="line">        print(<span class="string">"start_urls Done"</span>)</div><div class="line">        </div><div class="line">    time.sleep(<span class="number">10</span>)</div></pre></td></tr></table></figure>
-<h1 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h1><p>我是用的是第三种方法,目前看来效果还行,数据已经爬取了大半,相信三天假过去了应该就没问题了.</p>
-<p>如果以后要长期做这个项目的话,最好的办法应该还是第二种,从根本去解决问题.</p>
-<p>本次做这个项目也收获颇多,对于<code>cookies</code>使用更加有经验;感觉最好玩的是<code>token</code>的加密与解密实现,对这方面感兴趣的可以了解下这个: <a href="https://docs.python.org/3/library/zlib.html" target="_blank" rel="external">zlib — Compression compatible with gzip</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十五篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;终于有方法了  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/VD9q71g.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>从cookie池搭建说起</title>
-    <link href="https://zhangslob.github.io/2018/06/14/%E4%BB%8Ecookie%E6%B1%A0%E6%90%AD%E5%BB%BA%E8%AF%B4%E8%B5%B7/"/>
-    <id>https://zhangslob.github.io/2018/06/14/从cookie池搭建说起/</id>
-    <published>2018-06-14T13:25:46.000Z</published>
-    <updated>2018-06-14T14:33:09.507Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第五十四篇原创文章
-</code></pre><p>我快绝望了  (๑• . •๑)</p>
-<p><img src="https://i.imgur.com/ZJMuGd5.jpg" alt=""></p>
-<a id="more"></a>
-<p>这几天接手了一个很急的项目，要在几天爬取某网站的数据。该站是我知道国内反爬比较严重的网站之一，我也做好了心理准备。</p>
-<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1528996797209&amp;di=3836d0c6faff25ec236862e1eae20486&amp;imgtype=0&amp;src=http%3A%2F%2Fkibey-echo.b0.upaiyun.com%2Fposter%2F2014%2F09%2F24%2Fbd9ba222cb5a1e9e.gif" alt=""></p>
-<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>该网站数据需要登录才能查看，APP抓包了但是没有发现相关数据，所以选择从PC站入手。</p>
-<p>既然需要登录，那就需要验证一个新鲜的<code>cookies</code>可以访问多少链接；验证方法是：</p>
-<blockquote>
-<p>直接拷贝已经登录该网站请求的Curl，转换为Python代码，加一个循环，测试，单个账号可以跑多少页</p>
-</blockquote>
-<p>经过10多次测试，发现单个Cookies可以下载，至少50个网页。</p>
-<p>那么就很好做了，可以开始写思路了。</p>
-<p><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1528996828313&amp;di=58be2c7592bc5f2f35ac0df4e513234f&amp;imgtype=0&amp;src=http%3A%2F%2Fcdnq.duitang.com%2Fuploads%2Fitem%2F201507%2F10%2F20150710172216_LtFrM.thumb.700_0.jpeg" alt=""></p>
-<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>首先我们需要多个可以登录的Cookies，然后利用这些Cookies去下载网页；一旦返回状态码不是200，就拉黑该Cookies。</p>
-<p>具体的方法看下图：</p>
-<p><img src="https://i.imgur.com/7uqitsi.png" alt=""></p>
-<p>有几点说明下：</p>
-<ol>
-<li><strong>如何模拟注册</strong>。有两种方法，<strong>模拟请求</strong>和<strong>浏览器模拟</strong>。模拟请求就是去分析注册过程中的每一步操作，这个请求是发送验证码的，那个是注册的，我优先推荐该方法，但是这种方法遇到一些携带有大量签名参数的变态网站时，难度较大，需要自己一步步断点<code>JavaScript</code>。浏览器模拟大家应该很熟悉，Python中就是<code>selenium</code>傻瓜操作，需要哪里点哪里。注意的坑是何时切换<code>iframe</code></li>
-<li><strong>Cookies的搭建</strong>。其实非常简单，这里利用了<code>redis</code>的集合，取Cookies使用<code>spop</code>即可。这里并没有做验活，因为基本上Cookies产生之后就会被使用。</li>
-</ol>
-<h1 id="我要崩溃了"><a href="#我要崩溃了" class="headerlink" title="我要崩溃了"></a>我要崩溃了</h1><p>不做不知道，一做吓一跳。</p>
-<p>但我以为该网站很简单，搭建一个简单的Cookies池就可以解决，但是我明显太年轻了。</p>
-<p>我先把采集链接推到<code>redis</code>中，使用了<code>scrapy_redis</code>。</p>
-<p>该网站的反爬：</p>
-<ol>
-<li><strong>代理问题</strong>。其实这里有一个悖论，到底该不该使用代理。首先，我不用代理，刚开始还好，但是很快我的本地代理就被拉黑了；那好上代理，但是接下来问题来了，开始出现一个个的验证码需要填了，作为一个<strong>单独的用户</strong>，我是不可能频繁的改变自己的<code>IP</code>去访问网站的，解决方法只有一个，Cookies和代理绑定，但是这种方法真的不好实现，尤其是使用<code>Scrapy</code>开发的爬虫。</li>
-<li><strong>验证码问题</strong>。既然出现了验证码，那就去解决它。验证码一般是和Cookies绑定的，那么我需要把访问该账号的<code>IP</code>、<code>User-Agent</code>、<code>Cookies</code>全部拿出来，再去发送新的请求，而且需要注意，此过程中不能再进行<code>IP</code>的变化。</li>
-</ol>
-<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>今天了大概两天的斗智斗勇，现在基本上可以爬到数据了，希望明天可以交差，不然端午就要加班了。</p>
-<p>希望这只小猫咪可以给我带来好远。</p>
-<p><img src="https://i.imgur.com/vWSjxX9.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第五十四篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;我快绝望了  (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/ZJMuGd5.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/categories/%E7%88%AC%E8%99%AB/"/>
-    
-    
-      <category term="爬虫" scheme="https://zhangslob.github.io/tags/%E7%88%AC%E8%99%AB/"/>
-    
-      <category term="cookie池" scheme="https://zhangslob.github.io/tags/cookie%E6%B1%A0/"/>
     
   </entry>
   
