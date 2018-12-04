@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[聊一聊足球]]></title>
+    <url>%2F2018%2F12%2F04%2F%E8%81%8A%E4%B8%80%E8%81%8A%E8%B6%B3%E7%90%83%2F</url>
+    <content type="text"><![CDATA[1这是崔斯特的第七十七篇原创文章 喜爱足球 (๑• . •๑) 以后除了技术还会聊点别的，这次就来聊聊我的爱好之一——足球。这里主要是说看球，看球以前主要看西甲，现在主要看意甲，C罗铁粉。 我是从高中开始喜欢足球，那时候选的文科嘛，然后男生又少，全班11人，大家都去踢球，就慢慢爱上了这个运动。大学时参加了院队，可惜自己技术太水，始终在打酱油，大二就退队了，以后就只看看球。 这里介绍下梅西和C罗，当今最顶尖的两位球员。如果你要问谁更厉害，我觉得这个问题就和PHP和Java谁是世界上最好的语言一样。我喜欢C罗，同时也敬佩梅西，两人各有伟大之处，创造无数记录，各夺得了5次金球奖。 说到金球奖，就不得不说今天的金球奖得主——莫德里奇了。其实我觉得既然都已经是事实了，再去说别人怎么怎么水，没意思。对于梅罗来说，这可能是最好的结局，双方各获奖5次，打了个平手，挺好的。我最受不了的是某些球迷，天天骂来骂去，只是为了争论自己心中谁才是历史最佳，这种行为真的很无聊，有这个时间还不如多写写代码。 看篮球与看足球有很多不同，因为篮球进球太容易，而足球打90分钟0：0是很正常的，半夜看球有时候会很困，不过足球仍然是世界第一运动。世界杯上有一场比赛超级经典，是葡萄牙3-3西班牙那场，来看看https://v.qq.com/x/page/p0703fedijp.html 喜欢C罗不仅是因为进球多，也因为他的职业态度。他的职业态度是行业内任何人都不会怀疑的，求胜的欲望，好胜的心理，使得C罗一直都兢兢业业的训练着，即使是休赛期间，C罗也会仍然坚持每天锻炼。 各个时期的C罗肌肉 最后，说说如何看球。现在基本上都可以在pp体育上看，但是有些是会员场。有时候CCTV5也会有转播，上周末就转播意甲尤文3-0弗洛伦萨那场。还有龙珠直播的体育频道，经常会有小主播转播比赛，然后不停地叫你加微信。。 最后想说，趁着年轻能熬夜多看看，以后估计就没精神了。]]></content>
+      <categories>
+        <category>爱好</category>
+      </categories>
+      <tags>
+        <tag>足球</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[说一道排序题]]></title>
     <url>%2F2018%2F11%2F27%2F%E8%AF%B4%E4%B8%80%E9%81%93%E6%8E%92%E5%BA%8F%E9%A2%98%2F</url>
     <content type="text"><![CDATA[1这是崔斯特的第七十六篇原创文章 很经典的排序问题 (๑• . •๑) 先看题目，“前K个高频元素” 给定一个非空的整数数组，返回其中出现频率前 k 高的元素。 示例 1: 12输入: nums = [1,1,1,2,2,3], k = 2输出: [1,2] 示例 2: 12输入: nums = [1], k = 1输出: [1] 简单解法这题很简单，两步： 用字典保存数字及其出现的对应频率 排序 那么第一步就不用说了，很简单 123456m = dict()for num in nums: if num in m: m[num] += 1 else: m[num] = 1 有趣的就在第二步，排序。很多人都是使用内置库sorted 1234567891011121314151617181920class Solution(object): def topKFrequent(self, nums, k): """ :type nums: List[int] :type k: int :rtype: List[int] """ m = dict() for num in nums: if num in m: m[num] += 1 else: m[num] = 1 output = sorted(m.items(), key=lambda e: e[1], reverse=True) final = [] for i in range(k): final.append(output[i][0]) return final 最简洁的代码是直接使用Python内置的collections 12345678910class Solution(object): def topKFrequent(self, nums, k): """ :type nums: List[int] :type k: int :rtype: List[int] """ import collections counter = collections.Counter(nums) return [item[0] for item in counter.most_common(k)] 这真是是我们想要的吗？并不是。我们的目标是不使用任何内置库。 sorted原理关于Python的sorted排序算法，这篇文章讲的比较详细：python sort函数内部实现原理，说到Python使用的是著名的Timesort算法。 Timsort是结合了合并排序（merge sort）和插入排序（insertion sort）而得出的排序算法，它在现实中有很好的效率。 Tim Peters在2002年设计了该算法并在Python中使用（TimSort 是 Python 中 list.sort 的默认实现）。该算法找到数据中已经排好序的块-分区，每一个分区叫一个run，然后按规则合并这些run。Pyhton自从2.3版以来一直采用Timsort算法排序，现在Java SE7和Android也采用Timsort算法对数组排序。 如果想自己用Python来写一个排序算法，完成本题要求该如何写？也就是对这个字典进行排序，{5: 1, 1: 3, 4: 1, 2: 2, 3: 1}，有什么好办法。 思路可以是两个指针遍历字典，如果左边大于右边，则替换位置。 更好的方法12345678910111213141516171819202122232425class Solution(object): def topKFrequent(self, nums, k): """ :type nums: List[int] :type k: int :rtype: List[int] """ m = dict() for num in nums: if num in m: m[num] += 1 else: m[num] = 1 bucket = [[] for _ in range(len(nums) + 1)] for key, value in m.items(): bucket[value].append(key) result = [] for i in range(len(nums), 0, -1): for n in bucket[i]: result.append(n) if len(result) == k: return result return result 很巧妙的使用列表的索引来保存value。 此时bucket值是[[], [5, 4, 3], [2], [1], [], [], [], [], []]，索引即出现次数。 此解法用时72ms，战胜 50.84 % 的 python3 提交记录。但是看了排在前面的算法，都是使用的Python内置的collections。 如果是你，会用什么方法呢？]]></content>
@@ -499,8 +510,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>Pycharm</tag>
         <tag>PEP8</tag>
+        <tag>Pycharm</tag>
       </tags>
   </entry>
   <entry>
