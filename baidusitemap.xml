@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>https://zhangslob.github.io/2018/12/05/Python%E5%A0%86%E6%8E%92%E5%BA%8F%E4%B9%8Bheapq/</loc>
+    <lastmod>2018-12-05T15:19:36.611Z</lastmod>
+    <data>
+        <display>
+        <title>Python堆排序之heapq</title>
+        <pubTime>2018-12-05T14:37:54.000Z</pubTime>
+        
+        <tag>heapq</tag>
+         
+         
+           
+             
+              <breadCrumb title="算法" url="https://zhangslob.github.io/categories/%E7%AE%97%E6%B3%95/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://zhangslob.github.io/2018/12/04/%E8%81%8A%E4%B8%80%E8%81%8A%E8%B6%B3%E7%90%83/</loc>
     <lastmod>2018-12-04T14:30:14.142Z</lastmod>
     <data>
@@ -450,9 +470,9 @@
         <title>Cookies池的后续解决方案</title>
         <pubTime>2018-06-16T07:01:54.000Z</pubTime>
         
-        <tag>cookie池</tag>
-         
         <tag>爬虫</tag>
+         
+        <tag>cookie池</tag>
          
          
            
@@ -472,9 +492,9 @@
         <title>从cookie池搭建说起</title>
         <pubTime>2018-06-14T13:25:46.000Z</pubTime>
         
-        <tag>cookie池</tag>
-         
         <tag>爬虫</tag>
+         
+        <tag>cookie池</tag>
          
          
            
@@ -955,9 +975,9 @@
         <title>PEP8规则及Pycharm应用</title>
         <pubTime>2018-02-08T13:06:23.000Z</pubTime>
         
-        <tag>PEP8</tag>
-         
         <tag>Pycharm</tag>
+         
+        <tag>PEP8</tag>
          
          
            
