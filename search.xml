@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[MongoDB保存数据的优化方法]]></title>
+    <url>%2F2018%2F12%2F18%2FMongoDB%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[这是崔斯特的第七十九篇原创文章 MongoDB保存数据的优化方法 (๑• . •๑) 这两天频繁遇到MongoDB插入数据的问题，这里记录下。 问题描述：我有多个线程在抓数据，每天数据里有含有多个文档（Document），使用Pymongo的插入方法，逐条插入。形如下 123def save_to_mongo(data): for i in data: db.insert_one(i) 在接收到数据后直接调用该方法即可。但是运维那边反馈，数据库压力比较大，让我修改。仔细想了想，可以使用insert_many方法。 插入可迭代的文档 1234567&gt;&gt;&gt; db.test.count_documents(&#123;&#125;)0&gt;&gt;&gt; result = db.test.insert_many([&#123;'x': i&#125; for i in range(2)])&gt;&gt;&gt; result.inserted_ids[ObjectId('54f113fffba522406c9cc20e'), ObjectId('54f113fffba522406c9cc20f')]&gt;&gt;&gt; db.test.count_documents(&#123;&#125;)2 有几个参数需要了解 documents: 可迭代文档 ordered :（可选）如果“True”（默认）文档将按顺序插入服务器，按提供的顺序。 如果发生错误，则中止所有剩余插入。 如果为“False”，文档将以任意顺序插入服务器，可能并行，并且将尝试所有文档插入。 bypass_document_validation: （可选）如果为“True”，则允许写入选择退出文档级别验证。 默认为“False”。 session (optional): a ClientSession. 好了最简单的方法就是把所有需要保存的数据暂时存放在列表中，最后再插入。建议加上ordered=False参数，可以防止数据保存异常。 12345678910111213141516171819202122def save_mongo(): while True: while len(tmp) &gt; 100: try: c = db[collection_name] c.insert_many(tmp, ordered=False) tmp.clear() except pymongo.errors.BulkWriteError: tmp.clear() except Exception as e: logging.error('mongodb_save insert_many: &#123;&#125;, &#123;&#125;'.format(e, tmp)) time.sleep(3)tmp = []for i in data: tmp.append(i)t_save = threading.Thread(target=save_mongo)t_save.setDaemon(True)t_save.start() 新开一个线程去不停的检查，如果列表数据大于100，则批量插入，或者等待3秒。 这里捕获pymongo.errors.BulkWriteError异常，如果在insert_many时发生错误，会产生该异常。在我这里通常是插入重复数据引起的。 还有一种情况，是在多线程情况下。多个线程共享一个列表对象，肯定是需要加锁的，如果使用Lock来管理数据插入问题，需要去给列表加锁。之前还没用过锁，边去看看教程。 12345678910111213141516171819202122232425import threadingclass SharedCounter: ''' A counter object that can be shared by multiple threads. ''' def __init__(self, initial_value = 0): self._value = initial_value self._value_lock = threading.Lock() def incr(self,delta=1): ''' Increment the counter with locking ''' self._value_lock.acquire() self._value += delta self._value_lock.release() def decr(self,delta=1): ''' Decrement the counter with locking ''' self._value_lock.acquire() self._value -= delta self._value_lock.release() 觉得太麻烦，可以将保存数据等方法封装成一个类对象，实例化一个列表，在每个线程中实例化一个类对象即可，这样多个线程中是不会共享列表数据的。 当然也可以使用另外一种数据结构：Queue队列。Queue是线程安全的，自带锁，使用的时候，不用对队列加锁操作。可以将数据暂时存入queue，然后用列表取出来，数量大于100则插入，并清空列表。]]></content>
+      <categories>
+        <category>数据库</category>
+      </categories>
+      <tags>
+        <tag>MongoDB</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Python堆排序之heapq]]></title>
     <url>%2F2018%2F12%2F05%2FPython%E5%A0%86%E6%8E%92%E5%BA%8F%E4%B9%8Bheapq%2F</url>
     <content type="text"><![CDATA[堆排序 (๑• . •๑) 1这是崔斯特的第七十八篇原创文章 Python中的堆排序heapq模块实现了Python中的堆排序，并提供了有关方法。让用Python实现排序算法有了简单快捷的方式。 heapq的官方文档和源码：Heap queue algorithm 下面通过举例的方式说明heapq的应用方法 实现堆排序123456789101112from heapq import *def heap_sort(iterable): h = [] for value in iterable: heappush(h, value) return [heappop(h) for _ in range(len(h))]if __name__ == '__main__': print(heap_sort([1, 3, 5, 9, 2, 123, 4, 88])) Output: [1, 2, 3, 4, 5, 9, 88, 123] 下面说说几个主要方法 heappush()heapq.heappush(heap, item):将item压入到堆数组heap中。如果不进行此步操作，后面的heappop()失效 heappop()heapq.heappop(heap):从堆数组heap中取出最小的值，并返回。 123456789101112131415161718192021222324&gt;&gt;&gt; h = [] #定义一个list&gt;&gt;&gt; from heapq import * #引入heapq模块&gt;&gt;&gt; h[]&gt;&gt;&gt; heappush(h, 5) #向堆中依次增加数值&gt;&gt;&gt; heappush(h, 2)&gt;&gt;&gt; heappush(h, 3)&gt;&gt;&gt; heappush(h, 9)&gt;&gt;&gt; h #h的值[2, 5, 3, 9]&gt;&gt;&gt; heappop(h) #从h中删除最小的，并返回该值2&gt;&gt;&gt; h[3, 5, 9]&gt;&gt;&gt; h.append(1) #注意，如果不是压入堆中，而是通过append追加一个数值&gt;&gt;&gt; h #堆的函数并不能操作这个增加的数值，或者说它堆对来讲是不存在的[3, 5, 9, 1]&gt;&gt;&gt; heappop(h) #从h中能够找到的最小值是3,而不是13&gt;&gt;&gt; heappush(h, 2) #这时，不仅将2压入到堆内，而且1也进入了堆。&gt;&gt;&gt; h[1, 2, 9, 5]&gt;&gt;&gt; heappop(h) #操作对象已经包含了11 heapq.heappushpop(heap, item)是上述heappush和heappop的合体，同时完成两者的功能.注意：相当于先操作了heappush(heap,item),然后操作heappop(heap) 12345678&gt;&gt;&gt; h[1, 2, 9, 5]&gt;&gt;&gt; heappop(h)1&gt;&gt;&gt; heappushpop(h, 4) #增加4同时删除最小值2并返回该最小值，与下列操作等同：2 #heappush(h,4),heappop(h)&gt;&gt;&gt; h[4, 5, 9] heapq.heapify(x)x必须是list，此函数将list变成堆，实时操作。从而能够在任何情况下使用堆的函数。 12345678910&gt;&gt;&gt; a = [3, 6, 1]&gt;&gt;&gt; heapify(a) #将a变成堆之后，可以对其操作&gt;&gt;&gt; heappop(a)1&gt;&gt;&gt; b = [4, 2, 5] #b不是堆，如果对其进行操作，显示结果如下&gt;&gt;&gt; heappop(b) #按照顺序，删除第一个数值并返回,不会从中挑选出最小的4&gt;&gt;&gt; heapify(b) #变成堆之后，再操作&gt;&gt;&gt; heappop(b)2 heapq.heapreplace(heap, item)是heappop(heap)和heappush(heap,item)的联合操作。注意，与heappushpop(heap,item)的区别在于，顺序不同，这里是先进行删除，后压入堆 12345678910111213141516171819202122232425&gt;&gt;&gt; a = []&gt;&gt;&gt; heapreplace(a, 3) #如果list空，则报错Traceback (most recent call last):File "&lt;stdin&gt;", line 1, in &lt;module&gt;IndexError: index out of range&gt;&gt;&gt; heappush(a, 3)&gt;&gt;&gt; a[3]&gt;&gt;&gt; heapreplace(a, 2) #先执行删除（heappop(a)-&gt;3),再执行加入（heappush(a, 2))3&gt;&gt;&gt; a[2]&gt;&gt;&gt; heappush(a, 5) &gt;&gt;&gt; heappush(a, 9)&gt;&gt;&gt; heappush(a, 4)&gt;&gt;&gt; a[2, 4, 9, 5]&gt;&gt;&gt; heapreplace(a, 6) #先从堆a中找出最小值并返回，然后加入62&gt;&gt;&gt; a[4, 5, 9, 6]&gt;&gt;&gt; heapreplace(a, 1) #1是后来加入的，在1加入之前，a中的最小值是44&gt;&gt;&gt; a[1, 5, 9, 6] heapq.merge(*iterables)举例： &gt;&gt;&gt; a = [2, 4, 6] &gt;&gt;&gt; b = [1, 3, 5] &gt;&gt;&gt; c = merge(a, b) &gt;&gt;&gt; list(c) [1, 2, 3, 4, 5, 6] 在归并排序中详细演示了本函数的使用方法。 heapq.nlargest(n, iterable[, key]),heapq.nsmallest(n, iterable[, key])获取列表中最大、最小的几个值。 &gt;&gt;&gt; a [2, 4, 6] &gt;&gt;&gt; nlargest(2,a) [6, 4] 数组中的第K个最大元素其实以上说了那么多，只是为了说这道题。 在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。 示例 1: 12输入: [3,2,1,5,6,4] 和 k = 2输出: 5 示例 2: 12输入: [3,2,3,1,2,4,5,5,6] 和 k = 4输出: 4 说明: 你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。 这里不说别的解法。当然面试中你肯定不能这么写，但这是一个很好的思路 12345678910class Solution: def findKthLargest(self, nums, k): """ :type nums: List[int] :type k: int :rtype: int """ import heapq heapq.heapify(nums) return heapq.nlargest(k, nums)[-1] 看到有人用return sorted(nums)[-k]，真的要被气死了。 参考 https://github.com/qiwsir/algorithm/blob/master/heapq.md]]></content>
@@ -171,8 +182,8 @@
         <category>加密算法</category>
       </categories>
       <tags>
-        <tag>加密</tag>
         <tag>淘宝</tag>
+        <tag>加密</tag>
       </tags>
   </entry>
   <entry>
@@ -246,8 +257,8 @@
         <category>爬虫</category>
       </categories>
       <tags>
-        <tag>爬虫</tag>
         <tag>cookie池</tag>
+        <tag>爬虫</tag>
       </tags>
   </entry>
   <entry>
@@ -258,8 +269,8 @@
         <category>爬虫</category>
       </categories>
       <tags>
-        <tag>爬虫</tag>
         <tag>cookie池</tag>
+        <tag>爬虫</tag>
       </tags>
   </entry>
   <entry>
@@ -521,8 +532,8 @@
         <category>Python</category>
       </categories>
       <tags>
-        <tag>Pycharm</tag>
         <tag>PEP8</tag>
+        <tag>Pycharm</tag>
       </tags>
   </entry>
   <entry>
@@ -654,8 +665,8 @@
       <tags>
         <tag>爬虫</tag>
         <tag>Scrapy</tag>
-        <tag>淘宝</tag>
         <tag>Flask</tag>
+        <tag>淘宝</tag>
       </tags>
   </entry>
   <entry>

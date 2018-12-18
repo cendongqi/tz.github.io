@@ -508,7 +508,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <p>为了解决这个问题，我们需要做一个重要的观察。从左到右处理符号时，最近开始符号必须与下一个关闭符号相匹配。此外，处理的第一个开始符号必须等待直到其匹配最后一个符号。结束符号以相反的顺序匹配开始符号。他们从内到外匹配。这是一个可以用栈解决问题的线索。</p>
 <p><img src="https://i.imgur.com/SLZpBJ8.png" alt=""></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> pythonds.basic.stack <span class="keyword">import</span> Stack</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">parChecker</span><span class="params">(symbolString)</span>:</span></div><div class="line">    s = Stack()</div><div class="line">    balanced = <span class="keyword">True</span></div><div class="line">    index = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> index &lt; len(symbolString) <span class="keyword">and</span> balanced:</div><div class="line">        symbol = symbolString[index]</div><div class="line">        <span class="keyword">if</span> symbol == <span class="string">"("</span>:</div><div class="line">            s.push(symbol)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> s.isEmpty():</div><div class="line">                balanced = <span class="keyword">False</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                s.pop()</div><div class="line"></div><div class="line">        index = index + <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">if</span> balanced <span class="keyword">and</span> s.isEmpty():</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line">print(parChecker(<span class="string">'((()))'</span>))</div><div class="line">print(parChecker(<span class="string">'(()'</span>))</div></pre></td></tr></table></figure>
-<p><em>output</em><br><figure class="highlight ada"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="literal">True</span></div><div class="line"><span class="literal">False</span></div></pre></td></tr></table></figure></p>
+<p><em>output</em><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">True</span></div><div class="line"><span class="keyword">False</span></div></pre></td></tr></table></figure></p>
 <p>一旦你认为栈是保存括号的恰当的数据结构，算法是很直接的。</p>
 <p>从空栈开始，从左到右处理括号字符串。如果一个符号是一个开始符号，将其作为一个信号，对应的结束符号稍后会出现。另一方面，如果符号是结束符号，弹出栈，只要弹出栈的开始符号可以匹配每个结束符号，则括号保持匹配状态。如果任何时候栈上没有出现符合开始符号的结束符号，则字符串不匹配。最后，当所有符号都被处理后，栈应该是空的。</p>
 <p><img src="https://i.imgur.com/M2ZtP7O.png" alt=""></p>
@@ -702,7 +702,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -713,7 +713,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -724,7 +724,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -857,7 +857,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">嗨，全站共87.6k字</span>
+  <span class="post-count">嗨，全站共88.4k字</span>
 </div>
 
 
