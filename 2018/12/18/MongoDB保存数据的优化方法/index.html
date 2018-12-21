@@ -88,7 +88,7 @@ MongoDB保存数据的优化方法  (๑• . •๑)">
 <meta property="og:description" content="这是崔斯特的第七十九篇原创文章
 MongoDB保存数据的优化方法  (๑• . •๑)">
 <meta property="og:image" content="https://ws4.sinaimg.cn/large/006tNbRwly1fyb6n6xo51j319o0owdjl.jpg">
-<meta property="og:updated_time" content="2018-12-18T12:43:18.455Z">
+<meta property="og:updated_time" content="2018-12-18T12:55:22.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MongoDB保存数据的优化方法">
 <meta name="twitter:description" content="这是崔斯特的第七十九篇原创文章
@@ -438,7 +438,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  747
+                  746
                 </span>
               
 
@@ -496,7 +496,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_mongo</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">while</span> len(tmp) &gt; <span class="number">100</span>:</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                c = db[collection_name]</div><div class="line">                c.insert_many(tmp, ordered=<span class="keyword">False</span>)</div><div class="line">                tmp.clear()</div><div class="line">            <span class="keyword">except</span> pymongo.errors.BulkWriteError:</div><div class="line">                tmp.clear()</div><div class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">                logging.error(<span class="string">'mongodb_save insert_many: &#123;&#125;, &#123;&#125;'</span>.format(e, tmp))</div><div class="line">        time.sleep(<span class="number">3</span>)</div><div class="line"></div><div class="line">tmp = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</div><div class="line">    tmp.append(i)</div><div class="line"></div><div class="line"></div><div class="line">t_save = threading.Thread(target=save_mongo)</div><div class="line">t_save.setDaemon(<span class="keyword">True</span>)</div><div class="line">t_save.start()</div></pre></td></tr></table></figure>
 <p>新开一个线程去不停的检查，如果列表数据大于100，则批量插入，或者等待3秒。</p>
 <p>这里捕获<code>pymongo.errors.BulkWriteError</code>异常，如果在<code>insert_many</code>时发生错误，会产生该异常。在我这里通常是插入重复数据引起的。</p>
-<p>还有一种情况，是在多线程情况下。多个线程共享一个列表对象，肯定是需要加锁的，如果使用<code>Lock</code>来管理数据插入问题，需要去给列表加锁。之前还没用过锁，边去看看教程。</p>
+<p>还有一种情况，是在多线程情况下。多个线程共享一个列表对象，肯定是需要加锁的，如果使用<code>Lock</code>来管理数据插入问题，需要去给列表加锁。之前还没用过锁，去看看教程。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SharedCounter</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    A counter object that can be shared by multiple threads.</div><div class="line">    '''</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, initial_value = <span class="number">0</span>)</span>:</span></div><div class="line">        self._value = initial_value</div><div class="line">        self._value_lock = threading.Lock()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">incr</span><span class="params">(self,delta=<span class="number">1</span>)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        Increment the counter with locking</div><div class="line">        '''</div><div class="line">        self._value_lock.acquire()</div><div class="line">        self._value += delta</div><div class="line">        self._value_lock.release()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decr</span><span class="params">(self,delta=<span class="number">1</span>)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        Decrement the counter with locking</div><div class="line">        '''</div><div class="line">        self._value_lock.acquire()</div><div class="line">        self._value -= delta</div><div class="line">        self._value_lock.release()</div></pre></td></tr></table></figure>
 <p>觉得太麻烦，可以将保存数据等方法封装成一个类对象，实例化一个列表，在每个线程中实例化一个类对象即可，这样多个线程中是不会共享列表数据的。</p>
 <p>当然也可以使用另外一种数据结构：Queue队列。Queue是线程安全的，自带锁，使用的时候，不用对队列加锁操作。可以将数据暂时存入queue，然后用列表取出来，数量大于100则插入，并清空列表。</p>
@@ -586,6 +586,10 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/12/21/Chrome断点JS寻找淘宝签名sign/" rel="prev" title="Chrome断点JS寻找淘宝签名sign">
+                Chrome断点JS寻找淘宝签名sign <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -658,7 +662,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">80</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -669,7 +673,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -680,7 +684,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">71</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -797,7 +801,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 <br/>
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">嗨，全站共88.4k字</span>
+  <span class="post-count">嗨，全站共89.5k字</span>
 </div>
 
 

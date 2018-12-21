@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-12-18T12:43:18.455Z</updated>
+  <updated>2018-12-21T17:01:22.423Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -16,11 +16,94 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Chrome断点JS寻找淘宝签名sign</title>
+    <link href="https://zhangslob.github.io/2018/12/21/Chrome%E6%96%AD%E7%82%B9JS%E5%AF%BB%E6%89%BE%E6%B7%98%E5%AE%9D%E7%AD%BE%E5%90%8Dsign/"/>
+    <id>https://zhangslob.github.io/2018/12/21/Chrome断点JS寻找淘宝签名sign/</id>
+    <published>2018-12-21T10:45:00.000Z</published>
+    <updated>2018-12-21T17:01:22.423Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第八十篇原创文章
+</code></pre><p>Chrome断点JS寻找淘宝签名sign  (๑• . •๑)</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fyekf65za5j30eb08kt9f.jpg" alt=""></p>
+<a id="more"></a>
+<p>写了这篇文章<a href="https://zhangslob.github.io/2018/08/14/%E6%B7%98%E5%AE%9Dsign%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/">淘宝sign加密算法</a>之后，很多人问我Chrome断点调试怎么做，今天会尽量详细聊聊。如果你用使用过Pycharm的断点，会更好理解。</p>
+<p>我们还是以淘宝为例，使用Chrome的移动请求头打开这个网站，<code>https://s.m.taobao.com/h5?q=%E9%9E%8B%E6%9E%B6</code>，然后打开开发者工具。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fyekbvh8fvj30xc0q9108.jpg" alt=""></p>
+<p>可以看到数据都在这里:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl 'https://acs.m.taobao.com/h5/mtop.taobao.wsearch.h5search/1.0/?jsv=2.3.16&amp;appKey=12574478&amp;t=1545389573843&amp;sign=b7d69692d1cc16adec65502f0bac2018&amp;api=mtop.taobao.wsearch.h5search&amp;v=1.0&amp;H5Request=true&amp;ecode=1&amp;type=jsonp&amp;dataType=jsonp&amp;callback=mtopjsonp1&amp;data=%7B%22q%22%3A%22%E9%9E%8B%E6%9E%B6%22%2C%22sst%22%3A%221%22%2C%22n%22%3A20%2C%22buying%22%3A%22buyitnow%22%2C%22m%22%3A%22api4h5%22%2C%22token4h5%22%3A%22%22%2C%22abtest%22%3A%2214%22%2C%22wlsort%22%3A%2214%22%2C%22page%22%3A1%7D' -H 'accept-encoding: gzip, deflate, br' -H 'accept-language: zh-CN,zh;q=0.9' -H 'user-agent: Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' -H 'accept: */*' -H 'referer: https://s.m.taobao.com/h5?q=%E9%9E%8B%E6%9E%B6' -H 'authority: acs.m.taobao.com' -H 'cookie: _m_h5_tk=2d819f0b9e7ed54e22c296a4d0a2ad24_1545397060981; _m_h5_tk_enc=1337c23b9d98086e735af8c00bdeeea1; t=6b9cfdffa68f4d6ea189913d5288bde7; cna=vbOjFJRUeAYCAd3aK4xZQfic; l=aBVCFdFpyHMPonDmBMaOIX41pVt4SOZzuUwM1MazniYktO-39Z2vPjYb-VwWK_qC5B7y_jt5F; isg=BC8v8gXjr7rLXauG9FFT5HkjvkUz3onQo3vs1UG8yx6lkE-SSaQTRi1BFoau6Ftu' --compressed</div></pre></td></tr></table></figure>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fyekf65za5j30eb08kt9f.jpg" alt=""></p>
+<p>重要参数是这些，简单看看，很多都是固定值，可能会变的有时间戳、<code>data</code>中的搜索关键词、页码等信息。重要的就是sign是怎么来的。</p>
+<p>下面开始一步步介绍。</p>
+<p>首先搜索sign数值，看看在其他地方时候是否出现过</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fyekq8h0arj30ty0rvn3m.jpg" alt=""></p>
+<p>接着搜索方法名。选择一个冷门的变量名可能会有帮助，如下图，一个个地点进去看看，搜索<code>sign</code>，看是否有匹配。</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fyel45wopoj310v0jqn29.jpg" alt=""></p>
+<p>最终确定关键代码在第二个，也就是<code>https://g.alicdn.com/mtb/lib-mtop/2.3.16/mtop.js</code></p>
+<p>格式化代码，并搜索sign，确定代码位置。</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fyela3fgx5j30tk0lytcd.jpg" alt=""></p>
+<p>直接贴出来</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">      <span class="keyword">if</span> (d.H5Request === !<span class="number">0</span>) &#123;</div><div class="line">          <span class="keyword">var</span> f = <span class="string">"//"</span> + (d.prefix ? d.prefix + <span class="string">"."</span> : <span class="string">""</span>) + (d.subDomain ? d.subDomain + <span class="string">"."</span> : <span class="string">""</span>) + d.mainDomain + <span class="string">"/h5/"</span> + c.api.toLowerCase() + <span class="string">"/"</span> + c.v.toLowerCase() + <span class="string">"/"</span></div><div class="line">            , g = c.appKey || (<span class="string">"waptest"</span> === d.subDomain ? <span class="string">"4272"</span> : <span class="string">"12574478"</span>)</div><div class="line">            , i = (<span class="keyword">new</span> <span class="built_in">Date</span>).getTime()</div><div class="line">            , j = h(d.token + <span class="string">"&amp;"</span> + i + <span class="string">"&amp;"</span> + g + <span class="string">"&amp;"</span> + c.data)</div><div class="line">            , k = &#123;</div><div class="line">              <span class="attr">jsv</span>: x,</div><div class="line">              <span class="attr">appKey</span>: g,</div><div class="line">              <span class="attr">t</span>: i,</div><div class="line">              <span class="attr">sign</span>: j</div><div class="line">          &#125;</div><div class="line">            , l = &#123;</div><div class="line">              <span class="attr">data</span>: c.data,</div><div class="line">              <span class="attr">ua</span>: c.ua</div><div class="line">          &#125;;</div><div class="line"><span class="comment">///</span></div><div class="line">      &#125;</div></pre></td></tr></table></figure>
+<p>可以看到sign等于j，j等于<code>h(d.token + &quot;&amp;&quot; + i + &quot;&amp;&quot; + g + &quot;&amp;&quot; + c.data)</code>，感觉是一些字符串通过“&amp;”连接起来，下一步就可以对js代码打断点去看看具体数据是什么。如下图位置。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fyeldlmty4j30ip0aodhn.jpg" alt=""></p>
+<p>此时我们再次刷新网页，稍等片刻。会出现各个变量的信息</p>
+<p><img src="https://ws3.sinaimg.cn/large/006tNbRwly1fyeleevcbnj30ku0g7djk.jpg" alt=""></p>
+<p>我们把鼠标放到变量的位置就可以看到相关信息。我们关注的是如下参数：</p>
+<ul>
+<li>d.token</li>
+<li>i</li>
+<li>g</li>
+<li>c.data</li>
+</ul>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fyet1ngv80j314m0jyn35.jpg" alt=""></p>
+<h3 id="获取d-token"><a href="#获取d-token" class="headerlink" title="获取d.token"></a>获取d.token</h3><p>我们一一来看这些是什么。我这里的token是<code>c2b90ff4dd1405aa02fda3b5a2ee72c0</code>，先去搜索下，发现在请求网页时返回的。可是这里是Request Cookies。</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fyet5n1d0xj31d40r8wm0.jpg" alt=""></p>
+<p>我们清空缓存，再来。发现第一次token是空的</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fyetio1mvkj317e0qk7co.jpg" alt=""></p>
+<p>继续往下走，直到在Network中看到请求发出去了</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNbRwly1fyetm2ifjgj31e80regrt.jpg" alt=""></p>
+<p>直接复制Curl在命令行，结果是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mtopjsonp1(&#123;<span class="string">"api"</span>:<span class="string">"mtop.taobao.wsearch.h5search"</span>,<span class="string">"data"</span>:&#123;&#125;,<span class="string">"ret"</span>:[<span class="string">"FAIL_SYS_TOKEN_EMPTY::令牌为空"</span>],<span class="string">"v"</span>:<span class="string">"1.0"</span>&#125;)</div></pre></td></tr></table></figure>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fyetptnaiuj31dq0twagy.jpg" alt=""></p>
+<p>我们接着往下走，发现终于有返回的Cookies了，而且对比发现下个请求使用的就是这里的Cookies，token就分号处理了。</p>
+<p>首先无cookie状态下去访问该请求：<code>https://acs.m.taobao.com/h5/mtop.taobao.wsearch.h5search/1.0</code>，对方会返回关键Cookies信息，<code>_m_h5_tk</code>和<code>_m_h5_tk_enc</code>，接下来会用到。</p>
+<h3 id="下一步"><a href="#下一步" class="headerlink" title="下一步"></a>下一步</h3><p>接下来的就比较简单了，i很明显就是时间戳，g是定值：12574478，那么data是什么呢，我们可以直接打印到console</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fyetv9l1fkj317y0u049g.jpg" alt=""></p>
+<p>发现就是Query String 里的data</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNbRwly1fyetx6u3hij31c20u0dps.jpg" alt=""></p>
+<p>好了我们现在已经可以找到所有的参数了，如下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; d.token + <span class="string">"&amp;"</span> + i + <span class="string">"&amp;"</span> + g + <span class="string">"&amp;"</span> + c.data</div><div class="line">&lt; <span class="string">"59e8d998ee8b36a04b6e9d8037ac22b7&amp;1545409677267&amp;12574478&amp;&#123;"</span>q<span class="string">":"</span>鞋架<span class="string">","</span>sst<span class="string">":"</span>1<span class="string">","</span>n<span class="string">":20,"</span>buying<span class="string">":"</span>buyitnow<span class="string">","</span>m<span class="string">":"</span>api4h5<span class="string">","</span>token4h5<span class="string">":"</span><span class="string">","</span>abtest<span class="string">":"</span>15<span class="string">","</span>wlsort<span class="string">":"</span>15<span class="string">","</span>page<span class="string">":1&#125;"</span></div></pre></td></tr></table></figure>
+<p>最后sign是<code>11a08dbbaa04aa6f9e4b35f6d9213242</code>，看起来像。复制字符串到在线网站里测试，发现结果是正确的。</p>
+<p><img src="/Users/zaoshu/Library/Application Support/typora-user-images/image-20181222003045612.png" alt=""></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>sign生成公式是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">md5Hex(token&amp;t&amp;appKey&amp;data)</div></pre></td></tr></table></figure>
+<p>公式可能会发生变化，只要掌握了断点调试的方法，分析起来会简单很多。想学更多搜索Chrome调试技巧。</p>
+<p>本文还有些地方没有说清楚，比如如何清空缓存，最佳方法是Application中的Storage，将下面的所有Value清空。</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNbRwly1fyeua1dj9bj319f0u0gqz.jpg" alt=""></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第八十篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Chrome断点JS寻找淘宝签名sign  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ws2.sinaimg.cn/large/006tNbRwly1fyekf65za5j30eb08kt9f.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="解密" scheme="https://zhangslob.github.io/categories/%E8%A7%A3%E5%AF%86/"/>
+    
+    
+      <category term="Chrome" scheme="https://zhangslob.github.io/tags/Chrome/"/>
+    
+      <category term="签名" scheme="https://zhangslob.github.io/tags/%E7%AD%BE%E5%90%8D/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MongoDB保存数据的优化方法</title>
     <link href="https://zhangslob.github.io/2018/12/18/MongoDB%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/"/>
     <id>https://zhangslob.github.io/2018/12/18/MongoDB保存数据的优化方法/</id>
     <published>2018-12-18T10:53:31.000Z</published>
-    <updated>2018-12-18T12:43:18.455Z</updated>
+    <updated>2018-12-18T12:55:22.495Z</updated>
     
     <content type="html"><![CDATA[<pre><code>这是崔斯特的第七十九篇原创文章
 </code></pre><p>MongoDB保存数据的优化方法  (๑• . •๑)</p>
@@ -43,7 +126,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">save_mongo</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">while</span> len(tmp) &gt; <span class="number">100</span>:</div><div class="line">            <span class="keyword">try</span>:</div><div class="line">                c = db[collection_name]</div><div class="line">                c.insert_many(tmp, ordered=<span class="keyword">False</span>)</div><div class="line">                tmp.clear()</div><div class="line">            <span class="keyword">except</span> pymongo.errors.BulkWriteError:</div><div class="line">                tmp.clear()</div><div class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">                logging.error(<span class="string">'mongodb_save insert_many: &#123;&#125;, &#123;&#125;'</span>.format(e, tmp))</div><div class="line">        time.sleep(<span class="number">3</span>)</div><div class="line"></div><div class="line">tmp = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data:</div><div class="line">    tmp.append(i)</div><div class="line"></div><div class="line"></div><div class="line">t_save = threading.Thread(target=save_mongo)</div><div class="line">t_save.setDaemon(<span class="keyword">True</span>)</div><div class="line">t_save.start()</div></pre></td></tr></table></figure>
 <p>新开一个线程去不停的检查，如果列表数据大于100，则批量插入，或者等待3秒。</p>
 <p>这里捕获<code>pymongo.errors.BulkWriteError</code>异常，如果在<code>insert_many</code>时发生错误，会产生该异常。在我这里通常是插入重复数据引起的。</p>
-<p>还有一种情况，是在多线程情况下。多个线程共享一个列表对象，肯定是需要加锁的，如果使用<code>Lock</code>来管理数据插入问题，需要去给列表加锁。之前还没用过锁，边去看看教程。</p>
+<p>还有一种情况，是在多线程情况下。多个线程共享一个列表对象，肯定是需要加锁的，如果使用<code>Lock</code>来管理数据插入问题，需要去给列表加锁。之前还没用过锁，去看看教程。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SharedCounter</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line">    A counter object that can be shared by multiple threads.</div><div class="line">    '''</div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, initial_value = <span class="number">0</span>)</span>:</span></div><div class="line">        self._value = initial_value</div><div class="line">        self._value_lock = threading.Lock()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">incr</span><span class="params">(self,delta=<span class="number">1</span>)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        Increment the counter with locking</div><div class="line">        '''</div><div class="line">        self._value_lock.acquire()</div><div class="line">        self._value += delta</div><div class="line">        self._value_lock.release()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decr</span><span class="params">(self,delta=<span class="number">1</span>)</span>:</span></div><div class="line">        <span class="string">'''</span></div><div class="line">        Decrement the counter with locking</div><div class="line">        '''</div><div class="line">        self._value_lock.acquire()</div><div class="line">        self._value -= delta</div><div class="line">        self._value_lock.release()</div></pre></td></tr></table></figure>
 <p>觉得太麻烦，可以将保存数据等方法封装成一个类对象，实例化一个列表，在每个线程中实例化一个类对象即可，这样多个线程中是不会共享列表数据的。</p>
 <p>当然也可以使用另外一种数据结构：Queue队列。Queue是线程安全的，自带锁，使用的时候，不用对队列加锁操作。可以将数据暂时存入queue，然后用列表取出来，数量大于100则插入，并清空列表。</p>
@@ -1105,64 +1188,6 @@
     
     
       <category term="多线程" scheme="https://zhangslob.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>为什么Selenium点不到元素</title>
-    <link href="https://zhangslob.github.io/2018/07/24/%E4%B8%BA%E4%BB%80%E4%B9%88Selenium%E7%82%B9%E4%B8%8D%E5%88%B0%E5%85%83%E7%B4%A0/"/>
-    <id>https://zhangslob.github.io/2018/07/24/为什么Selenium点不到元素/</id>
-    <published>2018-07-24T14:35:10.000Z</published>
-    <updated>2018-07-24T15:28:58.537Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://i.imgur.com/VfFKTnl.jpg" alt=""></p>
-<pre><code>这是崔斯特的第六十篇原创文章
-</code></pre><p>明明可以显示，为什么就是点不到呢  (๑• . •๑)</p>
-<a id="more"></a>
-<p>最近做了许多登陆项目，我会优先选择使用requests来模拟请求，但是有些参数实在是很难获取，这个时候我会使用Selenium，也还是遇到了各种坑，也算是见识到了很多的验证措施。</p>
-<p>今天说说如何解决selenium点选不到数据的问题。</p>
-<h1 id="等待"><a href="#等待" class="headerlink" title="等待"></a>等待</h1><p>这还是最常见的一种情况，推荐最多的是使用显示等待：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> selenium.webdriver.common.by <span class="keyword">import</span> By</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support.ui <span class="keyword">import</span> WebDriverWait</div><div class="line"><span class="keyword">from</span> selenium.webdriver.support <span class="keyword">import</span> expected_conditions <span class="keyword">as</span> EC</div><div class="line"></div><div class="line">driver = webdriver.Firefox()</div><div class="line">driver.get(<span class="string">"http://somedomain/url_that_delay_loading"</span>)</div><div class="line"><span class="keyword">try</span>:</div><div class="line">    element = WebDriverWait(driver,<span class="number">10</span>).until(</div><div class="line">        EC.presence_of_element_located((By.ID,<span class="string">"myDynamicElement"</span>))</div><div class="line">    )</div><div class="line"><span class="keyword">finally</span>:</div><div class="line">    driver.quit()</div></pre></td></tr></table></figure>
-<p>这段代码会等待10秒，如果10秒内找到元素则立即返回，否则会抛出TimeoutException异常。</p>
-<p>但是我比较懒，因为<code>time.sleep()</code>可以达到同样效果。</p>
-<h1 id="鼠标事件"><a href="#鼠标事件" class="headerlink" title="鼠标事件"></a>鼠标事件</h1><p>官方把它叫做“行为链”。ActionChains可以完成简单的交互行为，例如鼠标移动，鼠标点击事件，键盘输入，以及内容菜单交互。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">click(on_element=None) ——单击鼠标左键</div><div class="line"></div><div class="line">click_and_hold(on_element=None) ——点击鼠标左键，不松开</div><div class="line"></div><div class="line">context_click(on_element=None) ——点击鼠标右键</div><div class="line"></div><div class="line">double_click(on_element=None) ——双击鼠标左键</div><div class="line"></div><div class="line">drag_and_drop(<span class="built_in">source</span>, target) ——拖拽到某个元素然后松开</div><div class="line"></div><div class="line">drag_and_drop_by_offset(<span class="built_in">source</span>, xoffset, yoffset) ——拖拽到某个坐标然后松开</div><div class="line"></div><div class="line">key_down(value, element=None) ——按下某个键盘上的键</div><div class="line"></div><div class="line">key_up(value, element=None) ——松开某个键</div><div class="line"></div><div class="line">move_by_offset(xoffset, yoffset) ——鼠标从当前位置移动到某个坐标</div><div class="line"></div><div class="line">move_to_element(to_element) ——鼠标移动到某个元素</div><div class="line"></div><div class="line">move_to_element_with_offset(to_element, xoffset, yoffset) ——移动到距某个元素（左上角坐标）多少距离的位置</div><div class="line"></div><div class="line">perform() ——执行链中的所有动作</div><div class="line"></div><div class="line">release(on_element=None) ——在某个元素位置松开鼠标左键</div><div class="line"></div><div class="line">send_keys(*keys_to_send) ——发送某个键到当前焦点的元素</div><div class="line"></div><div class="line">send_keys_to_element(element, *keys_to_send) ——发送某个键到指定元素</div></pre></td></tr></table></figure>
-<p>深入了解可以参考 <a href="https://blog.csdn.net/huilan_same/article/details/52305176" target="_blank" rel="external">https://blog.csdn.net/huilan_same/article/details/52305176</a></p>
-<p><code>move_to_element_with_offset</code>和<code>click_and_hold</code>会经常用到破解验证码中。</p>
-<h1 id="触摸操作-TouchAction"><a href="#触摸操作-TouchAction" class="headerlink" title="触摸操作 (TouchAction)"></a>触摸操作 (TouchAction)</h1><p><strong>该事件仅仅针对移动端、触屏版</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">flick_element(on_element, xoffset, yoffset, speed) <span class="comment"># 以元素为起点以一定速度向下滑动</span></div><div class="line">scroll_from_element(on_element xoffset yoffset) <span class="comment">#以元素为起点向下滑动</span></div><div class="line">double_tap(on_element)                                     <span class="comment">#双击   </span></div><div class="line">flick_element(on_element, xoffset, yoffset, speed)         <span class="comment">#从元素开始以指定的速度移动</span></div><div class="line">long_press(on_element)　　                                          <span class="comment">#长按不释放</span></div><div class="line">move(xcoord, ycoord)　　                                              <span class="comment">#移动到指定的位置</span></div><div class="line">perform()　　                                                                  <span class="comment">#执行链中的所有动作</span></div><div class="line">release(xcoord, ycoord)　　                                           <span class="comment">#在某个位置松开操作</span></div><div class="line">scroll(xoffset, yoffset)                                                      <span class="comment">#滚动到某个位置</span></div><div class="line">scroll_from_element(on_element, xoffset, yoffset)         <span class="comment">#从某元素开始滚动到某个位置</span></div><div class="line">tap(on_element)                                                             <span class="comment">#单击</span></div><div class="line">tap_and_hold(xcoord, ycoord)                                        <span class="comment">#某点按住</span></div></pre></td></tr></table></figure>
-<p>为什么要说到移动端，在做登陆时，移动端往往会更加简单，但是触屏版的点击和PC端时完全不同的，点击与按住时不同的。</p>
-<p>在某个项目我换成<code>TouchAction</code>后，神奇的发现，注册不再需要处理验证码了，真是太棒了。</p>
-<h1 id="使用js"><a href="#使用js" class="headerlink" title="使用js"></a>使用js</h1><p>当你使用浏览器已经找到该元素，使用<code>click()</code>方法但是不起作用时，这个时候建议尝试js，例如在我的主页 <a href="https://www.zhihu.com/people/cuishite/activities，点击" target="_blank" rel="external">https://www.zhihu.com/people/cuishite/activities，点击</a> “查看详细资料”</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">js = <span class="string">'document.getElementsByClassName("Button ProfileHeader-expandButton Button--plain")[0].click();'</span></div><div class="line">driver.execute_script(js)</div></pre></td></tr></table></figure>
-<p>你可以先在控制台调试</p>
-<p><img src="https://i.imgur.com/kyz089A.png" alt=""></p>
-<p>js通常可以解决绝大多是问题，如果还是解决不了，那你可能和我遇到了同样的问题，比如说，我在处理某移动端网站登陆，处理如下验证码时，我会使用到<code>move_to_element_with_offset</code>，该方法是“移动到距某个元素（左上角坐标）多少距离的位置”。</p>
-<p>计算出坐标后，会调用该方法，如<code>action.move_to_element_with_offset(element, width, height).click().perform()</code>，然而实际上问题并没有这么简单，多次点击失效。具体的有时间再说。</p>
-<p><img src="https://i.imgur.com/5KXib4o.png" alt=""></p>
-<h1 id="实用方法"><a href="#实用方法" class="headerlink" title="实用方法"></a>实用方法</h1><p><strong>提取selenium的cookies</strong></p>
-<p>介绍把selenium的cookies船体给requests使用的方法：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cookies = driver.get_cookies()</div><div class="line"></div><div class="line">s = requests.Session()</div><div class="line"><span class="keyword">for</span> cookie <span class="keyword">in</span> cookies:</div><div class="line">    s.cookies.set(cookie[<span class="string">'name'</span>], cookie[<span class="string">'value'</span>])</div></pre></td></tr></table></figure>
-<p><a href="https://stackoverflow.com/questions/29563335/how-do-i-load-session-and-cookies-from-selenium-browser-to-requests-library-in-p" target="_blank" rel="external">How do I load session and cookies from Selenium browser to requests library in Python?</a></p>
-<p><strong>元素截图方法</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line"></div><div class="line">fox = webdriver.Firefox()</div><div class="line">fox.get(<span class="string">'https://stackoverflow.com/'</span>)</div><div class="line"></div><div class="line"><span class="comment"># now that we have the preliminary stuff out of the way time to get that image :D</span></div><div class="line">element = fox.find_element_by_id(<span class="string">'hlogo'</span>) <span class="comment"># find part of the page you want image of</span></div><div class="line">location = element.location</div><div class="line">size = element.size</div><div class="line">fox.save_screenshot(<span class="string">'screenshot.png'</span>) <span class="comment"># saves screenshot of entire page</span></div><div class="line">fox.quit()</div><div class="line"></div><div class="line">im = Image.open(<span class="string">'screenshot.png'</span>) <span class="comment"># uses PIL library to open image in memory</span></div><div class="line"></div><div class="line">left = location[<span class="string">'x'</span>]</div><div class="line">top = location[<span class="string">'y'</span>]</div><div class="line">right = location[<span class="string">'x'</span>] + size[<span class="string">'width'</span>]</div><div class="line">bottom = location[<span class="string">'y'</span>] + size[<span class="string">'height'</span>]</div><div class="line"></div><div class="line"></div><div class="line">im = im.crop((left, top, right, bottom)) <span class="comment"># defines crop points</span></div><div class="line">im.save(<span class="string">'screenshot.png'</span>) <span class="comment"># saves new cropped image</span></div></pre></td></tr></table></figure>
-<p><a href="https://stackoverflow.com/questions/37564932/selenium-cannot-screenshot-a-web-element" target="_blank" rel="external">selenium cannot screenshot a web element</a></p>
-<p>最后推荐一个神器 <a href="https://github.com/appium/python-client" target="_blank" rel="external">appium/python-client</a></p>
-<p>至于验证码部分，现在主要还是靠第三方工具，并没有自己尝试机器学习等方法处理。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://i.imgur.com/VfFKTnl.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;这是崔斯特的第六十篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;明明可以显示，为什么就是点不到呢  (๑• . •๑)&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Selenium" scheme="https://zhangslob.github.io/categories/Selenium/"/>
-    
-    
-      <category term="Selenium" scheme="https://zhangslob.github.io/tags/Selenium/"/>
     
   </entry>
   
