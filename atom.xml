@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2018-12-21T17:01:22.423Z</updated>
+  <updated>2019-01-03T14:23:53.348Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pyspark操作MongoDB</title>
+    <link href="https://zhangslob.github.io/2019/01/03/pyspark%E6%93%8D%E4%BD%9CMongoDB/"/>
+    <id>https://zhangslob.github.io/2019/01/03/pyspark操作MongoDB/</id>
+    <published>2019-01-03T10:31:23.000Z</published>
+    <updated>2019-01-03T14:23:53.348Z</updated>
+    
+    <content type="html"><![CDATA[<p>pyspark对mongo数据库的基本操作  (๑• . •๑)</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fytrgust8kj318i0u0q8c.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第八十一篇原创文章</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>有几点需要注意的：</p>
+<ol>
+<li>不要安装最新的pyspark版本，请安装<code>pip3 install pyspark==2.3.2</code></li>
+<li><code>spark-connector</code>与平常的MongoDB写法不同，格式是：<code>mongodb://127.0.0.1:database.collection</code></li>
+<li>如果计算数据量比较大，你的电脑可能会比较卡，^_^</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python  </span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"><span class="string">"""</span></div><div class="line">@author: zhangslob</div><div class="line">@file: spark_count.py </div><div class="line">@time: 2019/01/03</div><div class="line">@desc:</div><div class="line">    不要安装最新的pyspark版本</div><div class="line">    `pip3 install pyspark==2.3.2`</div><div class="line">    更多pyspark操作MongoDB请看https://docs.mongodb.com/spark-connector/master/python-api/</div><div class="line">"""</div><div class="line"></div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">from</span> pyspark.sql <span class="keyword">import</span> SparkSession</div><div class="line"></div><div class="line"><span class="comment"># set PYSPARK_PYTHON to python36</span></div><div class="line">os.environ[<span class="string">'PYSPARK_PYTHON'</span>] = <span class="string">'/usr/bin/python36'</span></div><div class="line"></div><div class="line"><span class="comment"># load mongodb data</span></div><div class="line"><span class="comment"># 格式是："mongodb://127.0.0.1:database.collection"</span></div><div class="line">input_uri = <span class="string">"mongodb://127.0.0.1:27017/spark.spark_test"</span></div><div class="line">output_uri = <span class="string">"mongodb://127.0.0.1:27017/spark.spark_test"</span></div><div class="line"></div><div class="line"><span class="comment"># 创建spark，默认使用本地环境，或者"spark://master:7077"</span></div><div class="line">spark = SparkSession \</div><div class="line">    .builder \</div><div class="line">    .master(<span class="string">"local"</span>) \</div><div class="line">    .appName(<span class="string">"MyApp"</span>) \</div><div class="line">    .config(<span class="string">"spark.mongodb.input.uri"</span>, input_uri) \</div><div class="line">    .config(<span class="string">"spark.mongodb.output.uri"</span>, output_uri) \</div><div class="line">    .config(<span class="string">'spark.jars.packages'</span>, <span class="string">'org.mongodb.spark:mongo-spark-connector_2.11:2.2.0'</span>) \</div><div class="line">    .getOrCreate()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">except_id</span><span class="params">(collection_1, collection_2, output_collection, pipeline)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    计算表1与表2中不同的数据</div><div class="line">    :param collection_1: 导入表1</div><div class="line">    :param collection_2: 导入表2</div><div class="line">    :param output_collection: 保存的表</div><div class="line">    :param pipeline: MongoDB查询语句 str</div><div class="line">    :return:</div><div class="line">    """</div><div class="line">    <span class="comment"># 可以在这里指定想要导入的数据库，将会覆盖上面配置中的input_uri。下面保存数据也一样</span></div><div class="line">    <span class="comment"># .option("collection", "mongodb://127.0.0.1:27017/spark.spark_test")</span></div><div class="line">    <span class="comment"># .option("database", "people").option("collection", "contacts")</span></div><div class="line"></div><div class="line">    df_1 = spark.read.format(<span class="string">'com.mongodb.spark.sql.DefaultSource'</span>).option(<span class="string">"collection"</span>, collection_1) \</div><div class="line">        .option(<span class="string">"pipeline"</span>, pipeline).load()</div><div class="line"></div><div class="line">    df_2 = spark.read.format(<span class="string">'com.mongodb.spark.sql.DefaultSource'</span>).option(<span class="string">"collection"</span>, collection_2) \</div><div class="line">        .option(<span class="string">"pipeline"</span>, pipeline).load()</div><div class="line"></div><div class="line">    <span class="comment"># df_1有但是不在 df_2，同理可以计算df_2有，df_1没有</span></div><div class="line">    df = df_1.subtract(df_2)</div><div class="line">    df.show()</div><div class="line"></div><div class="line">    <span class="comment"># mode 参数可选范围</span></div><div class="line">    <span class="comment"># * `append`: Append contents of this :class:`DataFrame` to existing data.</span></div><div class="line">    <span class="comment"># * `overwrite`: Overwrite existing data.</span></div><div class="line">    <span class="comment"># * `error` or `errorifexists`: Throw an exception if data already exists.</span></div><div class="line">    <span class="comment"># * `ignore`: Silently ignore this operation if data already exists.</span></div><div class="line"></div><div class="line">    df.write.format(<span class="string">"com.mongodb.spark.sql.DefaultSource"</span>).option(<span class="string">"collection"</span>, output_collection).mode(<span class="string">"append"</span>).save()</div><div class="line">    spark.stop()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="comment"># mongodb query, MongoDB查询语句，可以减少导入数据量</span></div><div class="line">    pipeline = <span class="string">"[&#123;'$project': &#123;'uid': 1, '_id': 0&#125;&#125;]"</span></div><div class="line"></div><div class="line">    collection_1 = <span class="string">"spark_1"</span></div><div class="line">    collection_2 = <span class="string">"spark_2"</span></div><div class="line">    output_collection = <span class="string">'diff_uid'</span></div><div class="line">    except_id(collection_1, collection_2, output_collection, pipeline)</div><div class="line">    print(<span class="string">'success'</span>)</div></pre></td></tr></table></figure>
+<p>完整代码地址：<a href="https://github.com/zhangslob/learning-spark/blob/master/code/Python/spark_count_diff_uid.py" target="_blank" rel="external">spark_count_diff_uid.py</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;pyspark对mongo数据库的基本操作  (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ws1.sinaimg.cn/large/006tNc79ly1fytrgust8kj318i0u0q8c.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第八十一篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="spark" scheme="https://zhangslob.github.io/categories/spark/"/>
+    
+    
+      <category term="-pyspark" scheme="https://zhangslob.github.io/tags/pyspark/"/>
+    
+  </entry>
   
   <entry>
     <title>Chrome断点JS寻找淘宝签名sign</title>
@@ -1124,70 +1160,6 @@
       <category term="淘宝" scheme="https://zhangslob.github.io/tags/%E6%B7%98%E5%AE%9D/"/>
     
       <category term="加密" scheme="https://zhangslob.github.io/tags/%E5%8A%A0%E5%AF%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python多线程（一）</title>
-    <link href="https://zhangslob.github.io/2018/07/28/Python%E5%A4%9A%E7%BA%BF%E7%A8%8B%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>https://zhangslob.github.io/2018/07/28/Python多线程（一）/</id>
-    <published>2018-07-28T07:01:34.000Z</published>
-    <updated>2018-07-28T08:13:29.170Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://www.cn314.com/d/file/xinpin/452214b5930752f61039756c8dc70d67.jpg" alt=""></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十一篇原创文章</div></pre></td></tr></table></figure>
-<p>记录自己对多线程的理解  (๑• . •๑)</p>
-<a id="more"></a>
-<h1 id="线程与影分身"><a href="#线程与影分身" class="headerlink" title="线程与影分身"></a>线程与影分身</h1><p>多线程就是鸣人的<code>影分身之术</code>，可能不大恰当，但是非常容易理解。</p>
-<p><img src="https://cf-darren0322.zi.org.tw/wp-content/uploads/2017/09/1504614882-afaa0c0f0d32fd75d061c2aeff07b38f.jpg" alt=""></p>
-<p>平时一个鸣人会一个人，但是遇到强敌时，他会使用<code>影分身之术</code>，召唤自己的兄弟来帮助他一起来战斗。这样，他就从一个人战斗变成多个人战斗。</p>
-<p>多线程也是这样，平时一个线程去做某件事，当使用多线程后，就会有很多个线程按照命令去做事，就像影分身一样。</p>
-<h1 id="Python使用"><a href="#Python使用" class="headerlink" title="Python使用"></a>Python使用</h1><p>鸣人和使用需要先结印</p>
-<p><img src="http://i0.qhmsg.com/t01ccd9cfd17482901d.jpg" alt=""></p>
-<p>Python 中需要先调用，让我们看一个简单的例子：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">shadow</span><span class="params">(num)</span>:</span></div><div class="line">    print(<span class="string">'产生了第&#123;&#125;个分身...'</span>.format(num))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>):</div><div class="line">    t = threading.Thread(target=shadow, args=(i,))</div><div class="line">    t.start()</div><div class="line">    t.join()</div></pre></td></tr></table></figure>
-<p>Output</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">产生了第1个分身...</div><div class="line">产生了第2个分身...</div><div class="line">产生了第3个分身...</div><div class="line">产生了第4个分身...</div><div class="line">产生了第5个分身...</div></pre></td></tr></table></figure>
-<p>可以看出用法非常简单，只需要先导入<code>threading</code>模块，然后实例化一个线程对象，注意<code>args是</code>元祖</p>
-<p><code>t = threading.Thread(target=shadow, args=(i,))</code></p>
-<p>线程被创建之后并不会马上运行，需要手动调用 <code>start()</code> ， <code>join()</code> 让调用它的线程一直等待直到执行结束： </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">t.start()</div><div class="line">t.join()</div></pre></td></tr></table></figure>
-<h1 id="查看线程名字"><a href="#查看线程名字" class="headerlink" title="查看线程名字"></a>查看线程名字</h1><p>上述例子中，我们只知道产生了多个线程，但还是并不知道具体是哪个线程，如果某个线程出错了，我们没法去追踪，所以我们可以给线程加上名字。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">shadow</span><span class="params">(num)</span>:</span></div><div class="line">    print(<span class="string">'&#123;&#125;产生了第&#123;&#125;个分身...'</span>.format(threading.currentThread().getName(), num))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>):</div><div class="line">    t = threading.Thread(target=shadow, args=(i,), name=<span class="string">'第&#123;&#125;个鸣人'</span>.format(i))</div><div class="line">    t.start()</div><div class="line">    t.join()</div></pre></td></tr></table></figure>
-<p>Out:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">第1个鸣人产生了第1个分身...</div><div class="line">第2个鸣人产生了第2个分身...</div><div class="line">第3个鸣人产生了第3个分身...</div><div class="line">第4个鸣人产生了第4个分身...</div><div class="line">第5个鸣人产生了第5个分身...</div></pre></td></tr></table></figure>
-<p>当然，你可以这样</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">shadow</span><span class="params">(num)</span>:</span></div><div class="line">    print(<span class="string">'&#123;&#125;产生了第&#123;&#125;个分身...'</span>.format(threading.currentThread().getName(), num))</div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">6</span>):</div><div class="line">    t = threading.Thread(target=shadow, args=(i,))</div><div class="line">    t.start()</div><div class="line">    t.join()</div><div class="line"></div><div class="line">print(threading.currentThread().getName())</div></pre></td></tr></table></figure>
-<p>Out</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Thread-1产生了第1个分身...</div><div class="line">Thread-2产生了第2个分身...</div><div class="line">Thread-3产生了第3个分身...</div><div class="line">Thread-4产生了第4个分身...</div><div class="line">Thread-5产生了第5个分身...</div><div class="line">MainThread</div></pre></td></tr></table></figure>
-<p>你可以看到在所有创建的线程结束后，我们打印当前线程名字，就是主线程<code>MainThread</code></p>
-<h1 id="什么时候使用join"><a href="#什么时候使用join" class="headerlink" title="什么时候使用join"></a>什么时候使用join</h1><p>刚开始学多线程时，有个问题困扰了我很久，就是什么时候使用<code>join()</code></p>
-<p>缕一缕步骤：</p>
-<ol>
-<li>主线程中创建子线程t</li>
-<li>开始线程<code>t.star()</code></li>
-<li>调用<code>t.join()</code></li>
-<li>阻塞：等待子线程t结束后，再执行接下来的任务</li>
-</ol>
-<p>也就是说使用了<code>join()</code>后会阻塞当前的线程，只有这个线程执行完毕后才会接着走。要是一直不结束呢？你可以加上超时时间，如<code>t.join(timeout=10)</code></p>
-<h1 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h1><p>鸣人使用影分身后，产生了A、B、C三个小鸣人，鸣人可以使用<code>join()</code>方法，让B在A耗尽查克拉之后再进行攻击，如果没有使用<code>join()</code>，那么就会是这样的场景，大家一起上</p>
-<p><img src="https://image.ibb.co/b2AhW8/u_2086124472_3070676486_fm_173_s_C0983_F9_F4_C024_EDA8415_FC6803003079_w_500_h_314_img.jpg" alt=""></p>
-<p>这个时候如果鸣人命令A、B同时去写家庭作业，那么可能会产生什么情况呢？A先写还是B先写，大家可以想想。</p>
-<p>下一期会说说 <strong>锁 </strong></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://www.cn314.com/d/file/xinpin/452214b5930752f61039756c8dc70d67.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十一篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;记录自己对多线程的理解  (๑• . •๑)&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="多线程" scheme="https://zhangslob.github.io/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
-    
-    
-      <category term="多线程" scheme="https://zhangslob.github.io/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
