@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2019-01-03T14:23:53.348Z</updated>
+  <updated>2019-01-14T13:34:31.892Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python重试的多重方法</title>
+    <link href="https://zhangslob.github.io/2019/01/14/Python%E9%87%8D%E8%AF%95%E7%9A%84%E5%A4%9A%E9%87%8D%E6%96%B9%E6%B3%95/"/>
+    <id>https://zhangslob.github.io/2019/01/14/Python重试的多重方法/</id>
+    <published>2019-01-14T10:56:03.000Z</published>
+    <updated>2019-01-14T13:34:31.892Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>这是崔斯特的第八十二篇原创文章
+</code></pre><p>重试方法 (๑• . •๑)</p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fz6fuu2fq0j30tw0wen15.jpg" alt=""></p>
+<a id="more"></a>
+<p>没人能保证自己的的程序没BUG，所以重试非常有必要。</p>
+<p>下面说下我知道的几种Python重试方法。</p>
+<h1 id="装饰器"><a href="#装饰器" class="headerlink" title="装饰器"></a>装饰器</h1><p>这是最最简单的重试方法，而且有现成的轮子，推荐两个：</p>
+<ol>
+<li>retrying</li>
+<li>tenacity</li>
+</ol>
+<p>两种用法比较类似，我经常用后者，看下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> tenacity <span class="keyword">import</span> retry</div><div class="line"></div><div class="line"><span class="meta">@retry</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_something_unreliable</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">if</span> random.randint(<span class="number">0</span>, <span class="number">10</span>) &gt; <span class="number">1</span>:</div><div class="line">        <span class="keyword">raise</span> IOError(<span class="string">"Broken sauce, everything is hosed!!!111one"</span>)</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="string">"Awesome sauce!"</span></div><div class="line"></div><div class="line">print(do_something_unreliable())</div></pre></td></tr></table></figure>
+<p>用法非常简单，直接加上装饰器。当然也可以有各种自定义。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> tenacity <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="meta">@retry(stop=(stop_after_delay(10) | stop_after_attempt(5)), wait=wait_fixed(2))</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">stop_after_10_s_or_5_retries</span><span class="params">()</span>:</span></div><div class="line">    print(<span class="string">"Stopping after 10 seconds or 5 retries"</span>)</div><div class="line">    <span class="keyword">raise</span> Exception</div></pre></td></tr></table></figure>
+<p>以上是重试5次，每次间隔10秒，重试前等待2秒。</p>
+<h1 id="捕获异常"><a href="#捕获异常" class="headerlink" title="捕获异常"></a>捕获异常</h1><p>这种方法更常见</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">100</span>):</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            func()</div><div class="line">        <span class="keyword">except</span> SomeSpecificException:</div><div class="line">            <span class="keyword">continue</span></div><div class="line">        <span class="keyword">break</span></div></pre></td></tr></table></figure>
+<p>这里一定不要写成<code>except</code>或者<code>except Exception</code>，一定要指定异常，让别的错误打印出来，然后看日志再修改爬虫，或者会出现意想不到的情况。</p>
+<p>举一个例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">verify_url</span><span class="params">(url)</span>:</span></div><div class="line">    <span class="keyword">import</span> requests</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        requests.get(url, timeout=<span class="number">10</span>)</div><div class="line">        <span class="keyword">return</span> <span class="keyword">True</span></div><div class="line">    <span class="keyword">except</span> requests.exceptions.ConnectTimeout:</div><div class="line">        <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">5</span>):</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">if</span> verify_url(<span class="string">''</span>):</div><div class="line">                <span class="keyword">return</span></div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                <span class="keyword">continue</span></div><div class="line">        <span class="keyword">except</span> KeyError:</div><div class="line">            <span class="keyword">continue</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;这是崔斯特的第八十二篇原创文章
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重试方法 (๑• . •๑)&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://ws4.sinaimg.cn/large/006tNc79ly1fz6fuu2fq0j30tw0wen15.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Python" scheme="https://zhangslob.github.io/categories/Python/"/>
+    
+    
+      <category term="Python" scheme="https://zhangslob.github.io/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>pyspark操作MongoDB</title>
@@ -1107,59 +1152,6 @@
       <category term="scrapy" scheme="https://zhangslob.github.io/tags/scrapy/"/>
     
       <category term="post" scheme="https://zhangslob.github.io/tags/post/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>淘宝sign加密算法</title>
-    <link href="https://zhangslob.github.io/2018/08/14/%E6%B7%98%E5%AE%9Dsign%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
-    <id>https://zhangslob.github.io/2018/08/14/淘宝sign加密算法/</id>
-    <published>2018-08-14T13:50:33.000Z</published>
-    <updated>2018-09-03T13:56:28.816Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="https://pic4.zhimg.com/v2-1b87ba90b26d4a65d78146dcee21a40e_1200x500.jpg" alt=""></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第六十二篇原创文章</div></pre></td></tr></table></figure>
-<p>淘宝sign加密算法</p>
-<a id="more"></a>
-<h1 id="淘宝sign加密算法"><a href="#淘宝sign加密算法" class="headerlink" title="淘宝sign加密算法"></a>淘宝sign加密算法</h1><p>淘宝对于h5的访问采用了和客户端不同的方式，由于在h5的js代码中保存appsercret具有较高的风险，mtop采用了随机分配令牌的方式，为每个访问端分配一个token，保存在用户的cookie中，通过cookie带回服务端分配的token, 客户端利用分配的token对请求的URL参数生成摘要值sign,</p>
-<p>MTOP利用这个摘用值和cookie中的token来防止URL篡改。</p>
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><ol>
-<li>当本地cookie中的token为空时（通常是第一次访问），mtop会收到”FAIL_SYS_TOKEN_EXOIRED:: 令牌过期“这个错误应答，同时mtop会生成token写入cookie中（response.cookies）。</li>
-<li>第二次请求时，js通过读取cookie中的token值，按照约定的算法生成sign, sign在mtop的请求中带上，mtop通过cookie中和token用同样的方式计算出sign,与请求的sign进行比较，检查通过将返回api的应答，失败提示“FAIL_SYS_ILLEGAL_ACCESS:: 非法请求”</li>
-<li>cookie中的token是有时效性的，遇到token失效时，将收到应答”FAIL_SYS_TOKEN_EXOIRED:: 令牌过期”, 同时会写入新的token,js利用新的token重新计算sign并重发请求。</li>
-</ol>
-<p>关于cookie中的token的自我检查，由于token在cookie中是明文的，可能会被仿冒，在输出的cookie中包含一个用非对称密钥的公钥加密后的token, MTOP在每次请求时会先检查cookie中的token是否是由服务端分配出去的（利用加密后的token和私钥还原token，与回传的明文token比较）</p>
-<h1 id="sign-生成"><a href="#sign-生成" class="headerlink" title="sign 生成"></a>sign 生成</h1><p>关于sign的生成公式：</p>
-<p><code>md5Hex(token&amp;t&amp;appKey&amp;data)</code></p>
-<p>如：md5Hex(“645d1f414d4914297dfaab40f3f76016 &amp;1234&amp;4272&amp;{“itemNumId”:”1500011132496”}”)</p>
-<p>sign=d2b2f818a03496b296b899a230c03abd</p>
-<h1 id="token"><a href="#token" class="headerlink" title="token"></a>token</h1><p>关于cookie的有效时长，cookie的有效时长为7天，但是token的有效时长目前为60分钟<br>_m_h5_tk: 格式为 明文token_expireTime, 从response.cookies处获取，如： <code>2fcd2baa62fc60f73c0487a9f8a0a9d1_1362559577301</code></p>
-<p>token就是2fcd2baa62fc60f73c0487a9f8a0a9d1</p>
-<p>t<br>很简单，即时间戳 int(time.time()*1000)</p>
-<p>appKey<br>一般是固定数值</p>
-<p>data<br>一般是提交的参数</p>
-<p>example<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">headers = &#123;</div><div class="line">    <span class="string">'accept-encoding'</span>: <span class="string">'gzip, deflate, br'</span>,</div><div class="line">    <span class="string">'accept-language'</span>: <span class="string">'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7'</span>,</div><div class="line">    <span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) CriOS/56.0.2924.75 Mobile/14E5239e Safari/602.1'</span>,</div><div class="line">    <span class="string">'accept'</span>: <span class="string">'*/*'</span>,</div><div class="line">    <span class="string">'referer'</span>: <span class="string">'https://h5.m.taobao.com/?sprefer=sypc00'</span>,</div><div class="line">    <span class="string">'authority'</span>: <span class="string">'h5api.m.taobao.com'</span>,</div><div class="line">    <span class="string">'cookie'</span>: <span class="string">'t=cff5759b3198bafb639030a7296d6bff; cna=OOz3EwDBHU8CAS9eVNkZGaaY; thw=cn; _m_h5_tk=4dab06478749cf71bcb31296c169e46f_1534260967070; _m_h5_tk_enc=eb5abdfc8a3e52d0f7982d2ab34eb471; isg=BH9_A4W7GMQHLxzbVJKP32QcDlqleywDp44sWxFMGy51IJ-iGTRjVv02ZvbeeKt-'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">params = (</div><div class="line">    (<span class="string">'jsv'</span>, <span class="string">'2.4.11'</span>),</div><div class="line">    (<span class="string">'appKey'</span>, <span class="string">'12574478'</span>),</div><div class="line">    (<span class="string">'t'</span>, <span class="string">'1534253767277'</span>),</div><div class="line">    (<span class="string">'sign'</span>, <span class="string">'12c6fac6a03cf98c8f912413feeaeaaf'</span>),</div><div class="line">    (<span class="string">'api'</span>, <span class="string">'mtop.taobao.wireless.home.load'</span>),</div><div class="line">    (<span class="string">'v'</span>, <span class="string">'1.0'</span>),</div><div class="line">    (<span class="string">'type'</span>, <span class="string">'jsonp'</span>),</div><div class="line">    (<span class="string">'dataType'</span>, <span class="string">'jsonp'</span>),</div><div class="line">    (<span class="string">'callback'</span>, <span class="string">'mtopjsonp2'</span>),</div><div class="line">    (<span class="string">'data'</span>, <span class="string">'&#123;"containerId":"main","ext":"&#123;\\"h5_platform\\":\\"h5\\",\\"h5_ttid\\":\\"60000@taobao_h5_1.0.0\\"&#125;"&#125;'</span>),</div><div class="line">)</div><div class="line"></div><div class="line">response = requests.get(<span class="string">'https://h5api.m.taobao.com/h5/mtop.taobao.wireless.home.load/1.0/'</span>, headers=headers, params=params)</div></pre></td></tr></table></figure></p>
-<h1 id="如何寻找"><a href="#如何寻找" class="headerlink" title="如何寻找"></a>如何寻找</h1><p>看下面这段js</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># https://g.alicdn.com/hollywood/hollywood-lib/2.0.2/mtop.js</div><div class="line"></div><div class="line">if (d.H5Request === !0) &#123;</div><div class="line">    var f = "//" + (d.prefix ? d.prefix + "." : "") + (d.subDomain ? d.subDomain + "." : "") + d.mainDomain + "/h5/" + c.api.toLowerCase() + "/" + c.v.toLowerCase() + "/"</div><div class="line">      , g = c.appKey || ("waptest" === d.subDomain ? "4272" : "12574478")</div><div class="line">      , i = (new Date).getTime()</div><div class="line">      , j = h(d.token + "&amp;" + i + "&amp;" + g + "&amp;" + c.data)</div><div class="line">      , k = &#123;</div><div class="line">        jsv: w,</div><div class="line">        appKey: g,</div><div class="line">        t: i,</div><div class="line">        sign: j</div><div class="line">    &#125;</div><div class="line">      , l = &#123;</div><div class="line">        data: c.data,</div><div class="line">        ua: c.ua</div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
-<p>你可能会问，如何寻找，答案是js断点，一步步调试。</p>
-<p>有兴趣的可以持续关注，以后会深入。</p>
-<p>好久都没法东西了，主要是最近太忙，加班比较多；自己也变懒了，也在学一些新东西，就不知道写什么好，以后还是勤快点吧。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://pic4.zhimg.com/v2-1b87ba90b26d4a65d78146dcee21a40e_1200x500.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第六十二篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;淘宝sign加密算法&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="加密算法" scheme="https://zhangslob.github.io/categories/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/"/>
-    
-    
-      <category term="淘宝" scheme="https://zhangslob.github.io/tags/%E6%B7%98%E5%AE%9D/"/>
-    
-      <category term="加密" scheme="https://zhangslob.github.io/tags/%E5%8A%A0%E5%AF%86/"/>
     
   </entry>
   
