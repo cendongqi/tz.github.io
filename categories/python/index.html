@@ -340,6 +340,34 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
 
       <h2 class="post-title">
         
+            <a class="post-title-link" href="/2019/01/14/Python重试的多重方法/" itemprop="url">
+              
+                <span itemprop="name">Python重试的多重方法</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-01-14T18:56:03+08:00"
+              content="2019-01-14" >
+          01-14
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
             <a class="post-title-link" href="/2018/05/22/Python最假的库：Faker/" itemprop="url">
               
                 <span itemprop="name">Python最假的库：Faker</span>
@@ -438,7 +466,7 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -476,7 +504,6 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                 </span>
               
             
-<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=33937527&auto=0&height=66"></iframe>
           </div>
 
           
@@ -1095,65 +1122,6 @@ const loadScript = function loadScript(c,b){var a=document.createElement("script
                 console.log('Failed to save Visitor num, with error message: ' + error.message);
               }
             });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-  <!-- 页面点击小红心 -->
-<script type="text/javascript" src="/js/src/love.js"></script>
-</body>
-</html>
-
-    });
           } else {
             var newcounter = new Counter();
             /* Set ACL */

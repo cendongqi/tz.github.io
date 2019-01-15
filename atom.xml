@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zhangslob.github.io/"/>
-  <updated>2019-01-14T13:34:31.892Z</updated>
+  <updated>2019-01-15T14:17:05.138Z</updated>
   <id>https://zhangslob.github.io/</id>
   
   <author>
@@ -20,11 +20,11 @@
     <link href="https://zhangslob.github.io/2019/01/14/Python%E9%87%8D%E8%AF%95%E7%9A%84%E5%A4%9A%E9%87%8D%E6%96%B9%E6%B3%95/"/>
     <id>https://zhangslob.github.io/2019/01/14/Python重试的多重方法/</id>
     <published>2019-01-14T10:56:03.000Z</published>
-    <updated>2019-01-14T13:34:31.892Z</updated>
+    <updated>2019-01-15T14:17:05.138Z</updated>
     
-    <content type="html"><![CDATA[<pre><code>这是崔斯特的第八十二篇原创文章
-</code></pre><p>重试方法 (๑• . •๑)</p>
-<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fz6fuu2fq0j30tw0wen15.jpg" alt=""></p>
+    <content type="html"><![CDATA[<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fz6fuu2fq0j30tw0wen15.jpg" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">这是崔斯特的第八十二篇原创文章</div></pre></td></tr></table></figure>
+<hr>
 <a id="more"></a>
 <p>没人能保证自己的的程序没BUG，所以重试非常有必要。</p>
 <p>下面说下我知道的几种Python重试方法。</p>
@@ -47,16 +47,16 @@
     
     <summary type="html">
     
-      &lt;pre&gt;&lt;code&gt;这是崔斯特的第八十二篇原创文章
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重试方法 (๑• . •๑)&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://ws4.sinaimg.cn/large/006tNc79ly1fz6fuu2fq0j30tw0wen15.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;img src=&quot;https://ws4.sinaimg.cn/large/006tNc79ly1fz6fuu2fq0j30tw0wen15.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;这是崔斯特的第八十二篇原创文章&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;hr&gt;
     
     </summary>
     
-      <category term="Python" scheme="https://zhangslob.github.io/categories/Python/"/>
+      <category term="python" scheme="https://zhangslob.github.io/categories/python/"/>
     
     
-      <category term="Python" scheme="https://zhangslob.github.io/tags/Python/"/>
+      <category term="python" scheme="https://zhangslob.github.io/tags/python/"/>
     
   </entry>
   
