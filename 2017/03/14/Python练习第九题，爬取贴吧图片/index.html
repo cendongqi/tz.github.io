@@ -120,7 +120,7 @@ http://tieba.baidu.com/p/2166231880">
     fancybox: true,
     motion: true,
     duoshuo: {
-      userId: '0',
+      userId: 'undefined',
       author: '博主'
     },
     algolia: {
@@ -332,16 +332,6 @@ http://tieba.baidu.com/p/2166231880">
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/14/Python练习第九题，爬取贴吧图片/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/14/Python练习第九题，爬取贴吧图片/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -488,9 +478,7 @@ request.urlretrieve(jpg_link, path)
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/14/Python练习第九题，爬取贴吧图片/"
-           data-title="Python练习第九题，爬取贴吧图片" data-url="https://zhangslob.github.io/2017/03/14/Python练习第九题，爬取贴吧图片/">
-      </div>
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80MjE4NS8xODczMg=="></div>
     
   </div>
 
@@ -740,39 +728,43 @@ request.urlretrieve(jpg_link, path)
 
   
 
-  
-    
-  
 
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"zhangslob"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
 
   
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
+
+
+
+
+	
+
+
+
+
+
   
 
 
 
 
 
+  
 
 
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
 
 
 
