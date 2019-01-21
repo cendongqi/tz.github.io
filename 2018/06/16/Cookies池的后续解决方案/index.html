@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="爬虫,cookie池," />
+  <meta name="keywords" content="cookie池,爬虫," />
 
 
 
@@ -439,9 +439,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
-          
             <a href="/tags/cookie池/" rel="tag"># cookie池</a>
+          
+            <a href="/tags/爬虫/" rel="tag"># 爬虫</a>
           
         </div>
       
@@ -487,6 +487,7 @@
   <!-- Link Gitalk 的支持文件  -->
     <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
     <script src="https://unpkg.com/gitalk@latest/dist/gitalk.min.js"></script> 
+    <script src="/js/src/md5.min.js"></script>
     <div id="gitalk-container"></div>     <script type="text/javascript">
     var gitalk = new Gitalk({
 
@@ -496,7 +497,7 @@
         repo: 'zhangslob.github.io',
         owner: 'zhangslob',
         admin: ['zhangslob'],
-        id: window.location.pathname,
+        id: md5(location.pathname),
 
     });
     gitalk.render('gitalk-container');
