@@ -105,7 +105,7 @@
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g1g8q966ibj31380sewli.jpg">
 <meta property="og:image" content="https://ws1.sinaimg.cn/large/006tKfTcly1g1g9pd53l0j30mf0audhk.jpg">
 <meta property="og:image" content="https://ws2.sinaimg.cn/large/006tKfTcly1g1ga75f8maj30hs06ewf0.jpg">
-<meta property="og:updated_time" content="2019-03-26T08:58:15.440Z">
+<meta property="og:updated_time" content="2019-03-27T03:06:50.394Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="scrapy去重与scrapy_redis去重与布隆过滤器">
 <meta name="twitter:description" content="1这是崔斯特的第九十一篇原创文章">
@@ -431,7 +431,7 @@
 <h1 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h1><p>它的原理是将一个元素通过 k 个哈希函数，将元素映射为 k 个比特位，在 bitmap 中把它们置为 1。在验证的时候只需要验证这些比特位是否都是 1 即可，如果其中有一个为 0，那么元素一定不在集合里，如果全为 1，则很可能在集合里。（因为可能会有其它的元素也映射到相应的比特位上）</p>
 <p>同时这也导致不能从 Bloom filter 中删除某个元素，无法确定这个元素一定在集合中。以及带来了误报的问题，当里面的数据越来越多，这个<strong>可能</strong>在集合中的靠谱程度就越来越低。（由于哈希碰撞，可能导致把不属于集合内的元素认为属于该集合）</p>
 <p><img src="https://ws2.sinaimg.cn/large/006tKfTcly1g1ga75f8maj30hs06ewf0.jpg" alt=""></p>
-<p>布隆过滤器的缺点是错判，就是说，不在里面的，可能误判成在里面，但是在里面的，就一定在里面，而且无法删除其中数据。</p>
+<p>布隆过滤器的缺点是错判，就是说，<strong>不在的一定不在，在的不一定在</strong>，而且无法删除其中数据。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pybloomfilter</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>fruit = pybloomfilter.BloomFilter(<span class="number">100000</span>, <span class="number">0.1</span>, <span class="string">'/tmp/words.bloom'</span>)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>fruit.update((<span class="string">'apple'</span>, <span class="string">'pear'</span>, <span class="string">'orange'</span>, <span class="string">'apple'</span>))</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>len(fruit)</div><div class="line"><span class="number">3</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'mike'</span> <span class="keyword">in</span> fruit</div><div class="line"><span class="keyword">False</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'apple'</span> <span class="keyword">in</span> fruit</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
 <p>python3使用<a href="https://github.com/PrashntS/pybloomfiltermmap3" target="_blank" rel="external">pybloomfilter</a>的例子。</p>
 <p>那么如何在scrapy中使用布隆过滤器呢，崔大大已经写好了，地址：<a href="https://github.com/Python3WebSpider/ScrapyRedisBloomFilter" target="_blank" rel="external">ScrapyRedisBloomFilter</a>，已经打包好，可以直接安装</p>
